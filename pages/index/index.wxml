@@ -1,0 +1,22 @@
+<!--index.wxml-->
+<view class="container">
+	<view class="background">
+		<view class="title">上应风筝</view>
+	</view>
+	<view class="main">
+		<swiper indicator-dots="true" class="swiper" circular>
+			<swiper-item>
+				<view class="box">
+					<image src="../../asset/pic/logo.png" style="width:100%;height:100%;"></image>
+				</view>
+			</swiper-item>
+			<swiper-item>
+				<view class="box">
+				<image src="../../asset/pic/logo.png" style="width:100%;height:100%;"></image></view>
+			</swiper-item>
+		</swiper>
+		<view class="menuBlock">
+
+		</view>
+	</view>
+</view>

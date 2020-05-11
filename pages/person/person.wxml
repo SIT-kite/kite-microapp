@@ -1,0 +1,5 @@
+<!--pages/person/person.wxml-->
+<view class="container">
+<view class="test" bindtap="login">登录</view>
+<view>{{test}}</view>
+</view>
