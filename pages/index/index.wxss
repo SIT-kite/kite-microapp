@@ -5,9 +5,7 @@
   box-shadow: 0rpx 0rpx 10rpx 6rpx rgba(224,224,224,0.77); */
 }
 
-page{
-  background-color: #e6e6e656;
-}
+
 /* .container{
   background-color: #e6e6e656;
 } */

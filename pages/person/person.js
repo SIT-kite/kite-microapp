@@ -12,42 +12,50 @@ Component({
    * 组件的初始数据
    */
   data: {
-    motto: 'Hello World',
-    userInfo: {},
+    userInfo: "",
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    test:""
+    imageUrl: "/asset/icon/头像 (2).png"
   },
   /**
    * 组件的方法列表
    */
   methods: {
-    login: function() {
-      wx.login({
-        success: (res) => {
-          console.log(res);
-          wx.request({
-            url: 'http://114.99.116.135:8090/session',
-            data: {
-              wxCode: res.code,
-              loginType:0
-            },
-            method: "POST",
-            header:{
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success:  (res)=> {
-              this.setData({
-                test:res.data.msg
-              })
-              console.log(res)
-            },
-            fail: function (res) {
-              console.log(res);
-            }
-          })
-        }
-      })
+    login: function (e) {
+      console.log(e)
+      if (e.detail.userInfo) {
+        this.setData({
+          userInfo: e.detail.userInfo.nickName,
+          imageUrl: e.detail.userInfo.avatarUrl
+        })
+      }
     }
+    // login: function() {
+    //   wx.login({
+    //     success: (res) => {
+    //       console.log(res);
+    //       wx.request({
+    //         url: 'http://114.99.116.135:8090/session',
+    //         data: {
+    //           wxCode: res.code,
+    //           loginType:0
+    //         },
+    //         method: "POST",
+    //         header:{
+    //           "Content-Type": "application/x-www-form-urlencoded"
+    //         },
+    //         success:  (res)=> {
+    //           this.setData({
+    //             test:res.data.msg
+    //           })
+    //           console.log(res)
+    //         },
+    //         fail: function (res) {
+    //           console.log(res);
+    //         }
+    //       })
+    //     }
+    //   })
+    // }
   }
 })

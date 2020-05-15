@@ -9,6 +9,10 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+.tab-icon{
+  width: 1.7rem;
+  height: 1.8rem;
+}
 
 .tab-bar-border {
   background-color: rgba(0, 0, 0, 0.33);
@@ -27,6 +31,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding-top: 0.2rem;
   color: #9e9696;
 }
 
@@ -34,7 +39,7 @@
   color: rgba(0, 0, 0, 0.7);
 }
 .tab-bar-item-text{
-  font-size: 12px;
+  font-size: 14px;
 }
 
 @font-face {

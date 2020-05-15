@@ -13,10 +13,12 @@ Component({
   data: {
     list: [{
       pagePath: "/pages/index/index",
-      text: "主页"
+      text: "主页",
+      iconpath:"/asset/icon/Home.png"
     },{
       pagePath: "/pages/person/person",
-      text: "个人"
+      text: "个人",
+      iconpath:"/asset/icon/账号.png"
     }]
   },
 

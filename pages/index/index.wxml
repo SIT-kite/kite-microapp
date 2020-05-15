@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <view class="container">
-	<view class="background">
+	<!-- <view class="background">
 		<view class="title">上应风筝</view>
-	</view>
+	</view> -->
 	<view class="main">
 		<swiper indicator-dots="true" class="swiper" circular>
 			<swiper-item>

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/person/person"
+    "pages/person/person",
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
