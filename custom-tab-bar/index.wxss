@@ -10,8 +10,9 @@
 }
 
 .tab-icon{
-  width: 1.7rem;
-  height: 1.8rem;
+  margin-top: .16rem;
+  width: 1.5rem;
+  height: 1.6rem;
 }
 
 .tab-bar-border {
@@ -39,7 +40,7 @@
   color: rgba(0, 0, 0, 0.7);
 }
 .tab-bar-item-text{
-  font-size: 14px;
+  font-size: 12px;
 }
 
 @font-face {
