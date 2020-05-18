@@ -1,24 +1,27 @@
 {
   "pages": [
-    "pages/person/person",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/person/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
-    "navigationStyle":"custom"
+    "navigationStyle": "custom"
   },
   "tabBar": {
-    "custom":true,
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "主页"
-    },{
-      "pagePath": "pages/person/person",
-      "text": "个人"
-    }]
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/person/main",
+        "text": "个人"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

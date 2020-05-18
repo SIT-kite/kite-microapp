@@ -1,7 +1,7 @@
 <view class="tab-bar">
 	<view class="tab-bar-border"></view>
-	<view wx:for="{{list}}" wx:key="item" data-current="{{idx}}" class="tab-bar-item" data-path="{{item.pagePath}}" bindtap="switchTab">
-	<image src="{{currentTab == idx ? item.selectedIconPath : item.iconpath }}" class="tab-icon"></image>
-		<span class="tab-bar-item-text">{{item.text}}</span>
+	<view wx:for="{{list}}" wx:key="index"  class="tab-bar-item" data-path="{{item.pagePath}}" bindtap="switchTab">
+	<image src="{{selected === index ? item.selectedIconPath : item.iconpath }}" class="{{selected===index ? 'tab-icon-selected':'tab-icon'}}"></image>
+		<span class="{{selected ===index ? 'text-selected' : 'tab-bar-item-text'}}">{{item.text}}</span>
 	</view>
 </view>

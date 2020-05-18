@@ -1,5 +1,6 @@
 <!--index.wxml-->
 <view class="container">
+	<image class='background' src="/asset/pic/download (2).png" mode="aspectFill"></image>
 	<!-- <view class="background">
 		<view class="title">上应风筝</view>
 	</view> -->
@@ -12,11 +13,15 @@
 			</swiper-item>
 			<swiper-item>
 				<view class="box">
-				<image src="../../asset/pic/logo.png" style="width:100%;height:100%;"></image></view>
+					<image src="../../asset/pic/logo.png" style="width:100%;height:100%;"></image>
+				</view>
 			</swiper-item>
 		</swiper>
 		<view class="menuBlock">
-
+			<view wx:for="{{menu_list}}" class="menu_cell">
+				<image src="{{item.iconPath}}"></image>
+				<view class="menu_cell_block">{{item.text}}</view>
+			</view>
 		</view>
 	</view>
 </view>

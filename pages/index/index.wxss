@@ -7,7 +7,7 @@
 
 
 /* .container{
-  background-color: #e6e6e656;
+  background-image: url('/asset/pic/download.png');
 } */
 
 .box{
@@ -20,7 +20,7 @@
   position: relative;
   top: 0;
   font-size: 30rpx;
-  margin: 55rpx auto;
+  margin: 5rpx auto;
   width: 250rpx;
   text-align: center;
 }
@@ -32,19 +32,40 @@
 }
 .main{
   width: 100%;
-  padding-top:200rpx;
+  padding-top:250rpx;
 }
 
-.background{
-  position: absolute;
-  background-color:white;
-  height: 300rpx;
+.background {
   width: 100%;
-  border-radius:  0 0 70rpx 70rpx;
-}
+  height: 100%;
+  position:fixed; 
+  background-size:100% 100%;
+  z-index: -1;
+  }
 
+  .menu_cell{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30rpx;
+    font-size:12px;
+  }
+  .menu_cell image{
+    width: 80rpx;
+    height: 80rpx;
+  }
+  .menu_cell_block{
+    color: #9e9696;
+    margin-top: 10rpx;
+    width: 60rpx;
+    height: 30rpx;
+  }
 .menuBlock{
   display: grid;
+  grid-template-columns: repeat(3,33.3%);
+  grid-template-rows: repeat(2,50%);
   position: relative;
   margin:100rpx auto;
   width: 650rpx;

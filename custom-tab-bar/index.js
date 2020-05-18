@@ -11,16 +11,17 @@ Component({
    * 组件的初始数据
    */
   data: {
+    selected:0,
     list: [{
       pagePath: "/pages/index/index",
       text: "主页",
-      iconpath:"/asset/icon/Home (1).png",
-      selectedIconPath:"/asset/icon/Home.png"
+      iconpath:"/asset/icon/home (2).png",
+      selectedIconPath:"/asset/icon/home (3).png"
     },{
-      pagePath: "/pages/person/person",
+      pagePath: "/pages/person/main",
       text: "个人",
-      iconpath:"/asset/icon/账号 (1).png",
-      selectedIconPath:"/asset/icon/账号.png"
+      iconpath:"/asset/icon/user.png",
+      selectedIconPath:"/asset/icon/user (1).png"
     }]
   },
 

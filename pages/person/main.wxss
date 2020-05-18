@@ -1,0 +1,74 @@
+.test {
+  margin-top: 5rem;
+  width: 4rem;
+  height: 3.8rem;
+  /* background-color: rgb(209, 216, 209); */
+}
+
+.welcome-block {
+  margin-top: 3rem;
+}
+
+.wechat-login-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  margin-top: 2rem;
+
+  height: 2.5rem;
+  color: white;
+  border-radius: 10px;
+  background-image: linear-gradient( 135deg, #70F570 10%, #49C628 100%);
+}
+
+/* .wechat-login-block image, .wechat-login-block span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+} */
+
+.wechat-login-block image {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.wechat-login-block span {
+  margin-left: 1rem;
+}
+
+.welcome-text {
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.login-default-img {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* pages/person/person.wxss
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ 
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+ 
+.userinfo-nickname {
+  color: #aaa;
+}
+ 
+.usermotto {
+  margin-top: 200px;
+} */
