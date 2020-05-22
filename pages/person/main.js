@@ -7,7 +7,6 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         imageUrl: "/asset/icon/头像 (2).png"
       },
-      methods: {
         login: function (e) {
           console.log(e)
           if (e.detail.userInfo) {
@@ -16,7 +15,7 @@ Page({
               imageUrl: e.detail.userInfo.avatarUrl
             })
           }
-        }},
+        },
         onShow: function (e) {
           if (typeof this.getTabBar === 'function' && this.getTabBar()) {
             this.getTabBar().setData({

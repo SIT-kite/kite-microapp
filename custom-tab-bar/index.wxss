@@ -16,11 +16,6 @@
   height: 1.6rem;
 }
 
-.tab-icon-selected{
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
 .tab-bar-border {
   background-color: rgba(0, 0, 0, 0.33);
   position: absolute;
@@ -52,6 +47,6 @@
 
 .text-selected{
   color:black;
-  font-size: 15px;
+  font-size: 12px;
 }
 

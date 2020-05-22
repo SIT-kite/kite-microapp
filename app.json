@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/person/main"
+    "pages/person/main",
+    "pages/shopping/shopping"
   ],
   "window": {
     "backgroundTextStyle": "light",

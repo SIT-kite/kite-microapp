@@ -1,22 +1,18 @@
-.swiper{
+.swiper {
   width: 100%;
-  height:300rpx;
-  /* border-radius: 20rpx;
-  box-shadow: 0rpx 0rpx 10rpx 6rpx rgba(224,224,224,0.77); */
+  height: 300rpx;
 }
 
 
-/* .container{
-  background-image: url('/asset/pic/download.png');
-} */
 
-.box{
+.box {
   position: relative;
   margin: 0 auto;
   height: 100%;
   width: 650rpx;
 }
-.title{
+
+.title {
   position: relative;
   top: 0;
   font-size: 30rpx;
@@ -25,52 +21,94 @@
   text-align: center;
 }
 
-.logo{
+.logo {
   text-align: center;
   line-height: 275rpx;
-  background:#83f0ff;
+  background: #83f0ff;
 }
-.main{
+
+.main {
   width: 100%;
-  padding-top:250rpx;
+  padding-top: 250rpx;
 }
 
 .background {
   width: 100%;
   height: 100%;
-  position:fixed; 
-  background-size:100% 100%;
+  position: fixed;
+  background-size: 100% 100%;
   z-index: -1;
-  }
+}
 
-  .menu_cell{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 30rpx;
-    font-size:12px;
-  }
-  .menu_cell image{
-    width: 80rpx;
-    height: 80rpx;
-  }
-  .menu_cell_block{
-    color: #9e9696;
-    margin-top: 10rpx;
-    width: 60rpx;
-    height: 30rpx;
-  }
-.menuBlock{
+.menu_cell {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30rpx;
+  font-size: var(--font-size);
+}
+
+.menu_cell:nth-child(1) {
+  border-top-left-radius: 40rpx;
+}
+
+.menu_cell:nth-child(3) {
+  border-top-right-radius: 40rpx;
+}
+
+.menu_cell:nth-child(4) {
+  border-bottom-left-radius: 40rpx;
+}
+
+.menu_cell:nth-child(6) {
+  border-bottom-right-radius: 40rpx;
+}
+
+.menu_cell:active {
+  background-color: #e3e3e3;
+}
+
+.menu_cell image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.menu_cell_text {
+  color: #9e9696;
+  margin-top: 10rpx;
+  width: 60rpx;
+  height: 30rpx;
+}
+
+.menuBlock {
   display: grid;
-  grid-template-columns: repeat(3,33.3%);
-  grid-template-rows: repeat(2,50%);
+  grid-template-columns: repeat(3, 33.3%);
+  grid-template-rows: repeat(2, 50%);
   position: relative;
-  margin:100rpx auto;
+  margin: 100rpx auto;
   width: 650rpx;
   height: 450rpx;
   border-radius: 40rpx;
-  box-shadow: 0rpx 0rpx 10rpx 6rpx rgba(224,224,224,0.77);
+  box-shadow: 0rpx 0rpx 10rpx 6rpx rgba(224, 224, 224, 0.77);
   background-color: white;
+}
+
+@keyframes living {
+  0% {
+    transaform: scale(1);
+  }
+  25%{
+    transform: scale(1.4);
+  }
+  50% {
+    transform: scale(1);
+  }
+  80%{
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
