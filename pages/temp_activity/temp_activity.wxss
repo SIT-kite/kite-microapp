@@ -1,0 +1,54 @@
+/* pages/temp_activity/temp_activity.wxss */
+.main {
+  width: 100%;
+  padding-top: 64vh;
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+}
+.line{
+  position: absolute;
+  height: 3rpx;
+  width: 50%;
+  margin-left: 30%;
+  top:55vh;
+  background-color: black;
+}
+
+.bg_img {
+  width: 70vw;
+  height: 85vh;
+  position: absolute;
+  margin: 5vh 0;
+}
+
+.main_title {
+  font-family: Microsoft YaHei;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 32px;
+  margin-bottom: 2.5vh;
+  text-align: center;
+  width: 70vw;
+  align-items:center;
+}
+
+.main_text{
+  width: 70vw;
+font-family: Microsoft YaHei;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 16px;
+text-align: center;
+margin-bottom: 0.7vh;
+
+}
+
+.main_button{
+  margin-top: 5vh;
+  width: 80%!important;
+}

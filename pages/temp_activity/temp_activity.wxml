@@ -1,0 +1,11 @@
+<view class="container">
+	<image src="/asset/pic/test1.png" class="bg_img"></image>
+			<view class="line"></view>
+	<view class="main">
+		<text class="main_title">上应大新生服务系统</text>
+		<text class="main_text">请点击下方按钮进入系统</text>
+		<text class="main_text">查阅寝室，留下信息</text>
+		<text class="main_text">开启大学生活第一站！</text>
+		<van-button open-type="getUserInfo" bind:getuserinfo="go_in"  class="main_button" custom-style="font-size: 22px;text-align: center;border-radius: 1vh;" block color="#363636">进入系统</van-button>
+	</view>
+</view>

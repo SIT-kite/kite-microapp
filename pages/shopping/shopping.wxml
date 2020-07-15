@@ -1,2 +1,3 @@
 <!--pages/shopping/shopping.wxml-->
-<text>pages/shopping/shopping.wxml</text>
+<view class="container">
+</view>

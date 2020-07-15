@@ -15,13 +15,13 @@ Component({
     list: [{
       pagePath: "/pages/index/index",
       text: "主页",
-      iconpath:"/asset/icon/home (2).png",
-      selectedIconPath:"/asset/icon/home (3).png"
+      iconpath:"/asset/icon/home.png",
+      selectedIconPath:"/asset/icon/home_active.png"
     },{
       pagePath: "/pages/person/main",
       text: "个人",
       iconpath:"/asset/icon/user.png",
-      selectedIconPath:"/asset/icon/user (1).png"
+      selectedIconPath:"/asset/icon/user_active.png"
     }]
   },
 

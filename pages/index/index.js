@@ -10,7 +10,7 @@ Page({
     menu_list: [{
         id:"notice",
         text: "通知",
-        iconPath: "/asset/icon/icon_6h444ajjwem/通知.png"
+        iconPath: "/asset/icon/icon_6h444ajjwem/notice.png"
       },
       {
         id:"activity",
@@ -61,5 +61,13 @@ Page({
         selected: 0
       })
     }
+  },
+  go_temp:function(e){
+    wx.navigateTo({
+      url: '/pages/temp_activity/temp_activity',
+      success:function(){}, //接口调用成功的回调函数
+      fail:function(){}, //接口调用失败的回调函数
+      complete:function(){} //接口调用结束的回调函数（调用成功、失败都会执行）
+    })
   }
 })

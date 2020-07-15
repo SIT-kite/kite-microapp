@@ -1,35 +1,20 @@
 .swiper {
   width: 100%;
-  height: 300rpx;
+  height: 292.4rpx;
 }
-
-
-
+/*高宽比约为0.42*/
 .box {
   position: relative;
   margin: 0 auto;
   height: 100%;
-  width: 650rpx;
+  width: 680rpx;
 }
 
-.title {
-  position: relative;
-  top: 0;
-  font-size: 30rpx;
-  margin: 5rpx auto;
-  width: 250rpx;
-  text-align: center;
-}
 
-.logo {
-  text-align: center;
-  line-height: 275rpx;
-  background: #83f0ff;
-}
 
 .main {
   width: 100%;
-  padding-top: 250rpx;
+  padding-top: var(--padding-size);
 }
 
 .background {
@@ -46,24 +31,24 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 30rpx;
+  padding-top: 20px;
   font-size: var(--font-size);
 }
 
 .menu_cell:nth-child(1) {
-  border-top-left-radius: 40rpx;
+  border-top-left-radius: 10px;
 }
 
 .menu_cell:nth-child(3) {
-  border-top-right-radius: 40rpx;
+  border-top-right-radius: 10px;
 }
 
 .menu_cell:nth-child(4) {
-  border-bottom-left-radius: 40rpx;
+  border-bottom-left-radius: 10px;
 }
 
 .menu_cell:nth-child(6) {
-  border-bottom-right-radius: 40rpx;
+  border-bottom-right-radius: 10px;
 }
 
 .menu_cell:active {
@@ -71,15 +56,15 @@
 }
 
 .menu_cell image {
-  width: 60rpx;
-  height: 60rpx;
+  width: 32px;
+  height: 32px;
 }
 
 .menu_cell_text {
   color: #9e9696;
-  margin-top: 10rpx;
-  width: 60rpx;
-  height: 30rpx;
+  margin-top: 10px;
+  width: 60px;
+  height: 30px;
 }
 
 .menuBlock {
@@ -87,11 +72,11 @@
   grid-template-columns: repeat(3, 33.3%);
   grid-template-rows: repeat(2, 50%);
   position: relative;
-  margin: 100rpx auto;
-  width: 650rpx;
-  height: 450rpx;
-  border-radius: 40rpx;
-  box-shadow: 0rpx 0rpx 10rpx 6rpx rgba(224, 224, 224, 0.77);
+  margin: 15vh auto;
+  width: 680rpx;
+  height: 453rpx;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 6px rgba(224, 224, 224, 0.37);
   background-color: white;
 }
 

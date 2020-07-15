@@ -1,8 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/temp_activity/temp_activity",
     "pages/person/main",
-    "pages/shopping/shopping"
+    "pages/shopping/shopping",
+    "pages/Student_system/Student_system"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -24,6 +26,8 @@
       }
     ]
   },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index"
+  }
 }

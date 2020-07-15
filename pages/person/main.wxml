@@ -4,10 +4,13 @@
         <image src="{{imageUrl}}" class="login-default-img"></image>
     </view>
     <view class="welcome-block">
-        <span class="welcome-text">欢迎访问上应风筝!\n{{userInfo}}</span>
+        <span class="welcome-text">欢迎访问上应风筝!{{userInfo}}</span>
     </view>
     <button style="width: 14rem;" wx:if="{{canIUse}}" open-type="getUserInfo" class="wechat-login-block" bindgetuserinfo="login">
-        <image src="/asset/icon/微信icon (2).png"></image>
+        <image src="/asset/icon/weixin.png"></image>
         <span>微信一键登录</span>
     </button>
+    <!-- <van-button type="primary">按钮</van-button>
+    <button style="border:1px solid red;position:relative;margin-top:200px;height:30px;width:90px;background-color:bleck;" bindtap="uploadfile"></button>
+    <image src="{{image}}" /> -->
 </view>
