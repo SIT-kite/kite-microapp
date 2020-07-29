@@ -1,0 +1,29 @@
+<view class="container">
+	<view class="main">
+		<view class="personal">
+			<view wx:if="{{isLogin}}" class="help">
+				<view class="personal_pic">
+					<image src="{{avater}}"></image>
+				</view>
+				<view class="personal_main">
+					<view class="main_info">
+						<text style="font-size:24px;font-weight:bold;text-align:left;">{{nickName}}</text>
+						<view class="true_basic {{isStu ? 'a_stu':'n_stu'}}">
+							<image src="{{isStu ? iconUrl.right:iconUrl.wrong}}"></image>
+							<text>{{isStu ? '已实名':'未实名'}}</text>
+						</view>
+					</view>
+					<view bindtap="go_signup"style="color:#e3e3e3;text-align:right;width:50vw;" >
+						<text>前往认证></text>
+					</view>
+				</view>
+			</view>
+			<view wx:else class="login">
+				<button class="image_container" bindgetuserinfo="login" open-type="getUserInfo">
+					<image src="/asset/icon/weixin.png"></image>
+				</button>
+				<text style="font-size:20px;color:#e3e3e3;">点击左侧微信登录</text>
+			</view>
+		</view>
+	</view>
+</view>

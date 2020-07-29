@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/temp_activity/temp_activity",
-    "pages/person/main",
+    "pages/qrcode/qrcode",
+    "pages/person/person",
+    "pages/welcome/main",
     "pages/shopping/shopping",
-    "pages/Student_system/Student_system"
+    "pages/Student_system/Student_system",
+    "pages/signup/signup"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -21,7 +23,7 @@
         "text": "主页"
       },
       {
-        "pagePath": "pages/person/main",
+        "pagePath": "pages/person/person",
         "text": "个人"
       }
     ]

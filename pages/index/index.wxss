@@ -9,8 +9,41 @@
   height: 100%;
   width: 680rpx;
 }
+.pop_class{
+  box-sizing: border-box;
+  height: 30vh;
+  width: 40vh;
+  padding:5vh;
+  border-radius: 1vh;
+}
+.pop_button{
+  width: 20vh;
+  height: 6vh;
+  background-color: black;
+  border-radius: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 
+}
 
+.popT_class{
+  height: 15vh;
+  width: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pop_container{
+  width: 30vh;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .main {
   width: 100%;

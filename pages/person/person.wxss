@@ -1,0 +1,106 @@
+.main {
+  display: flex;
+  padding-top: var(--padding-size);
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.personal {
+  box-sizing: border-box;
+  position: relative;
+  margin: 1vh auto 5vh;
+  height: 13vh;
+  width: 90%;
+  background-color: white;
+  border-radius: 1vh;
+}
+
+.help{
+  display: flex;
+  box-sizing: border-box;
+  padding: 0.5vh 1vh;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 1vh;
+  align-items: center;
+}
+
+.login{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login .image_container{
+  width: 8vh;
+  height: 8vh;
+  border-radius: 50%;
+  /* outline: 1px solid red; */
+  overflow: hidden;
+  margin: 0 3vh 0 0;
+  background-color: unset;
+  padding: unset;
+}
+.image_container image{
+  width: 8vh;
+  height: 8vh;
+}
+
+.personal_pic {
+  box-sizing: border-box;
+  padding: 0.5vh 0.5vh;
+  height: 10vh;
+  width: 10vh;
+}
+
+.personal_pic image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.personal_main {
+  margin-left: 2vh;
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main_info {
+  margin-top: 3.4vh;
+  height: 100%;
+}
+
+.true_basic {
+  margin-top: 1vh;
+  display: flex;
+  width: 20vw;
+  text-align: end;
+  color: white;
+  font-size: 15px;
+  /* line-height: 24px; */
+  height: 24px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.a_stu {
+  background-color: #bbe1fa;
+}
+
+.n_stu {
+  background-color: red;
+}
+
+.true_basic image {
+  width: 5vw;
+  height: 100%;
+}

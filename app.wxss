@@ -1,4 +1,3 @@
-
 .container {
   height: 100%;
   display: flex;
@@ -7,10 +6,25 @@
   justify-content: space-between;
   /* padding: 100rpx 0; */
   box-sizing: border-box;
-} 
-page{
-  background-color: rgb(246,246,251);
-  --font-size:12px;
-  --padding-size:15vh;
-  --common-width:87vw;
+}
+
+page {
+  background-color: rgb(246, 246, 251);
+  --font-size: 12px;
+  --padding-size: 15vh;
+  --common-width: 87vw;
+}
+
+button::after {
+  border: none;
+}
+
+button {
+  padding-left: 0;
+  padding-right: 0;
+  line-height: inherit;
+}
+
+button {
+  border-radius: 0;
 }

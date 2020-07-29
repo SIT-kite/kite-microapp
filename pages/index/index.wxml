@@ -1,14 +1,21 @@
 <!--index.wxml-->
 <view class="container">
+	<van-popup show="{{ show }}" closeable custom-class="pop_class" bind:close="onClose">
+		<view class="pop_container">
+			<text style="font-weight:bold;font-size:24px;">尚未登录，请前往登录</text>
+			<view class="pop_button" bindtap="go_login">登录</view>
+		</view>
+	</van-popup>
+	<van-popup show="{{ showTemp }}" custom-class="popT_class" bind:close="onClose">
+		<text>此功能暂未上线</text>
+		<text>敬请期待</text>
+	</van-popup>
 	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
-	<!-- <view class="background">
-		<view class="title">上应风筝</view>
-	</view> -->
 	<view class="main">
 		<swiper indicator-dots="true" class="swiper" circular>
 			<swiper-item>
 				<view class="box">
-					<image src="../../asset/pic/activity_logo.jpg" style="width:100%;height:100%;" bindtap="go_temp"></image>
+					<image src="../../asset/pic/temp_activity.png" style="width:100%;height:100%;" bindtap="go_temp"></image>
 				</view>
 			</swiper-item>
 			<swiper-item>
@@ -18,8 +25,7 @@
 			</swiper-item>
 		</swiper>
 		<view class="menuBlock">
-			<view wx:for="{{menu_list}}" wx:key="idx" data-id="{{item.id}}"
-			 data-index="{{index}}" class="menu_cell" bindtap="move">
+			<view wx:for="{{menu_list}}" wx:key="idx" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell" bindtap="move">
 				<image style="{{index===selected ? animation_data: '' }}" src="{{item.iconPath}}"></image>
 				<view class="menu_cell_text">{{item.text}}</view>
 			</view>

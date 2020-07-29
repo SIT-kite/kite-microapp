@@ -1,59 +1,85 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
 Page({
   data: {
+    show: false,
+    showTemp: false,
     selected: -1,
-    id:"",
+    id: "",
     animation_data: "",
     menu_list: [{
-        id:"notice",
-        text: "通知",
-        iconPath: "/asset/icon/icon_6h444ajjwem/notice.png"
+        id: "qrcode",
+        text: "入校码",
+        iconPath: "/asset/icon/main_icon/qrcode.png"
       },
       {
-        id:"activity",
+        id: "activity",
         text: "活动",
-        iconPath: "/asset/icon/icon_6h444ajjwem/tuandui.png"
+        iconPath: "/asset/icon/main_icon/tuandui.png"
       },
       {
-        id:"shopping",
+        id: "shopping",
         text: "闲置",
-        iconPath: "/asset/icon/icon_6h444ajjwem/dianpu.png"
+        iconPath: "/asset/icon/main_icon/dianpu.png"
       }, {
-        id:"lost",
+        id: "lost",
         text: "失物",
-        iconPath: "/asset/icon/icon_6h444ajjwem/sousuo.png"
+        iconPath: "/asset/icon/main_icon/sousuo.png"
       }, {
-        id:"education",
+        id: "education",
         text: "教务",
-        iconPath: "/asset/icon/icon_6h444ajjwem/kecheng.png"
+        iconPath: "/asset/icon/main_icon/kecheng.png"
       }, {
-        id:"share",
-        text: "分享",
-        iconPath: "/asset/icon/icon_6h444ajjwem/fenxiang.png"
+        id: "Student_system",
+        text: "新生",
+        iconPath: "/asset/icon/main_icon/user.png"
       }
     ]
   },
-
   move: function (e) {
     this.setData({
       animation_data: "animation:living .5s ease;",
-      selected : e.currentTarget.dataset.index,
-      id:e.currentTarget.dataset.id
+      selected: e.currentTarget.dataset.index,
+      id: e.currentTarget.dataset.id
     });
     this.router(this.data.id)
   },
-  router:function(id){
-    const currenturl = id+'/'+id;
+  router: function (id) {
+    const show = !app.globalData.isLogin;
+    const currenturl = id + '/' + id;
     console.log(currenturl);
-    wx.navigateTo({
-      url:`/pages/${currenturl}`,
-      success:function(){}, //接口调用成功的回调函数
-      fail:function(){}, //接口调用失败的回调函数
-      complete:function(){} //接口调用结束的回调函数（调用成功、失败都会执行）
-  })
+    if (!show) {
+      if (id === 'qrcode') {
+        wx.navigateTo({
+          url: `/pages/${currenturl}`,
+          success: function () {}, //接口调用成功的回调函数
+          fail: function () {}, //接口调用失败的回调函数
+          complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
+        })
+      }else{
+      this.setData({
+        showTemp: true
+      })}
+    } else {
+      this.setData({
+        show: true
+      })
+    }
+  },
+  go_login: function () {
+    this.setData({
+      show: false
+    })
+    wx.switchTab({
+      url: '/pages/person/person',
+    })
+  },
+  onClose() {
+    this.setData({
+      show: false,
+      showTemp: false
+    });
   },
   onShow: function (e) {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
@@ -61,13 +87,14 @@ Page({
         selected: 0
       })
     }
+
   },
-  go_temp:function(e){
+  go_temp: function (e) {
     wx.navigateTo({
-      url: '/pages/temp_activity/temp_activity',
-      success:function(){}, //接口调用成功的回调函数
-      fail:function(){}, //接口调用失败的回调函数
-      complete:function(){} //接口调用结束的回调函数（调用成功、失败都会执行）
+      url: '/pages/welcome/main',
+      success: function () {}, //接口调用成功的回调函数
+      fail: function () {}, //接口调用失败的回调函数
+      complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
     })
   }
 })

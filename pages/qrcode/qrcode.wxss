@@ -1,0 +1,66 @@
+/* pages/qrcode/qrcode.wxss */
+.main {
+  width: 80vw;
+  margin: var(--padding-size) 10vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+
+.info_block{
+  display: flex;
+  flex-direction: column;
+}
+
+.info_block text{
+  font-size: 18px;
+  margin-top: 0.5vh;
+}
+.qrcode_block{
+  box-sizing: border-box;
+  position: absolute;
+  top:40vh;
+  width: 60vw;
+  height: 60vw;
+  border: 2px solid green;
+  border-radius: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qrcode-wrong{
+  top:30vh;
+}
+
+.qrcode_block canvas{
+  width: 200px;
+  height: 200px;
+  z-index: 2;
+}
+.qrcode_block text{
+  z-index: 2;
+}
+.qrcode_block::before{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 70vw;
+  height: 40vw;
+  background-color: white;
+  top: 10vw;
+  left: -10vw;
+}
+
+.qrcode_block::after{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 40vw;
+  height: 64vw;
+  background-color: white;
+  top: -2vw;
+  left: 10vw;
+}

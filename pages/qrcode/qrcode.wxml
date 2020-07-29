@@ -1,0 +1,13 @@
+<view class="main">
+	<text style="line-height:40px;font-size:32px;color:#e3e3e3;font-weight:bold;margin-bottom:4vh;margin-top:-20px;">入校码</text>
+	<view wx:if="{{isStu&&getInfo}}" class="info_block">
+		<text>姓名：{{stuInfo.realName}}</text>
+		<text>学号：{{stuInfo.studentId}}</text>
+		<text>学院：{{stuInfo.college}}</text>
+	</view>
+	<view class="qrcode_block {{isStu&&getInfo ? '':'qrcode-wrong'}}">
+		<canvas wx:if="{{isStu&&getInfo}}" canvas-id="myQrcode"></canvas>
+		<text wx:elif="{{!isStu}}">尚未实名，请前往登录页面认证</text>
+		<text wx:elif="{{!getInfo}}">查无信息，可能是信息错误或尚未上报</text>
+	</view>
+</view>
