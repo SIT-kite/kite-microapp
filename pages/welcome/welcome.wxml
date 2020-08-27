@@ -1,0 +1,27 @@
+<!--pages/welcome/welcome.wxml-->
+<view class="main">
+    <!-- image -->
+    <view class="img-wrap">
+        <image src="../../asset/pic/welcome.png" mode="aspectFit" />
+    </view>
+    
+    <!-- black line -->
+    <view class="line-wrap">
+        <view class="black-line">
+        </view>
+    </view>
+
+    <!-- text -->
+    <view class="text-wrap">
+        <text class="text-1">上应大欢迎你!</text>
+        <text class="text-2">请在下方登录或注册</text>
+        <text class="text-3">查找寝室，留下信息</text>
+        <text class="text-4">开启愉快的大学生活第一站!</text>
+    </view>
+    
+    <!-- button -->
+    <view class="button-wrap">
+        <button bindtap="gotoStuInfoDetail">登录</button>
+    </view>
+
+</view>

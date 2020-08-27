@@ -10,7 +10,7 @@ Page({
     animation_data: "",
     menu_list: [{
         id: "qrcode",
-        text: "入校码",
+        text: "返校码",
         iconPath: "/asset/icon/main_icon/qrcode.png"
       },
       {
@@ -31,7 +31,7 @@ Page({
         text: "教务",
         iconPath: "/asset/icon/main_icon/kecheng.png"
       }, {
-        id: "Student_system",
+        id: "welcome",
         text: "新生",
         iconPath: "/asset/icon/main_icon/user.png"
       }
@@ -48,20 +48,14 @@ Page({
   router: function (id) {
     const show = !app.globalData.isLogin;
     const currenturl = id + '/' + id;
-    console.log(currenturl);
     if (!show) {
-      if (id === 'qrcode') {
         wx.navigateTo({
           url: `/pages/${currenturl}`,
           success: function () {}, //接口调用成功的回调函数
           fail: function () {}, //接口调用失败的回调函数
           complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
         })
-      }else{
-      this.setData({
-        showTemp: true
-      })}
-    } else {
+      }else {
       this.setData({
         show: true
       })

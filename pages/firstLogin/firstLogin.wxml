@@ -1,0 +1,25 @@
+<view class="main">
+
+    <!--微信用户信息昵称 头像 问候语（hey!）-->
+    <view  bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+    <text class="greetings">Hey!</text>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+
+    <view class="text_wrap">
+        <view class="text01">第一次登陆</view>
+        <view class="text02">先来查询下自己的信息吧</view>
+        <button class="button" style="width:400rpx;height:100rpx;">点击填写个人信息</button>
+    </view>
+
+    <!--半圆背景-->
+    <view class="background"></view>
+
+</view>
+
+
+
+
+
+

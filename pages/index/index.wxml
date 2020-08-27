@@ -6,10 +6,6 @@
 			<view class="pop_button" bindtap="go_login">登录</view>
 		</view>
 	</van-popup>
-	<van-popup show="{{ showTemp }}" custom-class="popT_class" bind:close="onClose">
-		<text>此功能暂未上线</text>
-		<text>敬请期待</text>
-	</van-popup>
 	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
 	<view class="main">
 		<swiper indicator-dots="true" class="swiper" circular>
@@ -25,7 +21,7 @@
 			</swiper-item>
 		</swiper>
 		<view class="menuBlock">
-			<view wx:for="{{menu_list}}" wx:key="idx" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell" bindtap="move">
+			<view wx:for="{{menu_list}}" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell" bindtap="move">
 				<image style="{{index===selected ? animation_data: '' }}" src="{{item.iconPath}}"></image>
 				<view class="menu_cell_text">{{item.text}}</view>
 			</view>

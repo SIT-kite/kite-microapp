@@ -10,7 +10,7 @@
   box-sizing: border-box;
   position: relative;
   margin: 1vh auto 5vh;
-  height: 13vh;
+  height:200rpx;
   width: 90%;
   background-color: white;
   border-radius: 1vh;
@@ -53,9 +53,9 @@
 
 .personal_pic {
   box-sizing: border-box;
-  padding: 0.5vh 0.5vh;
-  height: 10vh;
-  width: 10vh;
+  padding: 12.5rpx 12.5rpx;
+  height: 175rpx;
+  width: 175rpx;
 }
 
 .personal_pic image {
@@ -74,8 +74,11 @@
 }
 
 .main_info {
-  margin-top: 3.4vh;
-  height: 100%;
+  height: 70%;
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .true_basic {
@@ -84,9 +87,8 @@
   width: 20vw;
   text-align: end;
   color: white;
-  font-size: 15px;
-  /* line-height: 24px; */
-  height: 24px;
+  font-size: 30rpx;
+  height: 3.5vh;
   border-radius: 5px;
   justify-content: center;
   align-items: center;

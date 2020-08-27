@@ -40,7 +40,7 @@ Page({
     })
     const that = this;
     wx.request({
-      url: `${url}/checking/${app.globalData.uid}`,
+      url: `${url}/checking/student/${app.globalData.studentId}`,
       method: 'GET',
       header: {
         "content-type": "application/x-www-form-urlencoded",

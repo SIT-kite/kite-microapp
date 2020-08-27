@@ -1,0 +1,43 @@
+<view class="main">
+
+    <!--微信用户信息昵称 头像 问候语（hey!）-->
+    <view  bindtap="bindViewTap" class="userinfo">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+        <text class="greetings">Hey!</text>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+
+    <view class="stu_info">
+        <view class="image_wrap">
+            <image mode="aspectFill" src="/asset/pic/background2.png" />
+        </view>
+
+        <view class="info_wrap">
+            <text>姓名:{{name}}</text>
+            <text>学号:{{stuId}}</text>
+            <text>学院:{{college}}</text>
+            <text>专业:{{profession}}</text>
+            <text>寝室:{{bedroom}}</text>
+            <text>辅导员姓名:{{counselorName}}</text>
+            <text>辅导员电话:{{counselorPhone}}</text>
+        </view>
+    </view>
+
+    <view class="button_wrap_1">
+            <button style="width:38%">信息可见</button>
+    </view>
+
+    <view class="button_wrap_2">
+        <button style="width:38%">新的朋友</button>
+        <button style="width:38%">新的班级</button>
+    </view>
+
+    <!--半圆背景-->
+    <view class="background"></view>
+
+    <!--右侧修改符号-->
+    <navigator class="change_info">
+        <image mode="aspectFill" src="/asset/icon/modify.png"/>
+    </navigator>
+
+</view>

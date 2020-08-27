@@ -15,10 +15,10 @@ App({
       success(res) {
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
-            success(res) {
+            success(userinfo_res) {
               console.log(that)
-              that.globalData.nickName = res.userInfo.nickName
-              that.globalData.userAvater = res.userInfo.avatarUrl
+              that.globalData.nickName = userinfo_res.userInfo.nickName
+              that.globalData.userAvater = userinfo_res.userInfo.avatarUrl
               that.globalData.isLogin = true
               wx.login({
                 success(res) {
@@ -35,7 +35,6 @@ App({
                       },
                       success: function (res) {
                         if (res.data.code === 0) {
-                          console.log(res)
                           that.globalData.token = res.data.data.token
                           that.globalData.uid = res.data.data.data.uid
                           wx.request({
@@ -46,11 +45,48 @@ App({
                               "Authorization": `Bearer ${that.globalData.token}`
                             },
                             success: function (res) {
+                              console.log(res)
                               if (res.data.code === 0) {
+                                that.globalData.studentId = res.data.data.studentId
                                 that.globalData.isStudent = true
                               } else {
                                 that.globalData.isStudent = false
                               }
+                            }
+                          })
+                        }
+                        else{
+                          wx.request({
+                            url: `${that.globalData.commonUrl}/user`,
+                            method: "POST",
+                            header: {
+                              "content-type": "application/x-www-form-urlencoded"
+                            },
+                            data: userinfo_res.userInfo,
+                            success: function (res1) {
+                              that.globalData.uid = res1.data.data.uid
+                              that.globalData.token = res1.data.data.token
+                              console.log(res1)
+                              wx.login({
+                                success: function (res) {
+                                  wx.request({
+                                    url: `${that.globalData.commonUrl}/user/${res1.data.data.uid}/authentication`,
+                                    method: 'POST',
+                                    data: {
+                                      loginType: 0,
+                                      wxCode: res.code
+                                    },
+                                    header: {
+                                      "content-type": "application/x-www-form-urlencoded",
+                                      "Authorization": `Bearer ${res1.data.data.token}`
+                                    },
+                                    success:function(){
+                                      that.globalData.isStudent = false
+                                    }
+                                  })
+                                }
+                              })
+        
                             }
                           })
                         }

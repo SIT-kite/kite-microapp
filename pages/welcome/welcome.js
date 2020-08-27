@@ -1,4 +1,4 @@
-// pages/Student_system/Student_system.js
+// pages/welcome/welcome.js
 Page({
 
   /**
@@ -6,6 +6,12 @@ Page({
    */
   data: {
 
+  },
+
+  gotoStuInfoDetail:function (e) {
+      wx.navigateTo({
+        url: "/pages/stuInfoDetail/stuInfoDetail",
+      })
   },
 
   /**

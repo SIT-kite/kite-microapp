@@ -1,12 +1,14 @@
 {
   "pages": [
+    "pages/firstLogin/firstLogin",
+    "pages/stuInfoDetail/stuInfoDetail",
+    "pages/welcome/welcome",
     "pages/index/index",
     "pages/qrcode/qrcode",
     "pages/person/person",
-    "pages/welcome/main",
     "pages/shopping/shopping",
-    "pages/Student_system/Student_system",
-    "pages/signup/signup"
+    "pages/signup/signup",
+    "pages/getDormitory/getDormitory"
   ],
   "window": {
     "backgroundTextStyle": "light",

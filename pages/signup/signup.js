@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据1
    */
   data: {
+    testInfo:"",
     show: false,
     resInfo: null,
     upSuccess: false,
@@ -74,6 +75,7 @@ Page({
   },
   signup: function () {
     const that = this;
+    var test = "";
     for(let i in that.data.uploadInfo){
       if(that.data.uploadInfo[i]==="") delete(that.data.uploadInfo[i])
     }
@@ -84,7 +86,6 @@ Page({
       data: this.data.uploadInfo,
       key: 'uploadInfo',
     })
-    console.log(that.data.uploadInfo)
     wx.request({
       url: `${url}/user/${app.globalData.uid}/identity`,
       method: "POST",
@@ -109,15 +110,35 @@ Page({
           }, 500)
         } else {
           that.setData({
-            resInfo: res.data.msg
+            resInfo: res.data.msg,
+            upSuccess:false
           })
         }
         that.setData({
           show: true
         })
-        // }
-        // })
+        that.setData({
+          testInfo:test
+        })
+      },
+      fail:function(res){
+        that.setData({
+          upSuccess:false,
+          resInfo:"网络问题，请稍后再试",
+          testInfo:JSON.stringify(res)
+        })
+        that.setData({
+          show:true
+        })
+        setTimeout(() => {
+          that.setData({
+            show: false
+          })
+        }, 500)
       }
+    })
+    that.setData({
+      testInfo:test
     })
   },
   /**

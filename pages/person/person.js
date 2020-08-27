@@ -24,9 +24,9 @@ Page({
       wx.login({
         success(res) {
           if (res.code) {
-            // wx.showLoading({
-            //   title: '加载中',
-            // })
+            wx.showLoading({
+              title: '加载中',
+            })
             wx.request({
               url: `${url}/session`,
               method: "POST",
@@ -61,7 +61,7 @@ Page({
                         })
                         app.globalData.isStudent = false
                       }
-                      // wx.hideLoading();
+                      wx.hideLoading();
                     }
                   })
                 } else {
@@ -90,7 +90,7 @@ Page({
                             header: {
                               "content-type": "application/x-www-form-urlencoded",
                               "Authorization": `Bearer ${res1.data.data.token}`
-                            },
+                            }
                           })
                         }
                       })

@@ -1,0 +1,84 @@
+.main{
+  background-color:rgb(246, 246, 251);
+  z-index: 1;
+}
+
+.userinfo{
+  padding-top: 170rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.userinfo-avatar{
+  width: 230rpx;
+  height: 230rpx;
+  margin-top: 70rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.userinfo-nickname{
+  font-size: 38rpx;
+  font-weight: 530;
+  margin-bottom: 80rpx;
+  z-index: 3;
+}
+
+.greetings{
+  text-align: center;
+  font-size: 60rpx;
+  font-weight: 600;
+  margin-bottom: 60rpx;
+  z-index: 3;
+}
+
+.background{
+  position: absolute;
+  left: 0;
+  top: 480rpx;
+  border-radius: 160rpx;
+  background-color: white;
+  width: 100%;
+  height: 500rpx;
+  z-index: 2;
+}
+
+.text_wrap{
+  margin-top: 90rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+  background-color: white;
+}
+
+.text01{
+  background-color: white;
+  font-size: 65rpx;
+  font-weight: 600;
+  z-index: 3;
+}
+
+.text02{
+  margin-top: 70rpx;
+  background-color: white;
+  z-index: 3;
+  font-size: 32rpx;
+  font-weight: 400;
+}
+
+.button{
+  margin-top: 200rpx;
+  background-color:rgb(75,109,233);
+  color:white;
+  z-index: 3;
+  font-size: 30rpx;
+  font-weight: 400;
+  line-height: 100rpx;
+  border-radius: 24rpx;
+  margin-bottom: 240rpx;
+}

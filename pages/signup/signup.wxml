@@ -2,7 +2,7 @@
 	<van-popup show="{{ show }}"  custom-class="pop_class" bind:close="onClose">
 		<view class="pop_container">
 			<view class="icon_bg {{upSuccess?'right':'wrong'}}"><image src="{{upSuccess?'/asset/icon/right.png':'/asset/icon/wrong.png'}}"></image></view>
-			<text style="font-weight:bold;font-size:20px;">{{resInfo}}</text>
+			<text style="font-weight:bold;font-size:3vh;">{{resInfo}}</text>
 		</view>
 	</van-popup>
 	<view class="main">
@@ -16,5 +16,6 @@
 		<button disable="{{canupLoad}}"  class="v_button {{canupLoad ? '':'button_disable'}}" bindtap="signup">
 			<image src="/asset/icon/upload.png"></image>
 		</button>
+		<view>{{testInfo}}</view>
 	</view>
 </view>

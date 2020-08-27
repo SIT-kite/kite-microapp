@@ -89,8 +89,8 @@
 }
 
 .menu_cell image {
-  width: 32px;
-  height: 32px;
+  width: 4vh;
+  height: 4vh;
 }
 
 .menu_cell_text {
