@@ -14,14 +14,13 @@
     <!-- text -->
     <view class="text-wrap">
         <text class="text-1">上应大欢迎你!</text>
-        <text class="text-2">请在下方登录或注册</text>
-        <text class="text-3">查找寝室，留下信息</text>
-        <text class="text-4">开启愉快的大学生活第一站!</text>
+        <text class="text-2">请点击下方按钮完善你的信息</text>
+        <text class="text-3">即可查看室友，班级</text>
     </view>
     
     <!-- button -->
     <view class="button-wrap">
-        <button bindtap="gotoStuInfoDetail">登录</button>
+        <button bindtap="gotoStuInfoDetail">开启大学生活第一站</button>
     </view>
 
 </view>

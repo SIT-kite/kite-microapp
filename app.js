@@ -1,12 +1,14 @@
 //app.js
 App({
   globalData: {
+    visible:false,
     nickName: null,
     userAvater: null,
     isLogin: false,
     isStudent: false,
     commonUrl: "https://kite.sunnysab.cn/api/v1",
     uid: 0,
+    // 登录需要的授权码
     token: null
   },
   onShow: function () {
@@ -15,8 +17,10 @@ App({
       success(res) {
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
+            // 获取用户的昵称 
             success(userinfo_res) {
-              console.log(that)
+              console.log(123);
+              console.log(that);
               that.globalData.nickName = userinfo_res.userInfo.nickName
               that.globalData.userAvater = userinfo_res.userInfo.avatarUrl
               that.globalData.isLogin = true

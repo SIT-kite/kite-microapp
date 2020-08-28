@@ -10,7 +10,7 @@ Page({
 
   gotoStuInfoDetail:function (e) {
       wx.navigateTo({
-        url: "/pages/stuInfoDetail/stuInfoDetail",
+        url: "/pages/modifyInfo/modifyInfo",
       })
   },
 

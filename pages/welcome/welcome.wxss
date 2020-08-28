@@ -7,12 +7,12 @@
 }
 
 .img-wrap{
-    padding-top: 100rpx;
+    padding-top: 120rpx;
 }
 
 .img-wrap image{
     background-color: rgb(246,246,251);
-    height: 700rpx;
+    height: 750rpx;
     width: 550rpx;
 }
 
@@ -38,14 +38,14 @@
 }
 
 .text-1{
-    margin-top: 85rpx;
+    margin-top: 105rpx;
     font-size: 50rpx;
     font-weight: 500;
-    margin-bottom: 75rpx;
+    margin-bottom: 95rpx;
 }
 
 .button-wrap{
-    margin-top: 90rpx;
+    margin-top: 130rpx;
     width: 100%;
 }
 
@@ -54,6 +54,6 @@
     color: white;
     line-height: 75rpx;
     width: 78%;
-    font-size: 40rpx;
+    font-size: 36rpx;
     height: 80rpx;
 }

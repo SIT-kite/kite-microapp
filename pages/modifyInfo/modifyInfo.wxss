@@ -4,7 +4,7 @@
 }
 
 .userinfo{
-  padding-top: 170rpx;
+  padding-top: 150rpx;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,13 +47,21 @@
   z-index: 2;
 }
 
-.text_wrap{
+.input_wrap{
   margin-top: 90rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 3;
   background-color: white;
+}
+
+.input_wrap input{
+  z-index: 3;
+  width: 77%;
+  height: 60rpx;
+  background-color: rgb(246, 246, 251);
+  margin-bottom: 30rpx;
 }
 
 .text01{
