@@ -7,11 +7,23 @@
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
 
-    <view class="text_wrap">
-        <view class="text01">第一次登陆</view>
-        <view class="text02">先来查询下自己的信息吧</view>
+    <view class="input_wrap">
+        <input placeholder=" 姓名" type="text"></input>
+        <input placeholder=" 身份证后六位" type="number"></input>
+        <input placeholder=" 手机号(选填)" type="number"></input>
+        <input placeholder=" QQ(选填)" type="number"></input>
+        <input placeholder=" 微信(选填)" type="number"></input>
+        <checkbox-group bindchange="checkBoxChange">
+            <checkbox checked value="public">公开我的基本信息</checkbox>
+        </checkbox-group>
         <button class="button" style="width:400rpx;height:100rpx;">点击填写个人信息</button>
     </view>
+
+
+
+
+
+
 
     <!--半圆背景-->
     <view class="background"></view>

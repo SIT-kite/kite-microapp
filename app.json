@@ -1,9 +1,10 @@
 {
   "pages": [
-    "pages/firstLogin/firstLogin",
-    "pages/stuInfoDetail/stuInfoDetail",
+    "pages/modifyInfo/modifyInfo",
     "pages/welcome/welcome",
+    
     "pages/index/index",
+    "pages/stuInfoDetail/stuInfoDetail",
     "pages/qrcode/qrcode",
     "pages/person/person",
     "pages/shopping/shopping",

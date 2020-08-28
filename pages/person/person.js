@@ -19,11 +19,13 @@ Page({
   },
   login: function (e) {
     const that = this;
-    console.log(that)
+    console.log(that);
+    console.log(e.detail.userInfo);
     if (e.detail.userInfo) {
       wx.login({
         success(res) {
           if (res.code) {
+            console.log(res.code);
             wx.showLoading({
               title: '加载中',
             })

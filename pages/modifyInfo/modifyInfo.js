@@ -10,6 +10,13 @@ Page({
       nickName:"孙笑川"
     }
   },
+
+  checkBoxChange (e){
+    console.log(e.detail.value);
+    
+
+  },
+
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
