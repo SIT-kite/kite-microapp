@@ -1,2 +1,9 @@
 <!--pages/newFriend/newFriend.wxml-->
-<text>pages/newFriend/newFriend.wxml</text>
+<view class="main">
+
+
+  <text></text>
+
+
+
+</view>

@@ -1,18 +1,40 @@
 // pages/newFriend/newFriend.js
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
+    roommates:undefined
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if (this.data.roommates == undefined)
+    {
+      var that = this;
+      wx.request({
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}/roommate`,
+        method:"GET",
+        data:{
+          "secret": `${app.globalData.userInput.id}`
+        },
+        header:{
+          "content-type": "application/x-www-form-urlencoded",
+          "Authorization": `Bearer ${that.data.token}`,
+        },
+        success(res){
+          console.log(res.data);
+          that.setData({
+            roommates:res.data.data
+          })
+        },
+      })
+    }
   },
 
   /**

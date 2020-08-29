@@ -11,6 +11,9 @@ App({
     // 登录需要的授权码
     token: null,
     userInput:{
+    },
+    userDetail:{
+
     }
   },
   onShow: function () {
