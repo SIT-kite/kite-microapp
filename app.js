@@ -9,7 +9,9 @@ App({
     commonUrl: "https://kite.sunnysab.cn/api/v1",
     uid: 0,
     // 登录需要的授权码
-    token: null
+    token: null,
+    userInput:{
+    }
   },
   onShow: function () {
     const that = this;
@@ -19,7 +21,6 @@ App({
           wx.getUserInfo({
             // 获取用户的昵称 
             success(userinfo_res) {
-              console.log(123);
               console.log(that);
               that.globalData.nickName = userinfo_res.userInfo.nickName
               that.globalData.userAvater = userinfo_res.userInfo.avatarUrl

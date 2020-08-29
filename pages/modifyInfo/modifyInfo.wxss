@@ -17,6 +17,7 @@
   height: 230rpx;
   margin-top: 70rpx;
   margin: 20rpx;
+  margin-bottom: 40rpx;
   border-radius: 50%;
   z-index: 3;
 }
@@ -24,7 +25,7 @@
 .userinfo-nickname{
   font-size: 38rpx;
   font-weight: 530;
-  margin-bottom: 80rpx;
+  margin-bottom: 0rpx;
   z-index: 3;
 }
 
@@ -32,8 +33,13 @@
   text-align: center;
   font-size: 60rpx;
   font-weight: 600;
-  margin-bottom: 60rpx;
+  margin-bottom: 50rpx;
   z-index: 3;
+}
+
+.prompt{
+  z-index: 3;
+  margin-top: 50rpx;
 }
 
 .background{
@@ -48,7 +54,7 @@
 }
 
 .input_wrap{
-  margin-top: 90rpx;
+  margin-top: 70rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,12 +62,25 @@
   background-color: white;
 }
 
+.input_wrap checkbox-group{
+  padding-top: 30rpx;
+  padding-bottom: 20rpx;
+}
+/* 
+.input_wrap checkbox-group image{
+  z-index: 3;
+  margin-top: 5rpx;
+  width:40rpx;
+  height:40rpx
+} */
+
+
 .input_wrap input{
   z-index: 3;
   width: 77%;
   height: 60rpx;
   background-color: rgb(246, 246, 251);
-  margin-bottom: 30rpx;
+  margin-bottom: 35rpx;
 }
 
 .text01{
@@ -80,7 +99,7 @@
 }
 
 .button{
-  margin-top: 200rpx;
+  margin-top: 70rpx;
   background-color:rgb(75,109,233);
   color:white;
   z-index: 3;
@@ -88,5 +107,5 @@
   font-weight: 400;
   line-height: 100rpx;
   border-radius: 24rpx;
-  margin-bottom: 240rpx;
+  margin-bottom: 80rpx;
 }

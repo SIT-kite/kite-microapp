@@ -2,26 +2,24 @@
 
     <!--微信用户信息昵称 头像 问候语（hey!）-->
     <view  bindtap="bindViewTap" class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
-    <text class="greetings">Hey!</text>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        <image class="userinfo-avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
+        <text class="greetings">Hey!</text>
+        <text class="userinfo-nickname">{{nickName}}</text>
+        <text class="prompt">请完善一下信息吧:</text>
     </view>
 
     <view class="input_wrap">
-        <input placeholder=" 姓名" type="text"></input>
-        <input placeholder=" 身份证后六位" type="number"></input>
-        <input placeholder=" 手机号(选填)" type="number"></input>
-        <input placeholder=" QQ(选填)" type="number"></input>
-        <input placeholder=" 微信(选填)" type="number"></input>
+        <input bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
+        <input bindinput= "getId" placeholder="  身份证后六位 *" type="number"></input>
+        <input bindinput= "getPhoneNumber" placeholder="  手机号" type="number"></input>
+        <input bindinput= "getQQ" placeholder="  QQ" type="number"></input>
+        <input bindinput= "getWeChat" placeholder="  微信" type="text"></input>
         <checkbox-group bindchange="checkBoxChange">
-            <checkbox checked value="public">公开我的基本信息</checkbox>
+            <checkbox checked value="public">同城可见</checkbox>
+            <!-- <image src="/asset/pic/问号.png" mode="aspectFill"></image> -->
         </checkbox-group>
-        <button class="button" style="width:400rpx;height:100rpx;">点击填写个人信息</button>
+        <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">开启大学生活第一站</button>
     </view>
-
-
-
-
 
 
 
