@@ -94,9 +94,10 @@ Page({
                               "Authorization": `Bearer ${res1.data.data.token}`
                             }
                           })
+                          // 阻塞调试
+                          // wx.hideLoading();
                         }
                       })
-
                     }
                   })
                 }
@@ -108,11 +109,11 @@ Page({
         }
       })
       app.globalData.nickName = e.detail.userInfo.nickName
-      app.globalData.userAvater = e.detail.userInfo.avatarUrl
+      app.globalData.userAvatar = e.detail.userInfo.avatarUrl
       app.globalData.isLogin = true
       this.setData({
         nickName: app.globalData.nickName,
-        avater: app.globalData.userAvater,
+        avater: app.globalData.userAvatar,
         isLogin: app.globalData.isLogin,
       });
 
@@ -125,7 +126,7 @@ Page({
     console.log("page onload")
     this.setData({
       nickName: app.globalData.nickName,
-      avater: app.globalData.userAvater,
+      avater: app.globalData.userAvatar,
       isLogin: app.globalData.isLogin,
       isStu: app.globalData.isStudent
     });
@@ -138,7 +139,7 @@ Page({
     console.log("page onready")
     this.setData({
       nickName: app.globalData.nickName,
-      avater: app.globalData.userAvater,
+      avater: app.globalData.userAvatar,
       isLogin: app.globalData.isLogin,
       isStu: app.globalData.isStudent
     });
@@ -155,7 +156,7 @@ Page({
     };
     this.setData({
       nickName: app.globalData.nickName,
-      avater: app.globalData.userAvater,
+      avater: app.globalData.userAvatar,
       isLogin: app.globalData.isLogin,
       isStu: app.globalData.isStudent
     });
