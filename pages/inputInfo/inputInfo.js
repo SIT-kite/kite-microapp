@@ -95,9 +95,9 @@ Page({
     //     userInfo:userInfo
     //   })
     // })
-    // console.log(app.globalData.userAvater);
+    // console.log(app.globalData.userAvatar);
     this.setData({
-      avatarUrl:app.globalData.userAvater,
+      avatarUrl:app.globalData.userAvatar,
       nickName:app.globalData.nickName
     })
     // console.log(that.data.userInfo.nickName);

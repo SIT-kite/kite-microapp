@@ -55,7 +55,7 @@ Page({
     {
       // 获取头像昵称
       this.setData({
-        avatarUrl:app.globalData.userAvater,
+        avatarUrl:app.globalData.userAvatar,
         nickName:app.globalData.nickName
       })
       // console.log(app.globalData.commonUrl+"/freshman/"+app.globalData.userInput.name_examNumber);
