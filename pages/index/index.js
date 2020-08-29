@@ -84,9 +84,8 @@ Page({
 
   },
   go_temp: function (e) {
-    console.log('跳转迎新页面')
     wx.navigateTo({
-      url: '/pages/welcome/welcome',
+      url: '/pages/welcome/main',
       success: function () {}, //接口调用成功的回调函数
       fail: function () {}, //接口调用失败的回调函数
       complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）

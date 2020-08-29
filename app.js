@@ -3,7 +3,7 @@ App({
   globalData: {
     visible:false,
     nickName: null,
-    userAvatar: null,
+    userAvater: null,
     isLogin: false,
     isStudent: false,
     commonUrl: "https://kite.sunnysab.cn/api/v1",
@@ -26,7 +26,7 @@ App({
             success(userinfo_res) {
               console.log(that);
               that.globalData.nickName = userinfo_res.userInfo.nickName
-              that.globalData.userAvatar = userinfo_res.userInfo.avatarUrl
+              that.globalData.userAvater = userinfo_res.userInfo.avatarUrl
               that.globalData.isLogin = true
               wx.login({
                 success(res) {
