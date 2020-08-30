@@ -4,15 +4,21 @@
 var app = getApp()
 Page({
   data: {
+    promptText:"",
+    token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
+    buttonText:"",
+    isHidden:false,
     motto: 'Hey!',
     avatarUrl:"",
     nickName:"",
     userInput:{
       name_examNumber:"",
       id:"",
-      phoneNumber:"",
-      QQ:"",
-      WeChat:""
+      contact:{
+        phoneNumber:"",
+        qq:"",
+        wechat:""
+      }
     }
   },
 
@@ -44,17 +50,62 @@ Page({
   },
 
   gotoStuInfoDetail(e){
-    if (this.data.userInput.id.length != 6){
-      wx.showModal({
-        title:"哎呀，出错误了>.<",
-        content:"需要输入身份证后六位哦",
-        showCancel:false,
-        success(res){}
-      })
+    var that = this;
+    console.log(123);
+    // console.log(JSON.parse(that.data.userInput.contact));
+    console.log(JSON.stringify(that.data.userInput.contact));
+    // 没有隐藏输入框（第一次输入）
+    if (!this.data.isHidden){
+      if (this.data.userInput.id.length != 6){
+        wx.showModal({
+          title:"哎呀，出错误了>.<",
+          content:"需要输入身份证后六位哦",
+          showCancel:false,
+          success(res){}
+        })
+      }
+      else{
+        console.log(123);
+        app.globalData.userInput = this.data.userInput;
+        wx.request({
+          url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}`,
+          method:"PUT",
+          data:{
+            "secret": `${app.globalData.userInput.id}`,
+            "contact":JSON.stringify(that.data.userInput.contact)
+          },
+          header:{
+            "content-type": "application/x-www-form-urlencoded",
+            "Authorization": `Bearer ${that.data.token}`,
+          },
+          success(res){
+            console.log(res.data);
+          }
+        })
+        wx.navigateTo({
+          url: '/pages/stuInfoDetail/stuInfoDetail',
+        })
+      }
     }
+    //  修改
     else{
-      app.globalData.userInput = this.data.userInput;
-      wx.navigateTo({
+      wx.request({
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}`,
+        method:"PUT",
+        data:{
+          "secret": `${app.globalData.userInput.id}`,
+          "contact":JSON.stringify(that.data.userInput.contact)
+        },
+        header:{
+          "content-type": "application/x-www-form-urlencoded",
+          "Authorization": `Bearer ${that.data.token}`,
+        },
+        success(res){
+          console.log(res.data);
+        }
+      })
+      wx.navigateBack({
+        delta: 1,
         url: '/pages/stuInfoDetail/stuInfoDetail',
       })
     }
@@ -69,13 +120,13 @@ Page({
     this.data.userInput.id = e.detail.value;
   },
   getPhoneNumber(e){
-    this.data.userInput.phoneNumber = e.detail.value;
+    this.data.userInput.contact.phoneNumber = e.detail.value;
   },
-  getQQ(e){
-    this.data.userInput.QQ = e.detail.value;
+  getqq(e){
+    this.data.userInput.contact.qq = e.detail.value;
   },
-  getWeChat(e){
-    this.data.userInput.WeChat = e.detail.value;
+  getwechat(e){
+    this.data.userInput.contact.wechat = e.detail.value;
   },
 
 
@@ -85,7 +136,8 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function (option) {
+    console.log(option.isHidden);
     console.log('onLoad')
     var that = this
     //调用应用实例的方法获取全局数据
@@ -97,6 +149,9 @@ Page({
     // })
     // console.log(app.globalData.userAvater);
     this.setData({
+      promptText:option.isHidden?"请在下方输入要修改的信息:":"请完善一下信息吧:",
+      buttonText:option.isHidden?"确定":"开启大学生活第一站",
+      isHidden:option.isHidden,
       avatarUrl:app.globalData.userAvater,
       nickName:app.globalData.nickName
     })

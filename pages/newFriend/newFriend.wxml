@@ -1,9 +1,51 @@
 <!--pages/newFriend/newFriend.wxml-->
 <view class="main">
+  <scroll-view class="scbg" scroll-y="{{true}}">
 
+    <!-- 卡片 -->
+    <block wx:for="{{roommates}}" wx:for-index="id">
+    
+      <view class="card">    
+        <view class="info">
 
-  <text></text>
+          <view class="image-wrap">
+            <image src="{{item.avatar}}"></image>
+          </view>
+          
+            <view class="detail">
+              <view class="detail-1">
+                <text class="name">{{item.name}}</text>
+                <view class="pos-wrap">
+                  <image src="/asset/pic/位置.png"></image>
+                  <text class="position">{{item.province}}</text>
+                </view>
+              </view>
+              <view class="detail-2">
+                <text >{{item.major}}</text>
+              </view>
+              <view class="detail-3">
+                <text >{{item.college}}</text>
+              </view>
+            </view>
+            
+        </view>
 
+        <!-- 联系方式 -->
+        <view class="contact">
+          <view class="qq-wrap">
+            <view class="qq">
+              <image src="/asset/pic/qq.png"></image>
+              <text>{{item.contact.qq}}</text>
+            </view>
+            <text class="bed">{{item.bed}}</text>
+          </view>
+          <view class="wx">
+            <image src="/asset/pic/wx.png"></image>
+            <text >{{item.contact.wechat}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
 
-
+  </scroll-view>
 </view>

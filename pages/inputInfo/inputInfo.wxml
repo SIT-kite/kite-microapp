@@ -5,18 +5,20 @@
         <image class="userinfo-avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
         <text class="greetings">Hey!</text>
         <text class="userinfo-nickname">{{nickName}}</text>
-        <text class="prompt">请在下方输入要修改的信息:</text>
+        <text class="prompt">{{promptText}}</text>
     </view>
 
     <view class="input_wrap">
+        <input hidden="{{isHidden}}" bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
+        <input hidden="{{isHidden}}" bindinput= "getId" placeholder="  身份证后六位 *" type="number"></input>
         <input bindinput= "getPhoneNumber" placeholder="  手机号" type="number"></input>
-        <input bindinput= "getQQ" placeholder="  QQ" type="number"></input>
-        <input bindinput= "getWeChat" placeholder="  微信" type="text"></input>
+        <input bindinput= "getqq" placeholder="  QQ" type="number"></input>
+        <input bindinput= "getwechat" placeholder="  微信" type="text"></input>
         <checkbox-group bindchange="checkBoxChange">
             <checkbox checked value="public">同城可见</checkbox>
             <!-- <image src="/asset/pic/问号.png" mode="aspectFill"></image> -->
         </checkbox-group>
-        <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">确定</button>
+        <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">{{buttonText}}</button>
     </view>
 
 

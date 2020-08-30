@@ -7,13 +7,61 @@ Page({
    */
   data: {
     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
-    roommates:undefined
+    // roommates:undefined,
+    roommates: [
+      {
+        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        bed: "630-02",
+        building: "18号楼",
+        college: "计算机科学和信息工程学院",
+        contact: {
+          "qq":"2917021186",
+          "wechat":"wxid_syhw2malo8xb22"
+        },
+        gender: "M",
+        lastSeen: null,
+        major: "软件工程",
+        name: "陆浩頔",
+        province: "黑龙江",
+        room: 630
+      },
+      {
+        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        bed: "630-04",
+        building: "18号楼",
+        college: "计算机科学和信息工程学院",
+        contact: {
+          "qq":"2917021186",
+          "wechat":"ssalo8xb22"
+        },
+        gender: "M",
+        lastSeen: null,
+        major: "电气工程及其自动化(轨道供电牵引方向)",
+        name: "邵毅康",
+        province: "上海",
+        room: 630
+      },
+      {
+        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        bed: "630-03",
+        building: "18号楼",
+        college: "人文学院",
+        contact: {},
+        gender: "M",
+        lastSeen: null,
+        major: "公共管理类",
+        name: "赵星然",
+        province: "吉林",
+        room: 630
+      }
+    ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(123);
     if (this.data.roommates == undefined)
     {
       var that = this;

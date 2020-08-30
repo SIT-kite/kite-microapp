@@ -37,7 +37,7 @@
 
     <!--右侧修改符号-->
     <navigator class="change_info">
-        <image mode="aspectFill" src="/asset/icon/modify.png"/>
+        <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
     </navigator>
 
 </view>

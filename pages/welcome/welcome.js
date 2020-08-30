@@ -10,7 +10,7 @@ Page({
 
   gotoStuInfoDetail:function (e) {
       wx.navigateTo({
-        url: "/pages/inputInfo/inputInfo",
+        url: "/pages/inputInfo/inputInfo?isHidden=false",
       })
   },
 

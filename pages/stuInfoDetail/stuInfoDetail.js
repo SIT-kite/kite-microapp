@@ -23,6 +23,14 @@ Page({
     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM"
   },
 
+  gotoModify(e){
+
+    wx.navigateTo({
+      url: '/pages/inputInfo/inputInfo?isHidden=true',
+    })
+
+  },
+
   gotoNewFriend(e){
     wx.navigateTo({
       url: '/pages/newFriend/newFriend',

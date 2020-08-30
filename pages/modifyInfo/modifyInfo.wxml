@@ -9,8 +9,6 @@
     </view>
 
     <view class="input_wrap">
-        <input bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
-        <input bindinput= "getId" placeholder="  身份证后六位 *" type="number"></input>
         <input bindinput= "getPhoneNumber" placeholder="  手机号" type="number"></input>
         <input bindinput= "getQQ" placeholder="  QQ" type="number"></input>
         <input bindinput= "getWeChat" placeholder="  微信" type="text"></input>
@@ -18,7 +16,7 @@
             <checkbox checked value="public">同城可见</checkbox>
             <!-- <image src="/asset/pic/问号.png" mode="aspectFill"></image> -->
         </checkbox-group>
-        <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">开启大学生活第一站</button>
+        <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">确定</button>
     </view>
 
 
