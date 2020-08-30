@@ -3,13 +3,18 @@ App({
   globalData: {
     visible:false,
     nickName: null,
-    userAvater: null,
+    userAvatar: null,
     isLogin: false,
     isStudent: false,
     commonUrl: "https://kite.sunnysab.cn/api/v1",
     uid: 0,
     // 登录需要的授权码
-    token: null
+    token: null,
+    userInput:{
+    },
+    userDetail:{
+
+    }
   },
   onShow: function () {
     const that = this;
@@ -19,10 +24,9 @@ App({
           wx.getUserInfo({
             // 获取用户的昵称 
             success(userinfo_res) {
-              console.log(123);
               console.log(that);
               that.globalData.nickName = userinfo_res.userInfo.nickName
-              that.globalData.userAvater = userinfo_res.userInfo.avatarUrl
+              that.globalData.userAvatar = userinfo_res.userInfo.avatarUrl
               that.globalData.isLogin = true
               wx.login({
                 success(res) {

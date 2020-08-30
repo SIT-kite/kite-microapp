@@ -32,7 +32,7 @@ Page({
     }
     // 勾选
     else{
-      wx.showModal({
+      wx.showModal({ 
         title:"勾选",
         content:"我们将给您推送可能认识的人，包括将您推送给他人（同城，同乡..）",
         showCancel:false,
