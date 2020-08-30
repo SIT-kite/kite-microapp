@@ -149,14 +149,10 @@ Page({
     // })
     // console.log(app.globalData.userAvatar);
     this.setData({
-<<<<<<< HEAD
       promptText:option.isHidden?"请在下方输入要修改的信息:":"请完善一下信息吧:",
       buttonText:option.isHidden?"确定":"开启大学生活第一站",
       isHidden:option.isHidden,
-      avatarUrl:app.globalData.userAvater,
-=======
       avatarUrl:app.globalData.userAvatar,
->>>>>>> 8948ad721cc9bacdc11501d4beece08680909e37
       nickName:app.globalData.nickName
     })
     // console.log(that.data.userInfo.nickName);
