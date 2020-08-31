@@ -98,7 +98,8 @@ Page({
                       })
 
                     }
-                  })
+                  });
+                  wx.hideLoading();
                 }
               }
             })

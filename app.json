@@ -1,16 +1,26 @@
 {
   "pages": [
+<<<<<<< HEAD
     "pages/newFriend/newFriend",
     "pages/index/index",
     "pages/stuInfoDetail/stuInfoDetail",
     "pages/inputInfo/inputInfo",
     "pages/modifyInfo/modifyInfo",
+=======
+    "pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis",
+    "pages/index/index",
+    "pages/inputInfo/inputInfo",
+    "pages/stuInfoDetail/stuInfoDetail",
+    "pages/modifyInfo/modifyInfo",
+    "pages/newFriend/newFriend",
+>>>>>>> refs/remotes/origin/master
     "pages/newClass/newClass",
     "pages/qrcode/qrcode",
     "pages/person/person",
     "pages/shopping/shopping",
     "pages/signup/signup",
     "pages/getDormitory/getDormitory"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
