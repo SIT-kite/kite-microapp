@@ -1,5 +1,6 @@
 /* pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.wxss */
 .background{
+    overflow: hidden;
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -23,14 +24,14 @@
     top: 20vh;
     left: 11vw;
 }
-#share-button{
+#qrcode{
     position: absolute;
-    bottom: 1vh;
-    right: 2vw;
+    bottom: 3vh;
+    right: 6vw;
 }
 #text-area{
     position: absolute;
-    bottom: 2vh;
+    bottom: 5vh;
     left: 10vw;
     height: 43vh;
     width: 70vw;
@@ -41,4 +42,5 @@
 }
 .keyword{
     color: #e9444a;
+    font-weight: bold;
 }
