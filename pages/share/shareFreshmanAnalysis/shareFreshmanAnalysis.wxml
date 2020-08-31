@@ -1,0 +1,24 @@
+<!--pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.wxml-->
+
+<view class="background">
+<!-- 图像宽高比 4:5 -->
+<image id="wavebear" src="../../../asset/pic/share/wavebear.png" style="width: 16vw;height:20vw" />
+<!-- 图像宽高比 1:1 -->
+<image id="whitecircle" src="../../../asset/pic/share/whitecircle.png" style="width:78vw;height:78vw" />
+<!-- 图像宽高比 1:0.956 -->
+<image id="desktop" src="../../../asset/pic/share/analysis-desktop.png"  style="width:56vw;height:53.5vw"/>
+<!-- 图像宽高比 1:1 -->
+<image id="share-button" src="../../../asset/pic/share/analysis-button.png"  style="width:20vw;height:20vw"/>
+<view id="text-area">
+    <text >欢迎来到上海应用技术大学!\n\n</text>
+    <text>有<text class="keyword"> 200 </text>人和你一起\n</text>
+    <text>来到<text class="keyword"> 计算机学院 </text>\n</text>
+    <text>你的专业共有<text class="keyword"> 100 </text>人\n\n</text>
+    <text><text class="keyword"> 26 </text>人和你来自同一城市\n</text>
+    <text>其中<text class="keyword"> 2 </text>人是你的高中校友\n</text>
+    <text>有时间可以认识一下哦\n\n</text>
+    <text>哦 对了\n</text>
+    <text>有<text class="keyword"> 2 </text>个人和你同名\n</text>
+
+</view>
+</view>
