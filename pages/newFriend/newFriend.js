@@ -32,7 +32,7 @@ Page({
         college: "计算机科学和信息工程学院",
         contact: {
           "qq":"2917021186",
-          "wechat":"ssalo8xb22"
+          "wechat":""
         },
         gender: "M",
         lastSeen: null,
@@ -46,7 +46,7 @@ Page({
         bed: "630-03",
         building: "18号楼",
         college: "人文学院",
-        contact: {},
+        contact: null,
         gender: "M",
         lastSeen: null,
         major: "公共管理类",
@@ -83,6 +83,29 @@ Page({
         },
       })
     }
+
+    var hiddenList = [];
+    for(var i =0;i<this.data.roommates.length;i++){
+      this.data.roommates[i].isHidden = {
+        "qq":null,
+        "wechat":null
+      }
+      if (this.data.roommates[i].contact == null){
+        this.data.roommates[i].isHidden.qq = true;
+        this.data.roommates[i].isHidden.wechat = true;
+      }
+      else{
+        console.log(456);
+        this.data.roommates[i].isHidden.qq = this.data.roommates[i].contact.qq == ""?true:false;
+        this.data.roommates[i].isHidden.wechat = this.data.roommates[i].contact.wechat == ""?true:false;
+      }
+    }
+    wx.setData
+    
+    console.log(this.data.roommates);
+    this.setData({
+      roommates:this.data.roommates
+    })
   },
 
   /**

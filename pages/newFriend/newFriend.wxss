@@ -3,7 +3,7 @@
 .main{
     width: 100%;
     height: 100%;
-    margin-top: 100rpx;
+    margin-top: 110rpx;
     margin-bottom: 50rpx;
 }   
 
@@ -19,25 +19,44 @@
 
 .block{ 
     width: 100%;
-    
 }
 
 .card{
-    background-color: white;
+    background-color:rgb(246, 246, 251);
     /* border:solid 8rpx black; */
     /* border-radius: 10rpx; */
-    width: 80%;
-    margin-left: 65rpx;
+    width: 100%;
+    /* margin-left: 65rpx;
     margin-top: 25rpx;
     margin-bottom: 10rpx;
-    padding: 10rpx;
+    padding: 10rpx; */
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* box-shadow: 1rpx 2rpx 3rpx 4rpx red; */
+}
 
+.bed-wrap-1{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-top: 30rpx;
+    background-color: rgb(246, 246, 251);
+    width: 80%;
+    margin-bottom: 6rpx;
+}
+
+.bed-wrap-1 text{
+    padding-right: 10rpx;
+}
+
+.bed-wrap-1{
+    background-color: white;
 }
 
 .info{
+    background-color: white;
+    width: 80%;
     display: flex;
     flex-direction: row;
 }
@@ -47,7 +66,8 @@
     width: 180rpx;
     height: 180rpx;
     /* border: solid 6rpx red; */
-    margin-top: 8rpx;
+    margin-top: 12rpx;
+    margin-left: 20rpx;
 }
 
 .detail{
@@ -91,7 +111,7 @@
 }
 
 .detail-3{
-    margin: 5rpx 0 30rpx 15rpx;
+    margin: 5rpx 0 20rpx 15rpx;
 }
 
 .detail-3 text{
@@ -99,11 +119,12 @@
 }
 
 .contact{
-    margin-top: 10rpx;
+    background-color: white;
+    width: 80%;
+    padding-top: 10rpx;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
 }
 
 .qq{
@@ -145,8 +166,4 @@
     padding: 0rpx 0 0rpx 20rpx;
     width: 42rpx;
     height: 42rpx;
-}
-
-.bed{
-    font-weight: 400;
 }
