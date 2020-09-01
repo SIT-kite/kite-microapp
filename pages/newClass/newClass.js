@@ -7,21 +7,22 @@ Page({
    */
   data: {
     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
+    // classmates:null
     classmates:[
       {
-        avatar: "../../asset/pic/avatar02.jpg",
+        avatar: "../../asset/pic/trump.png",
         bed: "629-04",
         building: "18号楼",
         college: "人文学院",
         contact: {
-          "qq":"2917021186",
-          "wechat":"wxid_syhw2malo8xb22"
+          "qq":"5332254186",
+          "wechat":"wxid_syhw2malo8xb"
         },
         gender: "M",
-        lastSeen: "2020-08-30T16:18:57",
+        lastSeen: "2020-08-29T16:18:57",
         major: "公共管理类",
-        name: "穆耶赛尔·托合提库尔班",
-        province: "上海",
+        name: "特朗普",
+        province: "米国",
         room: 629
       },
       {
@@ -30,14 +31,14 @@ Page({
         building: "13号楼",
         college: "人文学院",
         contact: {
-          "qq":"2917021186",
-          "wechat":"123151351"
+          "qq":"2562222516",
+          "wechat":"xxbb123151351"
         },
-        gender: "F",
-        lastSeen: "2020-08-30T16:18:57",
+        gender: "M",
+        lastSeen: "2020-08-31T16:18:57",
         major: "公共管理类",
         name: "旭旭宝宝",
-        province: "广西",
+        province: "山东",
         room: 1601 
       },
       {
@@ -49,7 +50,7 @@ Page({
           "qq":"2917021186",
           "wechat":""
         },
-        gender: "F",
+        gender: "M",
         lastSeen: "2020-08-30T16:18:57",
         major: "公共管理类",
         name: "孙笑川",
@@ -57,7 +58,7 @@ Page({
         room: 1601
       },
       {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        avatar: "../../asset/pic/qz.png",
         bed: "1601-04",
         building: "13号楼",
         college: "人文学院",
@@ -65,15 +66,15 @@ Page({
           "qq":"2917021186",
           "wechat":""
         },
-        gender: "F",
-        lastSeen: "2020-08-30T16:18:57",
+        gender: "M",
+        lastSeen: "2020-09-01T16:13:02",
         major: "公共管理类",
-        name: "俞桑瑜",
+        name: "茄子",
         province: "上海",
         room: 1601
       },
       {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        avatar: "../../asset/pic/ysg.png",
         bed: "630-02",
         building: "18号楼",
         college: "人文学院",
@@ -82,9 +83,9 @@ Page({
           "wechat":""
         },
         gender: "M",
-        lastSeen: "2020-08-30T16:18:57",
+        lastSeen: "2020-08-28T16:18:57",
         major: "公共管理类",
-        name: "陆浩頔",
+        name: "刘波",
         province: "上海",
         room: 630
       },
@@ -141,11 +142,11 @@ Page({
     var util = require("../../utils/utils.js");
     console.log("onload");
     var that = this;
-    if (this.data.classmates == undefined)
-    {
- 
+    if (this.data.classmates == null){
+      console.log("request");
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}/roommate`,
+        // url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}/classmate`,
+        url:"https://kite.sunnysab.cn/api/v1/freshman/宋安邦/classmate",
         method:"GET",
         data:{
           "secret": `${app.globalData.userInput.id}`
