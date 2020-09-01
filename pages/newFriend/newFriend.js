@@ -10,7 +10,7 @@ Page({
     // roommates:undefined,
     roommates: [
       {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        avatar: "../../asset/pic/sxc.png",
         bed: "630-02",
         building: "18号楼",
         college: "计算机科学和信息工程学院",
@@ -19,14 +19,14 @@ Page({
           "wechat":"wxid_syhw2malo8xb22"
         },
         gender: "M",
-        lastSeen: null,
+        lastSeen:"2020-08-31T16:18:57",
         major: "软件工程",
-        name: "陆浩頔",
+        name: "穆耶赛尔·托合提库尔班",
         province: "黑龙江",
         room: 630
       },
       {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
+        avatar: "../../asset/pic/avatar02.jpg",
         bed: "630-04",
         building: "18号楼",
         college: "计算机科学和信息工程学院",
@@ -35,7 +35,7 @@ Page({
           "wechat":""
         },
         gender: "M",
-        lastSeen: null,
+        lastSeen:"2020-08-30T16:18:57",
         major: "电气工程及其自动化(轨道供电牵引方向)",
         name: "邵毅康",
         province: "上海",
@@ -48,7 +48,7 @@ Page({
         college: "人文学院",
         contact: null,
         gender: "M",
-        lastSeen: null,
+        lastSeen: "2020-07-30T16:18:57",
         major: "公共管理类",
         name: "赵星然",
         province: "吉林",
@@ -61,10 +61,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(123);
+    var util = require("../../utils/utils.js");
+    console.log("onload");
+    var that = this;
     if (this.data.roommates == undefined)
     {
-      var that = this;
+ 
       wx.request({
         url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}/roommate`,
         method:"GET",
@@ -83,9 +85,8 @@ Page({
         },
       })
     }
-
-    var hiddenList = [];
     for(var i =0;i<this.data.roommates.length;i++){
+      this.data.roommates[i].lastSeen = util.getIntervalToCurrentTime(that.data.roommates[i].lastSeen);
       this.data.roommates[i].isHidden = {
         "qq":null,
         "wechat":null
@@ -95,14 +96,14 @@ Page({
         this.data.roommates[i].isHidden.wechat = true;
       }
       else{
-        console.log(456);
         this.data.roommates[i].isHidden.qq = this.data.roommates[i].contact.qq == ""?true:false;
         this.data.roommates[i].isHidden.wechat = this.data.roommates[i].contact.wechat == ""?true:false;
       }
     }
-    wx.setData
-    
-    console.log(this.data.roommates);
+    // console.log(that.data.roommates[0].lastSeen);
+
+    // console.log(util.getIntervalToCurrentTime(that.data.roommates[0].lastSeen));
+    // console.log(this.data.roommates);
     this.setData({
       roommates:this.data.roommates
     })

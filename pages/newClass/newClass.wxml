@@ -1,2 +1,63 @@
-<!--pages/newClass/newClass.wxml-->
-<text>pages/newClass/newClass.wxml</text>
+<!--pages/newFriend/newFriend.wxml-->
+<view class="main">
+  <scroll-view class="scbg" scroll-y="{{true}}">
+
+    <!-- 卡片 -->
+    <block wx:for="{{classmates}}" wx:for-index="id">
+    
+      <view class="card">
+        <view class="bed-wrap-1">
+            <text>{{item.room}}</text>
+            <text class="lastSeen">{{item.lastSeen}}前来过</text>
+        </view>
+        <view class="info">
+          <view class="image-wrap">
+            <image class="gender" src="{{item.genderImage}}" style="width:60rpx;height:60rpx"></image>
+            <image class="avatar" src="{{item.avatar}}"></image>
+          </view>
+          
+          <view class="detail">
+            <view class="detail-1">
+              <text class="name">{{item.name}}</text>
+              <view class="pos-wrap">
+                <text class="position">{{item.province}}</text>
+                <image src="/asset/pic/位置.png"></image>
+              </view>
+            </view>
+            <view class="contact">
+          <view class="qq-wrap" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}">
+            <view class="qq">
+              <image src="/asset/pic/qq.png"></image>
+              <text>{{item.contact.qq}}</text>
+            </view>
+          </view>
+          <view class="wx" hidden="{{item.isHidden.wechat}}">
+            <image src="/asset/pic/wx.png"></image>
+            <text >{{item.contact.wechat}}</text>
+          </view>
+        </view>
+            
+
+            
+          </view>
+            
+        </view>
+
+        <!-- 联系方式 -->
+        <!-- <view class="contact">
+          <view class="qq-wrap" hidden="{{item.isHidden.qq}}">
+            <view class="qq">
+              <image src="/asset/pic/qq.png"></image>
+              <text>{{item.contact.qq}}</text>
+            </view>
+          </view>
+          <view class="wx" hidden="{{item.isHidden.wechat}}">
+            <image src="/asset/pic/wx.png"></image>
+            <text >{{item.contact.wechat}}</text>
+          </view>
+        </view> -->
+      </view>
+    </block>
+
+  </scroll-view>
+</view>

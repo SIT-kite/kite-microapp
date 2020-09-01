@@ -8,6 +8,7 @@
       <view class="card">
         <view class="bed-wrap-1">
             <text>{{item.bed}}</text>
+            <text class="lastSeen">{{item.lastSeen}}前来过</text>
         </view>
         <view class="info">
           <view class="image-wrap">
@@ -18,8 +19,8 @@
               <view class="detail-1">
                 <text class="name">{{item.name}}</text>
                 <view class="pos-wrap">
-                  <image src="/asset/pic/位置.png"></image>
                   <text class="position">{{item.province}}</text>
+                  <image src="/asset/pic/位置.png"></image>
                 </view>
               </view>
               <view class="detail-2">

@@ -8,6 +8,7 @@
   box-sizing: border-box;
 }
 
+
 page {
   background-color: rgb(246, 246, 251);
   --font-size: 12px;

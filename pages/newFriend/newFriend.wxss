@@ -48,10 +48,19 @@
 
 .bed-wrap-1 text{
     padding-right: 10rpx;
+   
+}
+
+.lastSeen{
+    padding-left: 10rpx;
+    font-size: 25rpx;
 }
 
 .bed-wrap-1{
     background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .info{
@@ -94,7 +103,9 @@
 
 .pos-wrap{
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
+    align-items: center;
+    width: 250rpx;
 }
 
 .detail-1 image{
