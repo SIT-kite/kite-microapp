@@ -77,7 +77,7 @@
 
 .input_wrap input{
   z-index: 3;
-  width: 77%;
+  width: 78%;
   height: 60rpx;
   background-color: rgb(246, 246, 251);
   margin-bottom: 35rpx;

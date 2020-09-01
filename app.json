@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/newClass/newClass",
     "pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis",
-    "pages/index/index",
+    
     "pages/inputInfo/inputInfo",
     "pages/stuInfoDetail/stuInfoDetail",
     "pages/modifyInfo/modifyInfo",

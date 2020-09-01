@@ -7,132 +7,7 @@ Page({
    */
   data: {
     token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
-    // classmates:null
-    classmates:[
-      {
-        avatar: "../../asset/pic/trump.png",
-        bed: "629-04",
-        building: "18号楼",
-        college: "人文学院",
-        contact: {
-          "qq":"5332254186",
-          "wechat":"wxid_syhw2malo8xb"
-        },
-        gender: "M",
-        lastSeen: "2020-08-29T16:18:57",
-        major: "公共管理类",
-        name: "特朗普",
-        province: "米国",
-        room: 629
-      },
-      {
-        avatar: "../../asset/pic/xxbb.png",
-        bed: "1601-02",
-        building: "13号楼",
-        college: "人文学院",
-        contact: {
-          "qq":"2562222516",
-          "wechat":"xxbb123151351"
-        },
-        gender: "M",
-        lastSeen: "2020-08-31T16:18:57",
-        major: "公共管理类",
-        name: "旭旭宝宝",
-        province: "山东",
-        room: 1601 
-      },
-      {
-        avatar: "/asset/pic/sxc.png",
-        bed: "1601-03",
-        building: "13号楼",
-        college: "人文学院",
-        contact: {
-          "qq":"2917021186",
-          "wechat":""
-        },
-        gender: "M",
-        lastSeen: "2020-08-30T16:18:57",
-        major: "公共管理类",
-        name: "孙笑川",
-        province: "河北",
-        room: 1601
-      },
-      {
-        avatar: "../../asset/pic/qz.png",
-        bed: "1601-04",
-        building: "13号楼",
-        college: "人文学院",
-        contact: {
-          "qq":"2917021186",
-          "wechat":""
-        },
-        gender: "M",
-        lastSeen: "2020-09-01T16:13:02",
-        major: "公共管理类",
-        name: "茄子",
-        province: "上海",
-        room: 1601
-      },
-      {
-        avatar: "../../asset/pic/ysg.png",
-        bed: "630-02",
-        building: "18号楼",
-        college: "人文学院",
-        contact: {
-          "qq":"2917021186",
-          "wechat":""
-        },
-        gender: "M",
-        lastSeen: "2020-08-28T16:18:57",
-        major: "公共管理类",
-        name: "刘波",
-        province: "上海",
-        room: 630
-      },
-      {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
-        bed: "1602-01",
-        building: "13号楼",
-        college: "人文学院",
-        contact: null,
-        gender: "F",
-        lastSeen: "2020-08-30T16:18:57",
-        major: "公共管理类",
-        name: "吕如嫣",
-        province: "安徽",
-        room: 1602
-      },
-      {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
-        bed: "1602-02",
-        building: "13号楼",
-        college: "人文学院",
-        contact: {
-        },
-        gender: "F",
-        lastSeen: "2020-08-30T16:18:57",
-        major: "公共管理类",
-        name: "黄洁凤",
-        province: "广西",
-        room: 1602
-      },
-      {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
-        bed: "1602-03",
-        building: "13号楼",
-        college: "人文学院",
-        contact: {
-          "qq":"2917021186",
-          "wechat":"123asfsd32"
-        },
-        gender: "F",
-        lastSeen: "2020-08-30T16:18:57",
-        major: "公共管理类",
-        name: "孙欣冉",
-        province: "黑龙江",
-        room: 1602
-      }
-    ]
+    classmates:null
   },
 
   /**
@@ -149,7 +24,8 @@ Page({
         url:"https://kite.sunnysab.cn/api/v1/freshman/宋安邦/classmate",
         method:"GET",
         data:{
-          "secret": `${app.globalData.userInput.id}`
+          // "secret": `${app.globalData.userInput.id}`
+          "secret":"120419"
         },
         header:{
           "content-type": "application/x-www-form-urlencoded",
@@ -157,39 +33,37 @@ Page({
         },
         success(res){
           console.log(res.data);
+          var stuList = res.data.data.classmates;
+          console.log(stuList);
+          for(var i =0;i<stuList.length;i++){
+            stuList[i].genderImage = stuList[i].gender == "M"? "../../asset/pic/boy.png":"../../asset/pic/girl.png";
+            stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
+            stuList[i].isHidden = {
+              "qq":null,
+              "wechat":null,
+              "padding":null
+            }
+            if (stuList[i].contact == null){
+              stuList[i].isHidden.qq = true;
+              stuList[i].isHidden.wechat = true;
+            }
+            else{
+              stuList[i].isHidden.qq = stuList[i].contact.qq == ""?true:false;
+              stuList[i].isHidden.wechat = stuList[i].contact.wechat == ""?true:false;
+              stuList[i].isHidden.padding = stuList[i].isHidden.wechat == true?25:0;
+              console.log(stuList[i].isHidden.padding);
+            }
+          }
+          // console.log(stuList[0].lastSeen);
+      
+          // console.log(util.getIntervalToCurrentTime(stuList[0].lastSeen));
+          // console.log(stuList);
           that.setData({
-            classmate:res.data.data
+            classmates:stuList
           })
         },
       })
     }
-
-    for(var i =0;i<this.data.classmates.length;i++){
-      this.data.classmates[i].genderImage = this.data.classmates[i].gender == "M"? "../../asset/pic/boy.png":"../../asset/pic/girl.png";
-      this.data.classmates[i].lastSeen = util.getIntervalToCurrentTime(this.data.classmates[i].lastSeen);
-      this.data.classmates[i].isHidden = {
-        "qq":null,
-        "wechat":null,
-        "padding":null
-      }
-      if (this.data.classmates[i].contact == null){
-        this.data.classmates[i].isHidden.qq = true;
-        this.data.classmates[i].isHidden.wechat = true;
-      }
-      else{
-        this.data.classmates[i].isHidden.qq = this.data.classmates[i].contact.qq == ""?true:false;
-        this.data.classmates[i].isHidden.wechat = this.data.classmates[i].contact.wechat == ""?true:false;
-        this.data.classmates[i].isHidden.padding = this.data.classmates[i].isHidden.wechat == true?25:0;
-        console.log(this.data.classmates[i].isHidden.padding);
-      }
-    }
-    // console.log(that.data.classmates[0].lastSeen);
-
-    // console.log(util.getIntervalToCurrentTime(that.data.classmates[0].lastSeen));
-    // console.log(this.data.classmates);
-    this.setData({
-      classmates:this.data.classmates
-    })
   },
 
   /**

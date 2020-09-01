@@ -9,8 +9,8 @@
     </view>
 
     <view class="input_wrap">
-        <input hidden="{{isHidden}}" bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
-        <input hidden="{{isHidden}}" bindinput= "getId" placeholder="  身份证后六位 *" type="number"></input>
+        <input style="display:{{isHidden}}" bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
+        <input style="display:{{isHidden}}" bindinput= "getId" placeholder="  身份证后六位 *" type="number"></input>
         <input bindinput= "getPhoneNumber" placeholder="  手机号" type="number"></input>
         <input bindinput= "getqq" placeholder="  QQ" type="number"></input>
         <input bindinput= "getwechat" placeholder="  微信" type="text"></input>
