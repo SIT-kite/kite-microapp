@@ -14,7 +14,7 @@ Page({
       name_examNumber:"",
       id:"",
       contact:{
-        phoneNumber:"",
+        tel:"",
         qq:"",
         wechat:""
       }
@@ -77,7 +77,7 @@ Page({
           url: `${app.globalData.commonUrl}/freshman/${that.data.userInput.name_examNumber}`,
           method:"PUT",
           data:{
-            "secret": `${app.globalData.userInput.id}`,
+            "secret": `${that.data.userInput.id}`,
             "contact":JSON.stringify(that.data.userInput.contact)
           },
           header:{
@@ -121,6 +121,11 @@ Page({
     }
     //  修改
     else{
+      console.log("modify request");
+      if (that.data.userInput.contact.qq){
+         
+      }
+
       wx.request({
         url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}`,
         method:"PUT",
@@ -134,25 +139,43 @@ Page({
         },
         success(res){
           console.log(res.data);
+          if (res.data.code == 0){
+            wx.navigateBack({
+              url: '/pages/stuInfoDetail/stuInfoDetail',
+              delta:1
+            })
+          }
+          else{
+            wx.showModal({
+              title:"哎呀，出错误了>.<",
+              content:res.data,
+              showCancel:false,
+              success(res){}
+            })
+          }
+        },
+        fail(res){
+          wx.showModal({
+            title:"哎呀，出错误了>.<",
+            content:"网络不在状态",
+            showCancel:false,
+            success(res){}
+          })
         }
       })
-      wx.navigateBack({
-        delta: 1,
-        url: '/pages/stuInfoDetail/stuInfoDetail',
-      })
     }
- 
   },
 
   // 获得用户输入的姓名
   getName(e){
+    console.log(e.detail.value);
     this.data.userInput.name_examNumber = e.detail.value;
   },  
   getId(e){
     this.data.userInput.id = e.detail.value;
   },
   getPhoneNumber(e){
-    this.data.userInput.contact.phoneNumber = e.detail.value;
+    this.data.userInput.contact.tel = e.detail.value;
   },
   getqq(e){
     this.data.userInput.contact.qq = e.detail.value;
@@ -166,6 +189,7 @@ Page({
     console.log(option.isHidden);
     console.log('onLoad');
     var that = this;
+    console.log(that.data.userInput);
     //调用应用实例的方法获取全局数据
     // app.getUserInfo(function(userInfo){
     //   //更新数据

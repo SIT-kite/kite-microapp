@@ -13,7 +13,7 @@
         </view>
 
         <view class="info_wrap">
-            <text>姓名:{{userDetail.counselorName}}</text>
+            <text>姓名:{{userDetail.name}}</text>
             <text>学号:{{userDetail.studentId}}</text>
             <text>学院:{{userDetail.college}}</text>
             <text>专业:{{userDetail.major}}</text>
