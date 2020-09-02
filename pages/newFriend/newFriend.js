@@ -6,55 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
-    // roommates:undefined,
-    roommates: [
-      {
-        avatar: "../../asset/pic/sxc.png",
-        bed: "630-02",
-        building: "18号楼",
-        college: "计算机科学和信息工程学院",
-        contact: {
-          "qq":"2917021186",
-          "wechat":"wxid_syhw2malo8xb22"
-        },
-        gender: "M",
-        lastSeen:"2020-08-31T16:18:57",
-        major: "软件工程",
-        name: "穆耶赛尔·托合提库尔班",
-        province: "黑龙江",
-        room: 630
-      },
-      {
-        avatar: "../../asset/pic/avatar02.jpg",
-        bed: "630-04",
-        building: "18号楼",
-        college: "计算机科学和信息工程学院",
-        contact: {
-          "qq":"2917021186",
-          "wechat":""
-        },
-        gender: "M",
-        lastSeen:"2020-08-30T16:18:57",
-        major: "电气工程及其自动化(轨道供电牵引方向)",
-        name: "邵毅康",
-        province: "上海",
-        room: 630
-      },
-      {
-        avatar: "https://kite.sunnysab.cn/static/icon.png",
-        bed: "630-03",
-        building: "18号楼",
-        college: "人文学院",
-        contact: null,
-        gender: "M",
-        lastSeen: "2020-07-30T16:18:57",
-        major: "公共管理类",
-        name: "赵星然",
-        province: "吉林",
-        room: 630
-      }
-    ]
+    roommates:null,
   },
 
   /**
@@ -64,49 +16,70 @@ Page({
     var util = require("../../utils/utils.js");
     console.log("onload");
     var that = this;
-    if (this.data.roommates == undefined)
+    if (app.globalData.roommates == null)
     {
- 
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}/roommate`,
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}/roommate`,
         method:"GET",
         data:{
-          "secret": `${app.globalData.userInput.id}`
+          "secret": `${app.globalData.userInfo.id}`
         },
         header:{
           "content-type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer ${that.data.token}`,
+          "Authorization": `Bearer ${app.globalData.token}`,
         },
         success(res){
           console.log(res.data);
-          that.setData({
-            roommates:res.data.data
-          })
+          if (res.data.code == 0){
+            that.data.roommates = res.data.data.roommates;
+            for(var i =0;i<that.data.roommates.length;i++){
+              that.data.roommates[i].lastSeen = util.getIntervalToCurrentTime(that.data.roommates[i].lastSeen);
+              that.data.roommates[i].isHidden = {
+                "qq":null,
+                "wechat":null
+              }
+              if (that.data.roommates[i].contact == null){
+                that.data.roommates[i].isHidden.qq = true;
+                that.data.roommates[i].isHidden.wechat = true;
+              }
+              else{
+                that.data.roommates[i].isHidden.qq = that.data.roommates[i].contact.qq == ""?true:false;
+                that.data.roommates[i].isHidden.wechat = that.data.roommates[i].contact.wechat == ""?true:false;
+              }
+            }
+            // console.log(that.data.roommates[0].lastSeen);
+        
+            // console.log(util.getIntervalToCurrentTime(that.data.roommates[0].lastSeen));
+            // console.log(that.data.roommates);
+            that.setData({
+              roommates:that.data.roommates
+            })
+            app.globalData.roommates = res.data.data.roommates;
+          }else{
+            wx.showModal({
+              title:"哎呀，出错误了>.<",
+              content:res.data,
+              showCancel:false,
+              success(res){}
+            })
+          }
         },
+        fail(res){
+          wx.showModal({
+            title:"哎呀，出错误了>.<",
+            content:"网络不在状态",
+            showCancel:false,
+            success(res){}
+          })
+        }
       })
     }
-    for(var i =0;i<this.data.roommates.length;i++){
-      this.data.roommates[i].lastSeen = util.getIntervalToCurrentTime(that.data.roommates[i].lastSeen);
-      this.data.roommates[i].isHidden = {
-        "qq":null,
-        "wechat":null
-      }
-      if (this.data.roommates[i].contact == null){
-        this.data.roommates[i].isHidden.qq = true;
-        this.data.roommates[i].isHidden.wechat = true;
-      }
-      else{
-        this.data.roommates[i].isHidden.qq = this.data.roommates[i].contact.qq == ""?true:false;
-        this.data.roommates[i].isHidden.wechat = this.data.roommates[i].contact.wechat == ""?true:false;
-      }
+    else{
+      that.setData({
+        roommates:app.globalData.roommates
+      })
     }
-    // console.log(that.data.roommates[0].lastSeen);
-
-    // console.log(util.getIntervalToCurrentTime(that.data.roommates[0].lastSeen));
-    // console.log(this.data.roommates);
-    this.setData({
-      roommates:this.data.roommates
-    })
+    
   },
 
   /**

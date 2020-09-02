@@ -1,12 +1,10 @@
 {
   "pages": [
-    
-    "pages/stuInfoDetail/stuInfoDetail",
     "pages/index/index",
+    "pages/stuInfoDetail/stuInfoDetail",
     "pages/about/about",
     "pages/newClass/newClass",
     "pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis",
-   
     "pages/modifyInfo/modifyInfo",
     "pages/newFriend/newFriend",
     "pages/qrcode/qrcode",

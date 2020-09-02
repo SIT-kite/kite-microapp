@@ -14,7 +14,6 @@ var getIntervalToCurrentTime=function(GivenTime){
     var currTimeStamp = parseInt(new Date().getTime()/1000);
     console.log(currTimeStamp);
     var interval = currTimeStamp - givenTimeStamp;
-    console.log(interval);
     var intervalTime;
     var tmp;
     if (interval<60){

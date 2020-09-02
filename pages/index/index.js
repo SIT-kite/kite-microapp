@@ -43,11 +43,18 @@ Page({
       selected: e.currentTarget.dataset.index,
       id: e.currentTarget.dataset.id
     });
-    this.router(this.data.id)
+    // console.log(this.data.selected);
+    // console.log(this.data.id);
+    this.router(this.data.id);
   },
   router: function (id) {
+    // 如果点击新生但是userDetail不为空，那么直接跳入到stuInfoDetail
+    if (id == "welcome" && app.globalData.userDetail != null){
+        id = "stuInfoDetail";
+    }
     const show = !app.globalData.isLogin;
     const currenturl = id + '/' + id;
+    // console.log(currenturl);
     if (!show) {
         wx.navigateTo({
           url: `/pages/${currenturl}`,

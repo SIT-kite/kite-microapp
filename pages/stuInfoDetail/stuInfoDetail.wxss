@@ -93,6 +93,7 @@
 }
 
 .button_wrap_2{
+    padding-top: 120rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -72,7 +72,6 @@ Page({
         })
       }
       else{
-        console.log("");
         wx.request({
           url: `${app.globalData.commonUrl}/freshman/${that.data.userInfo.name_examNumber}`,
           method:"PUT",

@@ -12,7 +12,7 @@ Page({
   gotoStuInfoDetail:function (e) {
     // 第一次进入这个页面 则需要完善个人信息
     if (app.globalData.userDetail == null){
-      wx.navigateTo({
+      wx.redirectTo({
         url: "/pages/inputInfo/inputInfo?isHidden=flex",
       })
     }
