@@ -4,24 +4,25 @@ var app = getApp()
 Page({
   data: {
     promptText:"",
-    token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
     buttonText:"",
     isHidden:"flex",
     motto: 'Hey!',
     avatarUrl:"",
     nickName:"",
-    userInput:{
+    userInfo:{
       name_examNumber:"",
-      id:"",
-      contact:{
-        tel:"",
-        qq:"",
-        wechat:""
-      }
-    }
+      id:""
+    },
+    contact:{
+      tel:"",
+      qq:"",
+      wechat:""
+    },
+    visible:null
   },
 
   checkBoxChange (e){
+    var that = this;
     console.log(e.detail.value);
     // 取消勾选
     if (e.detail.value[0] == undefined){
@@ -32,8 +33,8 @@ Page({
         success(res){
         }
       })
-      app.globalData.visible = false;
-      console.log(app.globalData.visible);
+      that.data.visible = false;
+      // console.log(app.globalData.visible);
     }
     // 勾选
     else{
@@ -43,18 +44,18 @@ Page({
         showCancel:false,
         success(res){}
       })
-      app.globalData.visible = true;
-      console.log(app.globalData.visible);
+      that.data.visible = true;
+      // console.log(app.globalData.visible);
     }
   },
 
   gotoStuInfoDetail(e){
     var that = this;
     console.log("gotoStuInfoDetail");
-    console.log(JSON.stringify(that.data.userInput.contact));
+    console.log(JSON.stringify(that.data.contact));
     // 没有隐藏输入框（第一次输入）
     if (this.data.isHidden == "flex"){
-      if (this.data.userInput.name_examNumber == ""){
+      if (this.data.userInfo.name_examNumber == ""){
         wx.showModal({
           title:"哎呀，出错误了>.<",
           content:"请输入姓名/考生号/准考证号其中的一个",
@@ -62,7 +63,7 @@ Page({
           success(res){}
         })
       }
-      else if(this.data.userInput.id.length != 6 || this.data.userInput.id == ""){
+      else if(this.data.userInfo.id.length != 6 || this.data.userInfo.id == ""){
         wx.showModal({
           title:"哎呀，出错误了>.<",
           content:"需要输入身份证后六位哦",
@@ -72,22 +73,25 @@ Page({
       }
       else{
         console.log("");
-        app.globalData.userInput = this.data.userInput;
         wx.request({
-          url: `${app.globalData.commonUrl}/freshman/${that.data.userInput.name_examNumber}`,
+          url: `${app.globalData.commonUrl}/freshman/${that.data.userInfo.name_examNumber}`,
           method:"PUT",
           data:{
-            "secret": `${that.data.userInput.id}`,
-            "contact":JSON.stringify(that.data.userInput.contact)
+            "secret": `${that.data.userInfo.id}`,
+            "contact":JSON.stringify(that.data.contact)
           },
           header:{
             "content-type": "application/x-www-form-urlencoded",
-            "Authorization": `Bearer ${that.data.token}`,
+            "Authorization": `Bearer ${app.globalData.token}`,
           },
           success(res){
             console.log(res.data);
             if (res.data.code == 0){
-              wx.navigateTo({
+              // 本地保留一份
+              app.globalData.visible = that.data.visible;
+              app.globalData.userInfo = that.data.userInfo;
+              app.globalData.contact = that.data.contact;
+              wx.redirectTo({
                 url: '/pages/stuInfoDetail/stuInfoDetail',
               })
             }
@@ -122,20 +126,20 @@ Page({
     //  修改
     else{
       console.log("modify request");
-      if (that.data.userInput.contact.qq){
-         
-      }
-
+      // console.log(this.data.userInfo);
+      // console.log(this.data.visible);
+      // console.log(this.data.contact);
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}`,
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}`,
         method:"PUT",
         data:{
-          "secret": `${app.globalData.userInput.id}`,
-          "contact":JSON.stringify(that.data.userInput.contact)
+          "secret": `${app.globalData.userInfo.id}`,
+          "contact":JSON.stringify(that.data.contact),
+          "visible":that.data.visible
         },
         header:{
           "content-type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer ${that.data.token}`,
+          "Authorization": `Bearer ${app.globalData.token}`,
         },
         success(res){
           console.log(res.data);
@@ -168,20 +172,21 @@ Page({
 
   // 获得用户输入的姓名
   getName(e){
-    console.log(e.detail.value);
-    this.data.userInput.name_examNumber = e.detail.value;
+    // console.log(e.detail.value);
+    this.data.userInfo.name_examNumber = e.detail.value;
   },  
   getId(e){
-    this.data.userInput.id = e.detail.value;
+    this.data.userInfo.id = e.detail.value;
   },
   getPhoneNumber(e){
-    this.data.userInput.contact.tel = e.detail.value;
+    this.data.contact.tel = e.detail.value;
   },
   getqq(e){
-    this.data.userInput.contact.qq = e.detail.value;
+    // console.log(e.detail.value);
+    this.data.contact.qq = e.detail.value;
   },
   getwechat(e){
-    this.data.userInput.contact.wechat = e.detail.value;
+    this.data.contact.wechat = e.detail.value;
   },
 
 
@@ -189,20 +194,32 @@ Page({
     console.log(option.isHidden);
     console.log('onLoad');
     var that = this;
-    console.log(that.data.userInput);
-    //调用应用实例的方法获取全局数据
-    // app.getUserInfo(function(userInfo){
-    //   //更新数据
-    //   that.setData({
-    //     userInfo:userInfo
-    //   })
-    // })
-    this.setData({
-      promptText:option.isHidden == "flex"?"请完善一下信息吧:":"请在下方输入要修改的信息:",
-      buttonText:option.isHidden == "flex"?"开启大学生活第一站":"确定",
-      isHidden:option.isHidden,
-      avatarUrl:app.globalData.userAvatar,
-      nickName:app.globalData.nickName
-    })
+    console.log(that.data.userInfo);
+    // 如果为none，说明现在执行修改功能，需要把全局变量中的contact拷贝一份,展示在input框中
+    if (option.isHidden == "none"){
+      this.setData({
+        contact:app.globalData.contact,
+        userInfo:app.globalData.userInfo,
+        visible:app.globalData.visible,
+        promptText:option.isHidden == "flex"?"请完善一下信息吧:":"请在下方输入要修改的信息:",
+        buttonText:option.isHidden == "flex"?"开启大学生活第一站":"确定",
+        isHidden:option.isHidden,
+        avatarUrl:app.globalData.userAvatar,
+        nickName:app.globalData.nickName
+      })
+    }
+    else{
+      this.setData({
+        promptText:option.isHidden == "flex"?"请完善一下信息吧:":"请在下方输入要修改的信息:",
+        buttonText:option.isHidden == "flex"?"开启大学生活第一站":"确定",
+        isHidden:option.isHidden,
+        avatarUrl:app.globalData.userAvatar,
+        nickName:app.globalData.nickName
+      })
+    }
+    console.log(that.data.userInfo);
+    console.log(that.data.contact);
+    console.log(that.data.visible);
+    console.log("inputInfo onload over")
   }
 })

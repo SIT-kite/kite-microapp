@@ -23,9 +23,9 @@
         </view>
     </view>
 
-    <view class="button_wrap_1">
+    <!-- <view class="button_wrap_1">
             <button style="width:38%">信息可见</button>
-    </view>
+    </view> -->
 
     <view class="button_wrap_2">
         <button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>

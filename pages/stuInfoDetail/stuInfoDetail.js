@@ -7,7 +7,6 @@ Page({
     motto: 'Hey!',
     avatarUrl:"",
     nickName:"",
-    token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM"
   },
 
   gotoModify(e){
@@ -33,29 +32,23 @@ Page({
 
   onLoad: function () {
     console.log('stuInfoDetail onLoad')
-    var that = this
-    //调用应用实例的方法获取全局数据
-    // app.getUserInfo(function(userInfo){
-    //   //更新数据
-    //   that.setData({
-    //     userInfo:userInfo
-    //   })
-    // })
-    if (this.data.userDetail == null){
-      // console.log(app.globalData.commonUrl+"/freshman/"+app.globalData.userInput.name_examNumber);
-      // console.log(app.globalData.userInput.id);
-      // console.log(that.data.token);
+    var that = this;
+    // 如果本地没有此信息，则是第一次加载
+    if (app.globalData.userDetail == null){
+      // console.log(app.globalData.commonUrl+"/freshman/"+app.globalData.userInfo.name_examNumber);
+      // console.log(app.globalData.userInfo.id);
+      console.log(app.globalData.token);
       // 获取用户的详细信息
       console.log("request.get info");
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInput.name_examNumber}`,
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}`,
         method:"GET",
         data:{
-          "secret": `${app.globalData.userInput.id}`
+          "secret": `${app.globalData.userInfo.id}`
         },
         header:{
           "content-type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer ${that.data.token}`,
+          "Authorization": `Bearer ${app.globalData.token}`,
         },
         success(res){
           if (res.data.code == 0){
@@ -83,6 +76,13 @@ Page({
             success(res){}
           })
         }
+      })
+    }
+    else{
+      that.setData({
+        userDetail:app.globalData.userDetail,
+        avatarUrl:app.globalData.userAvatar,
+        nickName:app.globalData.nickName
       })
     }
   }

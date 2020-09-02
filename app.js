@@ -9,12 +9,12 @@ App({
     commonUrl: "https://kite.sunnysab.cn/api/v1",
     uid: 0,
     // 登录需要的授权码
-    token: null,
-    userInput:{
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
+    userInfo:{
     },
-    userDetail:{
-
-    }
+    contact:{
+    },
+    userDetail:null
   },
   onShow: function () {
     const that = this;
