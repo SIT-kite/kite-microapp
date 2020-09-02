@@ -2,6 +2,7 @@
   "pages": [
     "pages/inputInfo/inputInfo",
     "pages/index/index",
+    "pages/about/about",
     "pages/newClass/newClass",
     "pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis",
    

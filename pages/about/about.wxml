@@ -1,0 +1,4 @@
+<!--pages/about/about.wxml-->
+<view id="container">
+<rich-text  nodes="{{htmlSnip}}"></rich-text>
+</view>
