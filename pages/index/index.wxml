@@ -11,17 +11,17 @@
 			<text class="pop_text" style="font-weight:bold;font-size:18px;">别急别急，正在努力开发</text>
 		</view>
 	</van-popup>
-	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
+	<image class='background' src="https://file.peanut996.cn/Resources/static/img/asset/pic/background.png" mode="aspectFill"></image>
 	<view class="main">
 		<swiper indicator-dots="true" class="swiper" circular>
 			<swiper-item>
 				<view class="box">
-					<image src="../../asset/pic/temp_activity.png" style="width:100%;height:100%;" bindtap="go_temp"></image>
+					<image src="https://file.peanut996.cn/Resources/static/img/asset/pic/temp_activity.png" style="width:100%;height:100%;" bindtap="go_temp"></image>
 				</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="box">
-					<image src="../../asset/pic/logo.jpg" style="width:100%;height:100%;"></image>
+					<image src="https://file.peanut996.cn/Resources/static/img/asset/pic/logo.jpg" style="width:100%;height:100%;"></image>
 				</view>
 			</swiper-item>
 		</swiper>

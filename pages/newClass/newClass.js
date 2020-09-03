@@ -34,7 +34,7 @@ Page({
             var stuList = res.data.data.classmates;
             console.log(stuList);
             for(var i =0;i<stuList.length;i++){
-              stuList[i].genderImage = stuList[i].gender == "M"? "../../asset/pic/boy.png":"../../asset/pic/girl.png";
+              stuList[i].genderImage = stuList[i].gender == "M"? "https://file.peanut996.cn/Resources/static/img/asset/pic/boy.png":"https://file.peanut996.cn/Resources/static/img/asset/pic/girl.png";
               stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
               stuList[i].isHidden = {
                 "qq":null,
