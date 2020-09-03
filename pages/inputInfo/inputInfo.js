@@ -18,7 +18,7 @@ Page({
       qq:"",
       wechat:""
     },
-    visible:null
+    visible:true
   },
 
   checkBoxChange (e){
@@ -31,10 +31,10 @@ Page({
         content:"我们将不会给您推送可能认识的人,并且不会将您推送给他人（同城，同乡..）",
         showCancel:false,
         success(res){
+          that.data.visible = false;
+          // console.log(app.globalData.visible);
         }
       })
-      that.data.visible = false;
-      // console.log(app.globalData.visible);
     }
     // 勾选
     else{
@@ -42,10 +42,12 @@ Page({
         title:"勾选",
         content:"我们将给您推送可能认识的人，包括将您推送给他人（同城，同乡..）",
         showCancel:false,
-        success(res){}
+        success(res){
+          that.data.visible = true;
+          // console.log(app.globalData.visible);
+        }
       })
-      that.data.visible = true;
-      // console.log(app.globalData.visible);
+
     }
   },
 
@@ -77,7 +79,8 @@ Page({
           method:"PUT",
           data:{
             "secret": `${that.data.userInfo.id}`,
-            "contact":JSON.stringify(that.data.contact)
+            "contact":JSON.stringify(that.data.contact),
+            "visible":that.data.visible
           },
           header:{
             "content-type": "application/x-www-form-urlencoded",
@@ -87,6 +90,7 @@ Page({
             console.log(res.data);
             if (res.data.code == 0){
               // 本地保留一份
+              console.log(that.data.visible);
               app.globalData.visible = that.data.visible;
               app.globalData.userInfo = that.data.userInfo;
               app.globalData.contact = that.data.contact;
@@ -142,6 +146,9 @@ Page({
         },
         success(res){
           console.log(res.data);
+          // 本地同样保留一份
+          app.globalData.visible = that.data.visible;
+          app.globalData.contact = that.data.contact;
           if (res.data.code == 0){
             wx.navigateBack({
               url: '/pages/stuInfoDetail/stuInfoDetail',
@@ -206,6 +213,7 @@ Page({
         avatarUrl:app.globalData.userAvatar,
         nickName:app.globalData.nickName
       })
+      console.log(that.data.visible);
     }
     else{
       this.setData({
@@ -216,9 +224,9 @@ Page({
         nickName:app.globalData.nickName
       })
     }
-    console.log(that.data.userInfo);
-    console.log(that.data.contact);
-    console.log(that.data.visible);
+    // console.log(that.data.userInfo);
+    // console.log(that.data.contact);
+    // console.log(that.data.visible);
     console.log("inputInfo onload over")
   }
 })

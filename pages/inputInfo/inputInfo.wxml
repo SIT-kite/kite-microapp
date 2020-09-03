@@ -31,7 +31,7 @@
         </view>
        
         <checkbox-group bindchange="checkBoxChange">
-            <checkbox checked value="public">同城可见</checkbox>
+            <checkbox checked="{{visible}}" value="public">同城可见</checkbox>
             <!-- <image src="/asset/pic/问号.png" mode="aspectFill"></image> -->
         </checkbox-group>
         <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">{{buttonText}}</button>
