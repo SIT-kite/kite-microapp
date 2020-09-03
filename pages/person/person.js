@@ -119,6 +119,17 @@ Page({
 
     }
   },
+  moveToAbout: function(e){
+    console.log("进入跳转按钮")
+    wx.navigateTo({
+      url: '/pages/about/about',
+      success: (result)=>{
+        console.log("跳转至 关于我们 页面")
+      },
+      fail: ()=>{},
+      complete: ()=>{}
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
