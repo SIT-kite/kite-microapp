@@ -16,6 +16,22 @@
   padding:5vh;
   border-radius: 1vh;
 }
+.pop_class_complete{
+  box-sizing: border-box;
+  height: 15vh;
+  width: 30vh;
+  border-radius: 1vh;
+}
+.pop_container_complete{
+  width: 30vh;
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 .pop_button{
   width: 20vh;
   height: 6vh;
@@ -44,6 +60,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 
 .main {
   width: 100%;
@@ -129,4 +146,11 @@
   100% {
     transform: scale(1);
   }
+}
+
+
+.pop_text{
+  font-weight:bold;
+  font-size:24px;
+  margin: auto;
 }
