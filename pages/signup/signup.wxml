@@ -1,3 +1,4 @@
+<navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view class="container">
 	<van-popup show="{{ show }}"  custom-class="pop_class" bind:close="onClose">
 		<view class="pop_container">

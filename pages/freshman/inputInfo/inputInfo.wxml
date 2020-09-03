@@ -1,3 +1,4 @@
+<navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view class="main">
 
     <!--微信用户信息昵称 头像 问候语（hey!）-->

@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+import {handlerGohomeClick,handlerGobackClick} from '../../../utils/navBarUtils'
 var app = getApp()
 Page({
   data: {
@@ -20,6 +21,8 @@ Page({
     },
     visible:true
   },
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
 
   checkBoxChange (e){
     var that = this;
@@ -95,7 +98,7 @@ Page({
               app.globalData.userInfo = that.data.userInfo;
               app.globalData.contact = that.data.contact;
               wx.redirectTo({
-                url: '/pages/stuInfoDetail/stuInfoDetail',
+                url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
               })
             }
             else if (res.data.code == 120){

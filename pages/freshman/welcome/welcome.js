@@ -11,14 +11,14 @@ Page({
 
   gotoStuInfoDetail:function (e) {
     // 第一次进入这个页面 则需要完善个人信息
-    if (app.globalData.userDetail == null){
+    if (app.globalData.userDetail == ''|| app.globalData.userDetail == null){
       wx.redirectTo({
-        url: "/pages/inputInfo/inputInfo?isHidden=flex",
+        url: "/pages/freshman/inputInfo/inputInfo?isHidden=flex",
       })
     }
     else{
       wx.navigateTo({
-        url: '/pages/stuInfoDetail/stuInfoDetail',
+        url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
       })
     }
      

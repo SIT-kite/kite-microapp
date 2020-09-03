@@ -47,7 +47,8 @@ Page({
     htmlSnip
   },
 
-  handlerGohomeClick:handlerGohomeClick,
+  // navBar handler
+  handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
   // handlerGohomeClick: function() {
   //   console.log("Home");

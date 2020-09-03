@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData: {
-    visible:false,
+    visible: false,
     nickName: null,
     userAvatar: null,
     isLogin: false,
@@ -11,14 +11,25 @@ App({
     // 登录需要的授权码
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
     // 用户在inputInfo界面输入的个人信息（准考证/姓名，身份证后六位）
-    userInfo:{
+    userInfo: {
     },
-    contact:{
+    contact: {
     },
-    userDetail:null,
-    classmates:null,
-    roommates:null,
-    familiar:null
+    userDetail: null,
+    classmates: null,
+    roommates: null,
+    familiar: null
+  },
+  onLaunch: function () {
+    try {
+      var userDetail = wx.getStorageSync("userDetail");
+      console.log("userDetail:" + userDetail);
+      this.globalData.userDetail = userDetail;
+
+    } catch (error) {
+      console.log(userDetail);
+      console.log("获取userDetail出错");
+    }
   },
   onShow: function () {
     const that = this;
@@ -67,7 +78,7 @@ App({
                             }
                           })
                         }
-                        else{
+                        else {
                           wx.request({
                             url: `${that.globalData.commonUrl}/user`,
                             method: "POST",
@@ -92,13 +103,13 @@ App({
                                       "content-type": "application/x-www-form-urlencoded",
                                       "Authorization": `Bearer ${res1.data.data.token}`
                                     },
-                                    success:function(){
+                                    success: function () {
                                       that.globalData.isStudent = false
                                     }
                                   })
                                 }
                               })
-        
+
                             }
                           })
                         }

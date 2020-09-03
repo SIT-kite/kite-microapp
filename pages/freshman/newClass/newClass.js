@@ -1,4 +1,5 @@
 // pages/newClass/newClass.js
+import {handlerGohomeClick,handlerGobackClick} from '../../../utils/navBarUtils'
 var app = getApp();
 Page({
 
@@ -8,16 +9,27 @@ Page({
   data: {
     classmates:null
   },
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var util = require("../../utils/utils.js");
+    var util = require("../../../utils/utils.js");
     console.log("onload");
     var that = this;
     if (app.globalData.classmates == null){
       console.log("request");
+      wx.showLoading({
+        title: '加载中',
+        mask: true,
+        success: (result)=>{
+          
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
       wx.request({
         url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}/classmate`,
         method:"GET",
@@ -57,7 +69,8 @@ Page({
             // console.log(stuList);
             that.setData({
               classmates:stuList
-            })
+            });
+            wx.hideLoading();
           }else{
             wx.showModal({
               title:"哎呀，出错误了>.<",

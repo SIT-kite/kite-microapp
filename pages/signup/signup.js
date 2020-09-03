@@ -1,4 +1,5 @@
 // pages/signup/signup.js
+import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils'
 const app = getApp();
 const url = app.globalData.commonUrl
 Page({
@@ -7,7 +8,7 @@ Page({
    * 页面的初始数据1
    */
   data: {
-    testInfo:"",
+    testInfo: "",
     show: false,
     resInfo: null,
     upSuccess: false,
@@ -17,6 +18,10 @@ Page({
       studentId: null
     }
   },
+
+  // navBar handler
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
   bindName: function (e) {
     const that = this;
     this.setData({
@@ -76,11 +81,11 @@ Page({
   signup: function () {
     const that = this;
     var test = "";
-    for(let i in that.data.uploadInfo){
-      if(that.data.uploadInfo[i]==="") delete(that.data.uploadInfo[i])
+    for (let i in that.data.uploadInfo) {
+      if (that.data.uploadInfo[i] === "") delete (that.data.uploadInfo[i])
     }
     that.setData({
-      uploadInfo:that.data.uploadInfo
+      uploadInfo: that.data.uploadInfo
     })
     wx.setStorage({
       data: this.data.uploadInfo,
@@ -107,35 +112,35 @@ Page({
             that.setData({
               show: false
             });
-            setTimeout(() =>{
+            setTimeout(() => {
               wx.navigateBack({
                 delta: 1
               });
-            },500);
+            }, 500);
           }, 500);
         } else {
           that.setData({
             resInfo: res.data.msg,
-            upSuccess:false
+            upSuccess: false
           });
         }
         that.setData({
           show: true
         });
         that.setData({
-          testInfo:test
+          testInfo: test
         });
 
 
       },
-      fail:function(res){
+      fail: function (res) {
         that.setData({
-          upSuccess:false,
-          resInfo:"网络问题，请稍后再试",
-          testInfo:JSON.stringify(res)
+          upSuccess: false,
+          resInfo: "网络问题，请稍后再试",
+          testInfo: JSON.stringify(res)
         })
         that.setData({
-          show:true
+          show: true
         })
         setTimeout(() => {
           that.setData({
@@ -145,7 +150,7 @@ Page({
       }
     })
     that.setData({
-      testInfo:test
+      testInfo: test
     })
   },
   /**
@@ -169,17 +174,17 @@ Page({
     const that = this;
     wx.getStorage({
       key: 'uploadInfo',
-      success (res) {
+      success(res) {
         console.log(res)
-       that.setData({
-         uploadInfo:res.data
-       })
-       that.setData({
-        canupLoad: Boolean(that.data.uploadInfo.realName &&
-          that.data.uploadInfo.studentId &&
-          (that.data.uploadInfo.oaSecret ||
-            that.data.uploadInfo.identityNumber))
-      })
+        that.setData({
+          uploadInfo: res.data
+        })
+        that.setData({
+          canupLoad: Boolean(that.data.uploadInfo.realName &&
+            that.data.uploadInfo.studentId &&
+            (that.data.uploadInfo.oaSecret ||
+              that.data.uploadInfo.identityNumber))
+        })
       }
     })
   },

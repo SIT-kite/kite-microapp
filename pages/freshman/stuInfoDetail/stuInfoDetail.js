@@ -1,5 +1,6 @@
 //index.js
 //获取应用实例
+import {handlerGohomeClick,handlerGobackClick} from '../../../utils/navBarUtils'
 var app = getApp()
 Page({
   data: {
@@ -8,25 +9,28 @@ Page({
     avatarUrl:"",
     nickName:"",
   },
+  // 导航栏handler函数
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
 
   gotoModify(e){
     console.log("gotoModify");
     wx.navigateTo({
-      url: '/pages/inputInfo/inputInfo?isHidden=none',
+      url: '/pages/freshman/inputInfo/inputInfo?isHidden=none',
     })
   },
 
   gotoNewFriend(e){
     console.log("gotoNewFriend");
     wx.navigateTo({
-      url: '/pages/newFriend/newFriend',
+      url: '/pages/freshman/newFriend/newFriend',
     })
   },
 
   gotoClass(e){
     console.log("gotoNewClass");
     wx.navigateTo({
-      url: '/pages/newClass/newClass',
+      url: '/pages/freshman/newClass/newClass',
     })
   },
 
@@ -34,12 +38,21 @@ Page({
     console.log('stuInfoDetail onLoad')
     var that = this;
     // 如果本地没有此信息，则是第一次加载
-    if (app.globalData.userDetail == null){
+
       // console.log(app.globalData.commonUrl+"/freshman/"+app.globalData.userInfo.name_examNumber);
       // console.log(app.globalData.userInfo.id);
       console.log(app.globalData.token);
       // 获取用户的详细信息
       console.log("request.get info");
+      wx.showLoading({
+        title: '加载中',
+        mask: true,
+        success: (result)=>{
+          
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
       wx.request({
         url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}`,
         method:"GET",
@@ -54,6 +67,7 @@ Page({
           if (res.data.code == 0){
             app.globalData.userDetail = res.data.data;
             // 存储到本地
+            wx.clearStorageSync();
             wx.setStorageSync("userDetail", res.data.data);
             that.setData({
               userDetail:res.data.data,
@@ -77,15 +91,17 @@ Page({
             showCancel:false,
             success(res){}
           })
+        },
+        complete:()=>{
+          wx.hideLoading();
         }
-      })
-    }
-    else{
-      that.setData({
+      });
+      // 页面赋值
+      this.setData({
         userDetail:app.globalData.userDetail,
         avatarUrl:app.globalData.userAvatar,
         nickName:app.globalData.nickName
-      })
-    }
+      });
+    
   }
 })

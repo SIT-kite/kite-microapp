@@ -53,47 +53,57 @@ Page({
   },
   router: function (id) {
     // 如果点击新生但是userDetail不为空，那么直接跳入到stuInfoDetail
+    let url = null;
+    switch (id) {
+      case "welcome":
+        url = "/pages/freshman/welcome/welcome";
+        break;
+      case "qrcode":
+        url = "/pages/qrcode/qrcode";
+        break;
+      case "education":
+        url = "/pages/education/education";
+        break;
+      case "activity":
+        url = "/pages/activity/activity";
+        break;
+      case "shopping":
+        url = "/pages/shopping/shopping";
+        break;
+      case "lost":
+        url = "/pages/lost/lost"
+        break;
+      default:
+        break
+    }
 
-    if (id === "welcome") {
-      console.log('这里是新生');
-      try {
-        var userDetail = wx.getStorageSync("userDetail");
-        console.log(userDetail);
-        if (userDetail != ""){
-          app.globalData.userDetail = userDetail;
-        }
-      } catch (error) {
-        console.log(userDetail);
-        console.log("获取userDetail出错");
-      }
-      if (app.globalData.userDetail != null) {
-        id = "stuInfoDetail";
-      }
+    if (id === "welcome" && app.globalData.userDetail != "" && app.globalData.userDetail != null) {
+        url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
+      
     }
     // if (id == "welcome" && app.globalData.userDetail != null){
     //     id = "stuInfoDetail";
     // }
     const show = !app.globalData.isLogin;
-    const currenturl = id + '/' + id;
-    // console.log(currenturl);
+    console.log(url);
     if (!show) {
       let that = this
-        wx.navigateTo({
-          url: `/pages/${currenturl}`,
-          success: function () {}, //接口调用成功的回调函数
-          fail: function () {
+      wx.navigateTo({
+        url: url,
+        success: function () { }, //接口调用成功的回调函数
+        fail: function () {
+          that.setData({
+            incompleted: true
+          });
+          setTimeout(() => {
             that.setData({
-              incompleted: true
-            });
-            setTimeout(() => {
-              that.setData({
-                incompleted: false
-              })
-            },1500);
-          }, //接口调用失败的回调函数
-          complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
-        })
-      }else {
+              incompleted: false
+            })
+          }, 1500);
+        }, //接口调用失败的回调函数
+        complete: function () { } //接口调用结束的回调函数（调用成功、失败都会执行）
+      })
+    } else {
       this.setData({
         show: true
       })
@@ -124,9 +134,9 @@ Page({
   go_temp: function (e) {
     wx.navigateTo({
       url: '/pages/welcome/welcome',
-      success: function () {}, //接口调用成功的回调函数
-      fail: function () {}, //接口调用失败的回调函数
-      complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
+      success: function () { }, //接口调用成功的回调函数
+      fail: function () { }, //接口调用失败的回调函数
+      complete: function () { } //接口调用结束的回调函数（调用成功、失败都会执行）
     })
   }
 })

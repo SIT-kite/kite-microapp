@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "navBar" : "/components/navBar/navBar"
+  },
+  "navigationBarTitleText": "填写信息"
+}

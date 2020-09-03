@@ -1,86 +1,90 @@
-
 //index.js
 //获取应用实例
+import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
 var app = getApp()
 Page({
   data: {
     motto: 'Hey!',
-    avatarUrl:"",
-    nickName:"",
-    userInput:{
-      name_examNumber:"",
-      id:"",
-      phoneNumber:"",
-      QQ:"",
-      WeChat:""
+    avatarUrl: "",
+    nickName: "",
+    userInput: {
+      name_examNumber: "",
+      id: "",
+      phoneNumber: "",
+      QQ: "",
+      WeChat: ""
     }
   },
 
-  checkBoxChange (e){
+  // navBar handler
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
+
+  checkBoxChange(e) {
     console.log(e.detail.value);
     // 取消勾选
-    if (e.detail.value[0] == undefined){
+    if (e.detail.value[0] == undefined) {
       wx.showModal({
-        title:"取消勾选",
-        content:"我们将不会给您推送可能认识的人,并且不会将您推送给他人（同城，同乡..）",
-        showCancel:false,
-        success(res){
+        title: "取消勾选",
+        content: "我们将不会给您推送可能认识的人,并且不会将您推送给他人（同城，同乡..）",
+        showCancel: false,
+        success(res) {
         }
       })
       app.globalData.visible = false;
       console.log(app.globalData.visible);
     }
     // 勾选
-    else{
+    else {
       wx.showModal({
-        title:"勾选",
-        content:"我们将给您推送可能认识的人，包括将您推送给他人（同城，同乡..）",
-        showCancel:false,
-        success(res){}
+        title: "勾选",
+        content: "我们将给您推送可能认识的人，包括将您推送给他人（同城，同乡..）",
+        showCancel: false,
+        success(res) { }
       })
       app.globalData.visible = true;
       console.log(app.globalData.visible);
     }
   },
 
-  gotoStuInfoDetail(e){
-    if (this.data.userInput.id.length != 6){
+  gotoStuInfoDetail(e) {
+    if (this.data.userInput.id.length != 6) {
       wx.showModal({
-        title:"哎呀，出错误了>.<",
-        content:"需要输入身份证后六位哦",
-        showCancel:false,
-        success(res){}
+        title: "哎呀，出错误了>.<",
+        content: "需要输入身份证后六位哦",
+        showCancel: false,
+        success(res) { }
       })
     }
-    else{
+    else {
       app.globalData.userInput = this.data.userInput;
       wx.navigateTo({
-        url: '/pages/stuInfoDetail/stuInfoDetail',
+        url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
       })
     }
- 
+
   },
 
   // 获得用户输入的姓名
-  getName(e){
+  getName(e) {
     this.data.userInput.name_examNumber = e.detail.value;
-  },  
-  getId(e){
+  },
+  getId(e) {
     this.data.userInput.id = e.detail.value;
   },
-  getPhoneNumber(e){
+  getPhoneNumber(e) {
     this.data.userInput.phoneNumber = e.detail.value;
   },
-  getQQ(e){
+  getQQ(e) {
     this.data.userInput.QQ = e.detail.value;
   },
-  getWeChat(e){
+  getWeChat(e) {
     this.data.userInput.WeChat = e.detail.value;
   },
 
 
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
@@ -97,8 +101,8 @@ Page({
     // })
     // console.log(app.globalData.userAvatar);
     this.setData({
-      avatarUrl:app.globalData.userAvatar,
-      nickName:app.globalData.nickName
+      avatarUrl: app.globalData.userAvatar,
+      nickName: app.globalData.nickName
     })
     // console.log(that.data.userInfo.nickName);
   }

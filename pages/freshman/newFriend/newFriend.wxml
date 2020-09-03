@@ -1,4 +1,5 @@
 <!--pages/newFriend/newFriend.wxml-->
+<navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view class="main">
   <scroll-view class="scbg" scroll-y="{{true}}">
 
