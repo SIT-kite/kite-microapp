@@ -14,7 +14,7 @@
 						</view>
 					</view>
 					<view bindtap="go_signup" style="color:#e3e3e3;text-align:right;">
-						<text style="font-size:30rpx;">前往认证></text>
+						<text style="font-size:30rpx;">认证></text>
 					</view>
 				</view>
 			</view>
