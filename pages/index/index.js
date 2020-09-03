@@ -3,15 +3,27 @@
 const app = getApp()
 Page({
   data: {
+    incompleted: false,
     show: false,
     showTemp: false,
     selected: -1,
     id: "",
     animation_data: "",
-    menu_list: [{
+    menu_list: [
+      {
+        id: "welcome",
+        text: "新生",
+        iconPath: "/asset/icon/main_icon/user.png"
+      },
+      {
         id: "qrcode",
         text: "返校码",
         iconPath: "/asset/icon/main_icon/qrcode.png"
+      },
+      {
+        id: "education",
+        text: "教务",
+        iconPath: "/asset/icon/main_icon/kecheng.png"
       },
       {
         id: "activity",
@@ -26,14 +38,6 @@ Page({
         id: "lost",
         text: "失物",
         iconPath: "/asset/icon/main_icon/sousuo.png"
-      }, {
-        id: "education",
-        text: "教务",
-        iconPath: "/asset/icon/main_icon/kecheng.png"
-      }, {
-        id: "welcome",
-        text: "新生",
-        iconPath: "/asset/icon/main_icon/user.png"
       }
     ]
   },
@@ -56,10 +60,20 @@ Page({
     const currenturl = id + '/' + id;
     // console.log(currenturl);
     if (!show) {
+      let that = this
         wx.navigateTo({
           url: `/pages/${currenturl}`,
           success: function () {}, //接口调用成功的回调函数
-          fail: function () {}, //接口调用失败的回调函数
+          fail: function () {
+            that.setData({
+              incompleted: true
+            });
+            setTimeout(() => {
+              that.setData({
+                incompleted: false
+              })
+            },1500);
+          }, //接口调用失败的回调函数
           complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
         })
       }else {

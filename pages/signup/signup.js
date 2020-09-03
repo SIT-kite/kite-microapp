@@ -52,9 +52,9 @@ Page({
         (that.data.uploadInfo.oaSecret ||
           that.data.uploadInfo.identityNumber))
     })
-    console.log(that.data.canupLoad)
-    console.log(that.data.uploadInfo.oaSecret ||
-      that.data.uploadInfo.identityNumber)
+    // console.log(that.data.canupLoad)
+    // console.log(that.data.uploadInfo.oaSecret ||
+    //   that.data.uploadInfo.identityNumber)
   },
   bindidentity: function (e) {
     const that = this;
@@ -101,25 +101,32 @@ Page({
           that.setData({
             resInfo: "认证成功！",
             upSuccess: true
-          })
-          app.globalData.isStudent = true
+          });
+          app.globalData.isStudent = true;
           setTimeout(() => {
             that.setData({
               show: false
-            })
-          }, 500)
+            });
+            setTimeout(() =>{
+              wx.navigateBack({
+                delta: 1
+              });
+            },500);
+          }, 500);
         } else {
           that.setData({
             resInfo: res.data.msg,
             upSuccess:false
-          })
+          });
         }
         that.setData({
           show: true
-        })
+        });
         that.setData({
           testInfo:test
-        })
+        });
+
+
       },
       fail:function(res){
         that.setData({

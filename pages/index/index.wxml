@@ -6,6 +6,11 @@
 			<view class="pop_button" bindtap="go_login">登录</view>
 		</view>
 	</van-popup>
+	<van-popup show="{{ incompleted }}" closeable custom-class="pop_class_complete" bind:close="onClose">
+		<view class="pop_container_complete">
+			<text class="pop_text" style="font-weight:bold;font-size:18px;">别急别急，正在努力开发</text>
+		</view>
+	</van-popup>
 	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
 	<view class="main">
 		<swiper indicator-dots="true" class="swiper" circular>
