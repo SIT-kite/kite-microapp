@@ -1,9 +1,8 @@
 /* pages/about/about.wxss */
 #container{
-margin: 10vh 5vw;
+margin: 0vh 5vw;
 width: 90vw;
 height: 80vh;
-/* background-color: black; */
 }
 
 .title {

@@ -1,4 +1,5 @@
 // pages/about/about.js
+import {handlerGohomeClick,handlerGobackClick} from '../../utils/navBarUtils'
 const htmlSnip = 
 `<h1 class="title">关于上应小风筝</h1>
 
@@ -23,7 +24,7 @@ const htmlSnip =
 <p class="p"><strong>上海应用技术大学</strong>校易班学生工作站有八个常设部门，包括活动策划部、宣传部、编辑部、人力资源部、站务部、记者团、网课部和技术部。站长团具体负责工作站日常事务，各部门协同配合举办各类易班主题和校级重要活动。</p>
 <h2 class="title">参与贡献</h2>
 <p class="p">在每年招新期间，你可以关注一下"上海应用技术大学易班"公众号，或有关QQ群了解招新信息加入校易班工作站(欢迎来技术部!)<br>
-你也可以直接对有关项目发起 issue 或提交 PR，留下你的痕迹。</p>
+你也可以直接对有关项目提交 Issue 或 PR，留下你的痕迹。</p>
 <h2 class="title">贡献者</h2>
 <ul><li>2017级 外国语学院 张城</li>
 <li>2017级 生态学院 sascx</li>
@@ -45,6 +46,27 @@ Page({
   data: {
     htmlSnip
   },
+
+  handlerGohomeClick:handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
+  // handlerGohomeClick: function() {
+  //   console.log("Home");
+  //   wx.switchTab({
+  //     url: '/pages/index/index',
+  //     success: (result)=>{
+        
+  //     },
+  //     fail: ()=>{},
+  //     complete: ()=>{}
+  //   });
+
+  // },
+  // handlerGobackClick: function() {
+  //   console.log("Back");
+  //   wx.navigateBack({
+  //     delta: 1
+  // });
+  // },
 
   /**
    * 生命周期函数--监听页面加载
