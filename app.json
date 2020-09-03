@@ -7,7 +7,6 @@
     "pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis",
     "pages/modifyInfo/modifyInfo",
     "pages/newFriend/newFriend",
-    "pages/qrcode/qrcode",
     "pages/person/person",
     "pages/signup/signup",
     "pages/getDormitory/getDormitory"
