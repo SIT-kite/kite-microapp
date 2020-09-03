@@ -17,17 +17,17 @@
           
             <view class="detail">
               <view class="detail-1">
-                <text class="name">{{item.name}}</text>
+                <text selectable class="name">{{item.name}}</text>
                 <view class="pos-wrap">
                   <text class="position">{{item.province}}</text>
                   <image src="/asset/pic/位置.png"></image>
                 </view>
               </view>
               <view class="detail-2">
-                <text >{{item.major}}</text>
+                <text selectable >{{item.major}}</text>
               </view>
               <view class="detail-3">
-                <text >{{item.college}}</text>
+                <text selectable >{{item.college}}</text>
               </view>
             </view>
             
@@ -38,12 +38,12 @@
           <view class="qq-wrap" hidden="{{item.isHidden.qq}}">
             <view class="qq">
               <image src="/asset/pic/qq.png"></image>
-              <text>{{item.contact.qq}}</text>
+              <text selectable>{{item.contact.qq}}</text>
             </view>
           </view>
           <view class="wx" hidden="{{item.isHidden.wechat}}">
             <image src="/asset/pic/wx.png"></image>
-            <text >{{item.contact.wechat}}</text>
+            <text selectable >{{item.contact.wechat}}</text>
           </view>
         </view>
       </view>

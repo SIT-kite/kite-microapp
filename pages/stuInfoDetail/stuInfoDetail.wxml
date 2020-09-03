@@ -13,13 +13,13 @@
         </view>
 
         <view class="info_wrap">
-            <text>姓名:{{userDetail.name}}</text>
-            <text>学号:{{userDetail.studentId}}</text>
-            <text>学院:{{userDetail.college}}</text>
-            <text>专业:{{userDetail.major}}</text>
-            <text>寝室:{{userDetail.building}}{{userDetail.room}}室</text>
-            <text>辅导员姓名:{{userDetail.counselorName}}</text>
-            <text>辅导员电话:{{userDetail.counselorTel}}</text>
+            <text selectable>姓名:{{userDetail.name}}</text>
+            <text selectable>学号:{{userDetail.studentId}}</text>
+            <text selectable>学院:{{userDetail.college}}</text>
+            <text selectable>专业:{{userDetail.major}}</text>
+            <text selectable>寝室:{{userDetail.building}}{{userDetail.room}}室</text>
+            <text selectable>辅导员姓名:{{userDetail.counselorName}}</text>
+            <text selectable>辅导员电话:{{userDetail.counselorTel}}</text>
         </view>
     </view>
 

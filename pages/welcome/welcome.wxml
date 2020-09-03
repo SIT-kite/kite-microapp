@@ -13,7 +13,7 @@
 
     <!-- text -->
     <view class="text-wrap">
-        <text class="text-1">上应大欢迎你!</text>
+        <text class="text-1" >上应大欢迎你!</text>
         <text class="text-2">请点击下方按钮完善你的信息</text>
         <text class="text-3">即可查看室友，班级</text>
     </view>
