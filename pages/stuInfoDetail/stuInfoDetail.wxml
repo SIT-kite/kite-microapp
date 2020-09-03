@@ -13,7 +13,10 @@
         </view>
 
         <view class="info_wrap">
-            <text selectable>姓名:{{userDetail.name}}</text>
+            <view class="name-wrap">
+                <text selectable>姓名:穆耶赛尔·托合提库尔班</text>
+                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
+            </view>
             <text selectable>学号:{{userDetail.studentId}}</text>
             <text selectable>学院:{{userDetail.college}}</text>
             <text selectable>专业:{{userDetail.major}}</text>
@@ -34,10 +37,5 @@
 
     <!--半圆背景-->
     <view class="background"></view>
-
-    <!--右侧修改符号-->
-    <navigator class="change_info">
-        <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
-    </navigator>
 
 </view>

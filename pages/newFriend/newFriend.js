@@ -7,6 +7,7 @@ Page({
    */
   data: {
     roommates:null,
+    familiar:null 
   },
 
   /**
@@ -18,6 +19,7 @@ Page({
     var that = this;
     if (app.globalData.roommates == null)
     {
+      // 获取室友信息
       wx.request({
         url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}/roommate`,
         method:"GET",
@@ -29,32 +31,70 @@ Page({
           "Authorization": `Bearer ${app.globalData.token}`,
         },
         success(res){
-          console.log(res.data);
           if (res.data.code == 0){
             that.data.roommates = res.data.data.roommates;
-            for(var i =0;i<that.data.roommates.length;i++){
-              that.data.roommates[i].lastSeen = util.getIntervalToCurrentTime(that.data.roommates[i].lastSeen);
-              that.data.roommates[i].isHidden = {
-                "qq":null,
-                "wechat":null
+            // 获取可能认识的人
+            if (app.globalData.visible){
+              wx.request({ 
+                url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}/familiar`,
+                method:"GET",
+                data:{
+                  "secret": `${app.globalData.userInfo.id}`
+                },
+                header:{
+                  "content-type": "application/x-www-form-urlencoded",
+                  "Authorization": `Bearer ${app.globalData.token}`,
+                },
+              success(res){
+                  // console.log(res.data);
+                  if (res.data.code == 0){
+                    
+
+                  }
+                  else{
+                    wx.showModal({
+                      title:"哎呀，出错误了>.<",
+                      content:res.data,
+                      showCancel:false,
+                      success(res){}
+                    })
+                  }
+              },
+              fail(res){
+                wx.showModal({
+                  title:"哎呀，出错误了>.<",
+                  content:"网络不在状态",
+                  showCancel:false,
+                  success(res){}
+                })
               }
-              if (that.data.roommates[i].contact == null){
-                that.data.roommates[i].isHidden.qq = true;
-                that.data.roommates[i].isHidden.wechat = true;
-              }
-              else{
-                that.data.roommates[i].isHidden.qq = that.data.roommates[i].contact.qq == ""?true:false;
-                that.data.roommates[i].isHidden.wechat = that.data.roommates[i].contact.wechat == ""?true:false;
-              }
+              })
             }
-            // console.log(that.data.roommates[0].lastSeen);
-        
-            // console.log(util.getIntervalToCurrentTime(that.data.roommates[0].lastSeen));
-            // console.log(that.data.roommates);
-            that.setData({
-              roommates:that.data.roommates
-            })
-            app.globalData.roommates = res.data.data.roommates;
+            // 不用获取可能认识的人
+            else{
+              for(var i =0;i<that.data.roommates.length;i++){
+                that.data.roommates[i].lastSeen = util.getIntervalToCurrentTime(that.data.roommates[i].lastSeen);
+                that.data.roommates[i].isHidden = {
+                  "qq":null,
+                  "wechat":null
+                }
+                if (that.data.roommates[i].contact == null){
+                  that.data.roommates[i].isHidden.qq = true;
+                  that.data.roommates[i].isHidden.wechat = true;
+                }
+                else{
+                  that.data.roommates[i].isHidden.qq = that.data.roommates[i].contact.qq == ""?true:false;
+                  that.data.roommates[i].isHidden.wechat = that.data.roommates[i].contact.wechat == ""?true:false;
+                }
+              }
+              // console.log(that.data.roommates[0].lastSeen);
+              // console.log(util.getIntervalToCurrentTime(that.data.roommates[0].lastSeen));
+              // console.log(that.data.roommates);
+              that.setData({
+                roommates:that.data.roommates
+              })
+              app.globalData.roommates = res.data.data.roommates;
+          }
           }else{
             wx.showModal({
               title:"哎呀，出错误了>.<",
@@ -74,12 +114,13 @@ Page({
         }
       })
     }
+    // 本地有可能认识人和室友的信息
     else{
       that.setData({
-        roommates:app.globalData.roommates
+        roommates:app.globalData.roommates,
+        familiar:app.globalData.familiar
       })
     }
-    
   },
 
   /**

@@ -12,7 +12,8 @@
         </view>
         <view class="info">
           <view class="image-wrap">
-            <image src="{{item.avatar}}"></image>
+            <image class="gender" src="{{item.genderImage}}" style="width:60rpx;height:60rpx"></image>
+            <image class="avatar" src="{{item.avatar}}"></image>
           </view>
           
             <view class="detail">

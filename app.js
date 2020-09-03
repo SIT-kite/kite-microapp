@@ -17,7 +17,8 @@ App({
     },
     userDetail:null,
     classmates:null,
-    roommates:null  
+    roommates:null,
+    familiar:null
   },
   onShow: function () {
     const that = this;
