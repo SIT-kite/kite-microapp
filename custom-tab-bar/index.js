@@ -19,7 +19,7 @@ Component({
       selectedIconPath:"/asset/icon/home_active.png"
     },{
       pagePath: "/pages/person/person",
-      text: "我",
+      text: "个人",
       iconpath:"/asset/icon/user.png",
       selectedIconPath:"/asset/icon/user_active.png"
     }]
