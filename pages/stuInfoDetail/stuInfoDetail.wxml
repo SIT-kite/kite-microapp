@@ -14,7 +14,7 @@
 
         <view class="info_wrap">
             <view class="name-wrap">
-                <text selectable>姓名:穆耶赛尔·托合提库尔班</text>
+                <text selectable>姓名:{{userDetail.name}}</text>
                     <image bindtap="gotoModify" mode="aspectFill" src="https://file.peanut996.cn/Resources/static/img/asset/icon/modify.png"/>
             </view>
             <text selectable>学号:{{userDetail.studentId}}</text>

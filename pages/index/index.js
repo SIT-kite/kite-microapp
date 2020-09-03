@@ -53,9 +53,26 @@ Page({
   },
   router: function (id) {
     // 如果点击新生但是userDetail不为空，那么直接跳入到stuInfoDetail
-    if (id == "welcome" && app.globalData.userDetail != null){
+
+    if (id === "welcome") {
+      console.log('这里是新生');
+      try {
+        var userDetail = wx.getStorageSync("userDetail");
+        console.log(userDetail);
+        if (userDetail != ""){
+          app.globalData.userDetail = userDetail;
+        }
+      } catch (error) {
+        console.log(userDetail);
+        console.log("获取userDetail出错");
+      }
+      if (app.globalData.userDetail != null) {
         id = "stuInfoDetail";
+      }
     }
+    // if (id == "welcome" && app.globalData.userDetail != null){
+    //     id = "stuInfoDetail";
+    // }
     const show = !app.globalData.isLogin;
     const currenturl = id + '/' + id;
     // console.log(currenturl);

@@ -53,6 +53,8 @@ Page({
         success(res){
           if (res.data.code == 0){
             app.globalData.userDetail = res.data.data;
+            // 存储到本地
+            wx.setStorageSync("userDetail", res.data.data);
             that.setData({
               userDetail:res.data.data,
               avatarUrl:app.globalData.userAvatar,
