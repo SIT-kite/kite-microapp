@@ -26,9 +26,9 @@
 			</swiper-item>
 		</swiper>
 		<view class="menuBlock">
-			<view wx:for="{{menu_list}}" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell" bindtap="move">
+			<view wx:for="{{menu_list}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell" bindtap="move">
 				<image style="{{index===selected ? animation_data: '' }}" src="{{item.iconPath}}"></image>
-				<view class="menu_cell_text">{{item.text}}</view>
+				<view class="menu_cell_text" hover-class="menu_cell_active">{{item.text}}</view>
 			</view>
 		</view>
 	</view>

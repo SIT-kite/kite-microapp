@@ -16,7 +16,7 @@
         <view class="info_wrap">
             <view class="name-wrap">
                 <text selectable>姓名:{{userDetail.name}}</text>
-                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
+                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify-black.png"/>
             </view>
             <text selectable>学号:{{userDetail.studentId}}</text>
             <text selectable>学院:{{userDetail.college}}</text>
@@ -34,6 +34,9 @@
     <view class="button_wrap_2">
         <button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
         <button style="width:38%" bindtap="gotoClass">新的班级</button>
+    </view>
+    <view class="button_wrap_3">
+        <button style="width:40%" bindtap="gotoAnalysis">我的新生画像</button>
     </view>
 
     <!--半圆背景-->

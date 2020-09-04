@@ -41,40 +41,6 @@ Page({
     shareTempFilePath: null,
   },
 
-  // 分享
-  share: function () {
-    console.log("唤起分享事件");
-  },
-  //获取临时路径
-  getTempFilePath: function () {
-    wx.canvasToTempFilePath({
-      canvasId: 'share',
-      success: (res) => {
-        this.setData({
-          shareTempFilePath: res.tempFilePath
-        })
-      }
-    })
-  },
-  //保存至相册
-  saveImageToPhotosAlbum: function () {
-    if (!this.data.shareTempFilePath) {
-      wx.showModal({
-        title: '提示',
-        content: '图片绘制中，请稍后重试',
-        showCancel: false
-      })
-    }
-    wx.saveImageToPhotosAlbum({
-      filePath: this.data.shareTempFilePath,
-      success: (res) => {
-        console.log(res)
-      },
-      fail: (err) => {
-        console.log(err)
-      }
-    })
-  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -134,7 +100,7 @@ Page({
 
 
     // 获取分析数据  实际环境注意修改tempData
-    let url = `${app.globalData.commonUrl}/freshman/${this.data.tempData.account}/analysis?secret=${this.data.tempData.secret}`
+    let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/analysis?secret=${app.globalData.userInfo.secret}`
     console.log(url)
     console.log("请求统计数据中")
     var reqTask = wx.request({
@@ -143,7 +109,7 @@ Page({
       header: {
         'content-type': 'application/json',
         // XXX
-        'Authorization': `Bearer ${this.data.tempData.token}`,
+        'Authorization': `Bearer ${app.globalData.token}`,
       },
       method: 'GET',
       dataType: 'json',

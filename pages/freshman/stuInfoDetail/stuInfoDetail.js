@@ -13,6 +13,17 @@ Page({
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
 
+  gotoAnalysis: function(){
+    wx.navigateTo({
+      url: '/pages/freshman/shareAnalysis/shareAnalysis',
+      success: (result)=>{
+        console.log("跳转分享页面成功")
+      },
+      fail: ()=>{},
+      complete: ()=>{}
+    });
+  },
+
   gotoModify(e){
     console.log("gotoModify");
     wx.navigateTo({

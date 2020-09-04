@@ -122,9 +122,33 @@
     color: white;
     border-radius: 0;
     width: 20%;
+    margin-bottom: 20rpx;
+    z-index: 3;
+}
+
+
+.button_wrap_3{
+    display: flex;
+    flex-direction: row;
+    padding-top: 20rpx;
+    justify-content: space-between;
+    background-color: white;
+    z-index: 3;
+}
+
+.button_wrap_3 button{
+    height: 70rpx;
+    line-height: 70rpx;
+    font-weight: 500;
+    background-color: black;
+    color: white;
+    border-radius: 0;
+    width: 20%;
     margin-bottom: 210rpx;
     z-index: 3;
 }
+
+
 
 .background{
     position: absolute;
