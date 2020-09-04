@@ -5,7 +5,6 @@
     "pages/about/about",
     "pages/freshman/newClass/newClass",
     "pages/freshman/shareAnalysis/shareAnalysis",
-    "pages/freshman/modifyInfo/modifyInfo",
     "pages/freshman/newFriend/newFriend",
     "pages/person/person",
     "pages/signup/signup"

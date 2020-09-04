@@ -79,7 +79,7 @@
 								<image src="/asset/pic/位置.png"></image>
 							</view>
 						</view>
-						<view class="detail-3" style="padding-top:20rpx">
+						<view class="detail-3" style="padding-top:10rpx">
 								<text selectable >{{item.college}}</text>
 						</view>
 						<view class="contact">
