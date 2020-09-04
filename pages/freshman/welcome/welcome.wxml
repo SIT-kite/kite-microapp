@@ -2,7 +2,7 @@
 <view class="main">
     <!-- image -->
     <view class="img-wrap">
-        <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/welcome.png" mode="aspectFit" />
+        <image src="/asset/pic/welcome.png" mode="aspectFit" />
     </view>
     
     <!-- black line -->

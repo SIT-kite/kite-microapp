@@ -10,13 +10,13 @@
 
     <view class="stu_info">
         <view class="image_wrap">
-            <image mode="aspectFill" src="https://file.peanut996.cn/Resources/static/img/asset/pic/background2.png" />
+            <image mode="aspectFill" src="/asset/pic/background2.png" />
         </view>
 
         <view class="info_wrap">
             <view class="name-wrap">
                 <text selectable>姓名:{{userDetail.name}}</text>
-                    <image bindtap="gotoModify" mode="aspectFill" src="https://file.peanut996.cn/Resources/static/img/asset/icon/modify.png"/>
+                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
             </view>
             <text selectable>学号:{{userDetail.studentId}}</text>
             <text selectable>学院:{{userDetail.college}}</text>

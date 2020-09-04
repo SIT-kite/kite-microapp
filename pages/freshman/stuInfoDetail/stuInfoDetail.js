@@ -54,10 +54,10 @@ Page({
         complete: ()=>{}
       });
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}`,
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`,
         method:"GET",
         data:{
-          "secret": `${app.globalData.userInfo.id}`
+          "secret": `${app.globalData.userInfo.secret}`
         },
         header:{
           "content-type": "application/x-www-form-urlencoded",
@@ -67,7 +67,6 @@ Page({
           if (res.data.code == 0){
             app.globalData.userDetail = res.data.data;
             // 存储到本地
-            wx.clearStorageSync();
             wx.setStorageSync("userDetail", res.data.data);
             that.setData({
               userDetail:res.data.data,
