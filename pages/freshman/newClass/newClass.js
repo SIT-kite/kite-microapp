@@ -47,6 +47,7 @@ Page({
         success(res){
           if(res.data.code == 0){
             // console.log(res.data);
+            app.globalData.classmates = res.data.data.classmates;
             var stuList = res.data.data.classmates;
             for(var i =0;i<stuList.length;i++){
               stuList[i].genderImage = stuList[i].gender == "M"? "/asset/pic/boy.png":"/asset/pic/girl.png";
@@ -91,6 +92,11 @@ Page({
             success(res){}
           })
         }
+      })
+    }else{
+      console.log("本地已保存 classmates 数据");
+      this.setData({
+        classmates: app.globalData.classmates
       })
     }
   },
