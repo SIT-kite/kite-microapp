@@ -49,12 +49,12 @@
   border-radius: 160rpx;
   background-color: white;
   width: 100%;
-  height: 500rpx;
+  height: 250rpx;
   z-index: 2;
 }
 
 .all-input{
-  margin-top: 70rpx;
+  padding-top: 70rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,7 +79,7 @@
 
 .input-wrap input{
   margin-left: 24rpx;
-  z-index: 3;
+  z-index: 5;
   height: 60rpx;
   width: 85%;
   background-color: rgb(246, 246, 251);

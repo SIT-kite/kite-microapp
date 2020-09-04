@@ -11,7 +11,7 @@
 
     <view class="all-input">
         <view class="input-wrap" style="display:{{isHidden}};">
-            <image src="/asset/pic/name.png" style="height:50rpx;width:50rpx;background-color:red;"></image>
+            <image src="/asset/pic/name.png" style="height:50rpx;width:50rpx;"></image>
             <input  bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
         </view>
         <view class="input-wrap" style="display:{{isHidden}};" >

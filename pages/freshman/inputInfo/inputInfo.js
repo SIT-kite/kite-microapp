@@ -35,7 +35,7 @@ Page({
         showCancel:false,
         success(res){
           that.data.visible = false;
-          // console.log(app.globalData.visible);
+          console.log(that.data.visible);
         }
       })
     }
@@ -47,7 +47,7 @@ Page({
         showCancel:false,
         success(res){
           that.data.visible = true;
-          // console.log(app.globalData.visible);
+          console.log(that.data.visible);
         }
       })
 
@@ -149,11 +149,12 @@ Page({
           "Authorization": `Bearer ${app.globalData.token}`,
         },
         success(res){
-          console.log(res.data);
-          // 本地同样保留一份
-          app.globalData.visible = that.data.visible;
-          app.globalData.contact = that.data.contact;
+          // console.log(res.data);
           if (res.data.code == 0){
+            // 本地同样保留一份
+            app.globalData.visible = that.data.visible;
+            app.globalData.contact = that.data.contact;
+            console.log(app.globalData.visible);
             wx.navigateBack({
               url: '/pages/stuInfoDetail/stuInfoDetail',
               delta:1

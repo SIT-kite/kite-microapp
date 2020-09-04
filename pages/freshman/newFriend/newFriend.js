@@ -9,7 +9,8 @@ Page({
    */
   data: {
     roommates: null,
-    familiar: null
+    familiar: null,
+    isHidden:false
   },
   // navBar handler
   handlerGohomeClick: handlerGohomeClick,
@@ -103,7 +104,8 @@ Page({
                     }
                     that.setData({
                       familiar:familiarList,
-                      roommates:that.data.roommates
+                      roommates:that.data.roommates,
+                      isHidden:false
                     });
                   app.globalData.roommates = that.data.roommates;
                   app.globalData.familiar = that.data.familiar;
@@ -132,7 +134,8 @@ Page({
             // 不用获取可能认识的人
             else {
               that.setData({
-                roommates: that.data.roommates
+                roommates: that.data.roommates,
+                isHidden:true
               })
               app.globalData.roommates = that.data.roommates;
               wx.hideLoading();
@@ -164,10 +167,20 @@ Page({
     // 本地有可能认识人和室友的信息
     else {
       console.log("本地已有信息！");
-      that.setData({
-        roommates: app.globalData.roommates,
-        familiar: app.globalData.familiar
-      })
+      if (app.globalData.visible){
+        that.setData({
+          roommates: app.globalData.roommates,
+          familiar: app.globalData.familiar,
+          isHidden:false
+        })
+      }
+      else{
+        that.setData({
+          roommates: app.globalData.roommates,
+          isHidden:true
+        })
+      }
+      
     }
   },
 

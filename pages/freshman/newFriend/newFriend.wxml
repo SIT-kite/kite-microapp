@@ -54,7 +54,7 @@
 			</view>
 		</block>
 
-    <view style="margin-top:30rpx;margin-left:30rpx">
+    <view style="margin-top:30rpx;margin-left:30rpx" hidden="{{isHidden}}">
       <text style="font-size:50rpx;font-weight:600;">可能认识的人</text>
     </view>
 
