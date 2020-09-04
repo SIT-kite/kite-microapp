@@ -30,11 +30,15 @@ Page({
         fail: ()=>{},
         complete: ()=>{}
       });
+
+
+      let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/classmate`;
+      console.log(`url: ${url}`)
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}/classmate`,
+        url: url,
         method:"GET",
         data:{
-          "secret": `${app.globalData.userInfo.id}`
+          "secret": `${app.globalData.userInfo.secret}`
         },
         header:{
           "content-type": "application/x-www-form-urlencoded",
@@ -42,11 +46,10 @@ Page({
         },
         success(res){
           if(res.data.code == 0){
-            console.log(res.data);
+            // console.log(res.data);
             var stuList = res.data.data.classmates;
-            console.log(stuList);
             for(var i =0;i<stuList.length;i++){
-              stuList[i].genderImage = stuList[i].gender == "M"? "https://file.peanut996.cn/Resources/static/img/asset/pic/boy.png":"https://file.peanut996.cn/Resources/static/img/asset/pic/girl.png";
+              stuList[i].genderImage = stuList[i].gender == "M"? "/asset/pic/boy.png":"/asset/pic/girl.png";
               stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
               stuList[i].isHidden = {
                 "qq":null,
