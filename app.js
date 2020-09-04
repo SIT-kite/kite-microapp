@@ -23,8 +23,10 @@ App({
   onLaunch: function () {
     try {
       var userDetail = wx.getStorageSync("userDetail");
+      var userInfo = wx.getStorageSync("userInfo");
       console.log("userDetail:" + userDetail);
       this.globalData.userDetail = userDetail;
+      this.globalData.userInfo = userInfo;
 
     } catch (error) {
       console.log(userDetail);
