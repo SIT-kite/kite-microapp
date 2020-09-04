@@ -19,8 +19,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    console.log("onload");
+    var util = require("../../../utils/utils.js");
+    console.log("onload.");
     var that = this;
     if (app.globalData.roommates == null) {
       wx.showLoading({

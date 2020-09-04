@@ -40,12 +40,18 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  margin-top: 30rpx;
-  background-color: rgb(246, 246, 251);
+  justify-content: space-between;
+  margin-top: 40rpx;
+  background-color: white;
   width: 80%;
   margin-bottom: 6rpx;
+  border-radius: 5px;
 }
 
+/* .bed-wrap-1{
+  
+
+} */
 .bed-wrap-1 text{
   padding-right: 10rpx;
 }
@@ -55,13 +61,7 @@
   font-size: 25rpx;
 }
 
-.bed-wrap-1{
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 5px;
-}
+
 
 .info{
   background-color: white;
@@ -98,7 +98,7 @@
 .detail{
   display: flex;
   flex-direction: column;
-  width: 390rpx;
+  width: 420rpx;
 }
 
 .detail-1{
@@ -148,7 +148,7 @@
 
 .contact{
   background-color: white;
-  width: 80%;
+  width: 420rpx;
   padding-top: 10rpx;
   display: flex;
   flex-direction: column;
@@ -161,10 +161,9 @@
 }
 
 .qq-wrap{
-  width: 97%;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .wx{
@@ -172,30 +171,32 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 10rpx;
-}
-
-.wx text{
-  color: rgb(167,158,143);
-  padding: 0rpx 0rpx 0rpx 20rpx;
-  width: 75%;
-  word-break:break-all;
+  width: 100%;
 }
 
 .qq text{
   color: rgb(167,158,143);
-  padding: 0rpx 0rpx 0rpx 20rpx;
-  width: 75%;
+  padding-left: 15rpx;
   word-break:break-all;
 }
 
+.wx text{
+  color: rgb(167,158,143);
+  padding-left:15rpx;
+  word-break:break-all;
+}
+
+.wx image{
+  margin-left:15rpx;
+  width: 42rpx;
+  height: 42rpx;
+}
+
 .qq-wrap image{
-  padding: 0rpx 0 0rpx 20rpx;
+  margin-left:15rpx;
   width: 40rpx;
   height: 40rpx;
 }
 
-.wx image{
-  padding: 0rpx 0 0rpx 20rpx;
-  width: 42rpx;
-  height: 42rpx;
-}
+
+

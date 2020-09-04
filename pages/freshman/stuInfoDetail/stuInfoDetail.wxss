@@ -4,7 +4,7 @@
 }
 
 .userinfo{
-    padding-top: 70rpx;
+    padding-top: 55rpx;
     display: flex;
     flex-direction: column;
     justify-content: center;
