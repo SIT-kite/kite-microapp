@@ -56,7 +56,7 @@
 .name-wrap image{
     width: 65rpx;
     height: 65rpx;
-    padding-right: 25rpx;
+    margin-right: 30rpx;
 }
 
 .name-wrap{
@@ -106,7 +106,7 @@
 }
 
 .button_wrap_2{
-    padding-top: 140rpx;
+    padding-top: 100rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -130,7 +130,7 @@
 .button_wrap_3{
     display: flex;
     flex-direction: row;
-    padding-top: 20rpx;
+    padding-top: 60rpx;
     justify-content: space-between;
     background-color: white;
     z-index: 3;
