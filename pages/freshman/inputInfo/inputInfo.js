@@ -11,8 +11,8 @@ Page({
     avatarUrl:"",
     nickName:"",
     userInfo:{
-      name_examNumber:"",
-      id:""
+      account:"",
+      secret:""
     },
     contact:{
       tel:"",
@@ -60,7 +60,7 @@ Page({
     console.log(JSON.stringify(that.data.contact));
     // 没有隐藏输入框（第一次输入）
     if (this.data.isHidden == "flex"){
-      if (this.data.userInfo.name_examNumber == ""){
+      if (this.data.userInfo.account == ""){
         wx.showModal({
           title:"哎呀，出错误了>.<",
           content:"请输入姓名/考生号/准考证号其中的一个",
@@ -68,7 +68,7 @@ Page({
           success(res){}
         })
       }
-      else if(this.data.userInfo.id.length != 6 || this.data.userInfo.id == ""){
+      else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
         wx.showModal({
           title:"哎呀，出错误了>.<",
           content:"需要输入身份证后六位哦",
@@ -78,10 +78,10 @@ Page({
       }
       else{
         wx.request({
-          url: `${app.globalData.commonUrl}/freshman/${that.data.userInfo.name_examNumber}`,
+          url: `${app.globalData.commonUrl}/freshman/${that.data.userInfo.account}`,
           method:"PUT",
           data:{
-            "secret": `${that.data.userInfo.id}`,
+            "secret": `${that.data.userInfo.secret}`,
             "contact":JSON.stringify(that.data.contact),
             "visible":that.data.visible
           },
@@ -92,6 +92,7 @@ Page({
           success(res){
             console.log(res.data);
             if (res.data.code == 0){
+              wx.setStorageSync("userInfo",that.data.userInfo);
               // 本地保留一份
               console.log(that.data.visible);
               app.globalData.visible = that.data.visible;
@@ -136,10 +137,10 @@ Page({
       // console.log(this.data.visible);
       // console.log(this.data.contact);
       wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.name_examNumber}`,
+        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`,
         method:"PUT",
         data:{
-          "secret": `${app.globalData.userInfo.id}`,
+          "secret": `${app.globalData.userInfo.secret}`,
           "contact":JSON.stringify(that.data.contact),
           "visible":that.data.visible
         },
@@ -182,10 +183,10 @@ Page({
   // 获得用户输入的姓名
   getName(e){
     // console.log(e.detail.value);
-    this.data.userInfo.name_examNumber = e.detail.value;
+    this.data.userInfo.account = e.detail.value;
   },  
-  getId(e){
-    this.data.userInfo.id = e.detail.value;
+  getSecret(e){
+    this.data.userInfo.secret = e.detail.value;
   },
   getPhoneNumber(e){
     this.data.contact.tel = e.detail.value;
