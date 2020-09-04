@@ -12,7 +12,7 @@ Page({
     menu_list: [
       {
         id: "welcome",
-        text: "新生",
+        text: "迎新",
         iconPath: "/asset/icon/main_icon/user.png"
       },
       {
