@@ -22,18 +22,18 @@
               <text selectable class="name">{{item.name}}</text>
               <view class="pos-wrap">
                 <text class="position">{{item.province}}</text>
-                <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/位置.png"></image>
+                <image src="/asset/pic/位置.png"></image>
               </view>
             </view>
             <view class="contact">
           <view class="qq-wrap" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}">
             <view class="qq">
-              <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/qq.png"></image>
+              <image src="/asset/pic/qq.png"></image>
               <text selectable>{{item.contact.qq}}</text>
             </view>
           </view>
           <view class="wx" hidden="{{item.isHidden.wechat}}">
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/wx.png"></image>
+            <image src="/asset/pic/wx.png"></image>
             <text selectable>{{item.contact.wechat}}</text>
           </view>
         </view>
@@ -48,12 +48,12 @@
         <!-- <view class="contact">
           <view class="qq-wrap" hidden="{{item.isHidden.qq}}">
             <view class="qq">
-              <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/qq.png"></image>
+              <image src="/asset/pic/qq.png"></image>
               <text>{{item.contact.qq}}</text>
             </view>
           </view>
           <view class="wx" hidden="{{item.isHidden.wechat}}">
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/wx.png"></image>
+            <image src="/asset/pic/wx.png"></image>
             <text >{{item.contact.wechat}}</text>
           </view>
         </view> -->

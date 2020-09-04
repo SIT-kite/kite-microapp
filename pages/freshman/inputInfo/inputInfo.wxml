@@ -11,29 +11,29 @@
 
     <view class="all-input">
         <view class="input-wrap" style="display:{{isHidden}};">
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/name.png" style="height:50rpx;width:50rpx;background-color:red;"></image>
+            <image src="/asset/pic/name.png" style="height:50rpx;width:50rpx;background-color:red;"></image>
             <input  bindinput= "getName" placeholder="  姓名/考生号/准考证号 *" type="text"></input>
         </view>
         <view class="input-wrap" style="display:{{isHidden}};" >
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/idcard.png" style="height:50rpx;width:50rpx"></image>
-             <input bindinput= "getId" placeholder="  身份证后六位 *" type="number"></input>
+            <image src="/asset/pic/idcard.png" style="height:50rpx;width:50rpx"></image>
+             <input bindinput= "getSecret" placeholder="  身份证后六位 *" type="number"></input>
         </view>
         <view class="input-wrap" >
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/tel.png" style="height:50rpx;width:50rpx"></image>
+            <image src="/asset/pic/tel.png" style="height:50rpx;width:50rpx"></image>
             <input value="{{contact.tel}}" bindinput= "getPhoneNumber" placeholder="  手机号" type="number"></input>
         </view>
         <view class="input-wrap" >
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/qq.png" style="height:50rpx;width:50rpx"></image>
+            <image src="/asset/pic/qq.png" style="height:50rpx;width:50rpx"></image>
             <input value="{{contact.qq}}" bindinput= "getqq" placeholder="  QQ" type="number"></input>
         </view>
         <view class="input-wrap">
-            <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/wx.png" style="height:50rpx;width:50rpx"></image>
+            <image src="/asset/pic/wx.png" style="height:50rpx;width:50rpx"></image>
             <input value="{{contact.wechat}}" bindinput= "getwechat" placeholder="  微信" type="text"></input>
         </view>
        
         <checkbox-group bindchange="checkBoxChange">
             <checkbox checked="{{visible}}" value="public">同城可见</checkbox>
-            <!-- <image src="https://file.peanut996.cn/Resources/static/img/asset/pic/问号.png" mode="aspectFill"></image> -->
+            <!-- <image src="/asset/pic/问号.png" mode="aspectFill"></image> -->
         </checkbox-group>
         <button class="button" bindtap="gotoStuInfoDetail" style="width:400rpx;height:100rpx;">{{buttonText}}</button>
     </view>
