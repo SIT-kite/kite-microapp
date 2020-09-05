@@ -42,7 +42,7 @@
     align-items: center;
     margin-top: 30rpx;
     background-color: rgb(246, 246, 251);
-    width: 80%;
+    width: 86%;
     margin-bottom: 6rpx;
 }
 
@@ -65,7 +65,7 @@
 
 .info{
     background-color: white;
-    width: 80%;
+    width: 86%;
     display: flex;
     flex-direction: row;
 }
@@ -96,12 +96,12 @@
   }
   
 .avatar{
-border-radius: 50%;
-width: 150rpx;
-height: 150rpx;
-/* border: solid 6rpx red; */
-margin-top: 12rpx;
-margin-left: 20rpx;
+    border-radius: 50%;
+    width: 150rpx;
+    height: 150rpx;
+    /* border: solid 6rpx red; */
+    margin-top: 12rpx;
+    margin-left: 20rpx;
 }
 
 .detail{
@@ -156,7 +156,7 @@ margin-left: 20rpx;
 
 .contact{
     background-color: white;
-    width: 80%;
+    width: 86%;
     padding-top: 10rpx;
     display: flex;
     flex-direction: column;
