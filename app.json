@@ -1,13 +1,14 @@
 {
+  "entryPagePath": "pages/index/index",
   "pages": [
+    "pages/index/index",
     "pages/freshman/welcome/welcome",
     "pages/freshman/stuInfoDetail/stuInfoDetail",
-    "pages/index/index",
-    "pages/about/about",
     "pages/freshman/newClass/newClass",
     "pages/freshman/shareAnalysis/shareAnalysis",
     "pages/freshman/newFriend/newFriend",
     "pages/person/person",
+    "pages/about/about",
     "pages/signup/signup"
   ],
   "window": {
@@ -26,7 +27,7 @@
       },
       {
         "pagePath": "pages/person/person",
-        "text": "个人"
+        "text": "我"
       }
     ]
   },
