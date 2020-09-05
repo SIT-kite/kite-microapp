@@ -61,7 +61,7 @@ Page({
             }
 
             // 获取可能认识的人
-            if (app.globalData.visible) {
+            if (app.globalData.userDetail.visible) {
               wx.request({
                 url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`,
                 method: "GET",
@@ -157,7 +157,7 @@ Page({
     // 本地有可能认识人和室友的信息
     else {
       console.log("本地已有信息！");
-      if (app.globalData.visible) {
+      if (app.globalData.userDetail.visible) {
         that.setData({
           roommates: app.globalData.roommates,
           familiar: app.globalData.familiar,

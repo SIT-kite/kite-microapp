@@ -1,7 +1,6 @@
 //app.js
 App({
   globalData: {
-    visible: true,
     nickName: null,
     userAvatar: null,
     isLogin: false,
