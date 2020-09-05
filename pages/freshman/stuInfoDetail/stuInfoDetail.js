@@ -113,7 +113,6 @@ Page({
   onLoad: function () {
     this.data.pageReady = false;
     console.log('页面 stuInfoDetail onLoad...');
-    this.pageDataInit();
     
   },
   onShow: function(){
