@@ -18,7 +18,7 @@
     <text>其中男生<text class="keyword"> {{ freshman.major.boys }} </text>人 女生<text class="keyword"> {{ freshman.major.girls }} </text>人\n\n</text>
     <!-- 同城同校 -->
     <view wx:if="{{freshman.sameCity != 0}}">
-    <text>还有<text class="keyword"> {{ freshman.sameCity }} </text>人和你来自同一城市\n</text>
+    <text>还有<text class="keyword"> {{ freshman.sameCity }} </text>人和你来自同一地方\n</text>
     <text wx:if="{{ freshman.sameHighSchool != 0 }}">其中<text class="keyword"> {{ freshman.sameHighSchool }} </text>人是你的高中校友\n</text>
     <text>有时间可以认识一下哦\n\n</text>
     </view>
