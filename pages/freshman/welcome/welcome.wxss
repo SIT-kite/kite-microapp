@@ -12,7 +12,6 @@
 
 .img-wrap image{
     background-color: rgb(246,246,251);
-    height: 750rpx;
     width: 550rpx;
 }
 
