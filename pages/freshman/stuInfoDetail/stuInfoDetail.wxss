@@ -153,7 +153,7 @@
 .background{
     position: absolute;
     left: 0;
-    top: 460rpx;
+    top: 480rpx;
     border-radius: 160rpx;
     background-color: white;
     width: 100%;

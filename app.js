@@ -9,7 +9,7 @@ App({
     commonUrl: "https://kite.sunnysab.cn/api/v1",
     uid: 0,
     // 登录需要的授权码
-    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
+    token: "",
     // 用户在inputInfo界面输入的个人信息（准考证/姓名，身份证后六位）
     userInfo: {
     },
