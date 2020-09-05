@@ -64,7 +64,7 @@ Page({
   bindidentity: function (e) {
     const that = this;
     this.setData({
-      'uploadInfo.identityNumber': e.detail.value
+      'uploadInfo.identityNumber': e.detail.value.toString().toUpperCase() 
     })
     this.setData({
       canupLoad: Boolean(that.data.uploadInfo.realName &&
