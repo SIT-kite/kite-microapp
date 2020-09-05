@@ -6,6 +6,7 @@
     "pages/freshman/newClass/newClass",
     "pages/freshman/shareAnalysis/shareAnalysis",
     "pages/freshman/newFriend/newFriend",
+    "pages/freshman/welcome/welcome",
     "pages/person/person",
     "pages/signup/signup"
 

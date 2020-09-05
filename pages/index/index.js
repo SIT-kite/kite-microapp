@@ -132,11 +132,21 @@ Page({
 
   },
   go_temp: function (e) {
+    let url = new String("/pages/freshman/welcome/welcome");
+    if (app.globalData.userDetail != "" && app.globalData.userDetail != null) {
+      url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
+    }
     wx.navigateTo({
-      url: '/pages/welcome/welcome',
-      success: function () { }, //接口调用成功的回调函数
-      fail: function () { }, //接口调用失败的回调函数
+      url: url,
+      success: function () {
+        console.log("跳转成功")
+       }, //接口调用成功的回调函数
+      fail: function (res) {
+        console.log(res); 
+        console.log("跳转失败")
+      }, //接口调用失败的回调函数
       complete: function () { } //接口调用结束的回调函数（调用成功、失败都会执行）
     })
+  
   }
 })
