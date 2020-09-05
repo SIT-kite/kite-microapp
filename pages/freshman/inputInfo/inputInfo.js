@@ -58,9 +58,10 @@ Page({
     var that = this;
     console.log("gotoStuInfoDetail");
     console.log(JSON.stringify(that.data.contact));
-    // 没有隐藏输入框（第一次输入）
+    // 没有隐藏输入框（第一次输入个人信息）
     if (this.data.isHidden == "flex"){
       if (this.data.userInfo.account == ""){
+        // 账号未填写
         wx.showModal({
           title:"哎呀，出错误了>.<",
           content:"请输入姓名/考生号/准考证号其中的一个",
@@ -69,6 +70,7 @@ Page({
         })
       }
       else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
+        // secret不符合格式
         wx.showModal({
           title:"哎呀，出错误了>.<",
           content:"需要输入身份证后六位哦",
@@ -77,6 +79,7 @@ Page({
         })
       }
       else{
+        // 满足输入框要求 发送PUT请求
         wx.request({
           url: `${app.globalData.commonUrl}/freshman/${that.data.userInfo.account}`,
           method:"PUT",
@@ -92,17 +95,23 @@ Page({
           success(res){
             console.log(res.data);
             if (res.data.code == 0){
+              // 本地Storage存储一份
               wx.setStorageSync("userInfo",that.data.userInfo);
-              // 本地保留一份
-              console.log(that.data.visible);
+              // 全局同时更新
               app.globalData.visible = that.data.visible;
               app.globalData.userInfo = that.data.userInfo;
               app.globalData.contact = that.data.contact;
-              wx.redirectTo({
+              wx.navigateTo({
                 url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
-              })
+                success: (result)=>{
+                  console.log("跳转 stuInfoDetail 页面成功")
+                },
+                fail: ()=>{},
+                complete: ()=>{}
+              });
             }
             else if (res.data.code == 120){
+              // 返回数据错误码 120
               wx.showModal({
                 title:"哎呀，出错误了>.<",
                 content:"查询不到该用户的信息",
@@ -111,6 +120,7 @@ Page({
               })
             }
             else{
+              // 其他数据错误码的所有情况
               wx.showModal({
                 title:"哎呀，出错误了>.<",
                 content:res.data,
@@ -120,6 +130,7 @@ Page({
             }
           },
           fail(res){
+            // PUT请求失败
             wx.showModal({
               title:"哎呀，出错误了>.<",
               content:"网络不在状态",
@@ -130,12 +141,9 @@ Page({
         })
       }
     }
-    //  修改
+    //  非第一次进入 修改信息
     else{
-      console.log("modify request");
-      // console.log(this.data.userInfo);
-      // console.log(this.data.visible);
-      // console.log(this.data.contact);
+      console.log("修改个人信息");
       wx.request({
         url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`,
         method:"PUT",
@@ -151,10 +159,10 @@ Page({
         success(res){
           // console.log(res.data);
           if (res.data.code == 0){
-            // 本地同样保留一份
+            // Storage 和 globalData 同时更新
+            wx.setStorageSync("userInfo",that.data.userInfo);
             app.globalData.visible = that.data.visible;
             app.globalData.contact = that.data.contact;
-            console.log(app.globalData.visible);
             wx.navigateBack({
               url: '/pages/stuInfoDetail/stuInfoDetail',
               delta:1

@@ -25,12 +25,13 @@ App({
       var userDetail = wx.getStorageSync("userDetail");
       var userInfo = wx.getStorageSync("userInfo");
       console.log("userDetail:" + userDetail);
+      console.log("userInfo:" + userInfo);
       this.globalData.userDetail = userDetail;
       this.globalData.userInfo = userInfo;
 
     } catch (error) {
-      console.log(userDetail);
-      console.log("获取userDetail出错");
+
+      console.log("获取本地变量出错");
     }
   },
   onShow: function () {

@@ -11,7 +11,6 @@ var getTimeStamp=function(GMTTime){
 var getIntervalToCurrentTime=function(GivenTime){
     var givenTimeStamp = getTimeStamp(GivenTime)/1000;
     var currTimeStamp = parseInt(new Date().getTime()/1000);
-    console.log(currTimeStamp);
     var interval = currTimeStamp - givenTimeStamp;
     var intervalTime;
     var tmp;

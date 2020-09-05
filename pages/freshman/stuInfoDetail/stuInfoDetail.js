@@ -12,6 +12,9 @@ Page({
   // 导航栏handler函数
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
+  onPullDownRefresh: function(){
+    console.log("页面刷新")
+  },
 
   gotoAnalysis: function(){
     wx.navigateTo({
@@ -46,15 +49,12 @@ Page({
   },
 
   onLoad: function () {
-    console.log('stuInfoDetail onLoad')
+    console.log('stuInfoDetail 页面onLoad')
     var that = this;
     // 如果本地没有此信息，则是第一次加载
 
-      // console.log(app.globalData.commonUrl+"/freshman/"+app.globalData.userInfo.name_examNumber);
-      // console.log(app.globalData.userInfo.id);
-      console.log(app.globalData.token);
       // 获取用户的详细信息
-      console.log("request.get info");
+      console.log("发送请求获取用户信息中");
       wx.showLoading({
         title: '加载中',
         mask: true,
@@ -76,8 +76,8 @@ Page({
         },
         success(res){
           if (res.data.code == 0){
+            // 同时更新 Storage 和 globalData
             app.globalData.userDetail = res.data.data;
-            // 存储到本地
             wx.setStorageSync("userDetail", res.data.data);
             that.setData({
               userDetail:res.data.data,
