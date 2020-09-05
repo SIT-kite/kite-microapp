@@ -1,15 +1,14 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/freshman/welcome/welcome",
     "pages/freshman/stuInfoDetail/stuInfoDetail",
+    "pages/index/index",
     "pages/about/about",
     "pages/freshman/newClass/newClass",
     "pages/freshman/shareAnalysis/shareAnalysis",
     "pages/freshman/newFriend/newFriend",
-    "pages/freshman/welcome/welcome",
     "pages/person/person",
     "pages/signup/signup"
-
   ],
   "window": {
     "backgroundTextStyle": "light",

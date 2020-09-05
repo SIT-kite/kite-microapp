@@ -2,5 +2,6 @@
   "usingComponents": {
     "navBar" : "/components/navBar/navBar"
   },
+  "disableScroll": true,
   "navigationBarTitleText": "填写信息"
 }

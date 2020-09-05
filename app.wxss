@@ -12,7 +12,7 @@
 page {
   background-color: rgb(246, 246, 251);
   --font-size: 12px;
-  --padding-size: 15vh;
+  --padding-size: 12vh;
   --common-width: 87vw;
 }
 

@@ -1,6 +1,6 @@
 .main {
   display: flex;
-  padding-top: var(--padding-size);
+  padding-top: 12vh;
   flex-direction: column;
   width: 100%;
   height: 100%;
@@ -12,14 +12,10 @@
   margin: 1vh auto 5vh;
   height:200rpx;
   width: 90%;
-
   border-radius: 1vh;
-  
 }
 
 .help{
-  /* 注意这里的-5vh */
-  margin-top: -5vh;
   display: flex;
   box-sizing: border-box;
   padding: 0.5vh 1vh;
@@ -33,8 +29,6 @@
 }
 
 .login{
-  /* 注意这里的-5vh */
-  margin-top: -5vh;
   display: flex;
   box-sizing: border-box;
   padding: 0.5vh 1vh;
@@ -45,14 +39,12 @@
   border-radius: 1vh;
   align-items: center;
   justify-content: center;
-  
 }
 
 .login .image_container{
   width: 8vh;
   height: 8vh;
   border-radius: 50%;
-
   overflow: hidden;
   margin: 0 3vh 0 0;
   background-color: unset;
@@ -86,7 +78,7 @@
 }
 
 .main_info {
-  height: 70%;
+  height: 65%;
   width: auto;
   display: flex;
   justify-content: space-between;
@@ -99,7 +91,7 @@
   text-align: end;
   color: white;
   font-size: 30rpx;
-  height: 3vh;
+  height: 3.2vh;
   border-radius: 5px;
   justify-content: center;
   align-items: center;
@@ -133,11 +125,11 @@
   font-size:42rpx;
   font-weight: normal;
   line-height: 6vh;
-  padding: 0vh 8vw;
-  
+  padding:0.5vh 1vh;
 }
 .left{
-  font-size: xx-large;
+  margin-left: 12.5rpx;
+  font-size: 40rpx;
 }
 .right{
   font-weight: 100;

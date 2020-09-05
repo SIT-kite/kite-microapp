@@ -1,12 +1,11 @@
 /* pages/signup/signup.wxss */
 .main {
   width: 100vw;
-  height: 96vh;
+  height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
-  padding-top: 4vh;
 }
 
 .pop_class{
@@ -47,9 +46,9 @@
   align-items: center;
 }
 .v_button{
-  width: 20vw;
-  height: 20vw;
-  margin-top: 6vh;
+  width: 15vw;
+  height: 15vw;
+  margin-top: 5vh;
   border-radius: 50%;
   background-color: black;
   display: flex;

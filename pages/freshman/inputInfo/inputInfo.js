@@ -239,8 +239,7 @@ Page({
         contact:app.globalData.contact,
         userInfo:app.globalData.userInfo,
         visible:app.globalData.visible,
-        promptText:option.isHidden == "flex"?"请完善一下信息吧:":"请在下方输入要修改的信息:",
-        buttonText:option.isHidden == "flex"?"开启大学生活第一站":"确定",
+        buttonText:option.isHidden == "flex"?"提交":"确定",
         isHidden:option.isHidden,
         avatarUrl:app.globalData.userAvatar,
         nickName:app.globalData.nickName
@@ -249,8 +248,7 @@ Page({
     }
     else{
       this.setData({
-        promptText:option.isHidden == "flex"?"请完善一下信息吧:":"请在下方输入要修改的信息:",
-        buttonText:option.isHidden == "flex"?"开启大学生活第一站":"确定",
+        buttonText:option.isHidden == "flex"?"提交":"确定",
         isHidden:option.isHidden,
         avatarUrl:app.globalData.userAvatar,
         nickName:app.globalData.nickName

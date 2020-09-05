@@ -1,38 +1,32 @@
-.main{
-    background-color:rgb(246, 246, 251);
-    z-index: 1;
-}
-
 .userinfo{
-    padding-top: 55rpx;
+    padding-top: 30rpx;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 3;
-}
-
-.userinfo-avatar{
-    width: 230rpx;
-    height: 230rpx;
-    margin-top: 20rpx;
-    margin: 10rpx;
+  }
+  .userinfo-avatar{
+    width: 180rpx;
+    height: 180rpx;
+    margin-top: 70rpx;
+    margin: 20rpx;
+    margin-bottom: 40rpx;
     border-radius: 50%;
     z-index: 3;
-}
-
-.userinfo-nickname{
+  }
+  
+  .userinfo-nickname{
     font-size: 38rpx;
-    font-weight: 500;
-    margin-bottom: 60rpx;
+    font-weight: 530;
+    margin-bottom: 40rpx;
     z-index: 3;
-}
-
+  }
 .greetings{
     text-align: center;
     font-size: 60rpx;
     font-weight: 550;
-    margin-bottom: 40rpx;
+    margin-bottom: 20rpx;
     z-index: 3;
 }
 
@@ -41,7 +35,6 @@
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    background-color: white;
     z-index: 3;
 }
 
@@ -77,23 +70,16 @@
 }
 
 .image_wrap{
-    width: 42%;
+    padding-top: 3vh;
+    width: 35%;
     z-index: 3;
 }
 
 .image_wrap image{
     width:100%;
-    height: 98%;
+    height: 80%;
     z-index: 3;
 }
-
-.button_wrap_1{
-    padding: 90rpx 0 90rpx 0;
-    width: 100%;
-    background-color: white;
-    z-index: 3;
-}
-
 .button_wrap_1 button{
     background-color: rgb(59, 175, 91);
     height: 65rpx;
@@ -110,7 +96,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: white;
+
     z-index: 3;
 }
 
@@ -127,14 +113,6 @@
 }
 
 
-.button_wrap_3{
-    display: flex;
-    flex-direction: row;
-    padding-top: 60rpx;
-    justify-content: space-between;
-    background-color: white;
-    z-index: 3;
-}
 
 .button_wrap_3 button{
     height: 70rpx;
@@ -153,12 +131,13 @@
 .background{
     position: absolute;
     left: 0;
-    top: 480rpx;
-    border-radius: 160rpx;
+    top: 430rpx;
+    border-top-left-radius: 160rpx;
+    border-top-right-radius: 160rpx;
     background-color: white;
     width: 100%;
-    height: 500rpx;
-    z-index: 2;
+    height: 70vh;
+    z-index: -1;
 }
 
  

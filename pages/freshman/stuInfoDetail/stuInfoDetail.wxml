@@ -1,5 +1,5 @@
 <navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-<view class="main" wx:if="{{pageReady}}">
+<view wx:if="{{pageReady}}">
 
     <!--微信用户信息昵称 头像 问候语（hey!）-->
     <view  bindtap="bindViewTap" class="userinfo">
@@ -7,16 +7,14 @@
         <text class="greetings">Hey!</text>
         <text class="userinfo-nickname">{{nickName}}</text>
     </view>
-
     <view class="stu_info">
         <view class="image_wrap">
             <image mode="aspectFill" src="/asset/pic/background2.png" />
         </view>
-
         <view class="info_wrap">
             <view class="name-wrap">
                 <text selectable>姓名:{{userDetail.name}}</text>
-                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify-black.png"/>
+                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
             </view>
             <text selectable>学号:{{userDetail.studentId}}</text>
             <text selectable>学院:{{userDetail.college}}</text>
@@ -26,10 +24,6 @@
             <text selectable>辅导员电话:{{userDetail.counselorTel}}</text>
         </view>
     </view>
-
-    <!-- <view class="button_wrap_1">
-            <button style="width:38%">信息可见</button>
-    </view> -->
 
     <view class="button_wrap_2">
         <button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
