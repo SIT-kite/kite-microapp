@@ -2,6 +2,7 @@
 //获取应用实例
 import {handlerGohomeClick,handlerGobackClick} from '../../../utils/navBarUtils'
 var app = getApp()
+const secretRex = /[0-9]{5}[0-9X]/;
 Page({
   data: {
     promptText:"",
@@ -69,7 +70,8 @@ Page({
           success(res){}
         })
       }
-      else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
+      // else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
+      else if(!secretRex.test(this.data.userInfo.secret)){
         // secret不符合格式
         wx.showModal({
           title:"哎呀，出错误了>.<",
@@ -197,21 +199,32 @@ Page({
 
   // 获得用户输入的姓名
   getName(e){
-    // console.log(e.detail.value);
-    this.data.userInfo.account = e.detail.value;
+    this.setData({
+      'userInfo.account': e.detail.value
+    });
   },  
   getSecret(e){
-    this.data.userInfo.secret = e.detail.value;
+    this.setData({
+      'userInfo.secret': e.detail.value.toString().toUpperCase()
+    })
   },
   getPhoneNumber(e){
-    this.data.contact.tel = e.detail.value;
+
+    this.setData({
+      'contact.tel': e.detail.value
+    });
   },
   getqq(e){
-    // console.log(e.detail.value);
-    this.data.contact.qq = e.detail.value;
+    this.setData({
+      'contact.qq': e.detail.value
+    });
   },
   getwechat(e){
-    this.data.contact.wechat = e.detail.value;
+
+    this.setData({
+      'contact.wechat': e.detail.value
+    });
+    
   },
 
 
