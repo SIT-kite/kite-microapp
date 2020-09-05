@@ -4,7 +4,7 @@
 	<scroll-view class="scbg" scroll-y="{{true}}">
 
 		<!-- 卡片 -->
-		<block wx:for="{{classmates}}" wx:for-index="id">
+		<block wx:for="{{classmates}}" wx:for-index="id" wx:key="name">
 
 			<view class="card">
 				<view class="bed-wrap-1">

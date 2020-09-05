@@ -8,7 +8,7 @@
 			<text style="font-size:50rpx;font-weight:600">我的室友</text>
 		</view>
 		<!-- 卡片 -->
-		<block wx:for="{{roommates}}" wx:for-index="id">
+		<block wx:for="{{roommates}}"  wx:key="bed" wx:for-index="id">
 
 			<view class="card">
 				<view class="bed-wrap-1">
@@ -58,7 +58,7 @@
       <text style="font-size:50rpx;font-weight:600;">可能认识的人</text>
     </view>
 
-		<block wx:for="{{familiar}}" wx:for-index="id">
+		<block wx:for="{{familiar}}" wx:key="name" wx:for-index="id">
 
 			<view class="card">
 				<view class="bed-wrap-1">
