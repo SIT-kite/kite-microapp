@@ -163,10 +163,16 @@ Page({
             wx.setStorageSync("userInfo",that.data.userInfo);
             app.globalData.visible = that.data.visible;
             app.globalData.contact = that.data.contact;
-            wx.navigateBack({
+            
+            wx.redirectTo({
               url: '/pages/stuInfoDetail/stuInfoDetail',
-              delta:1
-            })
+              success: (result)=>{
+                console.log("跳转至页面 stuInfoDetail")  
+              },
+              fail: ()=>{},
+              complete: ()=>{}
+            });
+            
           }
           else{
             wx.showModal({
