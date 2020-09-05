@@ -1,5 +1,5 @@
 <navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-<view class="main">
+<view class="main" wx:if="{{pageReady}}">
 
     <!--微信用户信息昵称 头像 问候语（hey!）-->
     <view  bindtap="bindViewTap" class="userinfo">

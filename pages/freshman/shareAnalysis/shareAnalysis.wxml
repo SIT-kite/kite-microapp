@@ -1,6 +1,6 @@
 <!--pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.wxml-->
 
-<view class="background">
+<view class="background" wx:if="{{pageReady}}">
 <!-- 图像宽高比 4:5 -->
 <image id="wavebear" src="/asset/pic/share/wavebear.png" style="width: 16vw;height:20vw" />
 <!-- 图像宽高比 1:1 -->

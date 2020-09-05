@@ -6,19 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    pageReady: false,
     motto: {
       source: "",
       content: ""
-    },
-    tempData: {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19hZG1pbiI6dHJ1ZSwidWlkIjoxMH0.tY2adWTqpK21lqquSbxYLT3Zvwn83q8K0U0J59oeeFM",
-      account: "1812100505",
-      secret: "120419",
-    },
-    requestData: {
-      token: "",
-      account: "",
-      secret: "",
     },
     // 分析数据
     freshman: {
@@ -46,6 +37,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.data.pageReady = false
     wx.showLoading({
       title: "加载中",
       mask: true,
@@ -108,7 +100,6 @@ Page({
       data: {},
       header: {
         'content-type': 'application/json',
-        // XXX
         'Authorization': `Bearer ${app.globalData.token}`,
       },
       method: 'GET',
@@ -131,7 +122,9 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.setData({
+      pageReady: true
+    })
   },
 
   /**
