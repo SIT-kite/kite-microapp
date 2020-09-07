@@ -81,17 +81,15 @@ Page({
         url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
       
     }
-    // if (id == "welcome" && app.globalData.userDetail != null){
-    //     id = "stuInfoDetail";
-    // }
+
     const show = !app.globalData.isLogin;
-    console.log(url);
     if (!show) {
       let that = this
       wx.navigateTo({
         url: url,
         success: function () { }, //接口调用成功的回调函数
         fail: function () {
+          // 页面跳转失败则显示未完成
           that.setData({
             incompleted: true
           });
@@ -99,7 +97,7 @@ Page({
             that.setData({
               incompleted: false
             })
-          }, 1500);
+          }, 1000);
         }, //接口调用失败的回调函数
         complete: function () { } //接口调用结束的回调函数（调用成功、失败都会执行）
       })
