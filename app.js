@@ -23,31 +23,32 @@ App({
     try {
       var userDetail = wx.getStorageSync("userDetail");
       var userInfo = wx.getStorageSync("userInfo");
-      console.log("userDetail:" + userDetail);
-      console.log("userInfo:" + userInfo);
+      console.log("Storage userDetail:" + userDetail);
+      console.log("Storage userInfo:" + userInfo);
       this.globalData.userDetail = userDetail;
       this.globalData.userInfo = userInfo;
-
     } catch (error) {
-
-      console.log("获取本地变量出错");
+      console.log("获取Storage变量出错");
     }
   },
   onShow: function () {
     const that = this;
     wx.getSetting({
       success(res) {
+        // 判断是否授权个人信息
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
-            // 获取用户的昵称 
+            // 获取用户信息
             success(userinfo_res) {
-              console.log(that);
+              console.log("获取用户Open Type信息成功")
+              console.log(userinfo_res);
               that.globalData.nickName = userinfo_res.userInfo.nickName
               that.globalData.userAvatar = userinfo_res.userInfo.avatarUrl
               that.globalData.isLogin = true
               wx.login({
                 success(res) {
                   if (res.code) {
+                    // Session获取uid
                     wx.request({
                       url: `${that.globalData.commonUrl}/session`,
                       method: "POST",
@@ -59,9 +60,12 @@ App({
                         wxCode: res.code
                       },
                       success: function (res) {
+                        
                         if (res.data.code === 0) {
-                          that.globalData.token = res.data.data.token
-                          that.globalData.uid = res.data.data.data.uid
+                          // 用户已注册
+                          that.globalData.token = res.data.data.token;
+                          that.globalData.uid = res.data.data.data.uid;
+                          // 获取实名认证状态以及StudentId
                           wx.request({
                             url: `${that.globalData.commonUrl}/user/${that.globalData.uid}/identity`,
                             method: "GET",
@@ -70,6 +74,7 @@ App({
                               "Authorization": `Bearer ${that.globalData.token}`
                             },
                             success: function (res) {
+                              console.log("获取实名认证信息成功")
                               console.log(res)
                               if (res.data.code === 0) {
                                 that.globalData.studentId = res.data.data.studentId
@@ -77,10 +82,35 @@ App({
                               } else {
                                 that.globalData.isStudent = false
                               }
+                              
+                              // 更新用户信息
+                              var reqTask = wx.request({
+                                url: `${that.globalData.commonUrl}/user/${that.globalData.uid}`,
+                                data: userinfo_res.userInfo,
+                                header: {
+                                  "content-type": "application/x-www-form-urlencoded",
+                                  "Authorization": `Bearer ${that.globalData.token}`
+                                },
+                                method: 'PUT',
+                                success: (res)=>{
+                                  // 修改成功
+                                  if(res.data.code === 0){
+                                    console.log("更新用户信息成功");
+                                  }else{
+                                    console.log("更新用户信息失败");
+                                  }
+                                },
+                                fail: (res)=>{
+                                  console.log("更新用户信息出现问题");
+                                  console.log(res);
+                                },
+                                complete: ()=>{}
+                              });
                             }
-                          })
+                          });
                         }
                         else {
+                          // 不存在用户则创建用户
                           wx.request({
                             url: `${that.globalData.commonUrl}/user`,
                             method: "POST",
