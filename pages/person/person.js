@@ -19,7 +19,7 @@ Page({
   },
   login: function (e) {
     const that = this;
-    console.log(e);
+    var wxUserInfo = e.detail.userInfo;
     if (e.detail.userInfo) {
       wx.login({
         success(res) {
@@ -72,10 +72,7 @@ Page({
                     header: {
                       "content-type": "application/x-www-form-urlencoded"
                     },
-                    data: {
-                      nickName: that.data.nickName,
-                      avatarUrl: that.data.avater
-                    },
+                    data: wxUserInfo,
                     success: function (res1) {
                       app.globalData.uid = res1.data.data.uid
                       app.globalData.token = res1.data.data.token
@@ -133,7 +130,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("page onload")
+    console.log("页面 person onLoad");
     this.setData({
       nickName: app.globalData.nickName,
       avater: app.globalData.userAvatar,
@@ -146,7 +143,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log("page onready")
+    console.log("页面 person onReady");
     this.setData({
       nickName: app.globalData.nickName,
       avater: app.globalData.userAvatar,
