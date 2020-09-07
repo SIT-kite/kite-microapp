@@ -8,7 +8,7 @@
 
 			<view class="card">
 				<view class="bed-wrap-1">
-					<text>{{item.room}}</text>
+					<text>{{item.building}}</text>
 					<text class="lastSeen">{{item.lastSeen}}前来过</text>
 				</view>
 				<view class="info">
