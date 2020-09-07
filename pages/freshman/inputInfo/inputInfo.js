@@ -258,5 +258,11 @@ Page({
     // console.log(that.data.contact);
     // console.log(that.data.visible);
     console.log("inputInfo onload over")
+  },
+  onShareAppMessage: function (e) {
+    return {
+      title: "上应小风筝",
+      path: "pages/index/index"
+    }
   }
 })

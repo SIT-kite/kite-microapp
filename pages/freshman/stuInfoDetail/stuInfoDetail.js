@@ -125,6 +125,12 @@ Page({
     this.setData({
       pageReady:true
     });
+  },
+  onShareAppMessage: function (e) {
+    return {
+      title: "上应小风筝",
+      path: "pages/index/index"
+    }
   }
 
 })
