@@ -19,8 +19,7 @@ Page({
   },
   login: function (e) {
     const that = this;
-    console.log(that);
-    console.log(e.detail.userInfo);
+    console.log(e);
     if (e.detail.userInfo) {
       wx.login({
         success(res) {
