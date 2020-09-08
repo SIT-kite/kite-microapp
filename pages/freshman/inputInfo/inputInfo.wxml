@@ -30,11 +30,8 @@
         <checkbox-group bindchange="checkBoxChange">
             <checkbox checked="{{visible}}" value="public">同城可见</checkbox>
         </checkbox-group>
-        <button class="button" bindtap="gotoStuInfoDetail" style="width:300rpx;height:100rpx;">{{buttonText}}</button>
+        <button class="button" bindtap="gotoStuInfoDetail" style="width:300rpx;height:100rpx;font-size:36rpx;">{{buttonText}}</button>
     </view>
-
-
-
     <!--半圆背景-->
     <view class="background"></view>
 

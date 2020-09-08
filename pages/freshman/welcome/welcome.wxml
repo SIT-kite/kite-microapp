@@ -2,14 +2,14 @@
 <view class="main">
     <!-- image -->
     <view class="img-wrap">
-        <image src="/asset/pic/welcome1.png" />
+        <image src="/asset/pic/person_bg.png" />
     </view>
     
     <!-- black line -->
-    <view class="line-wrap">
+    <!-- <view class="line-wrap">
         <view class="black-line">
         </view>
-    </view>
+    </view> -->
 
     <!-- text -->
     <view class="text-wrap">
@@ -21,7 +21,7 @@
     
     <!-- button -->
     <view class="button-wrap">
-        <button bindtap="gotoStuInfoDetail">进入</button>
+        <button bindtap="gotoStuInfoDetail">进入系统</button>
     </view>
 
 </view>

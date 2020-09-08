@@ -23,7 +23,7 @@
 					<view class=" image_container">
 						<image src="/asset/icon/weixin.png"></image>
 					</view>
-					<text style="font-size:20px;color:#e3e3e3;">微信登录</text>
+					<text style="font-size:20px;color:#e3e3e3;">点击左侧微信登录</text>
 				</button>
 			</view>
 

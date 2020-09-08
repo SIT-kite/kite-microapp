@@ -9,31 +9,36 @@
   .userinfo-avatar{
     width: 180rpx;
     height: 180rpx;
-    margin-top: 70rpx;
-    margin: 20rpx;
+    margin-top: 20rpx;
     margin-bottom: 40rpx;
     border-radius: 50%;
     z-index: 3;
   }
-  
-  .userinfo-nickname{
-    font-size: 38rpx;
-    font-weight: 530;
-    margin-bottom: 40rpx;
-    z-index: 3;
-  }
-.greetings{
+
+  .greetings{
     text-align: center;
     font-size: 60rpx;
     font-weight: 550;
-    margin-bottom: 20rpx;
     z-index: 3;
+}
+  
+  .background{
+    position: absolute;
+    left: 0;
+    top: calc( 30rpx +  60rpx + 180rpx + 40rpx + 64px );
+    border-top-left-radius: 160rpx;
+    border-top-right-radius: 160rpx;
+    background-color: white;
+    width: 100%;
+    height: 90vh;
+    z-index: -1;
 }
 
 .stu_info{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 80rpx;
     width: 100%;
     z-index: 3;
 }
@@ -46,23 +51,18 @@
     z-index: 3;
 }
 
-.name-wrap image{
+.info_wrap image{
+    position: absolute;
+    right: 20rpx;
     width: 65rpx;
     height: 65rpx;
     margin-right: 30rpx;
 }
 
-.name-wrap{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-     justify-content: space-between;
-}
 
 .info_wrap text{
-    margin:4px;
-    font-size:34rpx;
-    font-weight: 530;
+    margin:2.5px;
+    font-size:33rpx;
     z-index: 3;
     word-wrap: break-word;
     word-break: break-all;
@@ -92,52 +92,34 @@
 }
 
 .button_wrap_2{
-    padding-top: 100rpx;
+    padding-top: 50rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     z-index: 3;
 }
-
 .button_wrap_2 button{
-    height: 70rpx;
-    line-height: 70rpx;
+    height: 100rpx;
+    line-height: 99rpx;
     font-weight: 500;
-    background-color: black;
+    background-image: linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%);
     color: white;
     border-radius: 0;
     width: 20%;
     margin-bottom: 20rpx;
     z-index: 3;
+    border-radius: 14px;
 }
-
-
-
+.button_wrap_3{
+    padding-top: 60rpx;
+}
 .button_wrap_3 button{
-    height: 70rpx;
-    line-height: 70rpx;
+    height: 100rpx;
+    line-height: 99rpx;
     font-weight: 500;
-    background-color: black;
+    background-image: linear-gradient( 135deg, #FCCF31 10%, #F55555 100%);
     color: white;
-    border-radius: 0;
+    border-radius: 14px;
     width: 20%;
-    margin-bottom: 210rpx;
     z-index: 3;
 }
-
-
-
-.background{
-    position: absolute;
-    left: 0;
-    top: 430rpx;
-    border-top-left-radius: 160rpx;
-    border-top-right-radius: 160rpx;
-    background-color: white;
-    width: 100%;
-    height: 90vh;
-    z-index: -1;
-}
-
- 

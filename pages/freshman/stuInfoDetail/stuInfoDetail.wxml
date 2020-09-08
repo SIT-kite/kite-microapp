@@ -1,39 +1,37 @@
-<navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view wx:if="{{pageReady}}">
 
-    <!--微信用户信息昵称 头像 问候语（hey!）-->
-    <view  bindtap="bindViewTap" class="userinfo">
-        <image class="userinfo-avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
-        <text class="greetings">Hey!</text>
-        <text class="userinfo-nickname">{{nickName}}</text>
-    </view>
-    <view class="stu_info">
-        <view class="image_wrap">
-            <image mode="aspectFill" src="/asset/pic/background2.png" />
-        </view>
-        <view class="info_wrap">
-            <view class="name-wrap">
-                <text selectable>姓名:{{userDetail.name}}</text>
-                    <image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png"/>
-            </view>
-            <text selectable>学号:{{userDetail.studentId}}</text>
-            <text selectable>学院:{{userDetail.college}}</text>
-            <text selectable>专业:{{userDetail.major}}</text>
-            <text selectable>寝室:{{userDetail.building}}{{userDetail.room}}室</text>
-            <text selectable>辅导员姓名:{{userDetail.counselorName}}</text>
-            <text selectable>辅导员电话:{{userDetail.counselorTel}}</text>
-        </view>
-    </view>
-
-    <view class="button_wrap_2">
-        <button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
-        <button style="width:38%" bindtap="gotoClass">新的班级</button>
-    </view>
-    <view class="button_wrap_3">
-        <button style="width:40%" bindtap="gotoAnalysis">我的新生画像</button>
-    </view>
-
-    <!--半圆背景-->
-    <view class="background"></view>
+	<!--微信用户信息昵称  问候语 头像-->
+	<view bindtap="bindViewTap" class="userinfo">
+		<image class="userinfo-avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
+		<text class="greetings">Hey!</text>
+	</view>
+	<!-- 学生详细信息 -->
+	<view class="stu_info">
+		<!-- 图片部分 -->
+		<view class="image_wrap">
+			<image mode="aspectFill" src="/asset/pic/background2.png" />
+		</view>
+		<!-- 文字部分 -->
+		<view class="info_wrap">
+			<image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png" />
+			<text selectable>姓名：{{userDetail.name}}</text>
+			<text selectable>学号：{{userDetail.studentId}}</text>
+			<text selectable>学院：{{userDetail.college}}</text>
+			<text selectable>专业：{{userDetail.major}}</text>
+			<text selectable>寝室：{{userDetail.building}}{{userDetail.room}}室</text>
+			<text selectable>辅导员姓名：{{userDetail.counselorName}}</text>
+			<text selectable>辅导员电话：{{userDetail.counselorTel}}</text>
+		</view>
+	</view>
+		<view class="button_wrap_3">
+		<button style="width:40%" bindtap="gotoAnalysis">我的新生画像</button>
+	</view>
+	<view class="button_wrap_2">
+		<button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
+		<button style="width:38%" bindtap="gotoClass">新的班级</button>
+	</view>
+	<!--半圆背景-->
+	<view class="background" style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
 
 </view>

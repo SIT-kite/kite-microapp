@@ -9,13 +9,13 @@
   }
 .img-wrap{
     position: absolute;
-    top: 4.7vh;
+    top: 5vh;
     z-index: -1;
 }
 .img-wrap image{
     background-color: rgb(246,246,251);
-    width: 70vw;
-    height: 80vh;
+    width: 50vh;
+    height: 50vh;
 }
 .black-line{
     position: absolute;
@@ -30,10 +30,10 @@
 }
 
 .title{
-    margin-top: 105rpx;
+    margin-top: 100rpx;
     font-size: 55rpx;
     font-weight: bold;
-    margin-bottom: 70rpx;
+    margin-bottom: 30rpx;
     letter-spacing: 0.075em;
 }
 
@@ -41,14 +41,17 @@
     margin: 0.3vh 0;
 }
 .button-wrap{
-    margin-top: 120rpx;
+    position: fixed;
+    bottom: 10vh;
+    /* margin-top: 100rpx; */
     width: 70vw;
 }
 .button-wrap button{
-    background-color: black;
+    background-color: rgb(75,109,233);
     color: white;
     line-height: 75rpx;
     width: 100%;
     font-size: 36rpx;
     height: 80rpx;
+    border-radius: 10rpx ;
 }
