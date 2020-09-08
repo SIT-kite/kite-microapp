@@ -78,8 +78,8 @@ Page({
     }
 
     if (id === "welcome" && app.globalData.userDetail != "" && app.globalData.userDetail != null) {
-        url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
-      
+      url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
+
     }
 
     const show = !app.globalData.isLogin;
@@ -130,7 +130,7 @@ Page({
 
   },
   go_temp: function (e) {
-    let url = new String("/pages/freshman/welcome/welcome");
+    let url = "/pages/freshman/welcome/welcome";
     if (app.globalData.userDetail != "" && app.globalData.userDetail != null) {
       url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
     }
@@ -138,13 +138,19 @@ Page({
       url: url,
       success: function () {
         console.log("跳转成功")
-       }, //接口调用成功的回调函数
+      }, //接口调用成功的回调函数
       fail: function (res) {
-        console.log(res); 
+        console.log(res);
         console.log("跳转失败")
       }, //接口调用失败的回调函数
       complete: function () { } //接口调用结束的回调函数（调用成功、失败都会执行）
     })
-  
+
+  },
+  onShareAppMessage: function (e) {
+    return {
+      title: "上应小风筝",
+      path: "pages/index/index"
+    }
   }
 })

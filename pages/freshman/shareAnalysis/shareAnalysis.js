@@ -165,7 +165,10 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    return {
+      title: "点击查看你的新生画像",
+      path: "pages/index/index"
+    }
   }
 })
