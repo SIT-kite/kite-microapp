@@ -130,7 +130,7 @@ Page({
 
   },
   go_temp: function (e) {
-    let url = new String("/pages/freshman/welcome/welcome");
+    let url = "/pages/freshman/welcome/welcome";
     if (app.globalData.userDetail != "" && app.globalData.userDetail != null) {
       url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
     }
