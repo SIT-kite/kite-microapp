@@ -98,7 +98,7 @@
 .detail{
   display: flex;
   flex-direction: column;
-  width: 420rpx;
+  width: 465rpx;
 }
 
 .detail-1{
@@ -106,12 +106,12 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .name{
   font-size: 38rpx;
   font-weight: 550;
-  width: 60%;
 }
 
 .position{
@@ -122,7 +122,6 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  width: 50%;
 }
 
 .detail-1{
