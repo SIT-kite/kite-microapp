@@ -196,7 +196,7 @@
     padding: 0rpx 0rpx 0rpx 20rpx;
 }
 
-.qq-wrap image{
+.qq image{
     margin: 0rpx 0 0rpx 20rpx;
     width: 40rpx;
     height: 40rpx;

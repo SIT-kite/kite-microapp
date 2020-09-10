@@ -192,13 +192,13 @@
 }
 
 .qq text{
-  color: rgb(167,158,143);
+  color: #e3e3e3;
   padding-left: 15rpx;
   word-break:break-all;
 }
 
 .wx text{
-  color: rgb(167,158,143);
+  color: #e3e3e3;
   padding-left:15rpx;
   word-break:break-all;
 }
@@ -209,7 +209,7 @@
   height: 42rpx;
 }
 
-.qq-wrap image{
+.qq image{
   margin-left:15rpx;
   width: 40rpx;
   height: 40rpx;

@@ -37,13 +37,11 @@
 			</view>
 			<!-- 联系方式 -->
 			<view class="contact">
-				<view class="qq-wrap" hidden="{{item.isHidden.qq}}">
-					<view class="qq">
-						<image src="/asset/icon/qq.png"></image>
-						<text selectable>{{item.contact.qq}}</text>
-					</view>
-				</view>
-				<view class="wx" hidden="{{item.isHidden.wechat}}">
+							<view class="qq"  style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
+								<image src="/asset/icon/qq.png"></image>
+								<text selectable>{{item.contact.qq}}</text>
+							</view>
+				<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
 					<image src="/asset/icon/weixin_small.png"></image>
 					<text selectable >{{item.contact.wechat}}</text>
 				</view>
@@ -83,13 +81,11 @@
 						<text selectable >{{item.college}}</text>
 					</view>
 					<view class="contact">
-						<view class="qq-wrap" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}">
-							<view class="qq">
+							<view class="qq"  style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
 								<image src="/asset/icon/qq.png"></image>
 								<text selectable>{{item.contact.qq}}</text>
 							</view>
-						</view>
-						<view class="wx" hidden="{{item.isHidden.wechat}}">
+						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
 							<image src="/asset/icon/weixin_small.png"></image>
 							<text selectable>{{item.contact.wechat}}</text>
 						</view>

@@ -12,7 +12,21 @@ Page({
   },
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
-
+  copyText: function (e) {
+    console.log(e)
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.text,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.showToast({
+              title: `复制${e.currentTarget.dataset.type}成功`
+            })
+          }
+        })
+      }
+    })
+  },
   pageDataInit: function(){
     var that = this;
     if (app.globalData.classmates == null){
