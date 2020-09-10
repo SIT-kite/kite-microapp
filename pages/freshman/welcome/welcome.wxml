@@ -4,14 +4,6 @@
     <view class="img-wrap">
         <image src="/asset/pic/person_bg.png" />
     </view>
-    
-    <!-- black line -->
-    <!-- <view class="line-wrap">
-        <view class="black-line">
-        </view>
-    </view> -->
-
-    <!-- text -->
     <view class="text-wrap">
         <text class="title" >上应大欢迎你!</text>
         <text class="text">请点击下方按钮</text>

@@ -1,11 +1,20 @@
 <!--pages/newFriend/newFriend.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<navBar
+ background='#fff'
+ back="{{true}}"
+ home="{{true}}"
+ bindback="handlerGobackClick"
+ bindhome="handlerGohomeClick"
+></navBar>
 <view class="main">
 	<scroll-view class="scbg" scroll-y="{{true}}">
 
 		<!-- 卡片 -->
-		<block wx:for="{{classmates}}" wx:for-index="id" wx:key="name">
-
+		<block
+		 wx:for="{{classmates}}"
+		 wx:for-index="id"
+		 wx:key="name"
+		>
 			<view class="card">
 				<view class="bed-wrap-1">
 					<text>{{item.building}}</text>
@@ -13,7 +22,6 @@
 				</view>
 				<view class="info">
 					<view class="image-wrap">
-						<image class="gender" src="{{item.genderImage}}" style="width:60rpx;height:60rpx"></image>
 						<image class="avatar" src="{{item.avatar}}"></image>
 					</view>
 
@@ -22,11 +30,15 @@
 							<text selectable class="name">{{item.name}}</text>
 							<view class="pos-wrap">
 								<text class="position">{{item.province}}</text>
-								<image src="/asset/pic/位置.png"></image>
+								<image src="/asset/icon/dizhi.png"></image>
 							</view>
 						</view>
 						<view class="contact">
-							<view class="qq-wrap" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}">
+							<view
+							 class="qq-wrap"
+							 style="padding-top:{{item.isHidden.padding}}rpx;"
+							 hidden="{{item.isHidden.qq}}"
+							>
 								<view class="qq">
 									<image src="/asset/pic/qq.png"></image>
 									<text selectable>{{item.contact.qq}}</text>
@@ -44,3 +56,4 @@
 
 	</scroll-view>
 </view>
+
