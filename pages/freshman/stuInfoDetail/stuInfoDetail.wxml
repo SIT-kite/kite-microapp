@@ -24,12 +24,13 @@
 			<text selectable>辅导员电话：{{userDetail.counselorTel}}</text>
 		</view>
 	</view>
-		<view class="button_wrap_3">
-		<button style="width:40%" bindtap="gotoAnalysis">我的新生画像</button>
-	</view>
-	<view class="button_wrap_2">
-		<button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
+		<view class="button_wrap_2">
+			<button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
 		<button style="width:38%" bindtap="gotoClass">新的班级</button>
+	</view>
+	<view class="button_wrap_3">
+		<button style="width:38%" bindtap="gotoAnalysis">我的新生画像</button>
+		<button style="width:38%" bindtap="gotoAnalysis">新生指南</button>
 	</view>
 	<!--半圆背景-->
 	<view class="background" style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>

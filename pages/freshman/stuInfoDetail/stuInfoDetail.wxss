@@ -92,7 +92,7 @@
 }
 
 .button_wrap_2{
-    padding-top: 50rpx;
+    padding-top: 60rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -106,12 +106,15 @@
     color: white;
     border-radius: 0;
     width: 20%;
-    margin-bottom: 20rpx;
     z-index: 3;
     border-radius: 14px;
 }
 .button_wrap_3{
-    padding-top: 60rpx;
+    padding-top: 50rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 3;
 }
 .button_wrap_3 button{
     height: 100rpx;
