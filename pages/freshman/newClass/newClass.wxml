@@ -29,12 +29,12 @@
 						<view class="contact">
 							<view class="qq-wrap" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}">
 								<view class="qq">
-									<image src="/asset/pic/qq.png"></image>
+									<image src="/asset/icon/qq.png"></image>
 									<text selectable>{{item.contact.qq}}</text>
 								</view>
 							</view>
 							<view class="wx" hidden="{{item.isHidden.wechat}}">
-								<image src="/asset/pic/wx.png"></image>
+								<image src="/asset/icon/weixin_small.png"></image>
 								<text selectable>{{item.contact.wechat}}</text>
 							</view>
 						</view>

@@ -187,12 +187,12 @@
 }
 
 .wx text{
-    color: rgb(167,158,143);
+    color: #e3e3e3;
     padding: 0rpx 0rpx 0rpx 20rpx;
 }
 
 .qq text{
-    color: rgb(167,158,143);
+    color: #e3e3e3;
     padding: 0rpx 0rpx 0rpx 20rpx;
 }
 

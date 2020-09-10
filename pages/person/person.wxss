@@ -43,7 +43,7 @@
 
 .login .image_container{
   width: 8vh;
-  height: 8vh;
+  height: 200rpx;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 3vh 0 0;
@@ -51,8 +51,8 @@
   padding: unset;
 }
 .image_container image{
-  width: 8vh;
-  height: 8vh;
+  width: 100%;
+  height: 100%;
 }
 
 .personal_pic {

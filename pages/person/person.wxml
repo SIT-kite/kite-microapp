@@ -21,7 +21,7 @@
 			<view wx:else style="height:100%;">
 				<button class="login  shadow" bindgetuserinfo="login" open-type="getUserInfo">
 					<view class=" image_container">
-						<image src="/asset/icon/weixin.png"></image>
+						<image src="/asset/icon/weixin.png" mode="aspectFit"></image>
 					</view>
 					<text style="font-size:20px;color:#e3e3e3;">点击左侧微信登录</text>
 				</button>
