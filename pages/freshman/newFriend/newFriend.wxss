@@ -95,7 +95,7 @@
 .detail{
     display: flex;
     flex-direction: column;
-    width: 390rpx;
+    width: 465rpx;
 }
 
 .basic_block{

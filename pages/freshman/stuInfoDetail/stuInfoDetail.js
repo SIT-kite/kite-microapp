@@ -16,6 +16,17 @@ Page({
   // 导航栏handler函数
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
+
+  /**
+   * 跳转至入学指南页面 
+   *
+   */
+  gotoNavigate: function () {
+    wx.navigateTo({
+      url: '/pages/freshman/navigate/navigate',
+    });
+  },
+
   pageDataInit: function () {
     var that = this;
     // 如果本地没有此信息，则是第一次加载
