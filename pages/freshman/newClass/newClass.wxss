@@ -6,6 +6,13 @@
   /* margin-top: 110rpx; */
   margin-bottom: 50rpx;
 }   
+.basic_block{
+  display: flex;
+  align-items: center;
+}
+.basic_block image{
+  margin-left: 14rpx;
+}
 
 .scbg{
   width: 100%;
@@ -71,11 +78,18 @@
   border-radius: 5px;
 }
 
-.image-wrap{
-  height: 170rpx;
-  width: 170rpx;
-  position: relative;
+.image-wrap {
+  width: 150rpx;
+  height: 150rpx;
 }
+
+.image-wrap image{
+  border-radius: 50%;
+  width: 130rpx;
+  height: 130rpx;
+  /* border: solid 6rpx red; */
+}
+
 
 .gender{
   /* left: 150rpx;
@@ -111,7 +125,6 @@
 .name{
   font-size: 38rpx;
   font-weight: 550;
-  width: 60%;
 }
 
 .position{

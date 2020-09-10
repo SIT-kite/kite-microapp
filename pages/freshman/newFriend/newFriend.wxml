@@ -1,21 +1,11 @@
 <!--pages/newFriend/newFriend.wxml-->
-<navBar
- background='#fff'
- back="{{true}}"
- home="{{true}}"
- bindback="handlerGobackClick"
- bindhome="handlerGohomeClick"
-></navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view class="main">
 	<view style="margin-top:30rpx;margin-left:30rpx">
 		<text style="font-size:50rpx;font-weight:600">我的室友</text>
 	</view>
 	<!-- 卡片 -->
-	<block
-	 wx:for="{{roommates}}"
-	 wx:key="bed"
-	 wx:for-index="id"
-	>
+	<block wx:for="{{roommates}}" wx:key="bed" wx:for-index="id">
 		<view class="card">
 			<view class="bed-wrap-1">
 				<text>{{item.bed}}</text>
@@ -28,7 +18,10 @@
 				</view>
 				<view class="detail">
 					<view class="detail-1">
-						<text selectable class="name">{{item.name}}</text>
+						<view class="basic_block">
+							<text selectable class="name">{{item.name}}</text>
+							<image src="{{item.genderImage}}"></image>
+						</view>
 						<view class="pos-wrap">
 							<text class="position">{{item.province}}</text>
 							<image src="/asset/icon/dizhi.png"></image>
@@ -64,11 +57,7 @@
 		<text style="font-size:50rpx;font-weight:600;">可能认识的人</text>
 	</view>
 
-	<block
-	 wx:for="{{familiar}}"
-	 wx:key="name"
-	 wx:for-index="id"
-	>
+	<block wx:for="{{familiar}}" wx:key="name" wx:for-index="id">
 		<view class="card">
 			<view class="bed-wrap-1">
 				<text>{{item.room}}</text>
@@ -81,21 +70,20 @@
 
 				<view class="detail">
 					<view class="detail-1">
-						<text selectable class="name">{{item.name}}</text>
+						<view class="basic_block">
+							<text selectable class="name">{{item.name}}</text>
+							<image src="{{item.genderImage}}"></image>
+						</view>
 						<view class="pos-wrap">
 							<text class="position">{{item.city}}</text>
-							<image src="/asset/pic/weizhi.png"></image>
+							<image src="/asset/icon/dizhi.png"></image>
 						</view>
 					</view>
 					<view class="detail-3" style="padding-top:10rpx">
 						<text selectable >{{item.college}}</text>
 					</view>
 					<view class="contact">
-						<view
-						 class="qq-wrap"
-						 style="padding-top:{{item.isHidden.padding}}rpx;"
-						 hidden="{{item.isHidden.qq}}"
-						>
+						<view class="qq-wrap" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}">
 							<view class="qq">
 								<image src="/asset/pic/qq.png"></image>
 								<text selectable>{{item.contact.qq}}</text>
@@ -111,4 +99,3 @@
 		</view>
 	</block>
 </view>
-

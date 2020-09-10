@@ -78,7 +78,7 @@ Page({
                   if (res.data.code == 0) {
                     var familiarList = res.data.data.people_familiar;
                     for (var i = 0; i < familiarList.length; i++) {
-                      familiarList[i].genderImage = familiarList[i].gender == "M" ? "/asset/pic/boy.png" : "/asset/pic/girl.png";
+                      familiarList[i].genderImage = familiarList[i].gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
                       familiarList[i].lastSeen = util.getIntervalToCurrentTime(familiarList[i].lastSeen);
                       familiarList[i].isHidden = {
                         qq: null,

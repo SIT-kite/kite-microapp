@@ -98,6 +98,14 @@
     width: 390rpx;
 }
 
+.basic_block{
+    display: flex;
+    align-items: center;
+}
+.basic_block image{
+    margin-left: 14rpx;
+}
+
 .detail-1{
     padding: 15rpx 0 0 15rpx;
     display: flex;
