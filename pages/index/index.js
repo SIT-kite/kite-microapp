@@ -107,7 +107,7 @@ Page({
       })
     }
   },
-  go_login: function () {
+  goLogin: function () {
     this.setData({
       show: false
     })
@@ -129,7 +129,7 @@ Page({
     }
 
   },
-  go_temp: function (e) {
+  goTemp: function (e) {
     let url = "/pages/freshman/welcome/welcome";
     if (app.globalData.userDetail != "" && app.globalData.userDetail != null) {
       url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
@@ -146,6 +146,11 @@ Page({
       complete: function () { } //接口调用结束的回调函数（调用成功、失败都会执行）
     })
 
+  },
+  goNavigate:function(){
+    wx.navigateTo({
+      url: '/pages/freshman/navigate/navigate',
+    });
   },
   onShareAppMessage: function (e) {
     return {

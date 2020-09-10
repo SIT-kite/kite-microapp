@@ -50,24 +50,6 @@ Page({
   // navBar handler
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
-  // handlerGohomeClick: function() {
-  //   console.log("Home");
-  //   wx.switchTab({
-  //     url: '/pages/index/index',
-  //     success: (result)=>{
-        
-  //     },
-  //     fail: ()=>{},
-  //     complete: ()=>{}
-  //   });
-
-  // },
-  // handlerGobackClick: function() {
-  //   console.log("Back");
-  //   wx.navigateBack({
-  //     delta: 1
-  // });
-  // },
 
   /**
    * 生命周期函数--监听页面加载
