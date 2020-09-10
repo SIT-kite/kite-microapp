@@ -59,7 +59,6 @@
     margin-right: 30rpx;
 }
 
-
 .info_wrap text{
     margin:2.5px;
     font-size:33rpx;

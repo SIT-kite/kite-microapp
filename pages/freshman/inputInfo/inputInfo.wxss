@@ -65,7 +65,19 @@
   flex-direction: row;
 }
 
+.input-wrap:nth-child(1)::before{
+ content: "*";
+ color: red;
+ left: calc( 750rpx * 0.25 / 2 - 13rpx );
+ position: absolute;
+}
 
+.input-wrap:nth-child(2)::before{
+  content: "*";
+  color: red;
+  position: absolute;
+  left: calc( 750rpx * 0.25 / 2  - 13rpx );
+ }
 .input-wrap input{
   margin-left: 24rpx;
   z-index: 5;
