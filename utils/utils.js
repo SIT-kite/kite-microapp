@@ -13,7 +13,7 @@ var getIntervalToCurrentTime = function (GivenTime) {
   var currTimeStamp = parseInt(new Date().getTime() / 1000);
   var interval = currTimeStamp - givenTimeStamp;
   // 解决时区问题
-  interval -= 8*3600;
+  interval -= 8 * 3600;
   var intervalTime;
   var tmp;
   if (interval < 60) {

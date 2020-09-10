@@ -1,5 +1,5 @@
 // pages/newClass/newClass.js
-import {handlerGohomeClick,handlerGobackClick} from '../../../utils/navBarUtils'
+import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
 var app = getApp();
 var util = require("../../../utils/utils.js");
 Page({
@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classmates:null
+    classmates: null
   },
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
@@ -27,18 +27,18 @@ Page({
       }
     })
   },
-  pageDataInit: function(){
+  pageDataInit: function () {
     var that = this;
-    if (app.globalData.classmates == null){
+    if (app.globalData.classmates == null) {
       console.log("request");
       wx.showLoading({
         title: '加载中',
         mask: true,
-        success: (result)=>{
-          
+        success: (result) => {
+
         },
-        fail: ()=>{},
-        complete: ()=>{}
+        fail: () => { },
+        complete: () => { }
       });
 
 
@@ -46,116 +46,118 @@ Page({
       console.log(`url: ${url}`)
       wx.request({
         url: url,
-        method:"GET",
-        data:{
+        method: "GET",
+        data: {
           "secret": `${app.globalData.userInfo.secret}`
         },
-        header:{
+        header: {
           "content-type": "application/x-www-form-urlencoded",
           "Authorization": `Bearer ${app.globalData.token}`,
         },
-        success(res){
-          if(res.data.code == 0){
+        success(res) {
+          if (res.data.code == 0) {
             // console.log(res.data);
             var stuList = res.data.data.classmates;
-            for(var i =0;i<stuList.length;i++){
-              stuList[i].genderImage = stuList[i].gender == "M"? "/asset/icon/male.png":"/asset/icon/female.png";
+            for (var i = 0; i < stuList.length; i++) {
+              stuList[i].genderImage = stuList[i].gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
               stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
               stuList[i].isHidden = {
-                "qq":null,
-                "wechat":null,
-                "padding":null
+                "qq": null,
+                "wechat": null,
+                "padding": null
               }
-              if (stuList[i].contact == null){
+              if (stuList[i].contact == null) {
                 stuList[i].isHidden.qq = true;
                 stuList[i].isHidden.wechat = true;
               }
-              else{
-                stuList[i].isHidden.qq = stuList[i].contact.qq == ""?true:false;
-                stuList[i].isHidden.wechat = stuList[i].contact.wechat == ""?true:false;
-                stuList[i].isHidden.padding = stuList[i].isHidden.wechat == true?25:0;
+              else {
+                stuList[i].isHidden.qq = stuList[i].contact.qq == "" ? true : false;
+                stuList[i].isHidden.wechat = stuList[i].contact.wechat == "" ? true : false;
+                stuList[i].isHidden.padding = stuList[i].isHidden.wechat == true ? 25 : 0;
               }
             }
             app.globalData.classmates = res.data.data.classmates;
             that.setData({
-              classmates:stuList
+              classmates: stuList
             });
             wx.hideLoading();
-          }else{
+          } else {
             wx.showModal({
-              title:"哎呀，出错误了>.<",
-              content:res.data,
-              showCancel:false,
-              success(res){}
+              title: "哎呀，出错误了>.<",
+              content: res.data,
+              showCancel: false,
+              success(res) { }
             })
           }
         },
-        fail(res){
+        fail(res) {
           wx.showModal({
-            title:"哎呀，出错误了>.<",
-            content:"网络不在状态",
-            showCancel:false,
-            success(res){}
+            title: "哎呀，出错误了>.<",
+            content: "网络不在状态",
+            showCancel: false,
+            success(res) { }
           })
         }
       })
-    }else{
+    } else {
       console.log("本地已保存 classmates 数据");
       this.setData({
         classmates: app.globalData.classmates
       })
     }
   },
-  pageDataFresh: function(){
+  pageDataFresh: function () {
     var that = this;
     var reqTask = wx.request({
       url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/classmate`,
-      data:{
+      data: {
         "secret": `${app.globalData.userInfo.secret}`
       },
-      header:{
+      header: {
         "content-type": "application/x-www-form-urlencoded",
         "Authorization": `Bearer ${app.globalData.token}`,
       },
       method: 'GET',
-      success: (result)=>{
-        if(result.data.code == 0){
+      success: (result) => {
+        if (result.data.code == 0) {
           // console.log(res.data);
           var stuList = result.data.data.classmates;
-          for(var i =0;i<stuList.length;i++){
-            stuList[i].genderImage = stuList[i].gender == "M"? "/asset/pic/boy.png":"/asset/pic/girl.png";
-            stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
-            stuList[i].isHidden = {
-              "qq":null,
-              "wechat":null,
-              "padding":null
+          for (var i = 0; i < stuList.length; i++) {
+            stuList[i].genderImage = stuList[i].gender == "M" ? "/asset/pic/boy.png" : "/asset/pic/girl.png";
+            if (null != stuList[i].lastSeen) {
+              stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
             }
-            if (stuList[i].contact == null){
+            stuList[i].isHidden = {
+              "qq": null,
+              "wechat": null,
+              "padding": null
+            }
+            if (stuList[i].contact == null) {
               stuList[i].isHidden.qq = true;
               stuList[i].isHidden.wechat = true;
             }
-            else{
-              stuList[i].isHidden.qq = stuList[i].contact.qq == ""?true:false;
-              stuList[i].isHidden.wechat = stuList[i].contact.wechat == ""?true:false;
-              stuList[i].isHidden.padding = stuList[i].isHidden.wechat == true?25:0;
+            else {
+              stuList[i].isHidden.qq = stuList[i].contact.qq == "" ? true : false;
+              stuList[i].isHidden.wechat = stuList[i].contact.wechat == "" ? true : false;
+              stuList[i].isHidden.padding = stuList[i].isHidden.wechat == true ? 25 : 0;
             }
           }
           app.globalData.classmates = result.data.data.classmates;
           that.setData({
-            classmates:stuList
+            classmates: stuList
           });
-        }else{
+        } else {
           wx.showModal({
-            title:"哎呀，出错误了>.<",
-            content:res.data,
-            showCancel:false,
-            success(res){}
+            title: "哎呀，出错误了>.<",
+            content: res.data,
+            showCancel: false,
+            success(res) { }
           })
         }
 
       },
-      fail: ()=>{},
-      complete: ()=>{
+      fail: () => { },
+      complete: () => {
         that.onLoad();
         that.onShow();
       }
@@ -168,7 +170,7 @@ Page({
   onLoad: function (options) {
     console.log("页面 newClass onLoad...");
     this.pageDataInit();
-    
+
   },
 
   /**
@@ -203,10 +205,10 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function(){
+  onPullDownRefresh: function () {
     console.log("页面 newClass 刷新中");
     this.pageDataFresh();
-    
+
   },
 
   /**

@@ -8,7 +8,7 @@
 			<view class="card">
 				<view class="bed-wrap-1">
 					<text>{{item.building}}</text>
-					<text class="lastSeen">{{item.lastSeen}}前来过</text>
+					<text wx:if="{{item.lastSeen != null }}" class="lastSeen">{{item.lastSeen}}前来过</text>
 				</view>
 				<view class="info">
 					<view class="image-wrap">
@@ -26,16 +26,16 @@
 								<image src="/asset/icon/dizhi.png"></image>
 							</view>
 						</view>
-					<view class="contact">
-							<view class="qq"  style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
+						<view class="contact">
+							<view class="qq" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
 								<image src="/asset/icon/qq.png"></image>
 								<text selectable>{{item.contact.qq}}</text>
 							</view>
-						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
-							<image src="/asset/icon/weixin_small.png"></image>
-							<text selectable>{{item.contact.wechat}}</text>
+							<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
+								<image src="/asset/icon/weixin_small.png"></image>
+								<text selectable>{{item.contact.wechat}}</text>
+							</view>
 						</view>
-					</view>
 					</view>
 				</view>
 			</view>
