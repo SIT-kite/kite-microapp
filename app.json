@@ -10,7 +10,8 @@
     "pages/freshman/newFriend/newFriend",
     "pages/person/person",
     "pages/about/about",
-    "pages/signup/signup"
+    "pages/signup/signup",
+    "pages/freshman/navigate/navigate"
   ],
   "window": {
     "backgroundTextStyle": "light",
