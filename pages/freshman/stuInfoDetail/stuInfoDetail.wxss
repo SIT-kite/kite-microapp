@@ -92,6 +92,7 @@
 }
 
 .button_wrap_2{
+    margin-top:50rpx;
     padding-top: 50rpx;
     display: flex;
     flex-direction: row;
@@ -112,6 +113,9 @@
 }
 .button_wrap_3{
     padding-top: 60rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .button_wrap_3 button{
     height: 100rpx;

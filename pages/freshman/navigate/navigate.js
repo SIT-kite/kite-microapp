@@ -22,6 +22,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    wx.showLoading({
+      title: "加载中"
+    });
+    setTimeout(() => {wx.hideLoading();},1500);
 
   },
 
