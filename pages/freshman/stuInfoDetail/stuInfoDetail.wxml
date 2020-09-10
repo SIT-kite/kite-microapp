@@ -30,7 +30,7 @@
 	</view>
 	<view class="button_wrap_3">
 		<button style="width:38%" bindtap="gotoAnalysis">迎新画像</button>
-		<button style="width:38%" bindtap="gotoNavigate">入学指南</button>
+		<button style="width:38%" bindtap="gotoNavigate">报到指南</button>
 	</view>
 	<!--半圆背景-->
 	<view class="background" style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
