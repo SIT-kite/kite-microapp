@@ -18,7 +18,7 @@ Page({
   handlerGobackClick: handlerGobackClick,
 
   /**
-   * 跳转至新生导航页面 
+   * 跳转至入学指南页面 
    *
    */
   gotoNavigate: function () {
