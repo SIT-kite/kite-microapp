@@ -251,6 +251,28 @@ Page({
     // console.log(that.data.visible);
     console.log("inputInfo onload over")
   },
+  onReady: function (option) {
+    console.log(this.data.isHidden);
+    var that = this;
+    if ("flex" == this.data.isHidden) {
+      wx.showModal({
+        title: '隐私信息提示',
+        content: '您的身份证号后6位和准考证号将用于验证您的身份，并查询您的寝室位置、查找您的舍友信息等用途。您的手机号、QQ、微信为可选项，填写后同寝室的人可以看到你的手机号、QQ、微信，班级的人可以看到你的QQ和微信，如果您授权，您可能认识的人也可以查看您的QQ和微信。我们仅保留您的联系方式约1周时间。',
+        showCancel: true,
+        cancelText: '我拒绝',
+        cancelColor: '#000000',
+        confirmText: '我已知晓',
+        confirmColor: '#4B6DE9',
+        success: (result) => {
+          if(!result.confirm){
+            that.handlerGohomeClick();
+          }
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
+    }
+  },
   onShareAppMessage: function (e) {
     return {
       title: "上应小风筝",

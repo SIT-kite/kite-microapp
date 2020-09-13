@@ -164,6 +164,23 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    var that = this;
+    wx.showModal({
+      title: '隐私信息提示',
+      content: `小程序部分功能(如闲置交易，课程表)需要验证并使用您的身份信息以提供功能或保证交易安全。数据仅用于比对身份信息且保存期限为7天`,
+      showCancel: true,
+      cancelText: '我拒绝',
+      cancelColor: '#000000',
+      confirmText: '我已知晓',
+      confirmColor: '#4B6DE9',
+      success: (result) => {
+        if(!result.confirm){
+          that.handlerGohomeClick();
+        }
+      },
+      fail: ()=>{},
+      complete: ()=>{}
+    });
 
   },
 
