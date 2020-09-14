@@ -123,7 +123,7 @@ Page({
           // console.log(res.data);
           var stuList = result.data.data.classmates;
           for (var i = 0; i < stuList.length; i++) {
-            stuList[i].genderImage = stuList[i].gender == "M" ? "/asset/pic/boy.png" : "/asset/pic/girl.png";
+            stuList[i].genderImage = stuList[i].gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
             if (null != stuList[i].lastSeen) {
               stuList[i].lastSeen = util.getIntervalToCurrentTime(stuList[i].lastSeen);
             }

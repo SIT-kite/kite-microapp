@@ -54,7 +54,15 @@ Page({
 
     }
   },
-
+  onShow:function(){
+    const {
+      navBarHeight,
+      navBarExtendHeight,
+    } = getApp().globalSystemInfo;
+    this.setData({
+      navBarCurrentHeight: navBarExtendHeight+navBarHeight
+    })
+  },
   gotoStuInfoDetail(e) {
     var that = this;
     console.log("gotoStuInfoDetail");
