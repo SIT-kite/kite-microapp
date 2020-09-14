@@ -9,6 +9,9 @@ var getTimeStamp = function (GMTTime) {
 // 获取给定时间到现在的时间间隔
 // 返回形式为 XX年XX月XX日XX:XX:XX
 var getIntervalToCurrentTime = function (GivenTime) {
+  if (null == GivenTime) {
+    return null;
+  }
   var givenTimeStamp = getTimeStamp(GivenTime) / 1000;
   var currTimeStamp = parseInt(new Date().getTime() / 1000);
   var interval = currTimeStamp - givenTimeStamp;

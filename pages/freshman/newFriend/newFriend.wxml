@@ -9,7 +9,7 @@
 		<view class="card">
 			<view class="bed-wrap-1">
 				<text>{{item.bed}}</text>
-				<text class="lastSeen">{{item.lastSeen}}前来过</text>
+				<text class="lastSeen" wx:if="{{item.lastSeen != null }}">{{item.lastSeen}}前来过</text>
 			</view>
 			<!-- <view class="wrap" style="display:flex;flex-direction:column;width:80%;"> -->
 			<view class="info">
