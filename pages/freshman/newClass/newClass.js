@@ -1,7 +1,7 @@
 // pages/newClass/newClass.js
 import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
 var app = getApp();
-var util = require("../../../utils/utils.js");
+var util = require("../../../utils/timeUtils");
 Page({
 
   /**
