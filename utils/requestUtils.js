@@ -46,7 +46,7 @@ var doPOST = (url, data, header) => {
 }
 
 /**
- * POST请求Promise化
+ * PUT请求Promise化
  * @param {String} url 
  * @param {Object} data 
  * @param {Object} header
