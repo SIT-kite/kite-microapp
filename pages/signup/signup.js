@@ -1,11 +1,12 @@
 // pages/signup/signup.js
 import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils'
 const app = getApp();
-const url = app.globalData.commonUrl
+const commonUrl = app.globalData.commonUrl;
+const requestUtils = require("../../utils/requestUtils");
 Page({
 
   /**
-   * 页面的初始数据1
+   * 页面的初始数据
    */
   data: {
     testInfo: "",
@@ -22,6 +23,7 @@ Page({
   // navBar handler
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
+
   bindName: function (e) {
     const that = this;
     this.setData({
@@ -86,72 +88,65 @@ Page({
     }
     that.setData({
       uploadInfo: that.data.uploadInfo
-    })
+    });
     wx.setStorage({
       data: this.data.uploadInfo,
       key: 'uploadInfo',
-    })
-    wx.request({
-      url: `${url}/user/${app.globalData.uid}/identity`,
-      method: "POST",
-      header: {
-        "content-type": "application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${app.globalData.token}`
-      },
-      data: that.data.uploadInfo,
-      success: function (res) {
-        // wx.hideLoading({
-        // success: (res1) => {
-        if (res.data.code === 0) {
-          that.setData({
-            resInfo: "认证成功！",
-            upSuccess: true
-          });
-          app.globalData.isStudent = true;
-          setTimeout(() => {
-            that.setData({
-              show: false
-            });
-            setTimeout(() => {
-              wx.navigateBack({
-                delta: 1
-              });
-            }, 500);
-          }, 500);
-        } else {
-          that.setData({
-            resInfo: res.data.msg,
-            upSuccess: false
-          });
-        }
+    });
+    let url = `${commonUrl}/user/${app.globalData.uid}/identity`;
+    let data = that.data.uploadInfo;
+    let header =  {
+      "content-type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${app.globalData.token}`
+    };
+    var postUserIdentity = requestUtils.doPOST(url, data, header);
+    postUserIdentity.then(res => {
+      that.setData({
+        resInfo: "认证成功！",
+        upSuccess: true
+      });
+      app.globalData.isStudent = true;
+      // 更新本地数据
+      wx.setStorageSync("isStudent", true);
+      setTimeout(() => {
         that.setData({
-          show: true
+          show: false
         });
-        that.setData({
-          testInfo: test
-        });
-
-
-      },
-      fail: function (res) {
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 500);
+      }, 500);
+      that.setData({
+        show: true
+      });
+    }).catch(res => {
+      if (res.error == requestUtils.NETWORK_ERROR) {
         that.setData({
           upSuccess: false,
           resInfo: "网络问题，请稍后再试",
-          testInfo: JSON.stringify(res)
-        })
+        });
         that.setData({
           show: true
-        })
+        });
         setTimeout(() => {
           that.setData({
             show: false
           })
-        }, 500)
+        }, 500);
       }
-    })
-    that.setData({
-      testInfo: test
-    })
+      if (res.error == requestUtils.REQUEST_ERROR) {
+        that.setData({
+          resInfo: res.data.msg,
+          upSuccess: false
+        });
+        that.setData({
+          show: true
+        });
+      }
+    });
+   
   },
   /**
    * 生命周期函数--监听页面加载
@@ -175,7 +170,7 @@ Page({
       confirmColor: '#4B6DE9',
       success: (result) => {
         if(!result.confirm){
-          that.handlerGohomeClick();
+          that.handlerGobackClick();
         }
       },
       fail: ()=>{},

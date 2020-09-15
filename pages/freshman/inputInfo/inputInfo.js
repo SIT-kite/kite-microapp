@@ -1,7 +1,8 @@
 //index.js
 //获取应用实例
 import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
-var app = getApp()
+const app = getApp();
+const requestUtils = require("../../../utils/requestUtils");
 const secretRex = /[0-9]{5}[0-9X]/;
 Page({
   data: {
@@ -20,7 +21,7 @@ Page({
       qq: "",
       wechat: ""
     },
-    visible: true
+    visible: true,
   },
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
@@ -48,25 +49,25 @@ Page({
         showCancel: false,
         success(res) {
           that.data.visible = true;
-          console.log(that.data.visible);
         }
       })
 
     }
   },
-  onShow:function(){
+  onShow: function () {
     const {
       navBarHeight,
       navBarExtendHeight,
     } = getApp().globalSystemInfo;
     this.setData({
-      navBarCurrentHeight: navBarExtendHeight+navBarHeight
+      navBarCurrentHeight: navBarExtendHeight + navBarHeight
     })
   },
   gotoStuInfoDetail(e) {
     var that = this;
-    console.log("gotoStuInfoDetail");
-    console.log(JSON.stringify(that.data.contact));
+    let url = "";
+    let data = {};
+    let header = {};
     // 没有隐藏输入框（第一次输入个人信息）
     if (this.data.isHidden == "flex") {
       if (this.data.userInfo.account == "") {
@@ -89,115 +90,102 @@ Page({
         })
       } else {
         // 满足输入框要求 发送PUT请求
-        wx.request({
-          url: `${app.globalData.commonUrl}/freshman/${that.data.userInfo.account}`,
-          method: "PUT",
-          data: {
-            "secret": `${that.data.userInfo.secret}`,
-            "contact": JSON.stringify(that.data.contact),
-            "visible": that.data.visible
-          },
-          header: {
-            "content-type": "application/x-www-form-urlencoded",
-            "Authorization": `Bearer ${app.globalData.token}`,
-          },
-          success(res) {
-            console.log(res.data);
-            if (res.data.code == 0) {
-              // 本地Storage存储一份
-              wx.setStorageSync("userInfo", that.data.userInfo);
-              // 全局同时更新
-              app.globalData.visible = that.data.visible;
-              app.globalData.userInfo = that.data.userInfo;
-              app.globalData.contact = that.data.contact;
-              wx.navigateTo({
-                url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
-                success: (result) => {
-                  console.log("跳转 stuInfoDetail 页面成功")
-                },
-                fail: () => { },
-                complete: () => { }
-              });
-            } else if (res.data.code == 120) {
-              // 返回数据错误码 120
-              wx.showModal({
-                title: "哎呀，出错误了>.<",
-                content: "查询不到该用户的信息",
-                showCancel: false,
-                success(res) { }
-              })
-            } else {
-              // 其他数据错误码的所有情况
-              wx.showModal({
-                title: "哎呀，出错误了>.<",
-                content: res.data,
-                showCancel: false,
-                success(res) { }
-              })
-            }
-          },
-          fail(res) {
-            // PUT请求失败
-            wx.showModal({
-              title: "哎呀，出错误了>.<",
-              content: "网络不在状态",
-              showCancel: false,
-              success(res) { }
-            })
-          }
-        })
-      }
-    }
-    //  非第一次进入 修改信息
-    else {
-      console.log("修改个人信息");
-      wx.request({
-        url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`,
-        method: "PUT",
-        data: {
-          "secret": `${app.globalData.userInfo.secret}`,
-          "contact": JSON.stringify(that.data.contact),
-          "visible": that.data.visible
-        },
-        header: {
+        url = `${app.globalData.commonUrl}/freshman/${this.data.userInfo.account}`;
+        data = {
+          "secret": `${this.data.userInfo.secret}`,
+          "contact": JSON.stringify(this.data.contact),
+          "visible": this.data.visible
+        };
+        header = {
           "content-type": "application/x-www-form-urlencoded",
           "Authorization": `Bearer ${app.globalData.token}`,
-        },
-        success(res) {
-          // console.log(res.data);
-          if (res.data.code == 0) {
-            // Storage 和 globalData 同时更新
-            wx.setStorageSync("userInfo", that.data.userInfo);
-            app.globalData.visible = that.data.visible;
-            app.globalData.contact = that.data.contact;
+        };
 
-            wx.redirectTo({
-              url: '/pages/stuInfoDetail/stuInfoDetail',
-              success: (result) => {
-                console.log("跳转至页面 stuInfoDetail")
-              },
-              fail: () => { },
-              complete: () => { }
-            });
-
-          } else {
+        var putFreshman = requestUtils.doPUT(url, data, header).then(res => {
+          // 本地Storage存储userInfo
+          wx.setStorageSync("userInfo", this.data.userInfo);
+          // 全局同时更新
+          app.globalData.visible = this.data.visible;
+          app.globalData.userInfo = this.data.userInfo;
+          app.globalData.contact = this.data.contact;
+          wx.redirectTo({
+            url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
+            success: (result) => {
+              console.log("跳转 stuInfoDetail 页面成功");
+            }
+          });
+          return res;
+        });
+        putFreshman.then(res => {
+          console.log("数据加载完成");
+        }).catch(res => {
+          if (res.error == requestUtils.REQUEST_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: res.data,
               showCancel: false,
-              success(res) { }
-            })
+            });
           }
-        },
-        fail(res) {
+          if (res.error == requestUtils.NO_ACCOUNT_ERROR) {
+            wx.showModal({
+              title: "哎呀，出错误了>.<",
+              content: "查询不到该用户的信息",
+              showCancel: false,
+            });
+          }
+          if (res.error == requestUtils.NETWORK_ERROR) {
+            wx.showModal({
+              title: "哎呀，出错误了>.<",
+              content: "网络不在状态",
+              showCancel: false,
+            });
+          }
+        });
+      }
+    } else {
+      //  非第一次进入 修改信息
+      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`;
+      data = {
+        "secret": `${app.globalData.userInfo.secret}`,
+        "contact": JSON.stringify(this.data.contact),
+        "visible": this.data.visible
+      };
+      header = {
+        "content-type": "application/x-www-form-urlencoded",
+        "Authorization": `Bearer ${app.globalData.token}`,
+      };
+      var patchFreshman = requestUtils.doPUT(url, data, header).then(res => {
+        // Storage 和 globalData 同时更新
+        wx.setStorageSync("userInfo", this.data.userInfo);
+        app.globalData.visible = this.data.visible;
+        app.globalData.contact = this.data.contact;
+        wx.redirectTo({
+          url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
+          success: (result) => {
+            console.log("跳转至页面 stuInfoDetail");
+          },
+          fail: (err) => console.log(err),
+        });
+        return res;
+      });
+      patchFreshman.then(res => {
+        console.log("patchFreshman 数据处理完成");
+      }).catch(res => {
+        if (res.error == requestUtils.REQUEST_ERROR) {
+          wx.showModal({
+            title: "哎呀，出错误了>.<",
+            content: res.data,
+            showCancel: false,
+          });
+        }
+        if (res.error == requestUtils.NETWORK_ERROR) {
           wx.showModal({
             title: "哎呀，出错误了>.<",
             content: "网络不在状态",
             showCancel: false,
-            success(res) { }
-          })
+          });
         }
-      })
+      });
     }
   },
 
@@ -232,8 +220,7 @@ Page({
   onLoad: function (option) {
     console.log(option.isHidden);
     console.log('onLoad');
-    var that = this;
-    console.log(that.data.userInfo);
+    console.log(this.data.userInfo);
     // 如果为none，说明现在执行修改功能，需要把全局变量中的contact拷贝一份,展示在input框中
     if (option.isHidden == "none") {
       this.setData({
@@ -245,7 +232,7 @@ Page({
         avatarUrl: app.globalData.userAvatar,
         nickName: app.globalData.nickName
       })
-      console.log(that.data.visible);
+      console.log(this.data.visible);
     } else {
       this.setData({
         buttonText: option.isHidden == "flex" ? "提交" : "确定",
@@ -254,14 +241,11 @@ Page({
         nickName: app.globalData.nickName
       })
     }
-    // console.log(that.data.userInfo);
-    // console.log(that.data.contact);
-    // console.log(that.data.visible);
     console.log("inputInfo onload over")
   },
   onReady: function (option) {
     console.log(this.data.isHidden);
-    var that = this;
+    
     if ("flex" == this.data.isHidden) {
       wx.showModal({
         title: '隐私信息提示',
@@ -272,12 +256,10 @@ Page({
         confirmText: '我已知晓',
         confirmColor: '#4B6DE9',
         success: (result) => {
-          if(!result.confirm){
-            that.handlerGohomeClick();
+          if (!result.confirm) {
+            this.handlerGohomeClick();
           }
-        },
-        fail: ()=>{},
-        complete: ()=>{}
+        }
       });
     }
   },
