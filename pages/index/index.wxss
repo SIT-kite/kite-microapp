@@ -65,6 +65,12 @@
 .main {
   width: 100%;
   padding-top: var(--padding-size);
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  height: calc( 100vh - 48px );
+  
 }
 
 .background {
@@ -122,14 +128,13 @@
   grid-template-columns: repeat(3, 33.3%);
   grid-template-rows: repeat(2, 50%);
   position: relative;
-  margin: 15vh auto;
+  margin: 5vh 0;
   width: 680rpx;
   height: 453rpx;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 6px rgba(224, 224, 224, 0.37);
   background-color: white;
 }
-
 @keyframes living {
   0% {
     transaform: scale(1);
@@ -148,9 +153,40 @@
   }
 }
 
-
 .pop_text{
   font-weight:bold;
   font-size:24px;
   margin: auto;
+}
+
+.toast_wrap{
+  position: relative;
+  width: 650rpx;
+  height: 70rpx;
+  box-shadow: 0px 0px 10px 6px rgba(224, 224, 224, 0.247);
+  background-color: rgb(255, 255, 255);
+  margin-top: 5vh;
+  border-radius:20rpx;
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-left: 30rpx;
+  overflow: hidden;
+}
+
+.toast_wrap image{
+  width:35rpx;
+  height:36rpx;
+}
+
+.toast_wrap swiper{
+  width: calc( 650rpx - ( 35rpx + 30rpx ));
+  height: 100%;
+}
+.toast_wrap .text_wrap{
+  width: calc( 650rpx - ( 35rpx + 30rpx ));
+  height: 100%;
+  text-align:center;
+  display: flex;
+  align-items: center;
 }

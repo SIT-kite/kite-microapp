@@ -1,22 +1,52 @@
 <!--index.wxml-->
 <view class="container">
-	<van-popup show="{{ show }}" closeable custom-class="pop_class" bind:close="onClose">
+	<!-- 未登录弹窗 -->
+	<van-popup
+	 show="{{ show }}"
+	 closeable
+	 custom-class="pop_class"
+	 bind:close="onClose"
+	>
 		<view class="pop_container">
 			<text style="font-weight:bold;font-size:24px;">尚未登录，请前往登录</text>
 			<view class="pop_button" bindtap="goLogin">登录</view>
 		</view>
 	</van-popup>
-	<van-popup show="{{ incompleted }}" closeable custom-class="pop_class_complete" bind:close="onClose">
+	<!-- 未开发弹窗 开发环境 -->
+	<van-popup
+	 show="{{ incompleted }}"
+	 closeable
+	 custom-class="pop_class_complete"
+	 bind:close="onClose"
+	>
 		<view class="pop_container_complete">
 			<text class="pop_text" style="font-weight:bold;font-size:18px;">别急别急，正在努力开发</text>
 		</view>
 	</van-popup>
-	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
+	<!-- 主页 -->
+	<image
+	 class='background'
+	 src="/asset/pic/background.png"
+	 mode="aspectFill"
+	></image>
 	<view class="main">
-		<swiper indicator-dots="true" class="swiper" autoplay="true" interval="4000" easing-function="linear" duration="700"circular>
+		<!-- 主页banner -->
+		<swiper
+		 indicator-dots="true"
+		 class="swiper"
+		 autoplay="true"
+		 interval="4000"
+		 easing-function="linear"
+		 duration="700"
+		 circular="true"
+		>
 			<swiper-item>
 				<view class="box">
-					<image src="/asset/pic/temp_activity.png" style="width:100%;height:100%;" bindtap="goTemp"></image>
+					<image
+					 src="/asset/pic/temp_activity.png"
+					 style="width:100%;height:100%;"
+					 bindtap="goTemp"
+					></image>
 				</view>
 			</swiper-item>
 			<swiper-item>
@@ -26,11 +56,60 @@
 				</view>
 			</swiper-item>
 		</swiper>
+		<!-- 滚动通知 -->
+		<view class="toast_wrap">
+			<image src="/asset/icon/main_icon/notice.png" />
+			<swiper
+			 class=""
+			 autoplay="true"
+			 current="0"
+			 interval="5000"
+			 duration="1000"
+			 circular="true"
+			 vertical="true"
+			>
+				<swiper-item>
+					<view class="text_wrap">
+						<text>上海多雨，记得带伞哦</text>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="text_wrap">
+						<text>一食堂好吃，二食堂三楼好吃，三食堂最好吃</text>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="text_wrap">
+						<text>多读书多看报，少吃零食多睡觉</text>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="text_wrap">
+						<text>我在测试红红火火恍恍惚惚</text>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="text_wrap">
+						<text>我在测试红红火火恍恍惚惚</text>
+					</view>
+				</swiper-item>
+			</swiper>
+
+		</view>
+		<!-- 主页功能索引 -->
 		<view class="menuBlock">
-			<view wx:for="{{menu_list}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell" bindtap="move">
+			<view
+			 wx:for="{{menu_list}}"
+			 wx:key="id"
+			 data-id="{{item.id}}"
+			 data-index="{{index}}"
+			 class="menu_cell"
+			 bindtap="move"
+			>
 				<image style="{{index===selected ? animation_data: '' }}" src="{{item.iconPath}}"></image>
 				<view class="menu_cell_text" hover-class="menu_cell_active">{{item.text}}</view>
 			</view>
 		</view>
 	</view>
 </view>
+
