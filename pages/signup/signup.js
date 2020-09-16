@@ -59,9 +59,7 @@ Page({
         (that.data.uploadInfo.oaSecret ||
           that.data.uploadInfo.identityNumber))
     })
-    // console.log(that.data.canupLoad)
-    // console.log(that.data.uploadInfo.oaSecret ||
-    //   that.data.uploadInfo.identityNumber)
+
   },
   bindidentity: function (e) {
     const that = this;
