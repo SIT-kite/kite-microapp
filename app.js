@@ -3,6 +3,7 @@ const requestUtils = require('./utils/requestUtils');
 const promisify = require('./utils/promisifyUtils');
 const wxGetSetting = promisify(wx.getSetting);
 const wxGetUserInfo = promisify(wx.getUserInfo);
+const wxShowModal = promisify(wx.showModal);
 App({
   globalData: {
     nickName: null,
@@ -24,6 +25,38 @@ App({
     familiar: null
   },
   onLaunch: function () {
+    // 更新版本处理
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      console.log("检查新版本信息");
+      console.log(`是否包含新版本：${res.hasUpdate}`);
+    });
+    updateManager.onUpdateReady(function () {
+      wxShowModal({
+        title: "更新提示",
+        content: "新版本已经准备好，是否重启应用？",
+      }).then(res => {
+        if (res.confirm) {
+          // 清理本地缓存
+          wx.clearStorageSync();
+          // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+          updateManager.applyUpdate();
+        }
+      });
+    });
+    updateManager.onUpdateFailed(function () {
+      // 新版本下载失败
+      wxShowModal({
+        title: '更新提示',
+        content: '新版本下载失败, 请稍后重试!',
+        showCancel: false,
+        confirmText: '好的',
+        confirmColor: '#4B6DE9',
+      }).then(res => { console.log("新版本下载失败") });
+    });
+
+    // 获取本地变量
     try {
       var userDetail = wx.getStorageSync("userDetail");
       var userInfo = wx.getStorageSync("userInfo");
@@ -39,15 +72,21 @@ App({
       console.log("获取Storage变量出错");
     }
   },
+
+
   onShow: function () {
     // 更新
     const that = this;
+    const isAllStorageOk = this.globalData.uid != "" && this.globalData.token != "" && this.globalData.isStudent != "";
     wxGetSetting().then(res => {
       if (res.authSetting['scope.userInfo']) {
         wxGetUserInfo().then(res => {
           that.globalData.nickName = res.userInfo.nickName;
           that.globalData.userAvatar = res.userInfo.avatarUrl;
-          that.globalData.isLogin = true;
+          // 确认所需全局变量正常 否则重新登录获取
+          if (isAllStorageOk) {
+            that.globalData.isLogin = true;
+          }
           if (that.globalData.uid != "") {
             // put 更新用户信息
             let url = `${that.globalData.commonUrl}/user/${that.globalData.uid}`

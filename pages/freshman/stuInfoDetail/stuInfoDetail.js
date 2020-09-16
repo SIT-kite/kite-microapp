@@ -67,18 +67,19 @@ Page({
       });
       return res;
     });
-    getFreshman.then( res => {
+    getFreshman.then(res => {
       // 取消加载框
       wx.hideLoading();
       console.log("数据处理完成");
-      this.setData({ show: true});
+      this.setData({ show: true });
     }).catch(res => {
       // 取消加载框
       wx.hideLoading();
       if (res.error == requestUtils.REQUEST_ERROR) {
+        console.log(res);
         wx.showModal({
           title: "哎呀，出错误了>.<",
-          content: res.data,
+          content: "业务逻辑错误",
           showCancel: false,
         });
       }
@@ -125,7 +126,7 @@ Page({
   },
 
   onLoad: function () {
-    this.setData({show: false});
+    this.setData({ show: false });
     console.log('页面 stuInfoDetail onLoad...');
 
   },

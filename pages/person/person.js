@@ -103,6 +103,12 @@ Page({
         }
       }).then((res) => {
         // PostSession 成功
+        // 设置本地变量 uid token
+        console.log(res);
+        this.globalData.token = res.data.data.token;
+        this.globalData.uid = res.data.data.data.uid;
+        wx.setStorageSync("uid", res.data.data.data.uid);
+        wx.setStorageSync("token", res.data.data.token);
         this.getIdentityPromise().then(res => {
           // GetIdentity 成功
           this.setData({ isStudent: true });
@@ -131,14 +137,12 @@ Page({
             this.postUserAuthPromise().then(res => {
               // PostAuthentication 成功
               wx.hideLoading();
-
               // 获取isStu信息
               this.getIdentityPromise().then(res => {
                 // GetIdentity 成功
                 this.setData({ isStudent: true });
                 app.globalData.isStudent = true
                 wx.setStorageSync("isStudent", true);
-
               }).catch(res => {
                 // GetIdentity 失败
                 wx.hideLoading();
@@ -152,20 +156,23 @@ Page({
               console.log(res);
             });
           }).catch(res => {
+            // wxlogin失败 
             wx.hideLoading();
             console.log("微信登录失败");
             console.log(res);
           });
         }).catch(res => {
+          // PostUser 失败
           wx.hideLoading();
           console.log("创建用户失败");
           console.log(res);
         });
       });
 
-      app.globalData.nickName = e.detail.userInfo.nickName
-      app.globalData.userAvatar = e.detail.userInfo.avatarUrl
-      app.globalData.isLogin = true
+      // 设置全局Avatar nickName
+      app.globalData.nickName = e.detail.userInfo.nickName;
+      app.globalData.userAvatar = e.detail.userInfo.avatarUrl;
+      app.globalData.isLogin = true;
       this.setData({
         nickName: app.globalData.nickName,
         avater: app.globalData.userAvatar,
