@@ -39,7 +39,7 @@ App({
       }).then(res => {
         if (res.confirm) {
           // 清理本地缓存
-          wx.clearStorageSync();
+          // wx.clearStorageSync();
           // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
           updateManager.applyUpdate();
         }
