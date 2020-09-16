@@ -77,7 +77,7 @@ App({
   onShow: function () {
     // 更新
     const that = this;
-    const isAllStorageOk = this.globalData.uid != "" && this.globalData.token != "" && this.globalData.isStudent != "";
+    const isAllStorageOk = this.globalData.uid !== "" && this.globalData.token !== "" && this.globalData.isStudent !== "";
     wxGetSetting().then(res => {
       if (res.authSetting['scope.userInfo']) {
         wxGetUserInfo().then(res => {
