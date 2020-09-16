@@ -177,6 +177,7 @@
 .toast_wrap image{
   width:35rpx;
   height:36rpx;
+  transform: rotate(-45deg);
 }
 
 .toast_wrap swiper{
