@@ -1,6 +1,11 @@
 // pages/person/person.js
 const app = getApp();
-const url = app.globalData.commonUrl
+const commonUrl = app.globalData.commonUrl;
+const requestUtils = require('../../utils/requestUtils');
+const promisify = require('../../utils/promisifyUtils');
+const wxLogin = promisify(wx.login);
+var wxCode = "";
+
 Page({
 
   /**
@@ -12,6 +17,67 @@ Page({
       right: "/asset/icon/right.png"
     }
   },
+
+  /**
+   * 返回获取用户实名认证请求的Promise
+   * @return {Promise}
+   */
+  getIdentityPromise: () => {
+    let url = `${commonUrl}/user/${app.globalData.uid}/identity`;
+    let data = {};
+    let header = {
+      "content-type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${app.globalData.token}`
+    };
+    return requestUtils.doGET(url, data, header);
+  },
+
+  /**
+   * 返回Post Session请求的Promise
+   * @return {Promise}
+   */
+  postSessionPromise: () => {
+    let url = `${commonUrl}/session`;
+    let header = {
+      "content-type": "application/x-www-form-urlencoded"
+    };
+    let data = {
+      loginType: 0,
+      wxCode: wxCode
+    };
+    return requestUtils.doPOST(url, data, header);
+  },
+
+  /**
+   * 返回PostUser请求的Promise
+   * @param {Object} wxUserInfo 微信提供的用户信息
+   * @return {Promise}
+   */
+  postUserPromise: (wxUserInfo) => {
+    let url = `${commonUrl}/user`
+    let header = { "content-type": "application/x-www-form-urlencoded" };
+    let data = wxUserInfo;
+    return requestUtils.doPOST(url, data, header);
+  },
+
+  /**
+   * 返回PostAuthentication请求的Promise
+   * @param {Object} res postUser的response
+   * @return {Promise}
+   */
+  postUserAuthPromise: () => {
+    let url = `${commonUrl}/user/${app.globalData.uid}/authentication`;
+    let data = {
+      loginType: 0,
+      wxCode: wxCode
+    };
+    let header = {
+      "content-type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${app.globalData.token}`
+    };
+    return requestUtils.doPOST(url, data, header);
+  },
+
   go_signup: function () {
     wx.navigateTo({
       url: '/pages/signup/signup'
@@ -19,91 +85,84 @@ Page({
   },
   login: function (e) {
     const that = this;
+
+    let url = "";
+    let data = {};
+    let header = {};
     var wxUserInfo = e.detail.userInfo;
     if (e.detail.userInfo) {
-      wx.login({
-        success(res) {
-          if (res.code) {
-            console.log(res.code);
-            wx.showLoading({
-              title: '加载中',
-            })
-            wx.request({
-              url: `${url}/session`,
-              method: "POST",
-              header: {
-                "content-type": "application/x-www-form-urlencoded"
-              },
-              data: {
-                loginType: 0,
-                wxCode: res.code
-              },
-              success: function (res) {
-                console.log(res)
-                if (res.data.code === 0) {
-                  app.globalData.token = res.data.data.token
-                  app.globalData.uid = res.data.data.data.uid
-                  wx.request({
-                    url: `${url}/user/${app.globalData.uid}/identity`,
-                    method: "GET",
-                    header: {
-                      "content-type": "application/x-www-form-urlencoded",
-                      "Authorization": `Bearer ${app.globalData.token}`
-                    },
-                    success: function (res) {
-                      if (res.data.code === 0) {
-                        that.setData({
-                          isStu: true
-                        })
-                        app.globalData.isStudent = true
-                      } else {
-                        that.setData({
-                          isStu: false
-                        })
-                        app.globalData.isStudent = false
-                      }
-                      wx.hideLoading();
-                    }
-                  })
-                } else {
-                  wx.request({
-                    url: `${url}/user`,
-                    method: "POST",
-                    header: {
-                      "content-type": "application/x-www-form-urlencoded"
-                    },
-                    data: wxUserInfo,
-                    success: function (res1) {
-                      app.globalData.uid = res1.data.data.uid
-                      app.globalData.token = res1.data.data.token
-                      wx.login({
-                        success: function (res) {
-                          wx.request({
-                            url: `${url}/user/${res1.data.data.uid}/authentication`,
-                            method: 'POST',
-                            data: {
-                              loginType: 0,
-                              wxCode: res.code
-                            },
-                            header: {
-                              "content-type": "application/x-www-form-urlencoded",
-                              "Authorization": `Bearer ${res1.data.data.token}`
-                            }
-                          })
-                        }
-                      })
-
-                    }
-                  });
-                  wx.hideLoading();
-                }
-              }
-            })
-          } else {
-            console.log('登录失败！' + res.errMsg)
-          }
+      wxLogin().then((res) => {
+        if (res.code) {
+          wxCode = res.code;
+          wx.showLoading({ title: '加载中' });
+          return this.postSessionPromise();
+        } else {
+          return new Promise((resolve, reject) => {
+            reject(`微信登录失败: ${res.errMsg}`);
+          });
         }
-      })
+      }).then((res) => {
+        // PostSession 成功
+        this.getIdentityPromise().then(res => {
+          // GetIdentity 成功
+          this.setData({ isStudent: true });
+          app.globalData.isStudent = true
+          wx.setStorageSync("isStudent", true);
+          wx.hideLoading();
+        }).catch(res => {
+          // GetIdentity 失败
+          this.setData({ isStudent: false });
+          app.globalData.isStudent = false;
+          wx.setStorageSync("isStudent", false);
+          wx.hideLoading();
+        });
+      }).catch(res => {
+        // PostSession 失败 创建用户
+        this.postUserPromise(wxUserInfo).then(res => {
+          app.globalData.uid = res.data.data.uid;
+          app.globalData.token = res.data.data.token;
+          // 本地存储变量
+          wx.setStorageSync("token", res.data.data.token);
+          wx.setStorageSync("uid", res.data.data.uid);
+
+          wxLogin().then(res => {
+            // 更新全局wxCode
+            wxCode = res.code;
+            this.postUserAuthPromise().then(res => {
+              // PostAuthentication 成功
+              wx.hideLoading();
+
+              // 获取isStu信息
+              this.getIdentityPromise().then(res => {
+                // GetIdentity 成功
+                this.setData({ isStudent: true });
+                app.globalData.isStudent = true
+                wx.setStorageSync("isStudent", true);
+
+              }).catch(res => {
+                // GetIdentity 失败
+                wx.hideLoading();
+                this.setData({ isStudent: false });
+                app.globalData.isStudent = false;
+                wx.setStorageSync("isStudent", false);
+              });
+            }).catch(res => {
+              // PostAuthentication 失败
+              console.log("PostAuthentication 失败");
+              console.log(res);
+            });
+          }).catch(res => {
+            wx.hideLoading();
+            console.log("微信登录失败");
+            console.log(res);
+          });
+        }).catch(res => {
+          wx.hideLoading();
+          console.log("创建用户失败");
+          console.log(res);
+        });
+      });
+
       app.globalData.nickName = e.detail.userInfo.nickName
       app.globalData.userAvatar = e.detail.userInfo.avatarUrl
       app.globalData.isLogin = true
@@ -115,15 +174,15 @@ Page({
 
     }
   },
-  moveToAbout: function(e){
+  moveToAbout: function (e) {
     console.log("进入跳转按钮")
     wx.navigateTo({
       url: '/pages/about/about',
-      success: (result)=>{
+      success: (result) => {
         console.log("跳转至 关于我们 页面")
       },
-      fail: ()=>{},
-      complete: ()=>{}
+      fail: () => { },
+      complete: () => { }
     });
   },
   /**
@@ -135,7 +194,7 @@ Page({
       nickName: app.globalData.nickName,
       avater: app.globalData.userAvatar,
       isLogin: app.globalData.isLogin,
-      isStu: app.globalData.isStudent
+      isStudent: app.globalData.isStudent
     });
   },
 
@@ -148,7 +207,7 @@ Page({
       nickName: app.globalData.nickName,
       avater: app.globalData.userAvatar,
       isLogin: app.globalData.isLogin,
-      isStu: app.globalData.isStudent
+      isStudent: app.globalData.isStudent
     });
   },
 
@@ -165,9 +224,9 @@ Page({
       nickName: app.globalData.nickName,
       avater: app.globalData.userAvatar,
       isLogin: app.globalData.isLogin,
-      isStu: app.globalData.isStudent
+      isStudent: app.globalData.isStudent
     });
-    console.log("person 被展示")
+    console.log("person onShow");
 
   },
 

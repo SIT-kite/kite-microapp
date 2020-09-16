@@ -1,5 +1,6 @@
 // pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.js
 var app = getApp();
+const requestUtils = require("../../../utils/requestUtils");
 Page({
 
   /**
@@ -14,22 +15,21 @@ Page({
     // 分析数据
     freshman: {
       sameName: 0,
-      sameCity: null,
-      sameHighSchool: null,
-      collegeCount: null,
+      sameCity: "",
+      sameHighSchool: "",
+      collegeCount: "",
       major: {
-        total: null,
-        boys: null,
-        girls: null
+        total: "",
+        boys: "",
+        girls: ""
       }
     },
     // 新生信息
     userDetail: {
-      college: null,
-      major: null,
-      name: null
+      college: "",
+      major: "",
+      name: ""
     },
-    shareTempFilePath: null,
   },
 
 
@@ -37,30 +37,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.data.pageReady = false
+    this.data.pageReady = false;
+    let url = "";
+    let data = {};
+    let header = {};
     wx.showLoading({
       title: "加载中",
       mask: true,
-      success: (result) => {
-
-      },
+      success: () => { },
       fail: () => { },
       complete: () => { }
     });
-    var that = this
+
     // 判定全局变量是否含有需要的信息
-    console.log(app.globalData.userDetail)
     if (undefined === app.globalData.userDetail.major
       && undefined === app.globalData.userDetail.college
       && undefined === app.globalData.userDetail.name) {
-      console.log("全局变量不包含userDetail信息")
-      this.setData({
-        userDetail: {
-          college: "人文学院",
-          major: "公共管理类",
-          name: "宋安邦"
-        }
-      });
+      console.log("全局变量不包含userDetail信息");
     } else {
       console.log("全局变量存在userDetail")
       this.setData({
@@ -69,52 +62,49 @@ Page({
     }
 
     // 获取格言
-    var reqTask = wx.request({
-      url: `${app.globalData.commonUrl}/motto?maxLength=12`,
-      data: {},
-      header: { 'content-type': 'application/json' },
-      method: 'GET',
-      dataType: 'json',
-      responseType: 'text',
-      success: (result) => {
-        console.log(`获取格言成功: content: ${result.data.data.content} source:${result.data.data.source}`)
-        that.setData({
-          motto: {
-            source: result.data.data.source == null ? "佚名" : result.data.data.source,
-            content: result.data.data.content,
-          }
-        });
-        console.log(that.data.motto)
-      },
-      fail: () => { },
-      complete: () => { }
+    url = `${app.globalData.commonUrl}/motto?maxLength=12`;
+    data = {};
+    header = { 'content-type': 'application/json' };
+    var getMotto = requestUtils.doGET(url, data, header);
+    getMotto.then(res => {
+      this.setData({
+        motto: {
+          source: res.data.data.source == null ? "佚名" : res.data.data.source,
+          content: res.data.data.content,
+        }
+      });
+    }).catch(res => {
+      console.log("获取格言失败");
     });
 
 
-    // 获取分析数据  实际环境注意修改tempData
-    let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/analysis?secret=${app.globalData.userInfo.secret}`
-    console.log(url)
-    console.log("请求统计数据中")
-    var reqTask = wx.request({
-      url: url,
-      data: {},
-      header: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${app.globalData.token}`,
-      },
-      method: 'GET',
-      dataType: 'json',
-      responseType: 'text',
-      success: (result) => {
-        console.log(result.data)
-        that.setData({
-          freshman: result.data.data.freshman
-        })
-        console.log(that.data.freshman)
+    // 获取分析数据
+    url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/analysis?secret=${app.globalData.userInfo.secret}`;
+    data = {};
+    header = {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${app.globalData.token}`,
+    };
+    var getAnalysis = requestUtils.doGET(url, data, header);
+    getAnalysis.then(res => {
+      this.setData({
+        freshman: res.data.data.freshman
+      });
+    }).catch(res => {
+      console.log("获取分析数据失败");
+      console.log(res);
+    });
 
-      },
-      fail: () => { },
-      complete: () => { wx.hideLoading(); }
+    // 等待全部请求完成
+    Promise.all([getMotto, getAnalysis])
+      .then(() => { wx.hideLoading(); })
+      .catch(res => {
+        console.log("请求未全部成功")
+        console.log(res);
+      });
+
+    this.setData({
+      pageReady: true
     });
   },
 
@@ -122,9 +112,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.setData({
-      pageReady: true
-    })
+
   },
 
   /**

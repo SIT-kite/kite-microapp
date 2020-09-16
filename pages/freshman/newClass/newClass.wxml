@@ -1,6 +1,6 @@
 <!--pages/newFriend/newFriend.wxml-->
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-<view class="main">
+<view class="main" wx:if="{{show}}">
 	<scroll-view class="scbg" scroll-y="{{true}}">
 
 		<!-- 卡片 -->

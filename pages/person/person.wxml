@@ -8,9 +8,9 @@
 				<view class="personal_main">
 					<view class="main_info">
 						<text style="font-size:40rpx;font-weight:500;text-align:left;font-weight:bold;">{{nickName}}</text>
-						<view class="true_basic {{isStu ? 'a_stu':'n_stu'}}">
-							<image src="{{isStu ? iconUrl.right:iconUrl.wrong}}"></image>
-							<text>{{isStu ? '已实名':'未实名'}}</text>
+						<view class="true_basic {{isStudent ? 'a_stu':'n_stu'}}">
+							<image src="{{isStudent ? iconUrl.right:iconUrl.wrong}}"></image>
+							<text>{{isStudent? '已实名':'未实名'}}</text>
 						</view>
 					</view>
 					<view bindtap="go_signup" style="color:#e3e3e3;text-align:right;">

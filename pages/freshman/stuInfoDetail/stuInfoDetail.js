@@ -4,17 +4,24 @@ import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../../utils/navBarUtils'
-var app = getApp()
+var app = getApp();
+const requestUtils = require('../../../utils/requestUtils');
 Page({
   data: {
-    pageReady: false,
+    show: false,
     userDetail: null,
     motto: 'Hey!',
     avatarUrl: "",
     nickName: "",
   },
-  // 导航栏handler函数
+
+  /**
+   * 导航栏handler函数
+   */
   handlerGohomeClick: handlerGohomeClick,
+  /**
+   * 导航栏handler函数
+   */
   handlerGobackClick: handlerGobackClick,
 
   /**
@@ -27,67 +34,61 @@ Page({
     });
   },
 
+  /**
+   * 页面数据重新加载
+   */
   pageDataInit: function () {
-    var that = this;
-    // 如果本地没有此信息，则是第一次加载
-
-    // 获取用户的详细信息
-    console.log("发送请求获取用户信息中");
+    let url = "";
+    let data = {};
+    let header = {};
     wx.showLoading({
       title: '加载中',
-      mask: true,
-      success: (result) => {
-
-      },
-      fail: () => {},
-      complete: () => {}
+      mask: true
     });
-    wx.request({
-      url: `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`,
-      method: "GET",
-      data: {
-        "secret": `${app.globalData.userInfo.secret}`
-      },
-      header: {
-        "content-type": "application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${app.globalData.token}`,
-      },
-      success(res) {
-        if (res.data.code == 0) {
-          // 同时更新 Storage 和 globalData
-          app.globalData.userDetail = res.data.data;
-          wx.setStorageSync("userDetail", res.data.data);
-          that.setData({
-            userDetail: res.data.data,
-            avatarUrl: app.globalData.userAvatar,
-            nickName: app.globalData.nickName
-          })
-        } else {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: res.data,
-            showCancel: false,
-            success(res) {}
-          })
-        }
-      },
-      fail(res) {
+
+    url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`;
+    data = {
+      "secret": `${app.globalData.userInfo.secret}`
+    };
+    header = {
+      "content-type": "application/x-www-form-urlencoded",
+      "Authorization": `Bearer ${app.globalData.token}`,
+    };
+
+    // 获取新生信息
+    var getFreshman = requestUtils.doGET(url, data, header).then(res => {
+      // 更新全局变量
+      app.globalData.userDetail = res.data.data;
+      wx.setStorageSync("userDetail", res.data.data);
+      this.setData({
+        userDetail: app.globalData.userDetail,
+        avatarUrl: app.globalData.userAvatar,
+        nickName: app.globalData.nickName
+      });
+      return res;
+    });
+    getFreshman.then( res => {
+      // 取消加载框
+      wx.hideLoading();
+      console.log("数据处理完成");
+      this.setData({ show: true});
+    }).catch(res => {
+      // 取消加载框
+      wx.hideLoading();
+      if (res.error == requestUtils.REQUEST_ERROR) {
+        wx.showModal({
+          title: "哎呀，出错误了>.<",
+          content: res.data,
+          showCancel: false,
+        });
+      }
+      if (res.error == requestUtils.NETWORK_ERROR) {
         wx.showModal({
           title: "哎呀，出错误了>.<",
           content: "网络不在状态",
           showCancel: false,
-          success(res) {}
-        })
-      },
-      complete: () => {
-        wx.hideLoading();
+        });
       }
-    });
-    // 页面赋值
-    this.setData({
-      userDetail: app.globalData.userDetail,
-      avatarUrl: app.globalData.userAvatar,
-      nickName: app.globalData.nickName
     });
   },
 
@@ -97,8 +98,8 @@ Page({
       success: (result) => {
         console.log("跳转分享页面成功")
       },
-      fail: () => {},
-      complete: () => {}
+      fail: () => { },
+      complete: () => { }
     });
   },
 
@@ -124,7 +125,7 @@ Page({
   },
 
   onLoad: function () {
-    this.data.pageReady = false;
+    this.setData({show: false});
     console.log('页面 stuInfoDetail onLoad...');
 
   },
@@ -134,7 +135,7 @@ Page({
       navBarExtendHeight,
     } = getApp().globalSystemInfo;
     this.setData({
-      navBarCurrentHeight: navBarExtendHeight+navBarHeight
+      navBarCurrentHeight: navBarExtendHeight + navBarHeight
     })
     console.log("页面 stuInfoDetail onShow...");
     this.pageDataInit();
@@ -142,9 +143,6 @@ Page({
   },
   onReady: function () {
     console.log("页面 stuInfoDetail onReady!");
-    this.setData({
-      pageReady: true
-    });
   },
   onShareAppMessage: function (e) {
     return {

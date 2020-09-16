@@ -1,6 +1,6 @@
 <!--pages/newFriend/newFriend.wxml-->
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-<view class="main">
+<view class="main" wx:if="{{show}}">
 	<view style="margin-top:30rpx;margin-left:30rpx">
 		<text style="font-size:50rpx;font-weight:600">我的室友</text>
 	</view>
