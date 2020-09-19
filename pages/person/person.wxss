@@ -1,3 +1,21 @@
+button{
+  margin:0;
+  padding:0;
+  background-color:#ffffff;
+  line-height:inherit;
+  height:100rpx;
+  border-radius:0;
+  border:none;
+  font-size:60rpx;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+button::after{
+  border: none;
+}
+
 .main {
   display: flex;
   padding-top: 12vh;
@@ -119,14 +137,15 @@
   display: flex;
   justify-content: space-between;
   height: 6vh;
-  margin: 0 5vw;
+  margin: 1vh 5vw;
   background-color: white;
   border-radius: 10px;
-  font-size:42rpx;
+  font-size:40rpx;
   font-weight: normal;
   line-height: 6vh;
   padding:0.5vh 1vh;
 }
+
 .left{
   margin-left: 12.5rpx;
   font-size: 40rpx;
