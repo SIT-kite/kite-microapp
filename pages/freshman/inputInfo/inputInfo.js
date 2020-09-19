@@ -122,7 +122,7 @@ Page({
           if (res.error == requestUtils.REQUEST_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
-              content: res.data,
+              content: "业务逻辑出错",
               showCancel: false,
             });
           }
@@ -174,7 +174,7 @@ Page({
         if (res.error == requestUtils.REQUEST_ERROR) {
           wx.showModal({
             title: "哎呀，出错误了>.<",
-            content: res.data,
+            content: "业务逻辑出错",
             showCancel: false,
           });
         }
@@ -245,8 +245,8 @@ Page({
   },
   onReady: function (option) {
     console.log(this.data.isHidden);
-    
-    if ("flex" == this.data.isHidden) {
+
+    if ("flex" == this.data.isHidden && app.globalData.freshmanPrivacyConfirm != true) {
       wx.showModal({
         title: '隐私信息提示',
         content: '您的身份证号后6位和准考证号将用于验证您的身份，并查询您的寝室位置、查找您的舍友信息等用途。您的手机号、QQ、微信为可选项，填写后同寝室的人可以看到你的手机号、QQ、微信，班级的人可以看到你的QQ和微信，如果您授权，您可能认识的人也可以查看您的QQ和微信。我们仅保留您的联系方式约1周时间。',
@@ -258,6 +258,9 @@ Page({
         success: (result) => {
           if (!result.confirm) {
             this.handlerGohomeClick();
+          }else{
+            app.globalData.freshmanPrivacyConfirm = true;
+            wx.setStorageSync("freshmanPrivacyConfirm",true);
           }
         }
       });

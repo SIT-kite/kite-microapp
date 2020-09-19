@@ -22,7 +22,8 @@ App({
     userDetail: null,
     classmates: null,
     roommates: null,
-    familiar: null
+    familiar: null,
+    isPrivacyConfirmed: false,
   },
   onLaunch: function () {
     // 更新版本处理
@@ -58,16 +59,21 @@ App({
 
     // 获取本地变量
     try {
+      // 注意未获取到storage值时 变量值为""
       var userDetail = wx.getStorageSync("userDetail");
       var userInfo = wx.getStorageSync("userInfo");
       var token = wx.getStorageSync("token");
       var uid = wx.getStorageSync("uid");
       var isStudent = wx.getStorageSync("isStudent");
+      var signPrivacyConfirm = wx.getStorageSync("isPrivacyConfirm");
+      var freshmanPrivacyConfirm = wx.getStorageSync("freshmanPrivacyConfirm");
       this.globalData.userDetail = userDetail;
       this.globalData.userInfo = userInfo;
       this.globalData.token = token;
       this.globalData.uid = uid;
       this.globalData.isStudent = isStudent;
+      this.globalData.signPrivacyConfirm = signPrivacyConfirm;
+      this.globalData.freshmanPrivacyConfirm = freshmanPrivacyConfirm;
     } catch (error) {
       console.log("获取Storage变量出错");
     }
@@ -78,6 +84,10 @@ App({
     // 更新
     const that = this;
     const isAllStorageOk = this.globalData.uid !== "" && this.globalData.token !== "" && this.globalData.isStudent !== "";
+    console.log(this.globalData.uid !== "");
+    console.log(this.globalData.token !== "");
+    console.log(this.globalData.isStudent !== "");
+    console.log(isAllStorageOk);
     wxGetSetting().then(res => {
       if (res.authSetting['scope.userInfo']) {
         wxGetUserInfo().then(res => {
