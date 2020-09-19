@@ -19,7 +19,11 @@
 				</view>
 			</view>
 			<view wx:else style="height:100%;">
-				<button class="login  shadow" bindgetuserinfo="login" open-type="getUserInfo">
+				<button
+				 class="login  shadow"
+				 bindgetuserinfo="login"
+				 open-type="getUserInfo"
+				>
 					<view class=" image_container">
 						<image src="/asset/icon/weixin.png" mode="aspectFit"></image>
 					</view>
@@ -28,13 +32,14 @@
 			</view>
 
 		</view>
-		<view class="menu-option shadow" bindtap="moveToAbout">
+		<button class="menu-option shadow" bindtap="moveToAbout">
 			<view class="left">关于我们</view>
 			<view class="right" style="color:#e3e3e3;">></view>
-		</view>
+		</button>
 		<button class="menu-option shadow" open-type="feedback">
 			<view class="left">意见反馈</view>
 			<view class="right" style="color:#e3e3e3;">></view>
 		</button>
 	</view>
 </view>
+
