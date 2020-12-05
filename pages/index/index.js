@@ -16,8 +16,8 @@ Page({
         iconPath: "/asset/icon/main_icon/user.png"
       },
       {
-        id: "qrcode",
-        text: "返校码",
+        id: "inquiry",
+        text: "电费",
         iconPath: "/asset/icon/main_icon/qrcode.png"
       },
       {
@@ -72,6 +72,9 @@ Page({
         break;
       case "lost":
         url = "/pages/lost/lost"
+        break;
+      case "inquiry":
+        url = "/pages/consume/electricity/electricity"
         break;
       default:
         break

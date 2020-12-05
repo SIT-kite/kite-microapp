@@ -1,0 +1,18 @@
+<!-- pages/consume/electricity/electricity.wxml -->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<view class="main">
+  <view class="title">
+    <text>电费余额查询</text>
+  </view>
+  <view>
+    <van-field model:value="{{ roomID }}" clearable label="房间号" icon="question-o" placeholder="请输入房间号" bind:click-icon="onClickIcon" bind:focus="focus" />
+  </view>
+  <view class="button">
+    <van-button type="info" size="large" bind:click="getEletricityConsume">
+      查询
+    </van-button>
+  </view>
+  <van-popup show="{{ show }}" round position="bottom" custom-style="height: 20%" bind:close="onClose">
+    {{ message }}
+  </van-popup>
+</view>

@@ -11,7 +11,8 @@
     "pages/person/person",
     "pages/about/about",
     "pages/signup/signup",
-    "pages/freshman/navigate/navigate"
+    "pages/freshman/navigate/navigate",
+    "pages/consume/electricity/electricity"
   ],
   "window": {
     "backgroundTextStyle": "light",

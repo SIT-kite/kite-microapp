@@ -1,0 +1,11 @@
+/* pages/consume/electricity/electricity.wxss */
+.title {
+  margin: 5vh auto;
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+}
+
+.button{
+  margin: 4vh auto 0;
+}
