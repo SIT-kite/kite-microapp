@@ -12,11 +12,13 @@ Page({
    */
   data: {
     show: false,
-    roomID: "请输入房间号",
+    roomID: "",
     electricityData:{
       balance: 0,
       power: 0,
       room: 0,
+      date:"",
+      time:""
     },
     message: "",
   },
@@ -32,6 +34,12 @@ Page({
   onClickIcon: () =>{
     
   },
+  bindroomID:function(e){
+    this.setData({
+      roomID:e.detail.value
+    })
+    console.log(this.data.roomID)
+  },
   getEletricityConsume: function(){
     let url = `${app.globalData.commonUrl}${electricitySuffix}${this.data.roomID}`;
     let header = {
@@ -43,21 +51,24 @@ Page({
     }
     let getEletricityConsume = requestUtils.doGET(url, data, header);
     getEletricityConsume.then((res) => {
-      console.log(res);
+      let data = res.data.data
+      data.date = data.ts.split('T')[0]
+      data.time = data.ts.split('T')[1].substr(0,5)
       this.setData({
-        electricityData: res.data.data,
+        electricityData: data,
+        show:true
       });
       
-      let message = `余额: ${this.data.electricityData.balance.toFixed(2)}元\r\n电量: ${this.data.electricityData.power.toFixed(2)}度`;
+      // let message = `余额: ${this.data.electricityData.balance.toFixed(2)}元\r\n电量: ${this.data.electricityData.power.toFixed(2)}度`;
       // this.setData({
       //   message: message,
       //   show: true,
       // });
-      wxShowModal({
-        title: "查询结果",
-        content: message,
-        showCancel: false,
-      });
+      // wxShowModal({
+      //   title: "查询结果",
+      //   content: message,
+      //   showCancel: false,
+      // });
     }).catch(res => {
       wxShowModal({
         content: "出错了",
@@ -65,11 +76,20 @@ Page({
     })
 
   },
-  focus: function(){
-    this.setData({
-      roomID: ""
-    });
+  showtips:function(){
+    console.log("我出发了")
+    const tips ="'10'+1~2位楼号+3~4位房间号"
+  wxShowModal({
+    title:"填写格式",
+    content:tips,
+    showCancel: false
+  })
   },
+  // focus: function(){
+  //   this.setData({
+  //     roomID: ""
+  //   });
+  // },
   /**
    * 生命周期函数--监听页面加载
    */

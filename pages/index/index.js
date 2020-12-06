@@ -18,7 +18,7 @@ Page({
       {
         id: "inquiry",
         text: "电费",
-        iconPath: "/asset/icon/main_icon/qrcode.png"
+        iconPath: "/asset/icon/main_icon/electricity.png"
       },
       {
         id: "education",
