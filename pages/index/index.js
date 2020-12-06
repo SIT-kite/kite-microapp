@@ -20,25 +20,25 @@ Page({
         text: "电费",
         iconPath: "/asset/icon/main_icon/electricity.png"
       },
-      {
-        id: "education",
-        text: "教务",
-        iconPath: "/asset/icon/main_icon/kecheng.png"
-      },
-      {
-        id: "activity",
-        text: "活动",
-        iconPath: "/asset/icon/main_icon/tuandui.png"
-      },
-      {
-        id: "shopping",
-        text: "闲置",
-        iconPath: "/asset/icon/main_icon/dianpu.png"
-      }, {
-        id: "lost",
-        text: "失物",
-        iconPath: "/asset/icon/main_icon/sousuo.png"
-      }
+      // {
+      //   id: "education",
+      //   text: "教务",
+      //   iconPath: "/asset/icon/main_icon/kecheng.png"
+      // },
+      // {
+      //   id: "activity",
+      //   text: "活动",
+      //   iconPath: "/asset/icon/main_icon/tuandui.png"
+      // },
+      // {
+      //   id: "shopping",
+      //   text: "闲置",
+      //   iconPath: "/asset/icon/main_icon/dianpu.png"
+      // }, {
+      //   id: "lost",
+      //   text: "失物",
+      //   iconPath: "/asset/icon/main_icon/sousuo.png"
+      // }
     ]
   },
   move: function (e) {
