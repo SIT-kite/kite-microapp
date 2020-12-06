@@ -13,12 +13,12 @@ Page({
   data: {
     show: false,
     roomID: "",
-    electricityData:{
+    electricityData: {
       balance: 0,
       power: 0,
       room: 0,
-      date:"",
-      time:""
+      date: "",
+      time: ""
     },
     message: "",
   },
@@ -26,21 +26,21 @@ Page({
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
 
-  onClose: function(){
+  onClose: function () {
     this.setData({
       show: false,
     })
   },
-  onClickIcon: () =>{
-    
+  onClickIcon: () => {
+
   },
-  bindroomID:function(e){
+  bindroomID: function (e) {
     this.setData({
-      roomID:e.detail.value
+      roomID: e.detail.value
     })
     console.log(this.data.roomID)
   },
-  getEletricityConsume: function(){
+  getEletricityConsume: function () {
     let url = `${app.globalData.commonUrl}${electricitySuffix}${this.data.roomID}`;
     let header = {
       "content-type": "application/x-www-form-urlencoded",
@@ -53,12 +53,14 @@ Page({
     getEletricityConsume.then((res) => {
       let data = res.data.data
       data.date = data.ts.split('T')[0]
-      data.time = data.ts.split('T')[1].substr(0,5)
+      data.time = data.ts.split('T')[1].substr(0, 5)
+      data.balance = data.balance.toFixed(2);
+      data.power = data.power.toFixed(2);
       this.setData({
         electricityData: data,
-        show:true
+        show: true
       });
-      
+
       // let message = `余额: ${this.data.electricityData.balance.toFixed(2)}元\r\n电量: ${this.data.electricityData.power.toFixed(2)}度`;
       // this.setData({
       //   message: message,
@@ -76,14 +78,14 @@ Page({
     })
 
   },
-  showtips:function(){
+  showtips: function () {
     console.log("我出发了")
-    const tips ="'10'+1~2位楼号+3~4位房间号"
-  wxShowModal({
-    title:"填写格式",
-    content:tips,
-    showCancel: false
-  })
+    const tips = "'10'+1~2位楼号+3~4位房间号"
+    wxShowModal({
+      title: "填写格式",
+      content: tips,
+      showCancel: false
+    })
   },
   // focus: function(){
   //   this.setData({

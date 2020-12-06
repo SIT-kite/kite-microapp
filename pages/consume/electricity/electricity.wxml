@@ -2,33 +2,32 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
 </navBar>
 <view class="main">
-  <view class="title">
-    <text>电费余额查询</text>
-  </view>
-  <view
-    style="position:relative;white-space: nowrap;display:flex;align-items:center;box-sizing:border-box;margin-top:2vh;">
-    <!-- <van-field model:value="{{ roomID }}" clearable label="房间号" icon="question-o" placeholder="请输入房间号" bind:click-icon="onClickIcon" bind:focus="focus" /> -->
-    <input value="{{roomID}}" bindinput="bindroomID" placeholder="请输入房间号"></input>
-    <image class="tips" src="../../../asset/icon/tips.png" bindtap="showtips"></image>
+	<view class="title">
+		<text>电费余额查询</text>
+	</view>
+	<view style="position:relative;white-space: nowrap;display:flex;align-items:center;box-sizing:border-box;margin-top:2vh;">
+		<!-- <van-field model:value="{{ roomID }}" clearable label="房间号" icon="question-o" placeholder="请输入房间号" bind:click-icon="onClickIcon" bind:focus="focus" /> -->
+		<input value="{{roomID}}" bindinput="bindroomID" placeholder="请输入房间号"></input>
+		<image class="tips" src="../../../asset/icon/tips.png" bindtap="showtips"></image>
 
-  </view>
-  <view class="button">
-    <button class="s_button" bindtap="getEletricityConsume">
-      查询
-    </button>
-  </view>
-  <view class="show_block" wx:if="{{show}}">
-    <view class="img_wrap">
-      <image src="../../../asset/icon/electronic.png" alt=""></image>
-    </view>
-    <view class="text_block">
-      <text style="margin-bottom:20rpx;">房间号：{{electricityData.room}}</text>
-      <text style="margin-bottom:20rpx;">剩余金额：{{electricityData.balance}}</text>
-      <text>剩余电量：{{electricityData.power}}</text>
-    </view>
-    <text style="color:#e3e3e3;margin-left:10rpx;">更新时间：{{electricityData.date}} {{electricityData.time}}</text>
-  </view>
-  <!-- <van-popup show="{{ show }}" round position="bottom" custom-style="height: 20%" bind:close="onClose">
+	</view>
+	<view class="button">
+		<button class="s_button" bindtap="getEletricityConsume">
+			查询
+		</button>
+	</view>
+	<view class="show_block" wx:if="{{show}}">
+		<view class="img_wrap">
+			<image src="../../../asset/icon/electronic.png" alt=""></image>
+		</view>
+		<view class="text_block">
+			<text style="margin-bottom:20rpx;">房间号：{{electricityData.room}}</text>
+			<text style="margin-bottom:20rpx;">剩余金额：{{electricityData.balance}} 元</text>
+			<text>剩余电量：{{electricityData.power}} 度</text>
+		</view>
+		<text style="color:#e3e3e3;margin-left:10rpx;">更新时间：{{electricityData.date}} {{electricityData.time}}</text>
+	</view>
+	<!-- <van-popup show="{{ show }}" round position="bottom" custom-style="height: 20%" bind:close="onClose">
     {{ message }}
   </van-popup> -->
 </view>
