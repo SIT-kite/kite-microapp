@@ -5,18 +5,23 @@
 	<view class="title">
 		<text>电费余额查询</text>
 	</view>
-	<view style="position:relative;white-space: nowrap;display:flex;align-items:center;box-sizing:border-box;margin-top:2vh;">
+	<view
+		style="position:relative;white-space: nowrap;display:flex;align-items:center;box-sizing:border-box;margin-top:2vh;width:80vw;padding:0 20rpx;">
 		<!-- <van-field model:value="{{ roomID }}" clearable label="房间号" icon="question-o" placeholder="请输入房间号" bind:click-icon="onClickIcon" bind:focus="focus" /> -->
-		<input value="{{roomID}}" bindinput="bindroomID" placeholder="请输入房间号"></input>
-		<image class="tips" src="../../../asset/icon/tips.png" bindtap="showtips"></image>
+		<input value="{{floorID}}" bindinput="bindfloorID" placeholder="楼号" class="input_left"></input>
+		<input value="{{roomID}}" bindinput="bindroomID" placeholder="房间号" class="input_right"></input>
+		<!-- <image class="tips" src="../../../asset/icon/tips.png" bindtap="showtips"></image> -->
 
 	</view>
-	<view class="button">
-		<button class="s_button" bindtap="getEletricityConsume">
+	<view class="button_container">
+		<view class="s_button" bindtap="getEletricityConsume">
 			查询
-		</button>
+		</view>
+		<view class="s_button" data-init="true"  data-type="hours"bindtap="getcostdata">
+			查看使用情况
+		</view>
 	</view>
-	<view class="show_block" wx:if="{{show}}">
+	<view class="show_block" wx:if="{{show&&showtype==='normal'}}">
 		<view class="img_wrap">
 			<image src="../../../asset/icon/electronic.png" alt=""></image>
 		</view>
@@ -25,7 +30,30 @@
 			<text style="margin-bottom:20rpx;">剩余金额：{{electricityData.balance}} 元</text>
 			<text>剩余电量：{{electricityData.power}} 度</text>
 		</view>
-		<text style="color:#e3e3e3;margin-left:10rpx;">更新时间：{{electricityData.date}} {{electricityData.time}}</text>
+		<text style="color:#d3d3d3;margin-left:10rpx;">更新时间：{{electricityData.date}} {{electricityData.time}}</text>
+	</view>
+	<view class="main" style="width:100%;"
+	wx:if="{{show&&showtype==='history'}}">
+		<view class="rank_container">
+			<view class="icon_container"><image src="../../../asset/pic/bangdan.png" alt=""></image></view>
+			<!-- <text >过去24小时中花费</text> -->
+				<text class="cost">{{rank.con}}<text style="font-size:18px;color:#e3e3e3;font-weight:unset!important;">元</text></text>
+			<text>24小时消费超越了{{rank.percen}}的寝室</text>
+		</view>
+		<view class="show_block" style="margin-top:30rpx;">
+			<chart chart-class="chart" option="{{ option }}" />
+		</view>
+		<view class="slider_contianer">
+			<view class="help  {{selected==='hours' ? 'type_indication_to_left':' type_indication_to_right'}}"></view>
+			<view class="slider_button {{selected==='hours' ? 'slider_button_selected':' '}}" data-type="hours"
+				bindtap="getcostdata">
+				过去一天
+			</view>
+			<view class="slider_button {{selected==='days' ? 'slider_button_selected':' '}}" data-type="days"
+				bindtap="getcostdata">
+				过去一周
+			</view>
+		</view>
 	</view>
 	<!-- <van-popup show="{{ show }}" round position="bottom" custom-style="height: 20%" bind:close="onClose">
     {{ message }}

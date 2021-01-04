@@ -1,5 +1,5 @@
 {
-  "entryPagePath": "pages/index/index",
+  "entryPagePath": "pages/consume/electricity/electricity",
   "pages": [
     "pages/freshman/inputInfo/inputInfo",
     "pages/index/index",
@@ -21,6 +21,14 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
+  
+    "plugins": {
+      "echarts": {
+        "version": "1.0.5",
+        "provider": "wx1db9e5ab1149ea03"
+      }
+    }
+  ,
   "tabBar": {
     "custom": true,
     "list": [
