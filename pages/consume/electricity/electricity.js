@@ -205,8 +205,10 @@ Page({
         console.log(`开始请求${type}`)
         let tempdata = [];
         let tempx = [];
+        let sum = 0;
         for (let value of res.data.data) {
           //  console.log(value)
+          sum+=value.consumption;
           tempdata.push(value.consumption.toFixed(2));
           type === 'hours' ? tempx.push(value.time.split(' ')[1]) : tempx.push(value.date.substr(5));
         }
@@ -224,7 +226,8 @@ Page({
           aoption.xAxis.data = tempx;
           aoption.xAxis.axisLabel.interval = 3
           that.sethours(aoption)
-          console.log(that.data.mhours)
+          // console.log(that.data.mhours)
+          console.log(sum)
         }
       }).catch(res => {
         wxShowModal({
