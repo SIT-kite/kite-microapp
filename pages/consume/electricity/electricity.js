@@ -3,9 +3,6 @@ import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../../utils/navBarUtils'
-import {
-  doGET
-} from '../../../utils/requestUtils';
 const app = getApp();
 const electricitySuffix = `/pay/room/`;
 const requestUtils = require("../../../utils/requestUtils");
