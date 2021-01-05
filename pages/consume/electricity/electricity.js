@@ -152,7 +152,7 @@ Page({
   setroom: function () {
     const floor = parseInt(this.data.floorID);
     const room = parseInt(this.data.roomID);
-    if (floor >= 1 && floor <= 16 && room / 100 >= 0 && room/100 <= 16){
+    if (floor >= 1 && floor <= 26 && room / 100 >= 0 && room/100 <= 16){
       const result =  `10${floor}${room}`;
       wx.setStorageSync('electricity_floor', floor);
       wx.setStorageSync('electricity_room', room);
