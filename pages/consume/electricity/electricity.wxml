@@ -1,13 +1,12 @@
 <!-- pages/consume/electricity/electricity.wxml -->
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
 </navBar>
-<view class="main">
+<view class="main" style="height:calc( 100vh - {{navBarCurrentHeight}}px )">
 	<view class="title">
 		<text>电费余额查询</text>
 	</view>
 	<view
 		style="position:relative;white-space: nowrap;display:flex;align-items:center;box-sizing:border-box;margin-top:2vh;width:80vw;padding:0 20rpx;">
-		<!-- <van-field model:value="{{ roomID }}" clearable label="房间号" icon="question-o" placeholder="请输入房间号" bind:click-icon="onClickIcon" bind:focus="focus" /> -->
 		<input value="{{floorID}}" bindinput="bindfloorID" placeholder="楼号" class="input_left"></input>
 		<input value="{{roomID}}" bindinput="bindroomID" placeholder="房间号" class="input_right"></input>
 		<!-- <image class="tips" src="../../../asset/icon/tips.png" bindtap="showtips"></image> -->
@@ -35,13 +34,13 @@
 	<view class="main" style="width:100%;"
 	wx:if="{{show&&showtype==='history'}}">
 		<view class="rank_container">
-			<view class="icon_container"><image src="../../../asset/pic/bangdan.png" alt=""></image></view>
+			<view class="icon_container"><image src="../../../asset/pic/bangdan.jpg" alt=""></image></view>
 			<!-- <text >过去24小时中花费</text> -->
 				<text class="cost">{{rank.con}}<text style="font-size:18px;color:#e3e3e3;font-weight:unset!important;"> 元</text></text>
 			<text>24小时消费超越了<text style="font-weight:bold;"> {{rank.percen}} </text>的寝室</text>
 		</view>
 		<view class="show_block" style="margin-top:30rpx;">
-			<chart chart-class="chart" option="{{ option }}" />
+			<chart chart-class="chart" option="{{ option }}" notMerge bindinstance="onInstance" />
 		</view>
 		<view class="slider_contianer">
 			<view class="help  {{selected==='hours' ? 'type_indication_to_left':' type_indication_to_right'}}"></view>
@@ -54,6 +53,7 @@
 				过去一周
 			</view>
 		</view>
+		<view class="share_button" bindtap="gotoshare">分享</view>
 	</view>
 	<!-- <van-popup show="{{ show }}" round position="bottom" custom-style="height: 20%" bind:close="onClose">
     {{ message }}

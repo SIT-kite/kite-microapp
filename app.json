@@ -12,7 +12,8 @@
     "pages/about/about",
     "pages/signup/signup",
     "pages/freshman/navigate/navigate",
-    "pages/consume/electricity/electricity"
+    "pages/consume/electricity/electricity",
+    "pages/share/share"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -21,14 +22,12 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  
-    "plugins": {
-      "echarts": {
-        "version": "1.0.5",
-        "provider": "wx1db9e5ab1149ea03"
-      }
+  "plugins": {
+    "echarts": {
+      "version": "1.0.5",
+      "provider": "wx1db9e5ab1149ea03"
     }
-  ,
+  },
   "tabBar": {
     "custom": true,
     "list": [

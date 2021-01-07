@@ -1,0 +1,12 @@
+.canvas_block{
+  height:1200rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 3vh;
+  flex-direction: column;
+}
+
+.canvas_block canvas{
+  border-radius:20px;
+}

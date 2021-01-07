@@ -26,6 +26,7 @@ App({
     isPrivacyConfirmed: false,
   },
   onLaunch: function () {
+console.log(this.globalData.userAvatar)
     // 更新版本处理
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
@@ -94,6 +95,7 @@ App({
         wxGetUserInfo().then(res => {
           that.globalData.nickName = res.userInfo.nickName;
           that.globalData.userAvatar = res.userInfo.avatarUrl;
+          console.log(that.globalData.userAvatar)
           // 确认所需全局变量正常 否则重新登录获取
           if (isAllStorageOk) {
             that.globalData.isLogin = true;

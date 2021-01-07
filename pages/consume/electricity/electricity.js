@@ -8,6 +8,7 @@ const electricitySuffix = `/pay/room/`;
 const requestUtils = require("../../../utils/requestUtils");
 const promisify = require('../../../utils/promisifyUtils');
 const wxShowModal = promisify(wx.showModal);
+const { echarts } = requirePlugin('echarts');
 Page({
 
   /**
@@ -123,7 +124,8 @@ Page({
     rank: {
       con: 0,
       percen: ' '
-    }
+    },
+    path:''
   },
   // 导航栏函数
   handlerGohomeClick: handlerGohomeClick,
@@ -134,8 +136,36 @@ Page({
       show: false,
     })
   },
-  onClickIcon: () => {
 
+  gotoshare:function(){
+    wx.showLoading({
+      title: "加载中"
+    });
+      wx.hideLoading();
+    wx.navigateTo({
+      url: '/pages/share/share?url='+this.data.path+'&rank='+JSON.stringify(this.data.rank),
+    })
+    // this.onInstance(echarts);
+  },
+  onInstance({detail: instance}) {
+    setTimeout(()=>{
+    const dom = instance.getDom()
+    dom.saveAsImage().then((path) => {
+      // 临时地址
+      this.setData({
+        path:path,
+        go:true
+      })
+      // wx.saveImageToPhotosAlbum({
+      //   filePath: path
+      // })
+    });
+  },1100
+)
+  },
+  rpx2px:function(rpx){
+    const pixelRatio1 = 750 / wx.getSystemInfoSync().windowWidth; 
+    return rpx / pixelRatio1;
   },
   bindroomID: function (e) {
     this.setData({
@@ -152,13 +182,12 @@ Page({
   setroom: function () {
     const floor = parseInt(this.data.floorID);
     const room = parseInt(this.data.roomID);
-    if (floor >= 1 && floor <= 26 && room / 100 >= 0 && room/100 <= 16){
-      const result =  `10${floor}${room}`;
+    if (floor >= 1 && floor <= 26 && room / 100 >= 0 && room / 100 <= 16) {
+      const result = `10${floor}${room}`;
       wx.setStorageSync('electricity_floor', floor);
       wx.setStorageSync('electricity_room', room);
       return result;
-    }
-    else{
+    } else {
       return 'error';
     }
   },
@@ -170,7 +199,7 @@ Page({
       selected: type
     })
     const room = that.setroom();
-    if(room==='error'){
+    if (room === 'error') {
       wx.showModal({
         content: "输入格式有误",
       })
@@ -208,7 +237,7 @@ Page({
         let sum = 0;
         for (let value of res.data.data) {
           //  console.log(value)
-          sum+=value.consumption;
+          sum += value.consumption;
           tempdata.push(value.consumption.toFixed(2));
           type === 'hours' ? tempx.push(value.time.split(' ')[1]) : tempx.push(value.date.substr(5));
         }
@@ -239,7 +268,7 @@ Page({
   getrank: function () {
     const that = this;
     const room = that.setroom();
-    if(room==='error'){
+    if (room === 'error') {
       wx.showModal({
         content: "输入格式有误",
       })
@@ -286,7 +315,7 @@ Page({
   },
   getEletricityConsume: function () {
     const room = this.setroom();
-    if(room==='error'){
+    if (room === 'error') {
       wx.showModal({
         content: "输入格式有误",
       })
@@ -337,8 +366,8 @@ Page({
     const floor = wx.getStorageSync('electricity_floor')
     const room = wx.getStorageSync('electricity_room')
     this.setData({
-      floorID:floor,
-      roomID:room
+      floorID: floor,
+      roomID: room
     })
   },
 
@@ -353,7 +382,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    const {
+      navBarHeight,
+      navBarExtendHeight,
+    } = getApp().globalSystemInfo;
+    this.setData({
+      navBarCurrentHeight: navBarExtendHeight + navBarHeight
+    })
   },
 
   /**
