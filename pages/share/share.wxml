@@ -4,4 +4,11 @@
 <view class="canvas_block">
   <canvas canvas-id="myCanvas" style="width: 650rpx;height:1000rpx;"></canvas>
 </view>
-<view>{{err}}</view> 
+<view class="button_container">
+		<view class="s_button" bindtap="share">
+			分享
+		</view>
+		<view class="s_button" data-init="true" data-type="hours" bindtap="saveShareImg">
+			保存到手机
+		</view>
+	</view>

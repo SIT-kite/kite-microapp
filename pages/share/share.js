@@ -4,6 +4,7 @@ import {
   handlerGobackClick
 } from '../../utils/navBarUtils'
 const app = getApp();
+let openStatus = true;
 Page({
 
   /**
@@ -34,8 +35,8 @@ Page({
     console.log(that.data.globalwidth)
     const cw = 650 * this.px();
     const ch = 1000 * this.px();
-    console.log(cw);
-    console.log(ch);
+    console.log('cw'+cw);
+    console.log('ch'+ch);
     wx.downloadFile({
       url: `${app.globalData.userAvatar.replace('thirdwx','wx')}`,
       success: res => {
@@ -55,6 +56,7 @@ Page({
 
   },
   trydraw: function (cw, ch) {
+    const that = this;
     const px = this.px();
     const ctx = wx.createCanvasContext('myCanvas')
     const avatar_w = 150 * px;
@@ -156,12 +158,124 @@ Page({
     const slw = ctx.measureText(slogan);
     console.log(stw)
     ctx.fillText(slogan, main_x + main_w - 180 * px - slw.width, main_y + main_h - 60 * px - avatar_h / 2);
-    ctx.draw()
+    ctx.draw(false, function () {
+      setTimeout(() => {
+        wx.canvasToTempFilePath({
+          canvasId: 'myCanvas',
+          success(res) {
+            that.setData({
+              tempfile: res.tempFilePath
+            })
+          }
+        })
+      }, 500);
+    })
   },
 
   px: function () {
     return this.data.globalwidth / 750;
     // return 0.5;
+  },
+  share: function () {
+    const that = this;
+    wx.previewImage({
+      current: `${that.data.tempfile}`, // 当前显示图片的http链接
+      urls: [ `${that.data.tempfile}`] // 需要预览的图片http链接列表
+    })
+  },
+  saveShareImg: function () {
+    let that = this;
+    // 获取用户是否开启用户授权相册
+    if (!openStatus) {
+      wx.openSetting({
+        success: (result) => {
+          if (result) {
+            if (result.authSetting["scope.writePhotosAlbum"] === true) {
+              openStatus = true;
+              wx.saveImageToPhotosAlbum({
+                filePath: that.data.tempfile,
+                success() {
+                  wx.showToast({
+                    title: '图片保存成功，快去分享到朋友圈吧~',
+                    icon: 'none',
+                    duration: 2000
+                  })
+                },
+                fail() {
+                  wx.showToast({
+                    title: '保存失败',
+                    icon: 'none'
+                  })
+                }
+              })
+            }
+          }
+        },
+        fail: () => { },
+        complete: () => { }
+      });
+    } else {
+      wx.getSetting({
+        success(res) {
+          // 如果没有则获取授权
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.authorize({
+              scope: 'scope.writePhotosAlbum',
+              success() {
+                openStatus = true
+                wx.saveImageToPhotosAlbum({
+                  filePath: that.data.tempfile,
+                  success() {
+                    wx.showToast({
+                      title: '图片保存成功，快去分享到朋友圈吧~',
+                      icon: 'none',
+                      duration: 2000
+                    })
+                  },
+                  fail() {
+                    wx.showToast({
+                      title: '保存失败',
+                      icon: 'none'
+                    })
+                  }
+                })
+              },
+              fail() {
+                // 如果用户拒绝过或没有授权，则再次打开授权窗口
+                openStatus = false
+                console.log('请设置允许访问相册')
+                wx.showToast({
+                  title: '请设置允许访问相册',
+                  icon: 'none'
+                })
+              }
+            })
+          } else {
+            // 有则直接保存
+            openStatus = true
+            wx.saveImageToPhotosAlbum({
+              filePath: that.data.tempfile,
+              success() {
+                wx.showToast({
+                  title: '图片保存成功，快去分享到朋友圈吧~',
+                  icon: 'none',
+                  duration: 2000
+                })
+              },
+              fail() {
+                wx.showToast({
+                  title: '保存失败',
+                  icon: 'none'
+                })
+              }
+            })
+          }
+        },
+        fail(err) {
+          console.log(err)
+        }
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

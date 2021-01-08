@@ -1,5 +1,5 @@
 .canvas_block{
-  height:1200rpx;
+  height:calc(1000rpx + 3vh);
   width: 100%;
   display: flex;
   align-items: center;
@@ -9,4 +9,33 @@
 
 .canvas_block canvas{
   border-radius:20px;
+}
+.button_container {
+  width: 80vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-left:10vw;
+  padding: 0 20rpx;
+}
+
+.s_button {
+  font-weight: bold;
+  height: 80rpx;
+  line-height: 79rpx;
+  /* background-color: #0396FF; */
+  background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+  color: white;
+  width: calc(750rpx * 0.25);
+  z-index: 3;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.s_button:nth-last-child(1) {
+  /* background-color: #F55555; */
+  background-image: linear-gradient(135deg, #FDD819 10%, #E80505 100%);
+  width: calc(750rpx * 0.4);
 }
