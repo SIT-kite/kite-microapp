@@ -1,5 +1,5 @@
 {
-  "entryPagePath": "pages/index/index",
+  "entryPagePath": "pages/consume/electricity/electricity",
   "pages": [
     "pages/freshman/inputInfo/inputInfo",
     "pages/index/index",

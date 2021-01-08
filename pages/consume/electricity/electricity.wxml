@@ -16,7 +16,7 @@
 		<view class="s_button" bindtap="getEletricityConsume">
 			查询
 		</view>
-		<view class="s_button" data-init="true"  data-type="hours"bindtap="getcostdata">
+		<view class="s_button" data-init="true" data-type="hours" bindtap="getcostdata">
 			查看使用情况
 		</view>
 	</view>
@@ -31,16 +31,17 @@
 		</view>
 		<text style="color:#d3d3d3;margin-left:10rpx;">更新时间：{{electricityData.date}} {{electricityData.time}}</text>
 	</view>
-	<view class="main" style="width:100%;"
-	wx:if="{{show&&showtype==='history'}}">
+	<view class="main" style="width:100%;" wx:if="{{show&&showtype==='history'}}">
 		<view class="rank_container">
-			<view class="icon_container"><image src="../../../asset/pic/bangdan.jpg" alt=""></image></view>
+			<view class="icon_container">
+				<image src="../../../asset/pic/bangdan.jpg" alt=""></image>
+			</view>
 			<!-- <text >过去24小时中花费</text> -->
-				<text class="cost">{{rank.con}}<text style="font-size:18px;color:#e3e3e3;font-weight:unset!important;"> 元</text></text>
+			<text class="cost">{{rank.con}}<text style="font-size:18px;color:#e3e3e3;font-weight:unset!important;">元</text></text>
 			<text>24小时消费超越了<text style="font-weight:bold;"> {{rank.percen}} </text>的寝室</text>
 		</view>
 		<view class="show_block" style="margin-top:30rpx;">
-			<chart chart-class="chart" option="{{ option }}" notMerge bindinstance="onInstance" />
+			<chart chart-class="chart" option="{{ option }}" notMerge />
 		</view>
 		<view class="slider_contianer">
 			<view class="help  {{selected==='hours' ? 'type_indication_to_left':' type_indication_to_right'}}"></view>
@@ -53,7 +54,9 @@
 				过去一周
 			</view>
 		</view>
-		<view class="share_button" bindtap="gotoshare">分享</view>
+		<view class="share_button" bindtap="gotoshare">
+			<text>点此生成分享海报</text>
+		</view>
 	</view>
 	<!-- <van-popup show="{{ show }}" round position="bottom" custom-style="height: 20%" bind:close="onClose">
     {{ message }}

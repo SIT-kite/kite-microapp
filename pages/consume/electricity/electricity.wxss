@@ -1,29 +1,36 @@
 /* pages/consume/electricity/electricity.wxss */
 .title {
-  margin: 5vh auto;
+  margin: 2vh auto;
   font-weight: bold;
   font-size: 32px;
   text-align: center;
 }
 
 .share_button{
-  position: absolute;
-  bottom:40rpx;
-  right:-30rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: linear-gradient( 135deg, #70F570 10%, #49C628 100%);
-  width: 20%;
+  /* background-color: #70F570 ; */
+  /* border: 1px solid black; */
+  width: 60%;
   height: 80rpx;
   color: white;
   border-radius: 14px;
   font-weight: bold;
+  margin-top: 20rpx;
+  font-size: 32rpx;
+  /* padding: 10rpx; */
   /* margin-top: 20rpx; */
 }
 
+.share_button image{
+  width: 90%;
+  height: 90%;
+}
+
 .main {
-  /* position: relative; */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

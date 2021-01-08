@@ -124,50 +124,50 @@ Page({
         });
       }).catch(res => {
         console.log(res)
-        // // PostSession 失败 创建用户
-        // this.postUserPromise(wxUserInfo).then(res => {
-        //   app.globalData.uid = res.data.data.uid;
-        //   app.globalData.token = res.data.data.token;
-        //   // 本地存储变量
-        //   wx.setStorageSync("token", res.data.data.token);
-        //   wx.setStorageSync("uid", res.data.data.uid);
+        // PostSession 失败 创建用户
+        this.postUserPromise(wxUserInfo).then(res => {
+          app.globalData.uid = res.data.data.uid;
+          app.globalData.token = res.data.data.token;
+          // 本地存储变量
+          wx.setStorageSync("token", res.data.data.token);
+          wx.setStorageSync("uid", res.data.data.uid);
 
-        //   wxLogin().then(res => {
-        //     // 更新全局wxCode
-        //     wxCode = res.code;
-        //     this.postUserAuthPromise().then(res => {
-        //       // PostAuthentication 成功
-        //       wx.hideLoading();
-        //       // 获取isStu信息
-        //       this.getIdentityPromise().then(res => {
-        //         // GetIdentity 成功
-        //         this.setData({ isStudent: true });
-        //         app.globalData.isStudent = true
-        //         wx.setStorageSync("isStudent", true);
-        //       }).catch(res => {
-        //         // GetIdentity 失败
-        //         wx.hideLoading();
-        //         this.setData({ isStudent: false });
-        //         app.globalData.isStudent = false;
-        //         wx.setStorageSync("isStudent", false);
-        //       });
-        //     }).catch(res => {
-        //       // PostAuthentication 失败
-        //       console.log("PostAuthentication 失败");
-        //       console.log(res);
-        //     });
-        //   }).catch(res => {
-        //     // wxlogin失败 
-        //     wx.hideLoading();
-        //     console.log("微信登录失败");
-        //     console.log(res);
-        //   });
-        // }).catch(res => {
-        //   // PostUser 失败
-        //   wx.hideLoading();
-        //   console.log("创建用户失败");
-        //   console.log(res);
-        // });
+          wxLogin().then(res => {
+            // 更新全局wxCode
+            wxCode = res.code;
+            this.postUserAuthPromise().then(res => {
+              // PostAuthentication 成功
+              wx.hideLoading();
+              // 获取isStu信息
+              this.getIdentityPromise().then(res => {
+                // GetIdentity 成功
+                this.setData({ isStudent: true });
+                app.globalData.isStudent = true
+                wx.setStorageSync("isStudent", true);
+              }).catch(res => {
+                // GetIdentity 失败
+                wx.hideLoading();
+                this.setData({ isStudent: false });
+                app.globalData.isStudent = false;
+                wx.setStorageSync("isStudent", false);
+              });
+            }).catch(res => {
+              // PostAuthentication 失败
+              console.log("PostAuthentication 失败");
+              console.log(res);
+            });
+          }).catch(res => {
+            // wxlogin失败 
+            wx.hideLoading();
+            console.log("微信登录失败");
+            console.log(res);
+          });
+        }).catch(res => {
+          // PostUser 失败
+          wx.hideLoading();
+          console.log("创建用户失败");
+          console.log(res);
+        });
       });
 
       // 设置全局Avatar nickName

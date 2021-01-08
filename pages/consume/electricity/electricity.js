@@ -147,22 +147,7 @@ Page({
     })
     // this.onInstance(echarts);
   },
-  onInstance({detail: instance}) {
-    setTimeout(()=>{
-    const dom = instance.getDom()
-    dom.saveAsImage().then((path) => {
-      // 临时地址
-      this.setData({
-        path:path,
-        go:true
-      })
-      // wx.saveImageToPhotosAlbum({
-      //   filePath: path
-      // })
-    });
-  },1100
-)
-  },
+
   rpx2px:function(rpx){
     const pixelRatio1 = 750 / wx.getSystemInfoSync().windowWidth; 
     return rpx / pixelRatio1;
