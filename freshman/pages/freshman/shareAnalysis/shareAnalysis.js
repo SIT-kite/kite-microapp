@@ -1,6 +1,6 @@
 // pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.js
 var app = getApp();
-const requestUtils = require("../../../utils/requestUtils");
+const requestUtils = require("../../../../utils/requestUtils");
 Page({
 
   /**

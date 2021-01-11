@@ -167,7 +167,7 @@ Page({
   setroom: function () {
     const floor = parseInt(this.data.floorID);
     const room = parseInt(this.data.roomID);
-    if (floor >= 1 && floor <= 26 && room / 100 >= 0 && room / 100 <= 16) {
+    if (floor >= 1 && floor < 27 && room / 100 >= 0 && room / 100 < 17) {
       const result = `10${floor}${room}`;
       wx.setStorageSync('electricity_floor', floor);
       wx.setStorageSync('electricity_room', room);
@@ -245,7 +245,7 @@ Page({
         }
       }).catch(res => {
         wxShowModal({
-          content: "出错了",
+          content: "无对应房间数据",
         });
       })
     }
@@ -272,11 +272,15 @@ Page({
       let percen = ((total - rank) / total * 100).toFixed(2);
       that.setData({
         'rank.con': res.data.data.consumption.toFixed(2),
-        'rank.percen': `${percen}%`
+        'rank.percen': `${percen}`
       })
     }).catch(res => {
+      that.setData({
+        'rank.con':0,
+        'rank.percen': 0
+      })
       wxShowModal({
-        content: "出错了",
+        content: "无对应房间数据",
       });
     })
   },
@@ -326,7 +330,7 @@ Page({
       });
     }).catch(res => {
       wxShowModal({
-        content: "出错了",
+        content: "无对应房间数据",
       });
     })
 
@@ -339,11 +343,6 @@ Page({
       showCancel: false
     })
   },
-  // focus: function(){
-  //   this.setData({
-  //     roomID: ""
-  //   });
-  // },
   /**
    * 生命周期函数--监听页面加载
    */

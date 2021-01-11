@@ -32,23 +32,30 @@ Page({
     const res = wx.getSystemInfoSync()
     that.data.globalwidth = res.windowWidth;
     that.data.rank = JSON.parse(options.rank);
+    
     console.log(that.data.globalwidth)
     const cw = 650 * this.px();
     const ch = 1000 * this.px();
     console.log('cw'+cw);
     console.log('ch'+ch);
     wx.downloadFile({
-      url: `${app.globalData.userAvatar.replace('thirdwx','wx')}`,
+      // url: `${app.globalData.userAvatar.replace('thirdwx','wx')}`,
+      url: `${app.globalData.userAvatar}`,
       success: res => {
-        if (res.statusCode === 200) {
           that.data.url = res.tempFilePath
           console.log(that.data.url)
+          wx.showLoading({
+            title: '绘制中',
+          })
           that.trydraw(cw, ch);
-        }
       },
       fail: res => {
+        wx.showModal({
+          content: '获取头像失败，请至反馈群反馈！',
+        })
         that.setData({
-          err: JSON.stringify(res)
+          err: JSON.stringify(res),
+          url:app.globalData.userAvatar
         });
       }
     });
@@ -123,7 +130,7 @@ Page({
     const ltw = ctx.measureText(longtext);
 
     ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
-    const percent = `${this.data.rank.percen}`;
+    const percent = `${this.data.rank.percen}%`;
     const pw = ctx.measureText(percent);
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
     const cotext = "的寝室";
@@ -142,7 +149,9 @@ Page({
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
     ctx.fillText(cotext, main_x + (main_w - s_center) / 2 + ltw.width + pw.width + 40 * px + (s_center - c_center) / 2, main_y + 230 * px);
 
-    ctx.drawImage('../../asset/pic/shengdian.png', main_x + (main_w - 330 * px) / 2, main_y + 270 * px, 330 * px, 330 * px);
+    const shareurl =  this.data.rank.percen / 100> 0.5 ? '../../asset/pic/nocold.png':'../../asset/pic/shengdian.png';
+    console.log(percent)
+    ctx.drawImage(shareurl, main_x + (main_w - 330 * px) / 2, main_y + 270 * px, 330 * px, 330 * px);
 
     ctx.drawImage('../../asset/pic/share_code.png', main_w - 110 * px, main_y + main_h - 170 * px - avatar_h / 2, 150 * px, 150 * px);
 
@@ -166,6 +175,15 @@ Page({
             that.setData({
               tempfile: res.tempFilePath
             })
+          },
+          fail:function(){
+            wx.showToast({
+              title: '绘制失败',
+            })
+          },
+          complete:function(){
+            // wx.hideToast();
+            wx.hideLoading();
           }
         })
       }, 500);

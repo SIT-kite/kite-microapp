@@ -12,3 +12,5 @@
 			保存到手机
 		</view>
 	</view>
+	<view>{{err}}</view>
+	<view>{{url}}</view>

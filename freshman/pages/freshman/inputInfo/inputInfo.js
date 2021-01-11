@@ -1,8 +1,8 @@
 //index.js
 //获取应用实例
-import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
+import { handlerGohomeClick, handlerGobackClick } from'../../../../utils/navBarUtils'
 const app = getApp();
-const requestUtils = require("../../../utils/requestUtils");
+const requestUtils = require("../../../../utils/requestUtils");
 const secretRex = /[0-9]{5}[0-9X]/;
 Page({
   data: {
@@ -109,7 +109,7 @@ Page({
           app.globalData.userInfo = this.data.userInfo;
           app.globalData.contact = this.data.contact;
           wx.redirectTo({
-            url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
+            url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
             success: (result) => {
               console.log("跳转 stuInfoDetail 页面成功");
             }
@@ -160,7 +160,7 @@ Page({
         app.globalData.visible = this.data.visible;
         app.globalData.contact = this.data.contact;
         wx.redirectTo({
-          url: '/pages/freshman/stuInfoDetail/stuInfoDetail',
+          url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
           success: (result) => {
             console.log("跳转至页面 stuInfoDetail");
           },

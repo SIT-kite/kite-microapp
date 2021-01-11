@@ -54,6 +54,7 @@ Page({
    * @return {Promise}
    */
   postUserPromise: (wxUserInfo) => {
+    console.log('调用注册逻辑')
     let url = `${commonUrl}/user`
     let header = { "content-type": "application/x-www-form-urlencoded" };
     let data = wxUserInfo;
@@ -169,7 +170,6 @@ Page({
           console.log(res);
         });
       });
-
       // 设置全局Avatar nickName
       app.globalData.nickName = e.detail.userInfo.nickName;
       app.globalData.userAvatar = e.detail.userInfo.avatarUrl;
@@ -179,7 +179,6 @@ Page({
         avater: app.globalData.userAvatar,
         isLogin: app.globalData.isLogin,
       });
-
     }
   },
   moveToAbout: function (e) {

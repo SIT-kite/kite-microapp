@@ -78,7 +78,7 @@ Page({
     let url = null;
     switch (id) {
       case "welcome":
-        url = "/pages/freshman/welcome/welcome";
+        url = "/freshman/pages/freshman/welcome/welcome";
         break;
       case "qrcode":
         url = "/pages/qrcode/qrcode";
@@ -103,7 +103,7 @@ Page({
     }
 
     if (id === "welcome" && app.globalData.userDetail != "" && app.globalData.userDetail != null) {
-      url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
+      url = "/freshman/pages/freshman/stuInfoDetail/stuInfoDetail";
 
     }
 
