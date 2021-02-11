@@ -14,6 +14,8 @@ page {
   --font-size: 12px;
   --padding-size: 12vh;
   --common-width: 87vw;
+  --swiper-color: linear-gradient( 135deg, #FF6FD8 10%, #3813C2 100%);
+  --height: calc( 100vh - 48px );
 }
 
 button::after {

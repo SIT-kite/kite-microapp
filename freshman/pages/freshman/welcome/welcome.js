@@ -1,5 +1,5 @@
-// pages/freshman/navigate/navigate.js
-import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
+// pages/welcome/welcome.js
+var app = getApp();
 Page({
 
   /**
@@ -8,8 +8,21 @@ Page({
   data: {
 
   },
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+
+  gotoStuInfoDetail:function (e) {
+    // 第一次进入这个页面 则需要完善个人信息
+    if (app.globalData.userDetail == ''|| app.globalData.userDetail == null){
+      wx.redirectTo({
+        url: "/freshman/pages/freshman/inputInfo/inputInfo?isHidden=flex",
+      })
+    }
+    else{
+      wx.navigateTo({
+        url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
+      })
+    }
+     
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -22,10 +35,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.showLoading({
-      title: "加载中"
-    });
-    setTimeout(() => {wx.hideLoading();},1500);
 
   },
 

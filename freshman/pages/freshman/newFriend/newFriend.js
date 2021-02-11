@@ -3,9 +3,9 @@ var app = getApp();
 import {
   handlerGohomeClick,
   handlerGobackClick
-} from '../../../utils/navBarUtils'
-const timeUtils = require("../../../utils/timeUtils");
-const requestUtils = require("../../../utils/requestUtils");
+} from '../../../../utils/navBarUtils'
+const timeUtils = require("../../../../utils/timeUtils");
+const requestUtils = require("../../../../utils/requestUtils");
 Page({
 
   /**

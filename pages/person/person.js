@@ -54,6 +54,7 @@ Page({
    * @return {Promise}
    */
   postUserPromise: (wxUserInfo) => {
+    console.log('调用注册逻辑')
     let url = `${commonUrl}/user`
     let header = { "content-type": "application/x-www-form-urlencoded" };
     let data = wxUserInfo;
@@ -105,8 +106,8 @@ Page({
         // PostSession 成功
         // 设置本地变量 uid token
         console.log(res);
-        this.globalData.token = res.data.data.token;
-        this.globalData.uid = res.data.data.data.uid;
+        app.globalData.token = res.data.data.token;
+        app.globalData.uid = res.data.data.data.uid;
         wx.setStorageSync("uid", res.data.data.data.uid);
         wx.setStorageSync("token", res.data.data.token);
         this.getIdentityPromise().then(res => {
@@ -123,6 +124,7 @@ Page({
           wx.hideLoading();
         });
       }).catch(res => {
+        console.log(res)
         // PostSession 失败 创建用户
         this.postUserPromise(wxUserInfo).then(res => {
           app.globalData.uid = res.data.data.uid;
@@ -168,7 +170,6 @@ Page({
           console.log(res);
         });
       });
-
       // 设置全局Avatar nickName
       app.globalData.nickName = e.detail.userInfo.nickName;
       app.globalData.userAvatar = e.detail.userInfo.avatarUrl;
@@ -178,7 +179,6 @@ Page({
         avater: app.globalData.userAvatar,
         isLogin: app.globalData.isLogin,
       });
-
     }
   },
   moveToAbout: function (e) {

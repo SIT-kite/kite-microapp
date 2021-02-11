@@ -1,8 +1,8 @@
 // pages/newClass/newClass.js
-import { handlerGohomeClick, handlerGobackClick } from '../../../utils/navBarUtils'
+import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils'
 const app = getApp();
-const timeUtils = require("../../../utils/timeUtils");
-const requestUtils = require("../../../utils/requestUtils");
+const timeUtils = require("../../../../utils/timeUtils");
+const requestUtils = require("../../../../utils/requestUtils");
 Page({
 
   /**

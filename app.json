@@ -1,18 +1,26 @@
 {
   "entryPagePath": "pages/index/index",
   "pages": [
-    "pages/freshman/inputInfo/inputInfo",
     "pages/index/index",
-    "pages/freshman/welcome/welcome",
-    "pages/freshman/stuInfoDetail/stuInfoDetail",
-    "pages/freshman/newClass/newClass",
-    "pages/freshman/shareAnalysis/shareAnalysis",
-    "pages/freshman/newFriend/newFriend",
     "pages/person/person",
     "pages/about/about",
     "pages/signup/signup",
-    "pages/freshman/navigate/navigate",
-    "pages/consume/electricity/electricity"
+    "pages/consume/electricity/electricity",
+    "pages/share/share"
+  ],
+  "subpackages": [
+    {
+      "root":"freshman",
+       "pages":[
+        "pages/freshman/inputInfo/inputInfo",
+        "pages/freshman/welcome/welcome",
+        "pages/freshman/stuInfoDetail/stuInfoDetail",
+        "pages/freshman/newClass/newClass",
+        "pages/freshman/shareAnalysis/shareAnalysis",
+        "pages/freshman/newFriend/newFriend",
+        "pages/freshman/navigate/navigate"
+       ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -20,6 +28,12 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
+  },
+  "plugins": {
+    "echarts": {
+      "version": "1.0.5",
+      "provider": "wx1db9e5ab1149ea03"
+    }
   },
   "tabBar": {
     "custom": true,

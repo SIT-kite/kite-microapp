@@ -26,6 +26,7 @@ App({
     isPrivacyConfirmed: false,
   },
   onLaunch: function () {
+console.log(this.globalData.userAvatar)
     // 更新版本处理
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
@@ -84,6 +85,7 @@ App({
     // 更新
     const that = this;
     const isAllStorageOk = this.globalData.uid !== "" && this.globalData.token !== "" && this.globalData.isStudent !== "";
+    console.log("isAllStorageOk"+isAllStorageOk)
     console.log(this.globalData.uid !== "");
     console.log(this.globalData.token !== "");
     console.log(this.globalData.isStudent !== "");
@@ -93,12 +95,13 @@ App({
         wxGetUserInfo().then(res => {
           that.globalData.nickName = res.userInfo.nickName;
           that.globalData.userAvatar = res.userInfo.avatarUrl;
+          console.log(that.globalData.userAvatar)
           // 确认所需全局变量正常 否则重新登录获取
           if (isAllStorageOk) {
             that.globalData.isLogin = true;
           }
           if (that.globalData.uid != "") {
-            // put 更新用户信息
+            // put 更新用户头像
             let url = `${that.globalData.commonUrl}/user/${that.globalData.uid}`
             let data = res.userInfo;
             let header = {
@@ -106,7 +109,7 @@ App({
               "Authorization": `Bearer ${that.globalData.token}`
             };
             requestUtils.doPUT(url, data, header).catch(res => {
-              console.log("更新用户数据失败");
+              console.log("更新用户头像失败");
               console.log(res);
             });
           }
