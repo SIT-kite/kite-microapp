@@ -24,6 +24,7 @@
 		<view class="img_wrap">
 			<image src="../../../asset/icon/electronic.png" alt=""></image>
 		</view>
+		<view style="position:absolute;top:33.75rpx;right:10rpx;color:#d3d3d3;margin-left:10rpx;" bindtap="showWrongTip">数据不一致？</view>
 		<view class="text_block">
 			<text style="margin-bottom:20rpx;">房间号：{{electricityData.room}}</text>
 			<text style="margin-bottom:20rpx;">剩余金额：{{electricityData.balance}} 元</text>

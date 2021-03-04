@@ -72,6 +72,7 @@ input {
 }
 
 .show_block {
+  position: relative;
   background-color: white;
   margin-top: 60rpx;
   width: 85%;

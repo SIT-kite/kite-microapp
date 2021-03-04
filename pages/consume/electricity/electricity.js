@@ -136,7 +136,13 @@ Page({
       show: false,
     })
   },
-
+  showWrongTip:function(){
+    wx.showModal({
+      title: '数据错误提示',
+      content: `此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。`,
+      showCancel: false,
+    })
+  },
   gotoshare:function(){
     wx.showLoading({
       title: "加载中"
