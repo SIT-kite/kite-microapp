@@ -1,8 +1,15 @@
 // pages/signup/signup.js
 import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils'
+
 const app = getApp();
 const commonUrl = app.globalData.commonUrl;
 const requestUtils = require("../../utils/requestUtils");
+
+const getCanupLoad = uploadInfo => Boolean(
+  uploadInfo.realName && uploadInfo.studentId &&
+  ( uploadInfo.oaSecret || uploadInfo.identityNumber )
+);
+
 Page({
 
   /**
@@ -25,52 +32,40 @@ Page({
   handlerGobackClick: handlerGobackClick,
 
   bindName: function (e) {
-    const that = this;
+    const uploadInfo = this.data.uploadInfo;
     this.setData({
       'uploadInfo.realName': e.detail.value
     })
     this.setData({
-      canupLoad: Boolean(that.data.uploadInfo.realName &&
-        that.data.uploadInfo.studentId &&
-        (that.data.uploadInfo.oaSecret ||
-          that.data.uploadInfo.identityNumber))
+      canupLoad: getCanupLoad(uploadInfo)
     })
   },
   bindId: function (e) {
-    const that = this;
+    const uploadInfo = this.data.uploadInfo;
     this.setData({
       'uploadInfo.studentId': e.detail.value
     })
     this.setData({
-      canupLoad: Boolean(that.data.uploadInfo.realName &&
-        that.data.uploadInfo.studentId &&
-        (that.data.uploadInfo.oaSecret ||
-          that.data.uploadInfo.identityNumber))
+      canupLoad: getCanupLoad(uploadInfo)
     })
   },
   bindSecret: function (e) {
-    const that = this;
+    const uploadInfo = this.data.uploadInfo;
     this.setData({
       'uploadInfo.oaSecret': e.detail.value
     })
     this.setData({
-      canupLoad: Boolean(that.data.uploadInfo.realName &&
-        that.data.uploadInfo.studentId &&
-        (that.data.uploadInfo.oaSecret ||
-          that.data.uploadInfo.identityNumber))
+      canupLoad: getCanupLoad(uploadInfo)
     })
 
   },
   bindidentity: function (e) {
-    const that = this;
+    const uploadInfo = this.data.uploadInfo;
     this.setData({
       'uploadInfo.identityNumber': e.detail.value.toString().toUpperCase() 
     })
     this.setData({
-      canupLoad: Boolean(that.data.uploadInfo.realName &&
-        that.data.uploadInfo.studentId &&
-        (that.data.uploadInfo.oaSecret ||
-          that.data.uploadInfo.identityNumber))
+      canupLoad: getCanupLoad(uploadInfo)
     })
   },
   onClose: function () {
@@ -168,15 +163,15 @@ Page({
         confirmText: '我已知晓',
         confirmColor: '#4B6DE9',
         success: (result) => {
-          if(!result.confirm){
+          if (!result.confirm) {
             that.handlerGobackClick();
-          }else{
+          } else {
             app.globalData.signPrivacyConfirm = true;
             wx.setStorageSync("signPrivacyConfirm", true);
           }
         },
-        fail: ()=>{},
-        complete: ()=>{}
+        fail: () => {},
+        complete: () => {}
       });
     }
 
@@ -195,10 +190,7 @@ Page({
           uploadInfo: res.data
         })
         that.setData({
-          canupLoad: Boolean(that.data.uploadInfo.realName &&
-            that.data.uploadInfo.studentId &&
-            (that.data.uploadInfo.oaSecret ||
-              that.data.uploadInfo.identityNumber))
+          canupLoad: getCanupLoad(that.data.uploadInfo)
         })
       }
     })

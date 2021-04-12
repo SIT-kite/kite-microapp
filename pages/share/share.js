@@ -36,8 +36,8 @@ Page({
     console.log(that.data.globalwidth)
     const cw = 650 * this.px();
     const ch = 1000 * this.px();
-    console.log('cw'+cw);
-    console.log('ch'+ch);
+    console.log('cw: ' + cw);
+    console.log('ch: ' + ch);
     wx.downloadFile({
       // url: `${app.globalData.userAvatar.replace('thirdwx','wx')}`,
       url: `${app.globalData.userAvatar}`,
@@ -63,6 +63,7 @@ Page({
 
   },
   trydraw: function (cw, ch) {
+
     const that = this;
     const px = this.px();
     const ctx = wx.createCanvasContext('myCanvas')
@@ -74,6 +75,7 @@ Page({
     const main_y = avatar_h + avatar_y;
     const main_w = 550 * px;
     const main_h = ch - (avatar_h / 2 + avatar_y) - 40 * px
+
     ctx.beginPath()
     var gra = ctx.createLinearGradient(0, 0, cw, ch)
     gra.addColorStop(0.1, "#ABDCFF");
@@ -104,16 +106,23 @@ Page({
     ctx.fillText(name, main_x + main_w / 2 - nw.width / 2, main_y + 60 * px);
 
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+
     const text = "昨日消耗电费";
     const tw = ctx.measureText(text);
+
     ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+
     const number = `${this.data.rank.con}`;
     const numw = ctx.measureText(number);
+
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+
     const yuan = "元";
     const yuanw = ctx.measureText(yuan);
     const s_center = tw.width + numw.width + yuanw.width + 20 * px + 40 * px;
+
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+
     ctx.fillText(text, main_x + (main_w - s_center) / 2, main_y + 160 * px);
 
     ctx.setFillStyle("red")
@@ -126,13 +135,17 @@ Page({
 
     // const s_center = tw.width+numw.width+yuanw.width+20*px+40*px;
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+
     const longtext = "超越了";
     const ltw = ctx.measureText(longtext);
 
     ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+
     const percent = `${this.data.rank.percen}%`;
     const pw = ctx.measureText(percent);
+
     ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+
     const cotext = "的寝室";
     const ctw = ctx.measureText(longtext);
     const c_center = ltw.width + pw.width + ctw.width + 20 * px + 60 * px;
@@ -198,7 +211,7 @@ Page({
     const that = this;
     wx.previewImage({
       current: `${that.data.tempfile}`, // 当前显示图片的http链接
-      urls: [ `${that.data.tempfile}`] // 需要预览的图片http链接列表
+      urls: [ `${that.data.tempfile}` ] // 需要预览的图片http链接列表
     })
   },
   saveShareImg: function () {
