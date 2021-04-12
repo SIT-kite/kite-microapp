@@ -10,7 +10,7 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-.tab-icon{
+.tab-icon {
   margin-top: .16rem;
   width: 1.5rem;
   height: 1.6rem;
@@ -37,15 +37,15 @@
   font-weight: bold;
 }
 
-.tab-bar-item:focus{
+.tab-bar-item:focus {
   color: rgba(0, 0, 0, 0.7);
 }
-.tab-bar-item-text{
+.tab-bar-item-text {
   color: #9e9696;
   font-size: 12px;
 }
 
-.text-selected{
+.text-selected {
   color:black;
   font-size: 12px;
 }
