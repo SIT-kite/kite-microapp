@@ -20,26 +20,26 @@ Page({
         id: "inquiry",
         text: "电费",
         iconPath: "/asset/icon/main_icon/electricity.png"
+      } /* ,
+      {
+        id: "education",
+        text: "教务",
+        iconPath: "/asset/icon/main_icon/kecheng.png"
       },
-      // {
-      //   id: "education",
-      //   text: "教务",
-      //   iconPath: "/asset/icon/main_icon/kecheng.png"
-      // },
-      // {
-      //   id: "activity",
-      //   text: "活动",
-      //   iconPath: "/asset/icon/main_icon/tuandui.png"
-      // },
-      // {
-      //   id: "shopping",
-      //   text: "闲置",
-      //   iconPath: "/asset/icon/main_icon/dianpu.png"
-      // }, {
-      //   id: "lost",
-      //   text: "失物",
-      //   iconPath: "/asset/icon/main_icon/sousuo.png"
-      // }
+      {
+        id: "activity",
+        text: "活动",
+        iconPath: "/asset/icon/main_icon/tuandui.png"
+      },
+      {
+        id: "shopping",
+        text: "闲置",
+        iconPath: "/asset/icon/main_icon/dianpu.png"
+      }, {
+        id: "lost",
+        text: "失物",
+        iconPath: "/asset/icon/main_icon/sousuo.png"
+      } */
     ]
   },
   onLoad: function () {
@@ -55,7 +55,7 @@ Page({
     let getNotice = requestUtils.doGET(url, data, header);
     getNotice.then((res) => {
       this.setData({
-        notice:res.data.data
+        notice: res.data.data
       })
       console.log(res.data.data)
     }).
@@ -74,37 +74,28 @@ Page({
     this.router(this.data.id);
   },
   router: function (id) {
-    // 如果点击新生但是userDetail不为空，那么直接跳入到stuInfoDetail
-    let url = null;
-    switch (id) {
-      case "welcome":
-        url = "/freshman/pages/freshman/welcome/welcome";
-        break;
-      case "qrcode":
-        url = "/pages/qrcode/qrcode";
-        break;
-      case "education":
-        url = "/pages/education/education";
-        break;
-      case "activity":
-        url = "/pages/activity/activity";
-        break;
-      case "shopping":
-        url = "/pages/shopping/shopping";
-        break;
-      case "lost":
-        url = "/pages/lost/lost"
-        break;
-      case "inquiry":
-        url = "/pages/consume/electricity/electricity"
-        break;
-      default:
-        break
+    const url = new Map([
+        [ "welcome", "/freshman/pages/freshman/welcome/welcome" ],
+        [ "qrcode", "/pages/qrcode/qrcode" ],
+        [ "education", "/pages/education/education" ],
+        [ "activity", "/pages/activity/activity" ],
+        [ "shopping", "/pages/shopping/shopping" ],
+        [ "lost", "/pages/lost/lost" ],
+        [ "inquiry", "/pages/consume/electricity/electricity" ]
+    ]).get(id);
+
+    if (url === undefined) {
+      console.error("找不到对应的 url", {id, url});
+      throw "找不到对应的 url";
     }
 
-    if (id === "welcome" && app.globalData.userDetail != "" && app.globalData.userDetail != null) {
+    // 如果点击新生但是userDetail不为空，那么直接跳入到stuInfoDetail
+    if (
+      id === "welcome" &&
+      app.globalData.userDetail != "" &&
+      app.globalData.userDetail != null
+    ) {
       url = "/freshman/pages/freshman/stuInfoDetail/stuInfoDetail";
-
     }
 
     const show = !app.globalData.isLogin;
@@ -181,6 +172,6 @@ Page({
     return {
       title: "上应小风筝",
       path: "pages/index/index"
-    }
+    };
   }
 })

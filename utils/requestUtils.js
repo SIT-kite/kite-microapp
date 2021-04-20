@@ -2,11 +2,10 @@
  * Promise化微信官方 wx-request 系列请求
  * FileName: requestUtils.js
  * Author: peanut996
- * CreateTime: 2020//9/14 15:24:45
+ * CreateTime: 2020/9/14 15:24:45
  * Copyright (c) 2020 By peanut996 All rights reserved.
  * License: GPL v3
  */
-
 
 const GET = "GET";
 const POST = "POST";
@@ -14,7 +13,6 @@ const PUT = "PUT";
 const HEAD = "HEAD";
 const PATCH = "PATCH";
 const DELETE = "DELETE";
-
 
 const NETWORK_ERROR = "网络请求错误";
 const REQUEST_ERROR = "业务逻辑错误";
@@ -96,7 +94,7 @@ var request = (url, data, header, method) => {
       data: data,
       header: header,
       method: method,
-      success: (res) => {
+      success: res => {
         if (res.data.code == SUCCESS_STAT_CODE) {
           resolve(res);
         } else if (res.data.code == NO_ACCOUNT_STAT_CODE) {
@@ -122,12 +120,8 @@ var request = (url, data, header, method) => {
 var wxLogin = () => {
   return new Promise((resolve, reject) => {
     wx.login({
-      success: (res) => {
-        resolve(res);
-      },
-      fail: (res) => {
-        reject(res);
-      }
+      success: res => resolve(res)
+      fail: res => reject(res)
     });
   })
 }

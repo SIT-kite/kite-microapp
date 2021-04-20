@@ -1,5 +1,5 @@
-// 格式为"2020-08-31T16:18:57"
 // 返回13位的时间戳(精确到毫秒)
+// 格式为"2020-08-31T16:18:57"
 var getTimeStamp = function (GMTTime) {
   var arr = GMTTime.split("T");
   var str = arr[0] + " " + arr[1];
