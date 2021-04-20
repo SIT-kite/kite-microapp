@@ -63,7 +63,6 @@ Page({
 
   /**
    * 返回PostAuthentication请求的Promise
-   * @param {Object} res postUser的response
    * @return {Promise}
    */
   postUserAuthPromise: () => {
@@ -178,7 +177,7 @@ Page({
       app.globalData.isLogin = true;
       this.setData({
         nickName: app.globalData.nickName,
-        avater: app.globalData.userAvatar,
+        avatar: app.globalData.userAvatar,
         isLogin: app.globalData.isLogin,
       });
     }
@@ -202,7 +201,7 @@ Page({
     const data = app.globalData;
     this.setData({
       nickName: data.nickName,
-      avater: data.userAvatar,
+      avatar: data.userAvatar,
       isLogin: data.isLogin,
       isStudent: data.isStudent
     });
@@ -216,7 +215,7 @@ Page({
     const data = app.globalData;
     this.setData({
       nickName: data.nickName,
-      avater: data.userAvatar,
+      avatar: data.userAvatar,
       isLogin: data.isLogin,
       isStudent: data.isStudent
     });
@@ -230,11 +229,11 @@ Page({
       this.getTabBar().setData({
         selected: 1
       })
-    };
+    }
     const data = app.globalData;
     this.setData({
       nickName: data.nickName,
-      avater: data.userAvatar,
+      avatar: data.userAvatar,
       isLogin: data.isLogin,
       isStudent: data.isStudent
     });

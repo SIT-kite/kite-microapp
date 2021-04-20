@@ -4,8 +4,10 @@ import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../../../utils/navBarUtils'
+
 var app = getApp();
 const requestUtils = require('../../../../utils/requestUtils');
+
 Page({
   data: {
     show: false,
