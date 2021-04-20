@@ -1,15 +1,17 @@
 <view class="container">
 	<view class="main">
+
 		<view class="personal">
-			<view wx:if="{{isLogin}}" class="help  shadow">
+
+			<view wx:if="{{isLogin}}" class="help shadow">
 				<view class="personal_pic">
 					<image src="{{avater}}"></image>
 				</view>
 				<view class="personal_main">
 					<view class="main_info">
 						<text style="font-size:40rpx;font-weight:500;text-align:left;font-weight:bold;">{{nickName}}</text>
-						<view class="true_basic {{isStudent ? 'a_stu':'n_stu'}}">
-							<image src="{{isStudent ? iconUrl.right:iconUrl.wrong}}"></image>
+						<view class="true_basic {{isStudent ? 'a_stu' : 'n_stu'}}">
+							<image src="{{isStudent ? iconUrl.right : iconUrl.wrong}}"></image>
 							<text>{{isStudent? '已实名':'未实名'}}</text>
 						</view>
 					</view>
@@ -18,11 +20,12 @@
 					</view>
 				</view>
 			</view>
+
 			<view wx:else style="height:100%;">
 				<button
-				 class="login  shadow"
-				 bindgetuserinfo="login"
-				 open-type="getUserInfo"
+					class="login shadow"
+					bindgetuserinfo="login"
+					open-type="getUserInfo"
 				>
 					<view class=" image_container">
 						<image src="/asset/icon/weixin.png" mode="aspectFit"></image>
@@ -32,14 +35,17 @@
 			</view>
 
 		</view>
+
 		<button class="menu-option shadow" bindtap="moveToAbout">
 			<view class="left">关于我们</view>
 			<view class="right" style="color:#e3e3e3;">></view>
 		</button>
+
 		<button class="menu-option shadow" open-type="feedback">
 			<view class="left">意见反馈</view>
 			<view class="right" style="color:#e3e3e3;">></view>
 		</button>
+
 	</view>
 </view>
 

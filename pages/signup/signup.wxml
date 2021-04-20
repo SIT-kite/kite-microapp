@@ -1,22 +1,25 @@
-<navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<navBar  background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view class="container">
+
 	<van-popup show="{{ show }}"  custom-class="pop_class" bind:close="onClose">
 		<view class="pop_container">
-			<view class="icon_bg {{upSuccess?'right':'wrong'}}"><image src="{{upSuccess?'/asset/icon/right.png':'/asset/icon/wrong.png'}}"></image></view>
+			<view class="icon_bg {{upSuccess ? 'right' : 'wrong'}}"><image src="{{upSuccess ? '/asset/icon/right.png' : '/asset/icon/wrong.png'}}"></image></view>
 			<text style="font-weight:bold;font-size:3vh;">{{resInfo}}</text>
 		</view>
 	</van-popup>
+
 	<view class="main">
 		<image src="/asset/pic/signup.jpg" style="width:100%;height:60vw;margin-bottom:3vh;"></image>
 		<view class="title_block">
 			<text style="font-size:32px;font-weight:bold;">实名认证</text></view>
 		<input value="{{uploadInfo.realName}}" bindinput="bindName" placeholder="请输入姓名"></input>
-		<input value="{{uploadInfo.studentId}}"bindinput="bindId" placeholder="请输入学号"></input>
-		<input value="{{uploadInfo.oaSecret}}"bindinput="bindSecret" placeholder="请输入OA密码（与身份证二选一）" type="password"></input>
-		<input value="{{uploadInfo.identityNumber}}"bindinput="bindidentity" placeholder="请输入身份证后六位"></input>
-		<button disable="{{canupLoad}}"  class="v_button {{canupLoad ? '':'button_disable'}}" bindtap="signup">
+		<input value="{{uploadInfo.studentId}}" bindinput="bindId" placeholder="请输入学号"></input>
+		<input value="{{uploadInfo.oaSecret}}" bindinput="bindSecret" placeholder="请输入OA密码（与身份证二选一）" type="password"></input>
+		<input value="{{uploadInfo.identityNumber}}" bindinput="bindidentity" placeholder="请输入身份证后六位"></input>
+		<button disable="{{canupLoad}}"  class="v_button {{canupLoad ? '' : 'button_disable'}}" bindtap="signup">
 			<image src="/asset/icon/upload.png"></image>
 		</button>
 		<view>{{testInfo}}</view>
 	</view>
+
 </view>

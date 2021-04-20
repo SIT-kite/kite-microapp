@@ -3,12 +3,14 @@ import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../../utils/navBarUtils'
+
 const app = getApp();
 const electricitySuffix = `/pay/room/`;
 const requestUtils = require("../../../utils/requestUtils");
 const promisify = require('../../../utils/promisifyUtils');
 const wxShowModal = promisify(wx.showModal);
 const { echarts } = requirePlugin('echarts');
+
 Page({
 
   /**
@@ -173,7 +175,10 @@ Page({
   setroom: function () {
     const floor = parseInt(this.data.floorID);
     const room = parseInt(this.data.roomID);
-    if (floor >= 1 && floor < 27 && room / 100 >= 0 && room / 100 < 17) {
+    if (
+      floor >= 1 && floor < 27 &&
+      room / 100 >= 0 && room / 100 < 17
+    ) {
       const result = `10${floor}${room}`;
       wx.setStorageSync('electricity_floor', floor);
       wx.setStorageSync('electricity_room', room);
@@ -230,7 +235,11 @@ Page({
           //  console.log(value)
           sum += value.consumption;
           tempdata.push(value.consumption.toFixed(2));
-          type === 'hours' ? tempx.push(value.time.split(' ')[1]) : tempx.push(value.date.substr(5));
+          tempx.push(
+            type === 'hours'
+              ? value.time.split(' ')[1]
+              : value.date.substr(5)
+          );
         }
         if (type === 'days') {
           let moption = that.data.mdays;
@@ -273,11 +282,12 @@ Page({
     let data = {};
     let getrank = requestUtils.doGET(url, data, header);
     getrank.then((res) => {
-      const rank = res.data.data.rank;
-      const total = res.data.data.room_count;
+      const data = res.data.data
+      const rank = data.rank;
+      const total = data.room_count;
       let percen = ((total - rank) / total * 100).toFixed(2);
       that.setData({
-        'rank.con': res.data.data.consumption.toFixed(2),
+        'rank.con': data.consumption.toFixed(2),
         'rank.percen': `${percen}`
       })
     }).catch(res => {
@@ -324,13 +334,15 @@ Page({
     let data = {};
     let getEletricityConsume = requestUtils.doGET(url, data, header);
     getEletricityConsume.then((res) => {
-      let data = res.data.data
-      data.date = data.ts.split('T')[0]
-      data.time = data.ts.split('T')[1].substr(0, 5)
-      data.balance = data.balance.toFixed(2);
-      data.power = data.power.toFixed(2);
+      const data = res.data.data
+      const dateTime = data.ts.split('T')
       this.setData({
-        electricityData: data,
+        electricityData: {
+          date: dateTime[0],
+          time: dateTime[1].substr(0, 5),
+          balance: data.balance.toFixed(2),
+          power: data.power.toFixed(2)
+        },
         show: true,
         showtype: 'normal'
       });
@@ -353,11 +365,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const floor = wx.getStorageSync('electricity_floor')
-    const room = wx.getStorageSync('electricity_room')
     this.setData({
-      floorID: floor,
-      roomID: room
+      floorID: wx.getStorageSync('electricity_floor'),
+      roomID: wx.getStorageSync('electricity_room')
     })
   },
 

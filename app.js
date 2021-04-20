@@ -4,6 +4,7 @@ const promisify = require('./utils/promisifyUtils');
 const wxGetSetting = promisify(wx.getSetting);
 const wxGetUserInfo = promisify(wx.getUserInfo);
 const wxShowModal = promisify(wx.showModal);
+
 App({
   globalData: {
     nickName: null,
@@ -15,10 +16,8 @@ App({
     // 登录需要的授权码
     token: "",
     // 用户在inputInfo界面输入的个人信息（准考证/姓名，身份证后六位）
-    userInfo: {
-    },
-    contact: {
-    },
+    userInfo: {},
+    contact: {},
     userDetail: null,
     classmates: null,
     roommates: null,
@@ -26,9 +25,9 @@ App({
     isPrivacyConfirmed: false,
   },
   onLaunch: function () {
-console.log(this.globalData.userAvatar)
+    console.log(this.globalData.userAvatar);
     // 更新版本处理
-    const updateManager = wx.getUpdateManager()
+    const updateManager = wx.getUpdateManager();
     updateManager.onCheckForUpdate(function (res) {
       // 请求完新版本信息的回调
       console.log("检查新版本信息");
@@ -55,7 +54,9 @@ console.log(this.globalData.userAvatar)
         showCancel: false,
         confirmText: '好的',
         confirmColor: '#4B6DE9',
-      }).then(res => { console.log("新版本下载失败") });
+      }).then(
+        res => console.log("新版本下载失败")
+      );
     });
 
     // 获取本地变量
@@ -84,8 +85,11 @@ console.log(this.globalData.userAvatar)
   onShow: function () {
     // 更新
     const that = this;
-    const isAllStorageOk = this.globalData.uid !== "" && this.globalData.token !== "" && this.globalData.isStudent !== "";
-    console.log("isAllStorageOk"+isAllStorageOk)
+    const isAllStorageOk =
+      this.globalData.uid !== "" &&
+      this.globalData.token !== "" &&
+      this.globalData.isStudent !== "";
+    console.log("isAllStorageOk: " + isAllStorageOk)
     console.log(this.globalData.uid !== "");
     console.log(this.globalData.token !== "");
     console.log(this.globalData.isStudent !== "");
