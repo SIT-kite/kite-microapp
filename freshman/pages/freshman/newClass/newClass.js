@@ -17,8 +17,8 @@ Page({
 
   /**
    * 点击复制
-   * @param {Object} 监听用户点击事件
    * @return 无
+   * @param e
    */
   copyText: function (e) {
     wx.setClipboardData({
@@ -63,7 +63,7 @@ Page({
       var getClassmates = requestUtils.doGET(url, data, header).then(res => {
         var stuList = res.data.data.classmates;
         stuList.forEach(student => {
-          student.genderImage = student.gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+          student.genderImage = student.gender === "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
           student.lastSeen = timeUtils.getIntervalToCurrentTime(student.lastSeen);
           student.isHidden = {
             "qq": null,
@@ -75,9 +75,9 @@ Page({
             student.isHidden.wechat = true;
           }
           else {
-            student.isHidden.qq = student.contact.qq == "" ? true : false;
-            student.isHidden.wechat = student.contact.wechat == "" ? true : false;
-            student.isHidden.padding = student.isHidden.wechat == true ? 25 : 0;
+            student.isHidden.qq = student.contact.qq === "";
+            student.isHidden.wechat = student.contact.wechat === "";
+            student.isHidden.padding = student.isHidden.wechat === true ? 25 : 0;
           }
         });
         app.globalData.classmates = res.data.data.classmates;
@@ -90,14 +90,14 @@ Page({
       getClassmates.then(res => {
         console.log("请求加载完成");
       }).catch(res => {
-        if (res.error == requestUtils.REQUEST_ERROR) {
+        if (res.error === requestUtils.REQUEST_ERROR) {
           wx.showModal({
             title: "哎呀，出错误了>.<",
             content: res.data,
             showCancel: false,
           });
         }
-        if (res.error == requestUtils.NETWORK_ERROR) {
+        if (res.error === requestUtils.NETWORK_ERROR) {
           wx.showModal({
             title: "哎呀，出错误了>.<",
             content: "网络不在状态",
@@ -142,7 +142,7 @@ Page({
     var refleshClassmates = requestUtils.doGET(url, data, header).then(res => {
       var stuList = res.data.data.classmates;
       stuList.forEach(student => {
-        student.genderImage = student.gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+        student.genderImage = student.gender === "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
         student.lastSeen = timeUtils.getIntervalToCurrentTime(student.lastSeen);
         student.isHidden = {
           "qq": null,
@@ -154,9 +154,9 @@ Page({
           student.isHidden.wechat = true;
         }
         else {
-          student.isHidden.qq = student.contact.qq == "" ? true : false;
-          student.isHidden.wechat = student.contact.wechat == "" ? true : false;
-          student.isHidden.padding = student.isHidden.wechat == true ? 25 : 0;
+          student.isHidden.qq = student.contact.qq === "";
+          student.isHidden.wechat = student.contact.wechat === "";
+          student.isHidden.padding = student.isHidden.wechat === true ? 25 : 0;
         }
       });
       app.globalData.classmates = res.data.data.classmates;
@@ -172,14 +172,14 @@ Page({
       this.onShow();
     }).catch(res => {
       // catch 用于捕捉最后错误
-      if (res.error == requestUtils.REQUEST_ERROR) {
+      if (res.error === requestUtils.REQUEST_ERROR) {
         wx.showModal({
           title: "哎呀，出错误了>.<",
           content: res.data,
           showCancel: false,
         });
       }
-      if (res.error == requestUtils.NETWORK_ERROR) {
+      if (res.error === requestUtils.NETWORK_ERROR) {
         wx.showModal({
           title: "哎呀，出错误了>.<",
           content: "网络不在状态",

@@ -75,7 +75,7 @@ Page({
   },
   signup: function () {
     const that = this;
-    var test = "";
+
     for (let i in that.data.uploadInfo) {
       if (that.data.uploadInfo[i] === "") delete (that.data.uploadInfo[i])
     }
@@ -115,7 +115,7 @@ Page({
         show: true
       });
     }).catch(res => {
-      if (res.error == requestUtils.NETWORK_ERROR) {
+      if (res.error === requestUtils.NETWORK_ERROR) {
         that.setData({
           upSuccess: false,
           resInfo: "网络问题，请稍后再试",
@@ -129,7 +129,7 @@ Page({
           })
         }, 500);
       }
-      if (res.error == requestUtils.REQUEST_ERROR) {
+      if (res.error === requestUtils.REQUEST_ERROR) {
         that.setData({
           resInfo: res.data.msg,
           upSuccess: false
@@ -153,7 +153,7 @@ Page({
    */
   onReady: function () {
     var that = this;
-    if (app.globalData.signPrivacyConfirm != true) {
+    if (!app.globalData.signPrivacyConfirm) {
       wx.showModal({
         title: '隐私信息提示',
         content: `小程序部分功能(如闲置交易，课程表)需要验证并使用您的身份信息以提供功能或保证交易安全。数据仅用于比对身份信息且保存期限为7天`,

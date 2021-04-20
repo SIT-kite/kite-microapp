@@ -4,6 +4,8 @@ import { handlerGohomeClick, handlerGobackClick } from'../../../../utils/navBarU
 const app = getApp();
 const requestUtils = require("../../../../utils/requestUtils");
 const secretRex = /[0-9]{5}[0-9X]/;
+
+
 Page({
   data: {
     promptText: "",
@@ -69,8 +71,8 @@ Page({
     let data = {};
     let header = {};
     // 没有隐藏输入框（第一次输入个人信息）
-    if (this.data.isHidden == "flex") {
-      if (this.data.userInfo.account == "") {
+    if (this.data.isHidden === "flex") {
+      if (this.data.userInfo.account === "") {
         // 账号未填写
         wx.showModal({
           title: "哎呀，出错误了>.<",
@@ -119,21 +121,21 @@ Page({
         putFreshman.then(res => {
           console.log("数据加载完成");
         }).catch(res => {
-          if (res.error == requestUtils.REQUEST_ERROR) {
+          if (res.error === requestUtils.REQUEST_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: "业务逻辑出错",
               showCancel: false,
             });
           }
-          if (res.error == requestUtils.NO_ACCOUNT_ERROR) {
+          if (res.error === requestUtils.NO_ACCOUNT_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: "查询不到该用户的信息",
               showCancel: false,
             });
           }
-          if (res.error == requestUtils.NETWORK_ERROR) {
+          if (res.error === requestUtils.NETWORK_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: "网络不在状态",
@@ -205,12 +207,12 @@ Page({
       'contact.tel': e.detail.value
     });
   },
-  getqq(e) {
+  getQQ(e) {
     this.setData({
       'contact.qq': e.detail.value
     });
   },
-  getwechat(e) {
+  getWechatId(e) {
     this.setData({
       'contact.wechat': e.detail.value
     });
@@ -222,12 +224,12 @@ Page({
     console.log('onLoad');
     console.log(this.data.userInfo);
     // 如果为none，说明现在执行修改功能，需要把全局变量中的contact拷贝一份,展示在input框中
-    if (option.isHidden == "none") {
+    if (option.isHidden === "none") {
       this.setData({
         contact: app.globalData.contact,
         userInfo: app.globalData.userInfo,
         visible: app.globalData.visible,
-        buttonText: option.isHidden == "flex" ? "提交" : "确定",
+        buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
         avatarUrl: app.globalData.userAvatar,
         nickName: app.globalData.nickName
@@ -235,7 +237,7 @@ Page({
       console.log(this.data.visible);
     } else {
       this.setData({
-        buttonText: option.isHidden == "flex" ? "提交" : "确定",
+        buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
         avatarUrl: app.globalData.userAvatar,
         nickName: app.globalData.nickName
@@ -246,7 +248,7 @@ Page({
   onReady: function (option) {
     console.log(this.data.isHidden);
 
-    if ("flex" == this.data.isHidden && app.globalData.freshmanPrivacyConfirm != true) {
+    if ("flex" === this.data.isHidden && app.globalData.freshmanPrivacyConfirm !== true) {
       wx.showModal({
         title: '隐私信息提示',
         content: '您的身份证号后6位和准考证号将用于验证您的身份，并查询您的寝室位置、查找您的舍友信息等用途。您的手机号、QQ、微信为可选项，填写后同寝室的人可以看到你的手机号、QQ、微信，班级的人可以看到你的QQ和微信，如果您授权，您可能认识的人也可以查看您的QQ和微信。我们仅保留您的联系方式约1周时间。',

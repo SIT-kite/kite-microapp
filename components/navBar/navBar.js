@@ -98,6 +98,7 @@ Component({
         `padding-right:${leftWidth}px`,
         `padding-bottom:${navBarExtendHeight}px`
       ].join(';');
+
       let navBarLeft = [];
       if ((back && !home) || (!back && home)) {
         navBarLeft = [`width:${capsulePosition.width}px`, `height:${capsulePosition.height}px`].join(';');

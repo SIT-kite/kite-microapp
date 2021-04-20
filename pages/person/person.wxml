@@ -5,7 +5,7 @@
 
 			<view wx:if="{{isLogin}}" class="help shadow">
 				<view class="personal_pic">
-					<image src="{{avater}}"></image>
+					<image src="{{avatar}}"></image>
 				</view>
 				<view class="personal_main">
 					<view class="main_info">
