@@ -120,7 +120,7 @@ var request = (url, data, header, method) => {
 var wxLogin = () => {
   return new Promise((resolve, reject) => {
     wx.login({
-      success: res => resolve(res)
+      success: res => resolve(res),
       fail: res => reject(res)
     });
   })
