@@ -10,8 +10,8 @@
   ],
   "subpackages": [
     {
-      "root":"freshman",
-       "pages":[
+      "root": "freshman",
+       "pages": [
         "pages/freshman/inputInfo/inputInfo",
         "pages/freshman/welcome/welcome",
         "pages/freshman/stuInfoDetail/stuInfoDetail",
