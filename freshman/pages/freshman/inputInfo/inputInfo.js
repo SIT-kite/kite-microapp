@@ -1,8 +1,9 @@
 //index.js
 //获取应用实例
-import { handlerGohomeClick, handlerGobackClick } from'../../../../utils/navBarUtils'
+import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils'
 const app = getApp();
 const requestUtils = require("../../../../utils/requestUtils");
+
 Page({
   data: {
     promptText: "",
@@ -23,8 +24,8 @@ Page({
     visible: true,
   },
 
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+  handlerGohomeClick,
+  handlerGobackClick,
 
   checkBoxChange(e) {
     const that = this;
@@ -69,11 +70,8 @@ Page({
       navBarCurrentHeight: navBarExtendHeight + navBarHeight
     })
   },
-  gotoStuInfoDetail(e) {
+  gotoStuInfoDetail() {
     const data = this.data;
-    let url = "";
-    let data = {};
-    let header = {};
     // 没有隐藏输入框（第一次输入个人信息）
     if (data.isHidden == "flex") {
       if (data.userInfo.account == "") {
@@ -82,30 +80,31 @@ Page({
           title: "哎呀，出错误了 >.<",
           content: "请输入姓名/考生号/准考证号其中的一个",
           showCancel: false
-        })
-      }
-      // else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
-      else if (!/[0-9]{5}[0-9X]/.test(data.userInfo.secret)) {
+        });
+      // } else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
+      } else if (!/[0-9]{5}[0-9X]/.test(data.userInfo.secret)) {
         // secret不符合格式
         wx.showModal({
           title: "哎呀，出错误了 >.<",
           content: "需要输入身份证后六位哦",
           showCancel: false
-        })
+        });
       } else {
         // 满足输入框要求 发送PUT请求
-        url = `${app.globalData.commonUrl}/freshman/${data.userInfo.account}`;
-        data = {
-          "secret": `${data.userInfo.secret}`,
-          "contact": JSON.stringify(data.contact),
-          "visible": data.visible
-        };
-        header = {
-          "content-type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer ${app.globalData.token}`,
+        const PUT = {
+          url: `${app.globalData.commonUrl}/freshman/${data.userInfo.account}`,
+          data: {
+            "secret": `${data.userInfo.secret}`,
+            "contact": JSON.stringify(data.contact),
+            "visible": data.visible
+          },
+          header: {
+            "content-type": "application/x-www-form-urlencoded",
+            "Authorization": `Bearer ${app.globalData.token}`,
+          }
         };
 
-        var putFreshman = requestUtils.doPUT(url, data, header).then(res => {
+        const putFreshman = requestUtils.doPUT(PUT.url, PUT.data, PUT.header).then(res => {
           // 本地Storage存储userInfo
           wx.setStorageSync("userInfo", data.userInfo);
           // 全局同时更新
@@ -136,18 +135,20 @@ Page({
     } else {
 
       //  非第一次进入 修改信息
-      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`;
-      data = {
-        "secret": `${app.globalData.userInfo.secret}`,
-        "contact": JSON.stringify(this.data.contact),
-        "visible": this.data.visible
-      };
-      header = {
-        "content-type": "application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${app.globalData.token}`,
+      const PUT = {
+        url: `${app.globalData.commonUrl}/freshman/${data.userInfo.account}`,
+        data: {
+          "secret": `${app.globalData.userInfo.secret}`,
+          "contact": JSON.stringify(data.contact),
+          "visible": data.visible
+        },
+        header: {
+          "content-type": "application/x-www-form-urlencoded",
+          "Authorization": `Bearer ${app.globalData.token}`
+        }
       };
 
-      var patchFreshman = requestUtils.doPUT(url, data, header).then(res => {
+      const patchFreshman = requestUtils.doPUT(PUT.url, PUT.data, PUT.header).then(res => {
         // Storage 和 globalData 同时更新
         wx.setStorageSync("userInfo", this.data.userInfo);
         app.globalData.visible = this.data.visible;

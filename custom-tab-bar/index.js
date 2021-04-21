@@ -30,9 +30,8 @@ Component({
    */
   methods: {
     switchTab(e) {
-      const path  =  e.currentTarget.dataset.path
       wx.switchTab({
-        path
+        url: e.currentTarget.dataset.path
       })
     }
   }
