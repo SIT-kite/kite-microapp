@@ -46,7 +46,7 @@
 }
 
 .text-selected {
-  color:black;
+  color: black;
   font-size: 12px;
 }
 
