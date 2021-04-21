@@ -3,7 +3,6 @@
 import { handlerGohomeClick, handlerGobackClick } from'../../../../utils/navBarUtils'
 const app = getApp();
 const requestUtils = require("../../../../utils/requestUtils");
-const secretRex = /[0-9]{5}[0-9X]/;
 Page({
   data: {
     promptText: "",
@@ -23,34 +22,41 @@ Page({
     },
     visible: true,
   },
+
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
 
   checkBoxChange(e) {
-    var that = this;
+    const that = this;
     console.log(e.detail.value);
-    // 取消勾选
-    if (e.detail.value[0] == undefined) {
-      wx.showModal({
+
+    const text = ["向您推送可能认识的人", "将您推送给他人（同城，同乡…）"];
+    wx.showModal(
+      e.detail.value[0] == undefined ? {
         title: "取消勾选",
-        content: "我们将不会给您推送可能认识的人,并且不会将您推送给他人（同城，同乡..）",
+        content: `我们将不会${ text[0] }，也不会${ text[1] }`,
         showCancel: false,
-        success(res) {
+        success() {
           that.data.visible = false;
           console.log(that.data.visible);
         }
-      })
-    }
-    // 勾选
-    else {
-      wx.showModal({
+      } : {
         title: "勾选",
-        content: "我们将给您推送可能认识的人，包括将您推送给他人（同城，同乡..）",
+        content: `我们将${ text[0] }，并${ text[1] }`,
         showCancel: false,
-        success(res) {
+        success() {
           that.data.visible = true;
+          console.log(that.data.visible);
         }
-      })
+      }
+    );
+
+    if (e.detail.value[0] == undefined) {
+      // 取消勾选
+      wx.showModal()
+    } else {
+      // 勾选
+      wx.showModal()
 
     }
   },
@@ -64,37 +70,35 @@ Page({
     })
   },
   gotoStuInfoDetail(e) {
-    var that = this;
+    const data = this.data;
     let url = "";
     let data = {};
     let header = {};
     // 没有隐藏输入框（第一次输入个人信息）
-    if (this.data.isHidden == "flex") {
-      if (this.data.userInfo.account == "") {
+    if (data.isHidden == "flex") {
+      if (data.userInfo.account == "") {
         // 账号未填写
         wx.showModal({
-          title: "哎呀，出错误了>.<",
+          title: "哎呀，出错误了 >.<",
           content: "请输入姓名/考生号/准考证号其中的一个",
-          showCancel: false,
-          success(res) { }
+          showCancel: false
         })
       }
       // else if(this.data.userInfo.secret.length != 6 || this.data.userInfo.secret == ""){
-      else if (!secretRex.test(this.data.userInfo.secret)) {
+      else if (!/[0-9]{5}[0-9X]/.test(data.userInfo.secret)) {
         // secret不符合格式
         wx.showModal({
-          title: "哎呀，出错误了>.<",
+          title: "哎呀，出错误了 >.<",
           content: "需要输入身份证后六位哦",
-          showCancel: false,
-          success(res) { }
+          showCancel: false
         })
       } else {
         // 满足输入框要求 发送PUT请求
-        url = `${app.globalData.commonUrl}/freshman/${this.data.userInfo.account}`;
+        url = `${app.globalData.commonUrl}/freshman/${data.userInfo.account}`;
         data = {
-          "secret": `${this.data.userInfo.secret}`,
-          "contact": JSON.stringify(this.data.contact),
-          "visible": this.data.visible
+          "secret": `${data.userInfo.secret}`,
+          "contact": JSON.stringify(data.contact),
+          "visible": data.visible
         };
         header = {
           "content-type": "application/x-www-form-urlencoded",
@@ -103,46 +107,34 @@ Page({
 
         var putFreshman = requestUtils.doPUT(url, data, header).then(res => {
           // 本地Storage存储userInfo
-          wx.setStorageSync("userInfo", this.data.userInfo);
+          wx.setStorageSync("userInfo", data.userInfo);
           // 全局同时更新
-          app.globalData.visible = this.data.visible;
-          app.globalData.userInfo = this.data.userInfo;
-          app.globalData.contact = this.data.contact;
+          app.globalData.visible  = data.visible;
+          app.globalData.userInfo = data.userInfo;
+          app.globalData.contact  = data.contact;
           wx.redirectTo({
             url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
-            success: (result) => {
-              console.log("跳转 stuInfoDetail 页面成功");
-            }
+            success: () => console.log("跳转 stuInfoDetail 页面成功")
           });
           return res;
         });
-        putFreshman.then(res => {
-          console.log("数据加载完成");
-        }).catch(res => {
-          if (res.error == requestUtils.REQUEST_ERROR) {
-            wx.showModal({
-              title: "哎呀，出错误了>.<",
-              content: "业务逻辑出错",
-              showCancel: false,
-            });
-          }
-          if (res.error == requestUtils.NO_ACCOUNT_ERROR) {
-            wx.showModal({
-              title: "哎呀，出错误了>.<",
-              content: "查询不到该用户的信息",
-              showCancel: false,
-            });
-          }
-          if (res.error == requestUtils.NETWORK_ERROR) {
-            wx.showModal({
-              title: "哎呀，出错误了>.<",
-              content: "网络不在状态",
-              showCancel: false,
-            });
-          }
-        });
+        putFreshman.then(() => {
+          console.log("putFreshman 数据加载完成");
+        }).catch(
+          res => wx.showModal({
+            title: "哎呀，出错误了 >.<",
+            content: (
+              res.error == requestUtils.REQUEST_ERROR ? "业务逻辑出错"
+              : res.error == requestUtils.NO_ACCOUNT_ERROR ? "查询不到该用户的信息"
+              : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+              : "未知错误"
+            ),
+            showCancel: false
+          })
+        );
       }
     } else {
+
       //  非第一次进入 修改信息
       url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`;
       data = {
@@ -154,6 +146,7 @@ Page({
         "content-type": "application/x-www-form-urlencoded",
         "Authorization": `Bearer ${app.globalData.token}`,
       };
+
       var patchFreshman = requestUtils.doPUT(url, data, header).then(res => {
         // Storage 和 globalData 同时更新
         wx.setStorageSync("userInfo", this.data.userInfo);
@@ -161,31 +154,28 @@ Page({
         app.globalData.contact = this.data.contact;
         wx.redirectTo({
           url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
-          success: (result) => {
+          success: () => {
             console.log("跳转至页面 stuInfoDetail");
           },
           fail: (err) => console.log(err),
         });
         return res;
       });
-      patchFreshman.then(res => {
+
+      patchFreshman.then(() => {
         console.log("patchFreshman 数据处理完成");
-      }).catch(res => {
-        if (res.error == requestUtils.REQUEST_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: "业务逻辑出错",
-            showCancel: false,
-          });
-        }
-        if (res.error == requestUtils.NETWORK_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: "网络不在状态",
-            showCancel: false,
-          });
-        }
-      });
+      }).catch(
+        res => wx.showModal({
+          title: "哎呀，出错误了 >.<",
+          content: (
+            res.error == requestUtils.REQUEST_ERROR ? "业务逻辑出错"
+            : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+            : "未知错误"
+          ),
+          showCancel: false
+        })
+      );
+
     }
   },
 
@@ -216,7 +206,6 @@ Page({
     });
   },
 
-
   onLoad: function (option) {
     console.log(option.isHidden);
     console.log('onLoad');
@@ -243,24 +232,27 @@ Page({
     }
     console.log("inputInfo onload over")
   },
-  onReady: function (option) {
+  onReady: function () {
     console.log(this.data.isHidden);
 
-    if ("flex" == this.data.isHidden && app.globalData.freshmanPrivacyConfirm != true) {
+    if (
+      "flex" == this.data.isHidden &&
+      app.globalData.freshmanPrivacyConfirm != true
+    ) {
       wx.showModal({
-        title: '隐私信息提示',
-        content: '您的身份证号后6位和准考证号将用于验证您的身份，并查询您的寝室位置、查找您的舍友信息等用途。您的手机号、QQ、微信为可选项，填写后同寝室的人可以看到你的手机号、QQ、微信，班级的人可以看到你的QQ和微信，如果您授权，您可能认识的人也可以查看您的QQ和微信。我们仅保留您的联系方式约1周时间。',
+        title: "隐私信息提示",
+        content: "您的身份证号后6位和准考证号将用于身份验证、查询寝室位置、查找舍友信息等用途。您的手机号、QQ、微信为可选项，填写后，同寝室的同学可以看到你的手机号、QQ、微信，同班同学可以看到你的QQ和微信。如果您授权，您可能认识的人也可以查看您的QQ和微信。我们仅保留您的联系方式约一周时间。",
         showCancel: true,
-        cancelText: '我拒绝',
-        cancelColor: '#000000',
-        confirmText: '我已知晓',
-        confirmColor: '#4B6DE9',
-        success: (result) => {
-          if (!result.confirm) {
-            this.handlerGohomeClick();
-          }else{
+        cancelText: "拒绝",
+        cancelColor: "#000000",
+        confirmText: "我已知晓",
+        confirmColor: "#4B6DE9",
+        success: result => {
+          if (result.confirm) {
             app.globalData.freshmanPrivacyConfirm = true;
-            wx.setStorageSync("freshmanPrivacyConfirm",true);
+            wx.setStorageSync("freshmanPrivacyConfirm", true);
+          } else {
+            this.handlerGohomeClick();
           }
         }
       });

@@ -1,5 +1,5 @@
 
-.userinfo{
+.userinfo {
   padding-top: 30rpx;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   align-items: center;
   z-index: 3;
 }
-.userinfo-avatar{
+.userinfo-avatar {
   width: 180rpx;
   height: 180rpx;
   margin-top: 70rpx;
@@ -17,14 +17,14 @@
   z-index: 3;
 }
 
-.userinfo-nickname{
+.userinfo-nickname {
   font-size: 38rpx;
   font-weight: 530;
   margin-bottom: 20rpx;
   z-index: 3;
 }
 
-.greetings{
+.greetings {
   text-align: center;
   font-size: 60rpx;
   font-weight: 600;
@@ -32,7 +32,7 @@
   z-index: 3;
 }
 
-.background{
+.background {
   position: absolute;
   left: 0;
   top: 430rpx;
@@ -44,7 +44,7 @@
   z-index: -1;
 }
 
-.all-input{
+.all-input {
   padding-top: 35rpx;
   display: flex;
   flex-direction: column;
@@ -52,12 +52,12 @@
   z-index: 3;
 }
 
-.all-input checkbox-group{
+.all-input checkbox-group {
   padding-top: 20rpx;
 }
 
 
-.input-wrap{
+.input-wrap {
   width:75%;
   margin-bottom: 35rpx;
   display: flex;
@@ -65,20 +65,26 @@
   flex-direction: row;
 }
 
-.input-wrap:nth-child(1)::before{
+.input-wrap:nth-child(1)::before {
  content: "*";
  color: red;
  left: calc( 750rpx * 0.25 / 2 - 13rpx );
  position: absolute;
 }
 
-.input-wrap:nth-child(2)::before{
+.input-wrap:nth-child(2)::before {
   content: "*";
   color: red;
   position: absolute;
   left: calc( 750rpx * 0.25 / 2  - 13rpx );
- }
-.input-wrap input{
+}
+
+.input-wrap > image {
+  height:50rpx;
+  width:50rpx;
+}
+
+.input-wrap > input {
   margin-left: 24rpx;
   z-index: 5;
   height: 60rpx;
@@ -87,14 +93,14 @@
   padding-left: 2vh;
 }
 
-.text01{
+.text01 {
   background-color: white;
   font-size: 65rpx;
   font-weight: 600;
   z-index: 3;
 }
 
-.text02{
+.text02 {
   margin-top: 70rpx;
   background-color: white;
   z-index: 3;
@@ -102,7 +108,7 @@
   font-weight: 400;
 }
 
-.button{
+.button {
   margin-top: 40rpx;
   background-color:rgb(75,109,233);
   color:white;

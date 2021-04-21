@@ -14,7 +14,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
 
   },
 
@@ -23,10 +23,9 @@ Page({
    */
   onReady: function () {
     wx.showLoading({
-      title: "加载中"
+      title: "正在加载"
     });
-    setTimeout(() => {wx.hideLoading();},1500);
-
+    setTimeout(() => wx.hideLoading(), 1500);
   },
 
   /**

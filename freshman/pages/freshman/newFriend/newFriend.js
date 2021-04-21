@@ -6,6 +6,17 @@ import {
 } from '../../../../utils/navBarUtils'
 const timeUtils = require("../../../../utils/timeUtils");
 const requestUtils = require("../../../../utils/requestUtils");
+
+const catchError = res => wx.showModal({
+  title: "哎呀，出错误了 >.<",
+  content: (
+    res.error == requestUtils.REQUEST_ERROR ? res.data
+    : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+    : "未知错误"
+  ),
+  showCancel: false
+});
+
 Page({
 
   /**
@@ -23,7 +34,7 @@ Page({
 
   /**
    * 一键复制文本
-   * @param {*} e 
+   * @param {*} e
    */
   copyText: function (e) {
     console.log(e)
@@ -130,26 +141,13 @@ Page({
 
       // 等待所有进程结束
       Promise.all(promiseList).then(res => {
-        let [res1, res2] = res;
+        // let [res1, res2] = res;
         console.log("请求全部完成");
         wx.hideLoading();
         this.setData({ show: true });
       }).catch(res => {
         wx.hideLoading();
-        if (res.error == requestUtils.REQUEST_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: res.data,
-            showCancel: false,
-          });
-        }
-        if (res.error == requestUtils.NETWORK_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: "网络不在状态",
-            showCancel: false,
-          });
-        }
+        catchError(res);
       });
 
 
@@ -264,20 +262,7 @@ Page({
       this.setData({ show: true });
     }).catch(res => {
       wx.hideLoading();
-      if (res.error == requestUtils.REQUEST_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: res.data,
-          showCancel: false,
-        });
-      }
-      if (res.error == requestUtils.NETWORK_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: "网络不在状态",
-          showCancel: false,
-        });
-      }
+      catchError(res);
     });
     this.onLoad();
     this.onShow();

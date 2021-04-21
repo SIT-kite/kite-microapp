@@ -1,8 +1,19 @@
 // pages/newClass/newClass.js
-import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils'
+import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils';
 const app = getApp();
 const timeUtils = require("../../../../utils/timeUtils");
 const requestUtils = require("../../../../utils/requestUtils");
+
+const catchError = res => wx.showModal({
+  title: "哎呀，出错误了 >.<",
+  content: (
+    res.error == requestUtils.REQUEST_ERROR ? res.data
+    : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+    : "未知错误"
+  ),
+  showCancel: false
+});
+
 Page({
 
   /**
@@ -12,28 +23,22 @@ Page({
     classmates: null,
     show: false,
   },
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+  handlerGohomeClick,
+  handlerGobackClick,
 
   /**
    * 点击复制
    * @param {Object} 监听用户点击事件
    * @return 无
    */
-  copyText: function (e) {
-    wx.setClipboardData({
-      data: e.currentTarget.dataset.text,
-      success: function (res) {
-        wx.getClipboardData({
-          success: function (res) {
-            wx.showToast({
-              title: `复制${e.currentTarget.dataset.type}成功`
-            })
-          }
-        })
-      }
+  copyText: e => wx.setClipboardData({
+    data: e.currentTarget.dataset.text,
+    success: () => wx.getClipboardData({
+      success: () => wx.showToast({
+        title: `复制${e.currentTarget.dataset.type}成功`
+      })
     })
-  },
+  }),
 
   /**
    * 初始化页面 classmates 数据
@@ -75,8 +80,8 @@ Page({
             student.isHidden.wechat = true;
           }
           else {
-            student.isHidden.qq = student.contact.qq == "" ? true : false;
-            student.isHidden.wechat = student.contact.wechat == "" ? true : false;
+            student.isHidden.qq = student.contact.qq == "";
+            student.isHidden.wechat = student.contact.wechat == "";
             student.isHidden.padding = student.isHidden.wechat == true ? 25 : 0;
           }
         });
@@ -87,30 +92,15 @@ Page({
         wx.hideLoading();
         return res;
       });
-      getClassmates.then(res => {
+
+      getClassmates.then(() => {
         console.log("请求加载完成");
-      }).catch(res => {
-        if (res.error == requestUtils.REQUEST_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: res.data,
-            showCancel: false,
-          });
-        }
-        if (res.error == requestUtils.NETWORK_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: "网络不在状态",
-            showCancel: false,
-          });
-        }
-      });
+      }).catch(catchError);
+
       // 阻塞页面渲染
-      Promise.all([getClassmates]).then(res => {
+      Promise.all([getClassmates]).then(() => {
         console.log("数据加载完成");
-        this.setData({
-          show: true,
-        })
+        this.setData({show: true})
       });
     } else {
       console.log("加载本地 classmates 数据");
@@ -154,8 +144,8 @@ Page({
           student.isHidden.wechat = true;
         }
         else {
-          student.isHidden.qq = student.contact.qq == "" ? true : false;
-          student.isHidden.wechat = student.contact.wechat == "" ? true : false;
+          student.isHidden.qq = student.contact.qq == "";
+          student.isHidden.wechat = student.contact.wechat == "";
           student.isHidden.padding = student.isHidden.wechat == true ? 25 : 0;
         }
       });
@@ -166,33 +156,17 @@ Page({
       wx.hideLoading();
       return res;
     });
-    refleshClassmates.then((res) => {
+    refleshClassmates.then(() => {
       // 关闭刷新动画
       this.setData({show: true});
       this.onShow();
-    }).catch(res => {
-      // catch 用于捕捉最后错误
-      if (res.error == requestUtils.REQUEST_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: res.data,
-          showCancel: false,
-        });
-      }
-      if (res.error == requestUtils.NETWORK_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: "网络不在状态",
-          showCancel: false,
-        });
-      }
-    });
+    }).catch(catchError);
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
     console.log("页面 newClass onLoad...");
     this.setData({show: false});
     this.pageDataInit();

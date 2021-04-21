@@ -1,4 +1,4 @@
 <!--pages/freshman/navigate/navigate.wxml-->
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-<image src="https://file.peanut996.cn/Resources/static/img/freshman-navigate.png"  style="width: 100%;" mode="widthFix"/>
-<image src="https://file.peanut996.cn/Resources/static/img/freshman-qrcode.png"  style="width: 100%;margin-top:-2%" mode="widthFix"/>
+<image src="https://file.peanut996.cn/Resources/static/img/freshman-navigate.png" mode="widthFix" style="width: 100%;"/>
+<image src="https://file.peanut996.cn/Resources/static/img/freshman-qrcode.png"   mode="widthFix" style="width: 100%; margin-top: -2%"/>
