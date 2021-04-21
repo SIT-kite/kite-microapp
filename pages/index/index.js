@@ -74,7 +74,7 @@ Page({
     this.router(this.data.id);
   },
   router: function (id) {
-    const url = new Map([
+    let url = new Map([
         [ "welcome", "/freshman/pages/freshman/welcome/welcome" ],
         [ "qrcode", "/pages/qrcode/qrcode" ],
         [ "education", "/pages/education/education" ],
