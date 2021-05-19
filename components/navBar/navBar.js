@@ -186,6 +186,12 @@ Component({
           console.log({ error, rect });
         }
 
+        /* 导航栏高度 = 胶囊高度 + 高度差 * 2
+        menu = wx.getMenuButtonBoundingClientRect() 
+        system = wx.getSystemInfo
+        导航栏高度 = menu.statusBarHeight + menu.height + (menu.top - menu.statusBarHeight) * 2
+        */
+
         let navBarHeight = '';
         if (!systemInfo.statusBarHeight) {
           systemInfo.statusBarHeight = systemInfo.screenHeight - systemInfo.windowHeight - 20;
