@@ -45,9 +45,24 @@ var getIntervalToCurrentTime = function (GivenTime) {
   return intervalTime
 }
 
+const formatTime = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+
+  return `${[year, month, day].map(formatNumber).join('-')}`
+}
+
+const formatNumber = n => {
+  n = n.toString()
+  return n[1] ? n : `0${n}`
+}
+
+
 // 在XXX.js通过 var util = require("../../utils/utils.js")和
 // util.XXX()来引用
 module.exports = {
   getTimeStamp: getTimeStamp,
-  getIntervalToCurrentTime: getIntervalToCurrentTime
+  getIntervalToCurrentTime: getIntervalToCurrentTime,
+  formatTime
 }
