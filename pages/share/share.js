@@ -32,7 +32,7 @@ Page({
     const res = wx.getSystemInfoSync()
     that.data.globalwidth = res.windowWidth;
     that.data.rank = JSON.parse(options.rank);
-    
+
     console.log(that.data.globalwidth)
     const cw = 650 * this.px();
     const ch = 1000 * this.px();
@@ -94,7 +94,7 @@ Page({
     ctx.closePath()
     ctx.drawImage(this.data.url, avatar_x, avatar_y, avatar_w, avatar_h)
     ctx.restore();
-    // ctx.drawImage('../../asset/pic/bangdan.jpg', main_x + 30 * px, main_y + 60 * px, 100 * px, 100 * px);
+    // ctx.drawImage('../../asset/pic/bangdan.png', main_x + 30 * px, main_y + 60 * px, 100 * px, 100 * px);
 
     ctx.setFillStyle('black'); // 文字颜色
     ctx.font = `normal bold ${parseInt(42*px)}px Microsoft YaHei`;
