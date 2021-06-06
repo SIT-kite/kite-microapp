@@ -32,7 +32,7 @@ Page({
    */
   gotoNavigate: function () {
     wx.navigateTo({
-      url: '/freshman/pages/freshman/navigate/navigate',
+      url: '/freshman/pages/freshman/navigate/navigate'
     });
   },
 
@@ -98,9 +98,7 @@ Page({
   gotoAnalysis: function () {
     wx.navigateTo({
       url: '/freshman/pages/freshman/shareAnalysis/shareAnalysis',
-      success: (result) => {
-        console.log("跳转分享页面成功")
-      },
+      success: () => console.log("跳转分享页面成功"),
       fail: () => { },
       complete: () => { }
     });

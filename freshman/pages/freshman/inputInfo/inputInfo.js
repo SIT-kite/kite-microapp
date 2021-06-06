@@ -112,34 +112,32 @@ Page({
           app.globalData.contact = this.data.contact;
           wx.redirectTo({
             url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
-            success: (result) => {
-              console.log("跳转 stuInfoDetail 页面成功");
-            }
+            success: () => console.log("跳转 stuInfoDetail 页面成功")
           });
           return res;
         });
-        putFreshman.then(res => {
-          console.log("数据加载完成");
-        }).catch(res => {
+        putFreshman.then(
+          () => console.log("数据加载完成")
+        ).catch(res => {
           if (res.error === requestUtils.REQUEST_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: "业务逻辑出错",
-              showCancel: false,
+              showCancel: false
             });
           }
           if (res.error === requestUtils.NO_ACCOUNT_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: "查询不到该用户的信息",
-              showCancel: false,
+              showCancel: false
             });
           }
           if (res.error === requestUtils.NETWORK_ERROR) {
             wx.showModal({
               title: "哎呀，出错误了>.<",
               content: "网络不在状态",
-              showCancel: false,
+              showCancel: false
             });
           }
         });
@@ -163,10 +161,8 @@ Page({
         app.globalData.contact = this.data.contact;
         wx.redirectTo({
           url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
-          success: (result) => {
-            console.log("跳转至页面 stuInfoDetail");
-          },
-          fail: (err) => console.log(err),
+          success: () => console.log("跳转 stuInfoDetail 页面成功"),
+          fail: err => console.log(err)
         });
         return res;
       });

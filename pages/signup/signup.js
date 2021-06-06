@@ -1,11 +1,11 @@
+// 注册
 // pages/signup/signup.js
-import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils'
-
-const app = getApp();
-const commonUrl = app.globalData.commonUrl;
+import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils';
 const requestUtils = require("../../utils/requestUtils");
 
-const getCanupLoad = uploadInfo => Boolean(
+const app = getApp();
+
+const getCanUpload = uploadInfo => Boolean(
   uploadInfo.realName && uploadInfo.studentId &&
   ( uploadInfo.oaSecret || uploadInfo.identityNumber )
 );
@@ -16,11 +16,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    testInfo: "",
-    show: false,
-    resInfo: null,
-    upSuccess: false,
-    canupLoad: false,
+    canUpload: false,
     uploadInfo: {
       realName: null,
       studentId: null
@@ -31,120 +27,92 @@ Page({
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
 
-  bindName: function (e) {
-    const uploadInfo = this.data.uploadInfo;
+  bindName(e) {
+    const canUpload = getCanUpload(this.data.uploadInfo);
     this.setData({
-      'uploadInfo.realName': e.detail.value
-    })
-    this.setData({
-      canupLoad: getCanupLoad(uploadInfo)
+      canUpload, 'uploadInfo.realName': e.detail.value
     })
   },
-  bindId: function (e) {
-    const uploadInfo = this.data.uploadInfo;
+  bindId(e) {
+    const canUpload = getCanUpload(this.data.uploadInfo);
     this.setData({
-      'uploadInfo.studentId': e.detail.value
-    })
-    this.setData({
-      canupLoad: getCanupLoad(uploadInfo)
+      canUpload, 'uploadInfo.studentId': e.detail.value
     })
   },
-  bindSecret: function (e) {
-    const uploadInfo = this.data.uploadInfo;
+  bindSecret(e) {
+    const canUpload = getCanUpload(this.data.uploadInfo);
     this.setData({
-      'uploadInfo.oaSecret': e.detail.value
+      canUpload, 'uploadInfo.oaSecret': e.detail.value
     })
+  },
+  bindidentity(e) {
+    const canUpload = getCanUpload(this.data.uploadInfo);
+    const identityNumber = e.detail.value.toString().toUpperCase();
     this.setData({
-      canupLoad: getCanupLoad(uploadInfo)
+      canUpload, 'uploadInfo.identityNumber': identityNumber
     })
+  },
 
-  },
-  bindidentity: function (e) {
-    const uploadInfo = this.data.uploadInfo;
-    this.setData({
-      'uploadInfo.identityNumber': e.detail.value.toString().toUpperCase() 
-    })
-    this.setData({
-      canupLoad: getCanupLoad(uploadInfo)
-    })
-  },
-  onClose: function () {
-    this.setData({
-      show: false
-    })
-  },
   signup: function () {
+
     const that = this;
 
+    // 删除 uploadInfo 中值为空字符串的属性
     for (let i in that.data.uploadInfo) {
-      if (that.data.uploadInfo[i] === "") delete (that.data.uploadInfo[i])
+      if (that.data.uploadInfo[i] === "") {
+        delete that.data.uploadInfo[i];
+      }
     }
+
     that.setData({
       uploadInfo: that.data.uploadInfo
     });
+
     wx.setStorage({
       data: this.data.uploadInfo,
-      key: 'uploadInfo',
+      key: 'uploadInfo'
     });
-    let url = `${commonUrl}/user/${app.globalData.uid}/identity`;
-    let data = that.data.uploadInfo;
-    let header =  {
+
+    // 认证
+    const url = `${app.globalData.commonUrl}/user/${app.globalData.uid}/identity`;
+    const data = that.data.uploadInfo;
+    const header =  {
       "content-type": "application/x-www-form-urlencoded",
       "Authorization": `Bearer ${app.globalData.token}`
     };
-    var postUserIdentity = requestUtils.doPOST(url, data, header);
-    postUserIdentity.then(res => {
-      that.setData({
-        resInfo: "认证成功！",
-        upSuccess: true
-      });
+    requestUtils.doPOST(url, data, header).then(() => {
+
       app.globalData.isStudent = true;
-      // 更新本地数据
       wx.setStorageSync("isStudent", true);
-      setTimeout(() => {
-        that.setData({
-          show: false
-        });
-        setTimeout(() => {
-          wx.navigateBack({
-            delta: 1
-          });
-        }, 500);
-      }, 500);
-      that.setData({
-        show: true
+
+      wx.showModal({
+        title: "认证成功",
+        content: "认证成功！",
+        confirmText: "回到主页",
+        success: () => wx.navigateBack({delta: 1})
       });
+
     }).catch(res => {
       if (res.error === requestUtils.NETWORK_ERROR) {
-        that.setData({
-          upSuccess: false,
-          resInfo: "网络问题，请稍后再试",
+        wx.showModal({
+          title: "哎呀，出错误了>.<",
+          content: "网络不在状态",
+          showCancel: false,
         });
-        that.setData({
-          show: true
-        });
-        setTimeout(() => {
-          that.setData({
-            show: false
-          })
-        }, 500);
-      }
-      if (res.error === requestUtils.REQUEST_ERROR) {
-        that.setData({
-          resInfo: res.data.msg,
-          upSuccess: false
-        });
-        that.setData({
-          show: true
+      } else if (res.error === requestUtils.REQUEST_ERROR) {
+        wx.showModal({
+          title: "哎呀，出错误了>.<",
+          content: res.data.msg || "业务逻辑出错",
+          showCancel: false
         });
       }
     });
-   
+
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
 
   },
 
@@ -152,26 +120,28 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    var that = this;
+    const handlerGobackClick = this.handlerGobackClick;
     if (!app.globalData.signPrivacyConfirm) {
       wx.showModal({
-        title: '隐私信息提示',
-        content: `小程序部分功能(如闲置交易，课程表)需要验证并使用您的身份信息以提供功能或保证交易安全。数据仅用于比对身份信息且保存期限为7天`,
+        title: "隐私信息提示",
+        content:
+          "小程序部分功能(如闲置交易，课程表)需要验证" +
+          "并使用您的身份信息以提供功能或保证交易安全。" +
+          "数据仅用于比对身份信息，保存期限为7天。",
         showCancel: true,
-        cancelText: '我拒绝',
-        cancelColor: '#000000',
-        confirmText: '我已知晓',
-        confirmColor: '#4B6DE9',
-        success: (result) => {
+        cancelText: "我拒绝",
+        confirmText: "我已知晓",
+        confirmColor: "#4B6DE9",
+        success: result => {
           if (!result.confirm) {
-            that.handlerGobackClick();
+            handlerGobackClick();
           } else {
             app.globalData.signPrivacyConfirm = true;
             wx.setStorageSync("signPrivacyConfirm", true);
           }
         },
-        fail: () => {},
-        complete: () => {}
+        // fail: () => {},
+        // complete: () => {}
       });
     }
 
@@ -183,51 +153,15 @@ Page({
   onShow: function () {
     const that = this;
     wx.getStorage({
-      key: 'uploadInfo',
+      key: "uploadInfo",
       success(res) {
-        console.log(res)
+        console.log(res);
         that.setData({
-          uploadInfo: res.data
-        })
-        that.setData({
-          canupLoad: getCanupLoad(that.data.uploadInfo)
+          uploadInfo: res.data,
+          canUpload: getCanUpload(that.data.uploadInfo)
         })
       }
     })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

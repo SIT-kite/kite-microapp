@@ -1,3 +1,4 @@
+// 我
 // pages/person/person.js
 const app = getApp();
 const commonUrl = app.globalData.commonUrl;
@@ -159,7 +160,7 @@ Page({
               console.error(res);
             });
           }).catch(res => {
-            // wxlogin失败 
+            // wxlogin失败
             wx.hideLoading();
             console.error("微信登录失败");
             console.error(res);

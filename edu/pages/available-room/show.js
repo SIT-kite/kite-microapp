@@ -17,17 +17,17 @@ Page({
     scrollLeftWidth: 0,
     windowWidth: 0,
     dates: [],
-    buildings:"ABCDEFGHI",
-    currentDateIndex:0,
-    currentBuildIndex:0,
-    classRooms:[{
-      name:"A101",
-      remark:"备注",
-      busy:[1,2,3,4,7,8]
-    },{
-      name:"A102",
-      remark:"备注",
-      busy:[1,2,5,6,9,10,11,12]
+    buildings: "ABCDEFGHI",
+    currentDateIndex: 0,
+    currentBuildIndex: 0,
+    classRooms: [{
+      name: "A101",
+      remark: "备注",
+      busy: [1, 2, 3, 4, 7, 8]
+    }, {
+      name: "A102",
+      remark: "备注",
+      busy: [1, 2, 5, 6, 9, 10, 11, 12]
     }]
   },
 
@@ -62,7 +62,7 @@ Page({
   onLoad: function () {
     var that = this;
     that.getScrollWidth();
-    this._initDate()
+    this._initDate();
   },
   changeDate(e){
     //选择日期
@@ -84,7 +84,7 @@ Page({
   _initDate() {
     const dates = ['今天']
     const date = new Date()
-    for (let i = 0; i < 6; i++){
+    for (let i = 0; i < 6; i++) {
       const currentTime = formatTime(date)
       dates.push(currentTime)
     }

@@ -9,20 +9,20 @@
   height: 100%;
   width: 680rpx;
 }
-.pop_class{
+.pop_class {
   box-sizing: border-box;
   height: 30vh;
   width: 40vh;
   padding:5vh;
   border-radius: 1vh;
 }
-.pop_class_complete{
+.pop_class_complete {
   box-sizing: border-box;
   height: 15vh;
   width: 30vh;
   border-radius: 1vh;
 }
-.pop_container_complete{
+.pop_container_complete {
   width: 30vh;
   height: 15vh;
   display: flex;
@@ -32,11 +32,11 @@
 }
 
 
-.pop_button{
+.pop_button {
   width: 20vh;
   height: 6vh;
   background-color: black;
-  border-radius: 2vh;
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,7 +131,7 @@
   margin: 5vh 0;
   width: 680rpx;
   height: 453rpx;
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: 0px 0px 10px 6px rgba(224, 224, 224, 0.37);
   background-color: white;
 }
@@ -139,13 +139,13 @@
   0% {
     transaform: scale(1);
   }
-  25%{
+  25% {
     transform: scale(1.4);
   }
   50% {
     transform: scale(1);
   }
-  80%{
+  80% {
     transform: scale(1.3);
   }
   100% {
@@ -153,20 +153,20 @@
   }
 }
 
-.pop_text{
-  font-weight:bold;
-  font-size:24px;
+.pop_text {
+  font-weight: bold;
+  font-size: 24px;
   margin: auto;
 }
 
-.toast_wrap{
+.toast_wrap {
   position: relative;
   width: 650rpx;
   height: 70rpx;
   box-shadow: 0px 0px 10px 6px rgba(224, 224, 224, 0.247);
   background-color: rgb(255, 255, 255);
   margin-top: 5vh;
-  border-radius:20rpx;
+  border-radius: 4px;
   display: flex;
   justify-content:space-between;
   align-items:center;
@@ -174,13 +174,13 @@
   overflow: hidden;
 }
 
-.toast_wrap image{
-  width:35rpx;
-  height:36rpx;
+.toast_wrap image {
+  width: 35rpx;
+  height: 36rpx;
   transform: rotate(-45deg);
 }
 
-.toast_wrap swiper{
+.toast_wrap swiper {
   position: relative;
   width: calc( 650rpx - ( 35rpx + 30rpx ));
   height: 100%;
@@ -198,13 +198,13 @@
 .toast_wrap .text_wrap{
   width: calc( 650rpx - ( 35rpx + 30rpx + 30rpx ));
   height: 100%;
-  text-align:center;
+  text-align: center;
   display: flex;
   align-items: center;
   overflow: hidden;
 }
-.text_wrap text{
+.text_wrap text {
   overflow: hidden;
-  text-overflow:ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
