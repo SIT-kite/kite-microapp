@@ -63,7 +63,6 @@ Page({
 
   /**
    * 返回PostAuthentication请求的Promise
-   * @param {Object} res postUser的response
    * @return {Promise}
    */
   postUserAuthPromise: () => {
@@ -106,10 +105,11 @@ Page({
         // PostSession 成功
         // 设置本地变量 uid token
         console.log(res);
-        app.globalData.token = res.data.data.token;
-        app.globalData.uid = res.data.data.data.uid;
-        wx.setStorageSync("uid", res.data.data.data.uid);
-        wx.setStorageSync("token", res.data.data.token);
+        const data = res.data.data;
+        app.globalData.token = data.token;
+        app.globalData.uid = data.data.uid;
+        wx.setStorageSync("uid", data.data.uid);
+        wx.setStorageSync("token", data.token);
         this.getIdentityPromise().then(res => {
           // GetIdentity 成功
           this.setData({ isStudent: true });
@@ -124,17 +124,18 @@ Page({
           wx.hideLoading();
         });
       }).catch(res => {
-        console.log(res)
+        console.log(res);
+        const data = res.data.data;
         // PostSession 失败 创建用户
         this.postUserPromise(wxUserInfo).then(res => {
-          app.globalData.uid = res.data.data.uid;
-          app.globalData.token = res.data.data.token;
+          app.globalData.uid = data.uid;
+          app.globalData.token = data.token;
           // 本地存储变量
-          wx.setStorageSync("token", res.data.data.token);
-          wx.setStorageSync("uid", res.data.data.uid);
+          wx.setStorageSync("token", data.token);
+          wx.setStorageSync("uid", data.uid);
 
           wxLogin().then(res => {
-            // 更新全局wxCode
+            // 更新全局 wxCode
             wxCode = res.code;
             this.postUserAuthPromise().then(res => {
               // PostAuthentication 成功
@@ -154,20 +155,20 @@ Page({
               });
             }).catch(res => {
               // PostAuthentication 失败
-              console.log("PostAuthentication 失败");
-              console.log(res);
+              console.error("PostAuthentication 失败");
+              console.error(res);
             });
           }).catch(res => {
             // wxlogin失败 
             wx.hideLoading();
-            console.log("微信登录失败");
-            console.log(res);
+            console.error("微信登录失败");
+            console.error(res);
           });
         }).catch(res => {
           // PostUser 失败
           wx.hideLoading();
-          console.log("创建用户失败");
-          console.log(res);
+          console.error("创建用户失败");
+          console.error(res);
         });
       });
       // 设置全局Avatar nickName
@@ -176,7 +177,7 @@ Page({
       app.globalData.isLogin = true;
       this.setData({
         nickName: app.globalData.nickName,
-        avater: app.globalData.userAvatar,
+        avatar: app.globalData.userAvatar,
         isLogin: app.globalData.isLogin,
       });
     }
@@ -197,11 +198,12 @@ Page({
    */
   onLoad: function (options) {
     console.log("页面 person onLoad");
+    const data = app.globalData;
     this.setData({
-      nickName: app.globalData.nickName,
-      avater: app.globalData.userAvatar,
-      isLogin: app.globalData.isLogin,
-      isStudent: app.globalData.isStudent
+      nickName: data.nickName,
+      avatar: data.userAvatar,
+      isLogin: data.isLogin,
+      isStudent: data.isStudent
     });
   },
 
@@ -210,11 +212,12 @@ Page({
    */
   onReady: function () {
     console.log("页面 person onReady");
+    const data = app.globalData;
     this.setData({
-      nickName: app.globalData.nickName,
-      avater: app.globalData.userAvatar,
-      isLogin: app.globalData.isLogin,
-      isStudent: app.globalData.isStudent
+      nickName: data.nickName,
+      avatar: data.userAvatar,
+      isLogin: data.isLogin,
+      isStudent: data.isStudent
     });
   },
 
@@ -226,12 +229,13 @@ Page({
       this.getTabBar().setData({
         selected: 1
       })
-    };
+    }
+    const data = app.globalData;
     this.setData({
-      nickName: app.globalData.nickName,
-      avater: app.globalData.userAvatar,
-      isLogin: app.globalData.isLogin,
-      isStudent: app.globalData.isStudent
+      nickName: data.nickName,
+      avatar: data.userAvatar,
+      isLogin: data.isLogin,
+      isStudent: data.isStudent
     });
     console.log("person onShow");
 

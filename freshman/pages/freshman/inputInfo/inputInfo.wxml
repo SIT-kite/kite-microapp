@@ -21,11 +21,11 @@
         </view>
         <view class="input-wrap" >
             <image src="/asset/pic/qq.png" style="height:50rpx;width:50rpx"></image>
-            <input value="{{contact.qq}}" bindinput= "getqq" placeholder="QQ" type="number"></input>
+            <input value="{{contact.qq}}" bindinput= "getQQ" placeholder="QQ" type="number"></input>
         </view>
         <view class="input-wrap">
             <image src="/asset/pic/wx.png" style="height:50rpx;width:50rpx"></image>
-            <input value="{{contact.wechat}}" bindinput= "getwechat" placeholder="微信" type="text"></input>
+            <input value="{{contact.wechat}}" bindinput= "getWechatId" placeholder="微信" type="text"></input>
         </view>
         <checkbox-group bindchange="checkBoxChange">
             <checkbox checked="{{visible}}" value="public">同城可见</checkbox>
