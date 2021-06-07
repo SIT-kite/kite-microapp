@@ -16,12 +16,15 @@
  * });
  */
 
-module.exports = (api) => {
-  return (option, ...params) => {
-    return new Promise((resolve, reject) => api(
+module.exports = api => (
+  (option, ...params) => new Promise(
+    (resolve, reject) => api(
       Object.assign(
-        {}, option, { success: resolve, fail: reject }
+        {}, option, {
+          success: resolve,
+          fail: reject
+        }
       ), ...params
-    ));
-  }
-};
+    )
+  )
+);

@@ -1,20 +1,23 @@
+// getTimeStamp(GMTTime: String): unixTimeStamp: Number
 // 返回13位的时间戳(精确到毫秒)
 // 格式为"2020-08-31T16:18:57"
-var getTimeStamp = function (GMTTime) {
-  var arr = GMTTime.split("T");
-  var str = arr[0] + " " + arr[1];
+const getTimeStamp = GMTTime => {
+  const arr = GMTTime.split("T");
+  const str = arr[0] + " " + arr[1];
   return new Date(str).getTime();
-}
+};
 
+// getIntervalToCurrentTime(GivenTime: String): intervalTime: String
 // 获取给定时间到现在的时间间隔
 // 返回形式为 XX年XX月XX日XX:XX:XX
-var getIntervalToCurrentTime = function (GivenTime) {
-  if (null == GivenTime) {
-    return null;
-  }
+const getIntervalToCurrentTime = GivenTime => {
+
+  if (null == GivenTime) return null;
+
   var givenTimeStamp = getTimeStamp(GivenTime) / 1000;
   var currTimeStamp = parseInt(new Date().getTime() / 1000);
   var interval = currTimeStamp - givenTimeStamp;
+
   // 解决时区问题
   interval -= 8 * 3600;
   var intervalTime;
@@ -28,7 +31,7 @@ var getIntervalToCurrentTime = function (GivenTime) {
   }
   else if (interval < 3600 * 24) {
     tmp = parseInt(interval / 3600);
-    intervalTime = tmp + "小时"
+    intervalTime = tmp + "小时";
   }
   else if (interval < 3600 * 24 * 30) {
     tmp = parseInt(interval / (3600 * 24));
@@ -42,27 +45,31 @@ var getIntervalToCurrentTime = function (GivenTime) {
     tmp = parseInt(interval / (3600 * 24 * 30 * 365));
     intervalTime = tmp + "年";
   }
-  return intervalTime
-}
 
+  return intervalTime;
+
+};
+
+// formatTime(date: Date): YYYY-MM-dd
 const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-  return `${[year, month, day].map(formatNumber).join('-')}`
-}
+  return [year, month, day].map(formatNumber).join('-');
+};
 
+// formatNumber(n: Number): nn: String
 const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : `0${n}`
-}
+  n = n.toString();
+  return n[1] ? n : `0${n}`;
+};
 
 
-// 在XXX.js通过 var util = require("../../utils/utils.js")和
-// util.XXX()来引用
+// 在XXX.js通过 var util = require("../../utils/utils.js") 和
+// util.XXX() 来引用
 module.exports = {
-  getTimeStamp: getTimeStamp,
-  getIntervalToCurrentTime: getIntervalToCurrentTime,
+  getTimeStamp,
+  getIntervalToCurrentTime,
   formatTime
-}
+};
