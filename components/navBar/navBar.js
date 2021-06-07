@@ -60,19 +60,15 @@ Component({
       value: 1
     }
   },
-  created: function() {
-    this.getSystemInfo();
-  },
-  attached: function() {
-    this.setStyle(); //设置样式
-  },
+  created() { this.getSystemInfo(); },
+  attached() { this.setStyle();  }, // 设置样式
   data: {},
 
   pageLifetimes: {
     show() {
       if (getApp().globalSystemInfo.ios) {
         this.getSystemInfo();
-        this.setStyle(); //设置样式1
+        this.setStyle(); // 设置样式1
       }
     },
     hide() {}
@@ -133,11 +129,11 @@ Component({
         });
       }
     },
-    _showChange: () => this.setStyle(),
+    _showChange () { this.setStyle(); },
     // 返回事件
-    back:   () => this.triggerEvent('back', { delta: this.data.delta }),
-    home:   () => this.triggerEvent('home', {}),
-    search: () => this.triggerEvent('search', {}),
+    back() { this.triggerEvent('back', { delta: this.data.delta }) },
+    home() { this.triggerEvent('home', {}); },
+    search() { this.triggerEvent('search', {}); },
 
     getSystemInfo() {
       var app = getApp();
