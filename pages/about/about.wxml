@@ -1,5 +1,5 @@
 <!--pages/about/about.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<navBar background='white' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view id="container">
-	<rich-text  nodes="{{htmlSnip}}"></rich-text>
+	<rich-text nodes="{{htmlSnip}}"></rich-text>
 </view>

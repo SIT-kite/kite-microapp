@@ -1,12 +1,10 @@
-//index.js
-//获取应用实例
-const app = getApp()
+// 主页
+// pages/person/person.js
+const app = getApp();
 const requestUtils = require("../../utils/requestUtils");
+
 Page({
   data: {
-    incompleted: false,
-    show: false,
-    showTemp: false,
     selected: -1,
     id: "",
     animation_data: "",
@@ -42,133 +40,123 @@ Page({
       } */
     ]
   },
-  onLoad: function () {
+
+  onLoad() {
     this.getNotice();
   },
-  getNotice: function () {
+
+  getNotice() {
+
     const url = `${app.globalData.commonUrl}/notice`;
     const data = {};
-    let header = {
+    const header = {
       "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`,
+      "Authorization": `Bearer ${app.globalData.token}`
     };
-    let getNotice = requestUtils.doGET(url, data, header);
-    getNotice.then((res) => {
-      this.setData({
-        notice: res.data.data
-      })
-      console.log(res.data.data)
-    }).
-    catch((res) => {
-      console.log(res)
-    })
+
+    requestUtils.doGET(url, data, header).then(res => {
+      this.setData({notice: res.data.data});
+      console.log("公告数据：", res.data.data);
+    }).catch(
+      res => console.log(res)
+    );
+
   },
-  move: function (e) {
+
+  move(e) {
+    const dataset = e.currentTarget.dataset;
     this.setData({
-      animation_data: "animation:living .5s ease;",
-      selected: e.currentTarget.dataset.index,
-      id: e.currentTarget.dataset.id
+      animation_data: "animation: living .5s ease;",
+      selected: dataset.index,
+      id: dataset.id
     });
-    // console.log(this.data.selected);
-    // console.log(this.data.id);
     this.router(this.data.id);
   },
-  router: function (id) {
+
+  router(pageId) {
+
+    const url_freshman = "/freshman/pages/freshman";
+
     let url = new Map([
-        [ "welcome", "/freshman/pages/freshman/welcome/welcome" ],
-        [ "qrcode", "/pages/qrcode/qrcode" ],
-        [ "education", "/pages/education/education" ],
-        [ "activity", "/pages/activity/activity" ],
-        [ "shopping", "/pages/shopping/shopping" ],
-        [ "lost", "/pages/lost/lost" ],
-        [ "inquiry", "/pages/consume/electricity/electricity" ]
-    ]).get(id);
+        [ "welcome"   , url_freshman + "/welcome/welcome" ],
+        [ "qrcode"    , "/pages/qrcode/qrcode" ],
+        [ "education" , "/pages/education/education" ],
+        [ "activity"  , "/pages/activity/activity" ],
+        [ "shopping"  , "/pages/shopping/shopping" ],
+        [ "lost"      , "/pages/lost/lost" ],
+        [ "inquiry"   , "/pages/consume/electricity/electricity" ]
+    ]).get(pageId);
 
     if (url === undefined) {
-      console.error("找不到对应的 url", {id, url});
+      console.error("找不到对应的 url", {id: pageId, url});
       throw "找不到对应的 url";
     }
 
-    // 如果点击新生但是userDetail不为空，那么直接跳入到stuInfoDetail
-    if (
-      id === "welcome" &&
-      app.globalData.userDetail != "" &&
-      app.globalData.userDetail != null
-    ) {
-      url = "/freshman/pages/freshman/stuInfoDetail/stuInfoDetail";
+    // 如果点击新生但是 userDetail 不为空，那么直接跳入到 stuInfoDetail
+    const userDetail = app.globalData.userDetail;
+    if (pageId === "welcome" && userDetail != "" && userDetail != null) {
+      url = url_freshman + "/stuInfoDetail/stuInfoDetail";
     }
 
-    const show = !app.globalData.isLogin;
-    if (!show) {
-      let that = this
+    const isLogin = app.globalData.isLogin;
+    if (isLogin) {
+      // 已登录，跳转到目标页面
       wx.navigateTo({
-        url: url,
-        success: function () {}, //接口调用成功的回调函数
-        fail: function () {
-          // 页面跳转失败则显示未完成
-          that.setData({
-            incompleted: true
-          });
-          setTimeout(() => {
-            that.setData({
-              incompleted: false
-            })
-          }, 1000);
-        }, //接口调用失败的回调函数
-        complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
+        url,
+        fail: () => wx.showModal({ // 页面跳转失败时，显示未完成
+          title: "尚未完成",
+          content: "别急别急，正在努力开发~",
+          confirmText: "知道了",
+          showCancel: false
+        })
       })
     } else {
-      this.setData({
-        show: true
+      // 未登录，提示用户登录
+      wx.showModal({ // 页面跳转失败显示未完成
+        title: "请登录",
+        content: "尚未登录，请前往登录",
+        success: res => res.confirm && this.goLogin()
       })
     }
   },
-  goLogin: function () {
-    this.setData({
-      show: false
-    })
-    wx.switchTab({
-      url: '/pages/person/person',
-    })
-  },
-  onClose() {
-    this.setData({
-      show: false,
-      showTemp: false
-    });
-  },
-  onShow: function (e) {
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 0
-      })
-    }
 
+  goLogin() {
+    wx.switchTab({
+      url: '/pages/person/person'
+    })
   },
-  goTemp: function (e) {
-    let url = "/pages/freshman/welcome/welcome";
-    if (app.globalData.userDetail != "" && app.globalData.userDetail != null) {
-      url = "/pages/freshman/stuInfoDetail/stuInfoDetail";
+
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 });
     }
+  },
+
+  goTemp() {
+    const userDetail = app.globalData.userDetail;
+    const url = "/pages/freshman" + (
+      userDetail != "" && userDetail != null
+      ? "/stuInfoDetail/stuInfoDetail"
+      : "/welcome/welcome"
+    );
     wx.navigateTo({
       url: url,
       success: function () {
         console.log("跳转成功")
-      }, //接口调用成功的回调函数
+      },
       fail: function (res) {
         console.log(res);
         console.log("跳转失败")
-      }, //接口调用失败的回调函数
-      complete: function () {} //接口调用结束的回调函数（调用成功、失败都会执行）
+      }
     })
-
   },
-  goNavigate: function () {
+
+  goNavigate() {
     wx.navigateTo({
-      url: '/pages/freshman/navigate/navigate',
+      url: '/pages/freshman/navigate/navigate'
     });
   },
-  onShareAppMessage: function (e) {
+  onShareAppMessage() {
     return {
       title: "上应小风筝",
       path: "pages/index/index"

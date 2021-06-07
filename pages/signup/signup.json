@@ -1,7 +1,5 @@
 {
   "usingComponents": {
-    "van-icon": "@vant/weapp/icon/index",
-    "van-popup": "@vant/weapp/popup/index",
     "navBar" : "/components/navBar/navBar"
   },
   "disableScroll": true

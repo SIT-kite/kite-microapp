@@ -4,8 +4,10 @@ import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../../../utils/navBarUtils'
+
 var app = getApp();
 const requestUtils = require('../../../../utils/requestUtils');
+
 Page({
   data: {
     show: false,
@@ -30,7 +32,7 @@ Page({
    */
   gotoNavigate: function () {
     wx.navigateTo({
-      url: '/freshman/pages/freshman/navigate/navigate',
+      url: '/freshman/pages/freshman/navigate/navigate'
     });
   },
 
@@ -90,9 +92,7 @@ Page({
   gotoAnalysis: function () {
     wx.navigateTo({
       url: '/freshman/pages/freshman/shareAnalysis/shareAnalysis',
-      success: (result) => {
-        console.log("跳转分享页面成功")
-      },
+      success: () => console.log("跳转分享页面成功"),
       fail: () => { },
       complete: () => { }
     });

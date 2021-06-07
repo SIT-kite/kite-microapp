@@ -1,7 +1,8 @@
 // pages/freshman/navigate/navigate.js
 import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils'
-Page({
 
+
+Page({
   /**
    * 页面的初始数据
    */

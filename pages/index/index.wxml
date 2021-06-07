@@ -1,23 +1,12 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <view class="container">
-	<!-- 未登录弹窗 -->
-	<van-popup show="{{ show }}" closeable custom-class="pop_class" bind:close="onClose">
-		<view class="pop_container">
-			<text style="font-weight:bold;font-size:24px;">尚未登录，请前往登录</text>
-			<view class="pop_button" bindtap="goLogin">登录</view>
-		</view>
-	</van-popup>
-	<!-- 未开发弹窗 开发环境 -->
-	<van-popup show="{{ incompleted }}" closeable custom-class="pop_class_complete" bind:close="onClose">
-		<view class="pop_container_complete">
-			<text class="pop_text" style="font-weight:bold;font-size:18px;">别急别急，正在努力开发</text>
-		</view>
-	</van-popup>
+
 	<!-- 主页 -->
 	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
 	<view class="main">
+
 		<!-- 主页banner -->
-		<swiper indicator-dots="true" class="swiper" autoplay="true" interval="4000" easing-function="linear" duration="700"
+		<swiper indicator-dots="true" class="swiper" autoplay="true" interval="5000" easing-function="east-out" duration="500"
 			circular="true">
 			<swiper-item>
 				<view class="box">
@@ -31,6 +20,7 @@
 				</view>
 			</swiper-item>
 		</swiper>
+
 		<!-- 滚动通知 -->
 		<view class="toast_wrap">
 			<image src="/asset/icon/main_icon/notice.png" />
@@ -39,15 +29,17 @@
 					<view class="text_wrap"><text>{{item.title}}</text></view>
 				</swiper-item>
 			</swiper>
-
 		</view>
+
 		<!-- 主页功能索引 -->
 		<view class="menuBlock">
 			<view wx:for="{{menu_list}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell"
 				bindtap="move">
-				<image style="{{index===selected ? animation_data : '' }}" src="{{item.iconPath}}"></image>
+				<image style="{{ index === selected ? animation_data : '' }}" src="{{item.iconPath}}"></image>
 				<view class="menu_cell_text" hover-class="menu_cell_active">{{item.text}}</view>
 			</view>
 		</view>
+
 	</view>
+
 </view>

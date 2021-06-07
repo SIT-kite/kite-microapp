@@ -1,3 +1,4 @@
+// 电费查询
 // pages/consume/electricity/electricity.js
 import {
   handlerGohomeClick,
@@ -157,7 +158,7 @@ Page({
   },
 
   rpx2px:function(rpx){
-    const pixelRatio1 = 750 / wx.getSystemInfoSync().windowWidth; 
+    const pixelRatio1 = 750 / wx.getSystemInfoSync().windowWidth;
     return rpx / pixelRatio1;
   },
   bindroomID: function (e) {

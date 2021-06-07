@@ -16,9 +16,6 @@ const catchError = res => wx.showModal({
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     classmates: null,
     show: false,
@@ -31,14 +28,16 @@ Page({
    * @param {Object} 监听用户点击事件
    * @return 无
    */
-  copyText: e => wx.setClipboardData({
-    data: e.currentTarget.dataset.text,
-    success: () => wx.getClipboardData({
-      success: () => wx.showToast({
-        title: `复制${e.currentTarget.dataset.type}成功`
+  copyText(e) {
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.text,
+      success: () => wx.getClipboardData({
+        success: () => wx.showToast({
+          title: `复制${e.currentTarget.dataset.type}成功`
+        })
       })
     })
-  }),
+  },
 
   /**
    * 初始化页面 classmates 数据
@@ -54,7 +53,7 @@ Page({
       console.log("请求远程 classmates 数据");
       wx.showLoading({
         title: '加载中',
-        mask: true,
+        mask: true
       });
 
       url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/classmate`;
@@ -68,34 +67,38 @@ Page({
       var getClassmates = requestUtils.doGET(url, data, header).then(res => {
         var stuList = res.data.data.classmates;
         stuList.forEach(student => {
-          student.genderImage = student.gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+
+          student.genderImage = "/asset/icon/" + (
+            student.gender === "M"
+            ? "male.png"
+            : "female.png"
+          );
           student.lastSeen = timeUtils.getIntervalToCurrentTime(student.lastSeen);
           student.isHidden = {
             "qq": null,
             "wechat": null,
             "padding": null
           }
+
           if (student.contact == null) {
             student.isHidden.qq = true;
             student.isHidden.wechat = true;
           }
           else {
-            student.isHidden.qq = student.contact.qq == "";
-            student.isHidden.wechat = student.contact.wechat == "";
-            student.isHidden.padding = student.isHidden.wechat == true ? 25 : 0;
+            student.isHidden.qq = student.contact.qq === "";
+            student.isHidden.wechat = student.contact.wechat === "";
+            student.isHidden.padding = student.isHidden.wechat === true ? 25 : 0;
           }
         });
         app.globalData.classmates = res.data.data.classmates;
-        this.setData({
-          classmates: stuList
-        });
+        this.setData({ classmates: stuList });
         wx.hideLoading();
         return res;
       });
 
-      getClassmates.then(() => {
-        console.log("请求加载完成");
-      }).catch(catchError);
+      getClassmates.then(
+        () => console.log("请求加载完成");
+      ).catch(catchError);
 
       // 阻塞页面渲染
       Promise.all([getClassmates]).then(() => {
@@ -132,7 +135,7 @@ Page({
     var refleshClassmates = requestUtils.doGET(url, data, header).then(res => {
       var stuList = res.data.data.classmates;
       stuList.forEach(student => {
-        student.genderImage = student.gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+        student.genderImage = student.gender === "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
         student.lastSeen = timeUtils.getIntervalToCurrentTime(student.lastSeen);
         student.isHidden = {
           "qq": null,
@@ -144,9 +147,9 @@ Page({
           student.isHidden.wechat = true;
         }
         else {
-          student.isHidden.qq = student.contact.qq == "";
-          student.isHidden.wechat = student.contact.wechat == "";
-          student.isHidden.padding = student.isHidden.wechat == true ? 25 : 0;
+          student.isHidden.qq = student.contact.qq === "";
+          student.isHidden.wechat = student.contact.wechat === "";
+          student.isHidden.padding = student.isHidden.wechat === true ? 25 : 0;
         }
       });
       app.globalData.classmates = res.data.data.classmates;
@@ -219,7 +222,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function (e) {
+  onShareAppMessage: function () {
     return {
       title: "上应小风筝",
       path: "pages/index/index"

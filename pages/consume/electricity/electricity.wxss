@@ -6,11 +6,11 @@
   text-align: center;
 }
 
-.share_button{
+.share_button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient( 135deg, #70F570 10%, #49C628 100%);
+  background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
   /* background-color: #70F570 ; */
   /* border: 1px solid black; */
   width: 60%;
@@ -24,7 +24,7 @@
   /* margin-top: 20rpx; */
 }
 
-.share_button image{
+.share_button image {
   width: 90%;
   height: 90%;
 }

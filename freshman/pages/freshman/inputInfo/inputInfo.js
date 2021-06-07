@@ -47,19 +47,9 @@ Page({
         showCancel: false,
         success() {
           that.data.visible = true;
-          console.log(that.data.visible);
         }
       }
     );
-
-    if (e.detail.value[0] == undefined) {
-      // 取消勾选
-      wx.showModal()
-    } else {
-      // 勾选
-      wx.showModal()
-
-    }
   },
   onShow: function () {
     const {
@@ -196,12 +186,12 @@ Page({
       'contact.tel': e.detail.value
     });
   },
-  getqq(e) {
+  getQQ(e) {
     this.setData({
       'contact.qq': e.detail.value
     });
   },
-  getwechat(e) {
+  getWechatId(e) {
     this.setData({
       'contact.wechat': e.detail.value
     });
@@ -212,12 +202,12 @@ Page({
     console.log('onLoad');
     console.log(this.data.userInfo);
     // 如果为none，说明现在执行修改功能，需要把全局变量中的contact拷贝一份,展示在input框中
-    if (option.isHidden == "none") {
+    if (option.isHidden === "none") {
       this.setData({
         contact: app.globalData.contact,
         userInfo: app.globalData.userInfo,
         visible: app.globalData.visible,
-        buttonText: option.isHidden == "flex" ? "提交" : "确定",
+        buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
         avatarUrl: app.globalData.userAvatar,
         nickName: app.globalData.nickName
@@ -225,7 +215,7 @@ Page({
       console.log(this.data.visible);
     } else {
       this.setData({
-        buttonText: option.isHidden == "flex" ? "提交" : "确定",
+        buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
         avatarUrl: app.globalData.userAvatar,
         nickName: app.globalData.nickName

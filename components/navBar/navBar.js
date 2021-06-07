@@ -55,29 +55,24 @@ Component({
       value: 1
     }
   },
+  created() { this.getSystemInfo(); },
+  attached() { this.setStyle();  }, // 设置样式
 
-  created: function() {
-    this.getSystemInfo();
-  },
-
-  attached: function() {
-    this.setStyle(); // 设置样式
-  },
 
   data: {},
 
   pageLifetimes: {
-    show: function() {
+    show() {
       if (getApp().globalSystemInfo.ios) {
         this.getSystemInfo();
         this.setStyle(); // 设置样式1
       }
     },
-    hide: function() {}
+    hide() {}
   },
 
   methods: {
-    setStyle: function(life) {
+    setStyle(life) {
 
       const {
         statusBarHeight,
@@ -89,8 +84,8 @@ Component({
       } = getApp().globalSystemInfo;
       const { back, home, title } = this.data;
 
-      let rightDistance = windowWidth - capsulePosition.right; //胶囊按钮右侧到屏幕右侧的边距
-      let leftWidth = windowWidth - capsulePosition.left; //胶囊按钮左侧到屏幕右侧的边距
+      let rightDistance = windowWidth - capsulePosition.right; // 胶囊按钮右侧到屏幕右侧的边距
+      let leftWidth     = windowWidth - capsulePosition.left;  // 胶囊按钮左侧到屏幕右侧的边距
 
       const navigationbarinnerStyle = [
         `color: ${this.data.color}`,
@@ -128,19 +123,12 @@ Component({
       }
 
     },
-    _showChange: function() {
-      this.setStyle();
-    },
+    _showChange () { this.setStyle(); },
     // 返回事件
-    back: function() {
-      this.triggerEvent('back', { delta: this.data.delta });
-    },
-    home: function() {
-      this.triggerEvent('home', {});
-    },
-    search: function() {
-      this.triggerEvent('search', {});
-    },
+    back() { this.triggerEvent('back', { delta: this.data.delta }) },
+    home() { this.triggerEvent('home', {}); },
+    search() { this.triggerEvent('search', {}); },
+
     getSystemInfo() {
       var app = getApp();
       if (app.globalSystemInfo && !app.globalSystemInfo.ios) {
@@ -219,6 +207,7 @@ Component({
         return systemInfo;
       }
     }
+
   }
 
 });

@@ -24,16 +24,17 @@ App({
     familiar: null,
     isPrivacyConfirmed: false,
   },
-  onLaunch: function () {
-    console.log(this.globalData.userAvatar);
-    // 更新版本处理
+
+  updateManager() {
+
+    // 更新版本
     const updateManager = wx.getUpdateManager();
-    updateManager.onCheckForUpdate(function (res) {
-      // 请求完新版本信息的回调
-      console.log("检查新版本信息");
-      console.log(`是否包含新版本：${res.hasUpdate}`);
-    });
-    updateManager.onUpdateReady(function () {
+  
+    updateManager.onCheckForUpdate(
+      res => console.log(`检查新版本信息\n是否包含新版本：${res.hasUpdate}`)
+    );
+
+    updateManager.onUpdateReady(() => {
       wxShowModal({
         title: "更新提示",
         content: "新版本已经准备好，是否重启应用？",
@@ -46,79 +47,96 @@ App({
         }
       });
     });
-    updateManager.onUpdateFailed(function () {
+
+    updateManager.onUpdateFailed(() => {
       // 新版本下载失败
       wxShowModal({
         title: '更新提示',
-        content: '新版本下载失败, 请稍后重试!',
-        showCancel: false,
+        content: '新版本下载失败, 请稍后重试！',
         confirmText: '好的',
-        confirmColor: '#4B6DE9',
+        showCancel: false
       }).then(
-        res => console.log("新版本下载失败")
+        () => console.log("新版本下载失败")
       );
     });
 
+  },
+
+  onLaunch() {
+    this.updateManager();
+
+    const globalData = this.globalData;
+  
     // 获取本地变量
-    try {
-      // 注意未获取到storage值时 变量值为""
-      var userDetail = wx.getStorageSync("userDetail");
-      var userInfo = wx.getStorageSync("userInfo");
-      var token = wx.getStorageSync("token");
-      var uid = wx.getStorageSync("uid");
-      var isStudent = wx.getStorageSync("isStudent");
-      var signPrivacyConfirm = wx.getStorageSync("isPrivacyConfirm");
-      var freshmanPrivacyConfirm = wx.getStorageSync("freshmanPrivacyConfirm");
-      this.globalData.userDetail = userDetail;
-      this.globalData.userInfo = userInfo;
-      this.globalData.token = token;
-      this.globalData.uid = uid;
-      this.globalData.isStudent = isStudent;
-      this.globalData.signPrivacyConfirm = signPrivacyConfirm;
-      this.globalData.freshmanPrivacyConfirm = freshmanPrivacyConfirm;
-    } catch (error) {
-      console.log("获取Storage变量出错");
-    }
+    [
+      "userDetail", "userInfo", "token", "uid",
+      "isStudent", "isPrivacyConfirm", "freshmanPrivacyConfirm"
+    ].forEach(
+      key => wx.getStorage({
+        key,
+        success: res => globalData[key] = res.data,
+        fail: res => {
+          if (res === "getStorage:fail data not found") {
+            console.log(`找不到变量 ${key}，回退为空字符串`);
+          }
+          globalData[key] = "";
+        }
+      })
+    );
+  
   },
 
 
-  onShow: function () {
+  onShow() {
     // 更新
-    const that = this;
+    const gData = this.globalData;
     const isAllStorageOk =
-      this.globalData.uid !== "" &&
-      this.globalData.token !== "" &&
-      this.globalData.isStudent !== "";
-    console.log("isAllStorageOk: " + isAllStorageOk)
-    console.log(this.globalData.uid !== "");
-    console.log(this.globalData.token !== "");
-    console.log(this.globalData.isStudent !== "");
-    console.log(isAllStorageOk);
+      [ "uid", "token", "isStudent" ].every( key => gData[key] !== "" );
+
+    console.log("基本变量：", {
+      isAllStorageOk,
+      uid: gData.uid,
+      token: gData.token,
+      isStudent: gData.isStudent
+    });
+
     wxGetSetting().then(res => {
+
       if (res.authSetting['scope.userInfo']) {
+
         wxGetUserInfo().then(res => {
-          that.globalData.nickName = res.userInfo.nickName;
-          that.globalData.userAvatar = res.userInfo.avatarUrl;
-          console.log(that.globalData.userAvatar)
+
+          gData.nickName = res.userInfo.nickName;
+          gData.userAvatar = res.userInfo.avatarUrl;
+          console.log("昵称与头像：", {
+            nickName: gData.nickName,
+            userAvatar: gData.userAvatar
+          });
+
           // 确认所需全局变量正常 否则重新登录获取
           if (isAllStorageOk) {
-            that.globalData.isLogin = true;
+            gData.isLogin = true;
           }
-          if (that.globalData.uid != "") {
+
+          if (gData.uid != "") {
             // put 更新用户头像
-            let url = `${that.globalData.commonUrl}/user/${that.globalData.uid}`
-            let data = res.userInfo;
-            let header = {
+            const url = `${gData.commonUrl}/user/${gData.uid}`
+            const data = res.userInfo;
+            const header = {
               "content-type": "application/x-www-form-urlencoded",
-              "Authorization": `Bearer ${that.globalData.token}`
+              "Authorization": `Bearer ${gData.token}`
             };
             requestUtils.doPUT(url, data, header).catch(res => {
-              console.log("更新用户头像失败");
-              console.log(res);
+              console.log("用户头像更新失败", res);
             });
           }
+
         });
+
       }
+
     });
-  },
+
+  }
+
 })

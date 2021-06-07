@@ -5,9 +5,9 @@
   },
   "setting": {
     "urlCheck": false,
-    "es6": false,
-    "enhance": true,
-    "postcss": true,
+    "es6": true,
+    "enhance": false,
+    "postcss": false,
     "preloadBackgroundData": false,
     "minified": true,
     "newFeature": true,
@@ -18,7 +18,7 @@
     "scopeDataCheck": false,
     "uglifyFileName": false,
     "checkInvalidKey": true,
-    "checkSiteMap": true,
+    "checkSiteMap": false,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
@@ -30,7 +30,6 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
@@ -40,9 +39,9 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.10.4",
+  "libVersion": "2.14.0",
   "appid": "wxfbc5fc9c0a0be9f9",
-  "projectname": "frontend-sit",
+  "projectname": "kite-microapp",
   "debugOptions": {
     "hidedInDevtools": []
   },
@@ -57,7 +56,6 @@
       "list": []
     },
     "game": {
-      "currentL": -1,
       "list": []
     },
     "miniprogram": {
