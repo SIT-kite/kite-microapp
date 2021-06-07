@@ -1,15 +1,8 @@
 // custom-tab-bar/index.js
 Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
 
-  },
+  properties: {},
 
-  /**
-   * 组件的初始数据
-   */
   data: {
     selected: 0,
     list: [{
@@ -25,15 +18,9 @@ Component({
     }]
   },
 
-  /**
-   * 组件的方法列表
-   */
   methods: {
     switchTab(e) {
-      const path  =  e.currentTarget.dataset.path
-      wx.switchTab({
-        url: path
-      })
+      wx.switchTab({url: e.currentTarget.dataset.path})
     }
   }
 })

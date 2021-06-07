@@ -1,10 +1,12 @@
-<!--index.wxml-->
+<!-- index.wxml -->
 <view class="container">
+
 	<!-- 主页 -->
 	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
 	<view class="main">
+
 		<!-- 主页banner -->
-		<swiper indicator-dots="true" class="swiper" autoplay="true" interval="4000" easing-function="linear" duration="700"
+		<swiper indicator-dots="true" class="swiper" autoplay="true" interval="5000" easing-function="east-out" duration="500"
 			circular="true">
 			<swiper-item>
 				<view class="box">
@@ -18,6 +20,7 @@
 				</view>
 			</swiper-item>
 		</swiper>
+
 		<!-- 滚动通知 -->
 		<view class="toast_wrap">
 			<image src="/asset/icon/main_icon/notice.png" />
@@ -26,8 +29,8 @@
 					<view class="text_wrap"><text>{{item.title}}</text></view>
 				</swiper-item>
 			</swiper>
-
 		</view>
+
 		<!-- 主页功能索引 -->
 		<view class="menuBlock">
 			<view wx:for="{{menu_list}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell"
@@ -36,5 +39,7 @@
 				<view class="menu_cell_text" hover-class="menu_cell_active">{{item.text}}</view>
 			</view>
 		</view>
+
 	</view>
+
 </view>
