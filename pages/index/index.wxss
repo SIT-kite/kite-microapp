@@ -31,7 +31,6 @@
   align-items: center;
 }
 
-
 .pop_button {
   width: 20vh;
   height: 6vh;
@@ -60,7 +59,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 
 .main {
   width: 100%;

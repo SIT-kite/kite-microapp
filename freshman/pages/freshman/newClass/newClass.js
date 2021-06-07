@@ -1,47 +1,27 @@
 // pages/newClass/newClass.js
-import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils';
-const app = getApp();
-const timeUtils = require("../../../../utils/timeUtils");
-const requestUtils = require("../../../../utils/requestUtils");
+import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
+import copyText from "../../../../utils/copyText";
+import catchError from "../../../../utils/requestUtils.catchError";
 
-const catchError = res => wx.showModal({
-  title: "哎呀，出错误了 >.<",
-  content: (
-    res.error == requestUtils.REQUEST_ERROR ? res.data
-    : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
-    : "未知错误"
-  ),
-  showCancel: false
-});
+const utlls = "../../../../utils/";
+const timeUtils = require(utlls + "timeUtils");
+const requestUtils = require(utlls + "requestUtils");
+
+const app = getApp();
 
 Page({
 
   data: {
     classmates: null,
-    show: false,
+    show: false
   },
+
   handlerGohomeClick,
   handlerGobackClick,
 
-  /**
-   * 点击复制
-   * @param {Object} 监听用户点击事件
-   * @return 无
-   */
-  copyText(e) {
-    wx.setClipboardData({
-      data: e.currentTarget.dataset.text,
-      success: () => wx.getClipboardData({
-        success: () => wx.showToast({
-          title: `复制${e.currentTarget.dataset.type}成功`
-        })
-      })
-    })
-  },
+  copyText,
 
-  /**
-   * 初始化页面 classmates 数据
-   */
+  // 初始化页面 classmates 数据
   pageDataInit: function () {
 
     let url = "";
@@ -97,7 +77,7 @@ Page({
       });
 
       getClassmates.then(
-        () => console.log("请求加载完成");
+        () => console.log("请求加载完成")
       ).catch(catchError);
 
       // 阻塞页面渲染

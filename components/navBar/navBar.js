@@ -58,7 +58,6 @@ Component({
   created() { this.getSystemInfo(); },
   attached() { this.setStyle();  }, // 设置样式
 
-
   data: {},
 
   pageLifetimes: {

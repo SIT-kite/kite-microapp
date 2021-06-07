@@ -7,7 +7,6 @@
 		<text>空教室查询</text>
 	</view>
 
-
 	<!--第一栏时间-->
 	<!-- <scroll-view scroll-x="true" scroll-left="{{scrollLeftWidth}} " bindscroll="scrollleft" scroll-with-animation='true'
 		bindscrolltolower="lowerRight">
@@ -68,8 +67,6 @@
 			</view>
 		</view>
 	</scroll-view> -->
-
-
 
 </view>
 

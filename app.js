@@ -86,7 +86,6 @@ App({
   
   },
 
-
   onShow() {
     // 更新
     const gData = this.globalData;

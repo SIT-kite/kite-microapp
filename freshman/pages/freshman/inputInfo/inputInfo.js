@@ -1,8 +1,8 @@
 //index.js
-//获取应用实例
-import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils'
-const app = getApp();
+import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
 const requestUtils = require("../../../../utils/requestUtils");
+
+const app = getApp();
 
 Page({
   data: {

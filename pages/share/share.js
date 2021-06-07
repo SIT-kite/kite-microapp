@@ -85,6 +85,8 @@ Page({
     const px = this.px();
     const ctx = canvas.getContext("2d");
 
+    console.log({canvas, context: ctx});
+
     // 图像需要先载入，再在回调函数 onload 中绘制
     const drawImageBySrc = (src, dx, dy, dWidth, dHeight, callback) => Object.assign(
       canvas.createImage(), {
@@ -101,6 +103,8 @@ Page({
     const avatar = canvas.createImage();
     avatar.src = this.data.url;
     avatar.onload = () => {
+
+      console.log("头像已载入");
 
       const avatar_w = 150 * px;
       const avatar_h = 150 * px;

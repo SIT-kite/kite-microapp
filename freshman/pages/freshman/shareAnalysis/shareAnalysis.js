@@ -33,22 +33,10 @@ Page({
     },
   },
 
+  onLoad() {
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
     this.data.pageReady = false;
-    let url = "";
-    let data = {};
-    let header = {};
-    wx.showLoading({
-      title: "加载中",
-      mask: true,
-      success: () => { },
-      fail: () => { },
-      complete: () => { }
-    });
+    wx.showLoading({ title: "加载中", mask: true });
 
     // 判定全局变量是否含有需要的信息
     if (undefined === app.globalData.userDetail.major
@@ -57,10 +45,12 @@ Page({
       console.log("全局变量不包含userDetail信息");
     } else {
       console.log("全局变量存在userDetail")
-      this.setData({
-        userDetail: app.globalData.userDetail
-      });
+      this.setData({ userDetail: app.globalData.userDetail });
     }
+
+    let url = "";
+    let data = {};
+    let header = {};
 
     // 获取格言
     url = `${app.globalData.commonUrl}/motto?maxLength=12`;
@@ -68,16 +58,14 @@ Page({
     header = { 'content-type': 'application/json' };
     var getMotto = requestUtils.doGET(url, data, header);
     getMotto.then(res => {
+      const data = res.data.data;
       this.setData({
         motto: {
-          source: res.data.data.source == null ? "佚名" : res.data.data.source,
-          content: res.data.data.content,
+          source: data.source == null ? "佚名" : source,
+          content: data.content,
         }
       });
-    }).catch(res => {
-      console.log("获取格言失败");
-    });
-
+    }).catch( res => console.log("获取格言失败", res) );
 
     // 获取分析数据
     url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/analysis?secret=${app.globalData.userInfo.secret}`;
@@ -87,69 +75,20 @@ Page({
       'Authorization': `Bearer ${app.globalData.token}`,
     };
     var getAnalysis = requestUtils.doGET(url, data, header);
-    getAnalysis.then(res => {
-      this.setData({
-        freshman: res.data.data.freshman
-      });
-    }).catch(res => {
-      console.log("获取分析数据失败");
-      console.log(res);
-    });
+    getAnalysis
+      .then(res => this.setData({ freshman: res.data.data.freshman }))
+      .catch(res => console.log("获取分析数据失败", res));
 
     // 等待全部请求完成
     Promise.all([getMotto, getAnalysis])
-      .then(() => { wx.hideLoading(); })
-      .catch(res => {
-        console.log("请求未全部成功")
-        console.log(res);
-      });
+      .then( () => wx.hideLoading() )
+      .catch( res => console.log("请求未全部成功", res) );
 
-    this.setData({
-      pageReady: true
-    });
+    this.setData({ pageReady: true });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
+  onReady() {},
+  onShow() {},
 
   /**
    * 用户点击右上角分享

@@ -7,12 +7,13 @@ const promisify = require('../../utils/promisifyUtils');
 const wxLogin = promisify(wx.login);
 var wxCode = "";
 
-const setUserData = (t, data) => t.setData({
-  nickName: data.nickName,
-  avater: data.userAvatar,
-  isLogin: data.isLogin,
-  isStudent: data.isStudent
-});
+// const setUserData = (t, data) => t.setData({
+//   nickName: data.nickName,
+//   avatar: data.userAvatar,
+//   isLogin: data.isLogin,
+//   isStudent: data.isStudent
+// });
+
 const setTokenUid = (token, uid) => {
   app.globalData.token = token;
   app.globalData.uid = uid;
@@ -22,9 +23,6 @@ const setTokenUid = (token, uid) => {
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     iconUrl: {
       wrong: "/asset/icon/wrong.png",
@@ -53,10 +51,7 @@ Page({
   postSessionPromise: () => {
     const url = `${commonUrl}/session`;
     const header = { "content-type": "application/x-www-form-urlencoded" };
-    const data = {
-      loginType: 0,
-      wxCode
-    };
+    const data = { loginType: 0, wxCode };
     return requestUtils.doPOST(url, data, header);
   },
 
@@ -79,10 +74,7 @@ Page({
    */
   postUserAuthPromise: () => {
     const url = `${commonUrl}/user/${app.globalData.uid}/authentication`;
-    const data = {
-      loginType: 0,
-      wxCode
-    };
+    const data = { loginType: 0, wxCode };
     const header = {
       "content-type": "application/x-www-form-urlencoded",
       "Authorization": `Bearer ${app.globalData.token}`
@@ -90,13 +82,10 @@ Page({
     return requestUtils.doPOST(url, data, header);
   },
 
-  go_signup: function () {
-    wx.navigateTo({
-      url: '/pages/signup/signup'
-    })
-  },
+  navigateToSignup: () => wx.navigateTo({ url: '/pages/signup/signup' }),
+  navigateToAbout:  () => wx.navigateTo({ url: '/pages/about/about' }),
 
-  login: function (e) {
+  login(e) {
 
     const setIsStudent = isStudent => {
       this.setData({ isStudent });
@@ -107,7 +96,9 @@ Page({
     var wxUserInfo = e.detail.userInfo;
 
     if (e.detail.userInfo) {
+
       wxLogin().then(res => {
+
         if (res.code) {
           wxCode = res.code;
           wx.showLoading({ title: '加载中' });
@@ -115,6 +106,7 @@ Page({
         } else {
           return Promise.reject(`微信登录失败: ${res.errMsg}`)
         }
+
       }).then(res => {
 
         console.log("PostSession 成功", res);
@@ -169,9 +161,6 @@ Page({
           }).catch( hideAndCatch("微信登录失败") );
         }).catch( hideAndCatch("创建用户失败") );
 
-
-
-
       });
 
       // 设置全局 Avatar nickName isLogin
@@ -186,42 +175,32 @@ Page({
 
     }
   },
-  moveToAbout() {
-    wx.navigateTo({
-      url: '/pages/about/about',
-      success: () => console.log("跳转至 关于我们 页面")
-    });
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
+
   onLoad() {
-    setUserData(this, app.globalData);
+    const data = app.globalData;
+    this.setData({
+      nickName: data.nickName,
+      avatar: data.userAvatar,
+      isLogin: data.isLogin,
+      isStudent: data.isStudent
+    });
+    console.log(this.data, app.globalData);
+    // setUserData(this, app.globalData);
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady() {
-    /*
-    setUserData(this, app.globalData);
-    */
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({selected: 1});
     }
-    setUserData(this, app.globalData);
+    // setUserData(this, app.globalData);
   },
+
+  onShow() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function (e) {
+  onShareAppMessage() {
     return {
       title: "上应小风筝",
       path: "pages/index/index"

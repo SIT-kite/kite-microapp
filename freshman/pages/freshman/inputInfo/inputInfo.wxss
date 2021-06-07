@@ -56,7 +56,6 @@
   padding-top: 20rpx;
 }
 
-
 .input-wrap {
   width:75%;
   margin-bottom: 35rpx;

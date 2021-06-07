@@ -20,8 +20,6 @@ Page({
   },
 
   onLoad() {},
-
-
   onReady() {}
 
 })
