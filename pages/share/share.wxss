@@ -1,4 +1,4 @@
-.canvas_block{
+.canvas_block {
   height:calc(1000rpx + 3vh);
   width: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   flex-direction: column;
 }
 
-.canvas_block canvas{
+.canvas_block canvas {
   border-radius:20px;
 }
 .button_container {

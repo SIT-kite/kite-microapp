@@ -68,8 +68,6 @@
   font-size: 25rpx;
 }
 
-
-
 .info{
   background-color: white;
   width: 86%;
@@ -89,7 +87,6 @@
   height: 130rpx;
   /* border: solid 6rpx red; */
 }
-
 
 .gender{
   /* left: 150rpx;
@@ -214,6 +211,3 @@
   width: 40rpx;
   height: 40rpx;
 }
-
-
-

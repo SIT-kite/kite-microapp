@@ -34,10 +34,3 @@
     </view>
     <!--半圆背景-->
     <view class="background" style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
-
-
-
-
-
-
-

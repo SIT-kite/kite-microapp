@@ -56,7 +56,7 @@ Page({
 
     requestUtils.doGET(url, data, header).then(res => {
       this.setData({notice: res.data.data});
-      console.log("通知数据：", res.data.data);
+      console.log("公告数据：", res.data.data);
     }).catch(
       res => console.log(res)
     );

@@ -86,7 +86,6 @@ App({
   
   },
 
-
   onShow() {
     // 更新
     const gData = this.globalData;
@@ -97,7 +96,7 @@ App({
       isAllStorageOk,
       uid: gData.uid,
       token: gData.token,
-      isStudent: gData.isStudent,
+      isStudent: gData.isStudent
     });
 
     wxGetSetting().then(res => {
@@ -105,7 +104,6 @@ App({
       if (res.authSetting['scope.userInfo']) {
 
         wxGetUserInfo().then(res => {
-          console.log(this);
 
           gData.nickName = res.userInfo.nickName;
           gData.userAvatar = res.userInfo.avatarUrl;

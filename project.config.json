@@ -30,8 +30,8 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "useIsolateContext": true,
-    "useCompilerModule": false,
+    "useIsolateContext": false,
+    "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
@@ -39,9 +39,9 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.14.0",
+  "libVersion": "2.17.0",
   "appid": "wxfbc5fc9c0a0be9f9",
-  "projectname": "kite",
+  "projectname": "kite-microapp",
   "debugOptions": {
     "hidedInDevtools": []
   },

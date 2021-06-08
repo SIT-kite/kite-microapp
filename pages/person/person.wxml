@@ -5,17 +5,17 @@
 
 			<view wx:if="{{isLogin}}" class="help shadow">
 				<view class="personal_pic">
-					<image src="{{avatar}}"></image>
+					<image src="{{avatar}}" role="img"></image>
 				</view>
 				<view class="personal_main">
 					<view class="main_info">
 						<text style="font-size:40rpx;font-weight:500;text-align:left;font-weight:bold;">{{nickName}}</text>
-						<view class="true_basic {{isStudent ? 'a_stu' : 'n_stu'}}">
-							<image src="{{isStudent ? iconUrl.right : iconUrl.wrong}}"></image>
+						<view class="true_basic {{ isStudent ? 'a_stu' : 'n_stu' }}">
+							<image src="{{ isStudent ? iconUrl.right : iconUrl.wrong }}"></image>
 							<text>{{isStudent? '已实名':'未实名'}}</text>
 						</view>
 					</view>
-					<view bindtap="go_signup" style="color:#e3e3e3;text-align:right;">
+					<view bindtap="navigateToSignup" style="color:#e3e3e3;text-align:right;">
 						<text style="font-size:30rpx;">认证></text>
 					</view>
 				</view>
@@ -36,7 +36,7 @@
 
 		</view>
 
-		<button class="menu-option shadow" bindtap="moveToAbout">
+		<button class="menu-option shadow" bindtap="navigateToAbout">
 			<view class="left">关于我们</view>
 			<view class="right" style="color:#e3e3e3;">></view>
 		</button>

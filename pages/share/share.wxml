@@ -2,7 +2,7 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
 </navBar>
 <view class="canvas_block">
-	<canvas id="canvas" canvas-id="canvas" style="width: 650rpx;height:1000rpx;"></canvas>
+	<canvas id="canvas" type="2d" style="width: 650rpx;height:1000rpx;"></canvas>
 </view>
 <view class="button_container">
 	<view class="s_button" bindtap="share">分享</view>

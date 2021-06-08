@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export { default as navBar } from './navBar';
+export { default as navBar } from './navBar'

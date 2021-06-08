@@ -65,7 +65,6 @@ const formatNumber = n => {
   return n[1] ? n : `0${n}`;
 };
 
-
 // 在XXX.js通过 var util = require("../../utils/utils.js") 和
 // util.XXX() 来引用
 module.exports = {

@@ -13,14 +13,14 @@
   box-sizing: border-box;
   height: 30vh;
   width: 40vh;
-  padding:5vh;
-  border-radius: 1vh;
+  padding: 5vh;
+  border-radius: 4px;
 }
 .pop_class_complete {
   box-sizing: border-box;
   height: 15vh;
   width: 30vh;
-  border-radius: 1vh;
+  border-radius: 4px;
 }
 .pop_container_complete {
   width: 30vh;
@@ -30,7 +30,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 
 .pop_button {
   width: 20vh;
@@ -60,7 +59,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 
 .main {
   width: 100%;
@@ -195,7 +193,7 @@
   height: 100%;
   z-index: 1;
 } */
-.toast_wrap .text_wrap{
+.toast_wrap .text_wrap {
   width: calc( 650rpx - ( 35rpx + 30rpx + 30rpx ));
   height: 100%;
   text-align: center;

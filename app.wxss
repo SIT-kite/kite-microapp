@@ -8,7 +8,6 @@
   box-sizing: border-box;
 }
 
-
 page {
   background-color: rgb(246, 246, 251);
   --font-size: 12px;
@@ -26,8 +25,5 @@ button {
   padding-left: 0;
   padding-right: 0;
   line-height: inherit;
-}
-
-button {
   border-radius: 0;
 }

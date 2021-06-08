@@ -1,16 +1,11 @@
 // pages/welcome/welcome.js
-var app = getApp();
+const app = getApp();
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
+  data: {},
 
-  },
-
-  gotoStuInfoDetail:function () {
+  gotoStuInfoDetail() {
 
     // 第一次进入这个页面 则需要完善个人信息
     const userDetail = app.globalData.userDetail;
@@ -24,13 +19,7 @@ Page({
      
   },
 
-  onLoad() {
-
-  },
-
-
-  onReady() {
-
-  }
+  onLoad() {},
+  onReady() {}
 
 })

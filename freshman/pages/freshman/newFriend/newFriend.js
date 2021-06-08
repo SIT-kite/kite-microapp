@@ -1,45 +1,29 @@
 // pages/newFriend/newFriend.js
-var app = getApp();
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../../utils/navBarUtils'
-const timeUtils = require("../../../../utils/timeUtils");
-const requestUtils = require("../../../../utils/requestUtils");
+import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
+import copyText from "../../../../utils/copyText.js";
+import catchError from "../../../../utils/requestUtils.catchError";
+
+const utlls = "../../../../utils/";
+const timeUtils = require(utlls + "timeUtils");
+const requestUtils = require(utlls + "requestUtils");
+
+const app = getApp();
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     roommates: null,
     familiar: null,
     isHidden: false,
     show: false,
   },
-  // navBar handler
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
 
-  /**
-   * 一键复制文本
-   * @param {*} e 
-   */
-  copyText: function (e) {
-    console.log(e)
-    wx.setClipboardData({
-      data: e.currentTarget.dataset.text,
-      success: function (res) {
-        wx.getClipboardData({
-          success: function (res) {
-            wx.showToast({
-              title: `复制${e.currentTarget.dataset.type}成功`
-            })
-          }
-        })
-      }
-    })
-  },
+  // navBar handler
+  handlerGohomeClick,
+  handlerGobackClick,
+
+  copyText,
+
   // 用于初始化页面数据
 
   pageDataInit: function () {
@@ -88,7 +72,6 @@ Page({
       });
       promiseList.push(getRoommates);
 
-
       // 可能认识的人
       if (app.globalData.userDetail.visible) {
         url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
@@ -130,28 +113,14 @@ Page({
 
       // 等待所有进程结束
       Promise.all(promiseList).then(res => {
-        let [res1, res2] = res;
+        // let [res1, res2] = res;
         console.log("请求全部完成");
         wx.hideLoading();
         this.setData({ show: true });
       }).catch(res => {
         wx.hideLoading();
-        if (res.error == requestUtils.REQUEST_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: res.data,
-            showCancel: false,
-          });
-        }
-        if (res.error == requestUtils.NETWORK_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: "网络不在状态",
-            showCancel: false,
-          });
-        }
+        catchError(res);
       });
-
 
     } else {
       // 本地有可能认识人和室友的信息
@@ -216,7 +185,6 @@ Page({
     });
     promiseList.push(getRoommates);
 
-
     // 可能认识的人
     if (app.globalData.userDetail.visible) {
       url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
@@ -264,25 +232,11 @@ Page({
       this.setData({ show: true });
     }).catch(res => {
       wx.hideLoading();
-      if (res.error == requestUtils.REQUEST_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: res.data,
-          showCancel: false,
-        });
-      }
-      if (res.error == requestUtils.NETWORK_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: "网络不在状态",
-          showCancel: false,
-        });
-      }
+      catchError(res);
     });
     this.onLoad();
     this.onShow();
   },
-
 
   /**
    * 生命周期函数--监听页面加载

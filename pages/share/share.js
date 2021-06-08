@@ -2,11 +2,11 @@
 import {
   handlerGohomeClick,
   handlerGobackClick
-} from '../../utils/navBarUtils';
+} from '../../utils/navBarUtils'
 
 const app = getApp();
 
-let openStatus = true;
+let hasPermission = true;
 
 Page({
 
@@ -19,295 +19,364 @@ Page({
     globalwidth: 0,
     globalheight: 0
   },
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+
+  handlerGohomeClick,
+  handlerGobackClick,
+
+  px() {
+    return this.data.globalwidth / 750;
+    // return 0.5;
+  },
 
   onLoad(options) {
 
     const that = this;
 
-    console.log(options)
-    console.log(app.globalData.userAvatar)
-    console.log(app.globalData.nickName)
+    console.log({
+      options,
+      userAvatar: app.globalData.userAvatar,
+      nickName: app.globalData.nickName
+    });
 
-    const res = wx.getSystemInfoSync()
-    that.data.globalwidth = res.windowWidth;
+    const systemInfo = wx.getSystemInfoSync();
+    that.data.globalwidth = systemInfo.windowWidth;
+    console.log("globalwidth: ", that.data.globalwidth);
+
     that.data.rank = JSON.parse(options.rank);
-    console.log(that.data.globalwidth);
-
-    const cw =  650 * this.px();
-    const ch = 1000 * this.px();
-    console.log('cw & ch: ', {cw, ch});
 
     wx.downloadFile({
       // url: `${app.globalData.userAvatar.replace('thirdwx','wx')}`,
-      url: `${app.globalData.userAvatar}`,
+      url: app.globalData.userAvatar,
       success: res => {
-          that.data.url = res.tempFilePath
-          console.log(that.data.url)
-          wx.showLoading({ title: '绘制中' })
-          that.trydraw(cw, ch);
+          that.data.url = res.tempFilePath;
+          console.log("url: ", that.data.url);
+          wx.showLoading({ title: "正在绘制" });
+          wx.createSelectorQuery().select("#canvas").node(res => {
+
+            const px = this.px();
+            const cw =  650 * px;
+            const ch = 1000 * px;
+
+            const canvas = res.node;
+            canvas.width = cw;
+            canvas.height = ch;
+            console.log({ cw, ch });
+
+            that.tryDraw(canvas, cw, ch);
+
+          }).exec();
       },
       fail: res => {
-        wx.showModal({ content: '获取头像失败，请至反馈群反馈！' })
+        wx.showModal({ content: "头像获取失败，请至反馈群反馈！" });
+        console.log("头像获取失败", res);
         that.setData({
           err: JSON.stringify(res),
-          url:app.globalData.userAvatar
+          url: app.globalData.userAvatar
         });
       }
     });
     // this.data.url = 'url';
 
   },
-  trydraw: function (cw, ch) {
+
+  tryDraw(canvas, cw, ch) {
 
     const that = this;
     const px = this.px();
-    const ctx = wx.createCanvasContext('canvas')
-    const avatar_w = 150 * px;
-    const avatar_h = 150 * px;
-    const avatar_x = cw / 2 - avatar_w / 2;
-    const avatar_y = 20 * px;
-    const main_x = 50 * px;
-    const main_y = avatar_h + avatar_y;
-    const main_w = 550 * px;
-    const main_h = ch - (avatar_h / 2 + avatar_y) - 40 * px
+    const ctx = canvas.getContext("2d");
 
-    ctx.beginPath();
-    var gra = ctx.createLinearGradient(0, 0, cw, ch);
-    gra.addColorStop(0.1, "#ABDCFF");
-    gra.addColorStop(1, "#0396FF");
-    // ctx.fillStyle = gra;
-    ctx.fillStyle('rgb(48,191,109)')
-    ctx.fillRect(0, 0, cw, ch)
-    ctx.fillStyle('#fafafa')
-    ctx.fillRect(main_x, main_y - avatar_h / 2, main_w, main_h)
-    ctx.arc(
-      avatar_w / 2 + avatar_x,
-      avatar_h / 2 + avatar_y,
-      avatar_w / 2 + 5 * px,
-      0, Math.PI * 2, false
+    console.log({canvas, context: ctx});
+
+    // 图像需要先载入，再在回调函数 onload 中绘制
+    const drawImageBySrc = (src, dx, dy, dWidth, dHeight, callback) => Object.assign(
+      canvas.createImage(), {
+        src,
+        onload: e => {
+          ctx.drawImage(e.target, dx, dy, dWidth, dHeight);
+          typeof callback === "function" && callback();
+        },
+        onerror: console.error
+      }
     );
-    ctx.fillStyle('white')
-    ctx.fill()
-    ctx.closePath();
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(
-      avatar_w / 2 + avatar_x,
-      avatar_h / 2 + avatar_y,
-      avatar_w / 2,
-      0, Math.PI * 2, false
-    );
-    ctx.clip()
-    ctx.closePath()
-    ctx.drawImage(this.data.url, avatar_x, avatar_y, avatar_w, avatar_h)
-    ctx.restore();
-    // ctx.drawImage(
-    //   '../../asset/pic/bangdan.png',
-    //   main_x + 30 * px, main_y + 60 * px,
-    //   100 * px, 100 * px
-    // );
+  
+    // 预先载入头像，避免因在回调函数 onload 中绘制而无法按路径裁剪 clip()
+    const avatar = canvas.createImage();
+    avatar.src = this.data.url;
+    avatar.onload = () => {
 
-    ctx.fillStyle('black'); // 文字颜色
-    ctx.font = `normal bold ${parseInt(42*px)}px Microsoft YaHei`;
-    const name = `${app.globalData.nickName}`;
-    const nw = ctx.measureText(name);
-    console.log(nw)
-    ctx.fillText(name, main_x + main_w / 2 - nw.width / 2, main_y + 60 * px);
+      console.log("头像已载入");
 
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const avatar_w = 150 * px;
+      const avatar_h = 150 * px;
+      const avatar_x = cw / 2 - avatar_w / 2;
+      const avatar_y = 20 * px;
+  
+      const main_x = 50 * px;
+      const main_y = avatar_h + avatar_y;
+      const main_w = 550 * px;
+      const main_h = ch - (avatar_h / 2 + avatar_y) - 40 * px;
+  
+      // 背景
+      ctx.beginPath();
+    
+        var gra = ctx.createLinearGradient(0, 0, cw, ch);
+        gra.addColorStop(0.1, "#ABDCFF");
+        gra.addColorStop(1, "#0396FF");
+        ctx.fillStyle = gra;
 
-    const text = "昨日消耗电费";
-    const tw = ctx.measureText(text);
+        // ctx.fillStyle = 'rgb(48,191,109)'
+        ctx.fillRect(0, 0, cw, ch)
+        ctx.fillStyle = '#fafafa'
+        ctx.fillRect(main_x, main_y - avatar_h / 2, main_w, main_h)
+        ctx.arc(
+          avatar_w / 2 + avatar_x,
+          avatar_h / 2 + avatar_y,
+          avatar_w / 2 + 5 * px, 0, Math.PI * 2
+        );
+        ctx.fillStyle = 'white'
+        ctx.fill()
+  
+      ctx.closePath();
+  
+      ctx.save();
+  
+      // 头像
+      ctx.beginPath();
+        ctx.arc(
+          avatar_w / 2 + avatar_x,
+          avatar_h / 2 + avatar_y,
+          avatar_w / 2, 0, Math.PI * 2
+        );
+        ctx.clip();
+      ctx.closePath();
 
-    ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+      ctx.drawImage(avatar, avatar_x, avatar_y, avatar_w, avatar_h)
 
-    const number = `${this.data.rank.con}`;
-    const numw = ctx.measureText(number);
+      ctx.restore();
 
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      // ctx.drawImage(img('../../asset/pic/bangdan.jpg'), main_x + 30 * px, main_y + 60 * px, 100 * px, 100 * px);
 
-    const yuan = "元";
-    const yuanw = ctx.measureText(yuan);
-    const s_center = tw.width + numw.width + yuanw.width + 20 * px + 40 * px;
+      // 用户名
+      ctx.fillStyle = 'black'; // 文字颜色
+      ctx.font = `normal bold ${parseInt(42*px)}px Microsoft YaHei`;
+      const name = `${app.globalData.nickName}`;
+      const name_metrics = ctx.measureText(name);
+      ctx.fillText(
+        name,
+        main_x + main_w / 2 - name_metrics.width / 2,
+        main_y + 60 * px
+      );
+  
+      // 第一行字
+      // 昨日消耗电费 xx.xx 元
+      // text1        bill  text2
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const text1 = "昨日消耗电费";
+      const text1_metrics = ctx.measureText(text1);
+  
+      ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+      const bill = `${this.data.rank.con}`;
+      const bill_metrics = ctx.measureText(bill);
+  
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const text2 = "元";
+      const text2_metrics = ctx.measureText(text2);
 
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const line1_center =
+        text1_metrics.width +
+        bill_metrics.width +
+        text2_metrics.width + 20 * px + 40 * px;
+  
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      ctx.fillText(
+        text1,
+        main_x + (main_w - line1_center) / 2,
+        main_y + 160 * px
+      );
+  
+      ctx.fillStyle = "red"
+      ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+      ctx.fillText(
+        bill,
+        main_x + (main_w - line1_center) / 2 + text1_metrics.width + 20 * px,
+        main_y + 160 * px
+      );
+  
+      ctx.fillStyle = 'black';
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      ctx.fillText(
+        text2,
+        main_x + (main_w - line1_center) / 2 + text1_metrics.width + bill_metrics.width + 40 * px,
+        main_y + 160 * px
+      );
+  
+      // 第二行字
+      // 超越了 yy.yy% 的寝室
+      // text3 percent text4
 
-    ctx.fillText(text, main_x + (main_w - s_center) / 2, main_y + 160 * px);
+      // const s_center = tw.width+numw.width+yuanw.width+20*px+40*px;
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const text3 = "超越了";
+      const text3_metrics = ctx.measureText(text3);
 
-    ctx.fillStyle("red")
-    ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
-    ctx.fillText(
-      number,
-      main_x + (main_w - s_center) / 2 + tw.width + 20 * px,
-      main_y + 160 * px
-    );
+      ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+      const percent = `${this.data.rank.percen}%`;
+      const percent_metrics = ctx.measureText(percent);
 
-    ctx.fillStyle('black');
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
-    ctx.fillText(
-      yuan,
-      main_x + (main_w - s_center) / 2 + tw.width + numw.width + 40 * px,
-      main_y + 160 * px
-    );
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const text4 = "的寝室";
+      const text4_metrics = ctx.measureText(text3);
 
-    // const s_center = tw.width+numw.width+yuanw.width+20*px+40*px;
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      const line2_center =
+        text3_metrics.width +
+        percent_metrics.width +
+        text4_metrics.width + 20 * px + 60 * px;
+  
+      ctx.fillStyle = 'black';
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      ctx.fillText(
+        text3,
+        main_x + (main_w - line1_center) / 2 + (line1_center - line2_center) / 2,
+        main_y + 230 * px
+      );
+  
+      ctx.fillStyle = 'red';
+      ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+      ctx.fillText(
+        percent,
+        main_x + (main_w - line1_center) / 2 + text3_metrics.width +
+        20 * px +
+        (line1_center - line2_center) / 2,
+        main_y + 230 * px
+      );
+  
+      ctx.fillStyle = 'black';
+      ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      ctx.fillText(
+        text4,
+        main_x + (main_w - line1_center) / 2 + text3_metrics.width +
+        percent_metrics.width + 40 * px +
+        (line1_center - line2_center) / 2,
+        main_y + 230 * px
+      );
 
-    const longtext = "超越了";
-    const ltw = ctx.measureText(longtext);
+      // 图片 省电达人 / 空调才是本体
+      drawImageBySrc(
+        "../../asset/pic/" + (
+          this.data.rank.percen / 100 > 0.5
+          ? 'nocold.png'
+          : 'shengdian.png'
+        ),
+        main_x + (main_w - 330 * px) / 2,
+        main_y + 270 * px,
+        330 * px, 330 * px
+      );
+  
+      // 图片 小程序码
+      drawImageBySrc(
+        '../../asset/pic/share_code.png',
+        main_w - 110 * px,
+        main_y + main_h - 170 * px - avatar_h / 2,
+        150 * px, 150 * px
+      );
 
-    ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
+      ctx.font = `normal ${parseInt(24*px)}px Microsoft YaHei`;
 
-    const percent = `${this.data.rank.percen}%`;
-    const pw = ctx.measureText(percent);
+      // 长按识别小程序码
+      const sharetext1 = "长按识别小程序码";
+      ctx.fillStyle = '#a0a0a0';
+      ctx.fillText(
+        sharetext1,
+        main_x + main_w - 180 * px - ctx.measureText(sharetext1).width,
+        main_y + main_h - 100 * px - avatar_h / 2
+      );
 
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
+      // 打开上应小风筝，享受便利校园
+      const sharetext2 = "打开上应小风筝，享受便利校园";
+      ctx.fillStyle = '#a0a0a0';
+      ctx.fillText(
+        sharetext2,
+        main_x + main_w - 180 * px - ctx.measureText(sharetext2).width,
+        main_y + main_h -  60 * px - avatar_h / 2
+      );
 
-    const cotext = "的寝室";
-    const ctw = ctx.measureText(longtext);
-    const c_center = ltw.width + pw.width + ctw.width + 20 * px + 60 * px;
+      // 保存为临时文件
+      wx.canvasToTempFilePath({
+        canvas,
+        success(res) {
+          console.log("success", res);
+          that.setData({ tempfile: res.tempFilePath });
+        },
+        fail(res) {
+          console.log("fail", res);
+          wx.showToast({ title: '绘制失败' });
+        },
+        complete() {
+          // wx.hideToast();
+          wx.hideLoading();
+        }
+      })
 
-    ctx.fillStyle('black');
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
-    ctx.fillText(
-      longtext,
-      main_x + (main_w - s_center) / 2 + (s_center - c_center) / 2,
-      main_y + 230 * px
-    );
-
-    ctx.fillStyle('red');
-    ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
-    ctx.fillText(
-      percent,
-      main_x + (main_w - s_center) / 2 + ltw.width + 20 * px + (s_center - c_center) / 2,
-      main_y + 230 * px
-    );
-
-    ctx.fillStyle('black');
-    ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
-    ctx.fillText(
-      cotext,
-      main_x + (main_w - s_center) / 2 + ltw.width + pw.width +
-      40 * px + (s_center - c_center) / 2,
-      main_y + 230 * px
-    );
-
-    const shareurl = "../../asset/pic/" + (
-      this.data.rank.percen / 100 > 0.5
-      ? 'nocold.png'
-      : 'shengdian.png'
-    );
-    console.log(percent)
-    ctx.drawImage(
-      shareurl,
-      main_x + (main_w - 330 * px) / 2,
-      main_y + 270 * px, 330 * px, 330 * px
-    );
-
-    ctx.drawImage(
-      '../../asset/pic/share_code.png',
-      main_w - 110 * px,
-      main_y + main_h - 170 * px - avatar_h / 2,
-      150 * px, 150 * px
-    );
-
-    ctx.font = `normal ${parseInt(24*px)}px Microsoft YaHei`;
-    const sharetext = "长按识别小程序码";
-    ctx.fillStyle('#a0a0a0');
-    const stw = ctx.measureText(sharetext);
-    console.log(stw)
-    ctx.fillText(
-      sharetext,
-      main_x + main_w - 180 * px - stw.width,
-      main_y + main_h - 100 * px - avatar_h / 2
-    );
-
-    const slogan = "打开上应小风筝，享受便利校园";
-    ctx.fillStyle('#a0a0a0');
-    const slw = ctx.measureText(slogan);
-    console.log(stw)
-    ctx.fillText(
-      slogan,
-      main_x + main_w - 180 * px - slw.width,
-      main_y + main_h - 60 * px - avatar_h / 2
-    );
-
-    ctx.draw(false, () => {
-      setTimeout(() => {
-        wx.canvasToTempFilePath({
-          canvasId: 'canvas',
-          success(res) {
-            that.setData({ tempfile: res.tempFilePath })
-          },
-          fail() {
-            wx.showToast({ title: '绘制失败' })
-          },
-          complete() {
-            // wx.hideToast();
-            wx.hideLoading();
-          }
-        })
-      }, 500);
-    });
+    };
 
   },
 
-  px() {
-    return this.data.globalwidth / 750;
-    // return 0.5;
-  },
-  share() {
+  share: function () {
     const that = this;
     wx.previewImage({
       current: `${that.data.tempfile}`, // 当前显示图片的http链接
       urls: [ `${that.data.tempfile}` ] // 需要预览的图片http链接列表
-    })
+    });
+    wx.showToast({
+      title: '长按图片以分享',
+      icon: 'none'
+    });
   },
-  saveShareImg() {
-    const that = this;
 
-    const saveImage = () => {
-      openStatus = true;
-      wx.saveImageToPhotosAlbum({
-        filePath: that.data.tempfile,
-        success: () => wx.showToast({
+  saveShareImg: function () {
+
+    const saveImage = () => wx.saveImageToPhotosAlbum({
+      filePath: this.data.tempfile,
+      success() {
+        wx.showToast({
           title: '图片保存成功，快去分享到朋友圈吧~',
-          icon: 'none',
-          duration: 2000
-        }),
-        fail: () => wx.showToast({
+          duration: 3000
+        })
+      },
+      fail() {
+        wx.showToast({
           title: '保存失败',
           icon: 'none'
         })
-      });
-    };
+      }
+    });
+
+    const scope = "scope.writePhotosAlbum";
 
     // 获取用户是否开启用户授权相册
-    if (!openStatus) {
-
+    if (!hasPermission) {
       wx.openSetting({
-        success(res) {
-          res &&
-          res.authSetting["scope.writePhotosAlbum"] === true &&
-          saveImage();
+        success: result => {
+          if (result && result.authSetting[scope] === true) {
+            hasPermission = true;
+            saveImage();
+          }
         }
       });
-
     } else {
-
       wx.getSetting({
         success(res) {
-          if (!res.authSetting['scope.writePhotosAlbum']) {
-            // 没有权限，获取授权
+          // 如果没有则获取授权
+          if (!res.authSetting[scope]) {
             wx.authorize({
-              scope: 'scope.writePhotosAlbum',
-              success: saveImage,
+              scope,
+              success() {
+                hasPermission = true;
+                saveImage();
+              },
               fail() {
                 // 如果用户拒绝过或没有授权，则再次打开授权窗口
-                openStatus = false;
-                console.log('请设置允许访问相册');
+                hasPermission = false;
                 wx.showToast({
                   title: '请设置允许访问相册',
                   icon: 'none'
@@ -315,14 +384,19 @@ Page({
               }
             })
           } else {
-            // 有权限则直接保存
+            // 有则直接保存
+            hasPermission = true;
             saveImage();
           }
         },
-        fail: err => console.log(err)
+        fail(err) {
+          console.log(err)
+        }
       })
     }
   },
 
-  onReady() {}
+  onReady: function () {},
+  onShow: function () {}
+
 })

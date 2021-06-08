@@ -27,7 +27,7 @@ Page({
   handlerGobackClick: handlerGobackClick,
 
   /**
-   * 跳转至报到指南页面 
+   * 跳转至报到指南页面
    *
    */
   gotoNavigate: function () {
@@ -69,30 +69,24 @@ Page({
       });
       return res;
     });
-    getFreshman.then(res => {
-      // 取消加载框
+
+    getFreshman.then(() => {
       wx.hideLoading();
       console.log("数据处理完成");
       this.setData({ show: true });
     }).catch(res => {
-      // 取消加载框
-      wx.hideLoading();
-      if (res.error == requestUtils.REQUEST_ERROR) {
-        console.log(res);
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: "业务逻辑错误",
-          showCancel: false,
-        });
-      }
-      if (res.error == requestUtils.NETWORK_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: "网络不在状态",
-          showCancel: false,
-        });
-      }
+      wx.hideLoading(); // 取消加载框
+      wx.showModal({
+        title: "哎呀，出错误了 >.<",
+        content: (
+          res.error == requestUtils.REQUEST_ERROR ? "业务逻辑错误"
+          : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+          : "未知错误"
+        ),
+        showCancel: false
+      });
     });
+
   },
 
   gotoAnalysis: function () {

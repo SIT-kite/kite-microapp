@@ -1,36 +1,27 @@
 // pages/newClass/newClass.js
-import { handlerGohomeClick, handlerGobackClick } from '../../../../utils/navBarUtils'
+import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
+import copyText from "../../../../utils/copyText";
+import catchError from "../../../../utils/requestUtils.catchError";
+
+const utlls = "../../../../utils/";
+const timeUtils = require(utlls + "timeUtils");
+const requestUtils = require(utlls + "requestUtils");
+
 const app = getApp();
-const timeUtils = require("../../../../utils/timeUtils");
-const requestUtils = require("../../../../utils/requestUtils");
+
 Page({
 
   data: {
     classmates: null,
-    show: false,
-  },
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
-
-  /**
-   * 点击复制
-   * @return 无
-   * @param e
-   */
-  copyText(e) {
-    wx.setClipboardData({
-      data: e.currentTarget.dataset.text,
-      success: () => wx.getClipboardData({
-        success: () => wx.showToast({
-          title: `复制${e.currentTarget.dataset.type}成功`
-        })
-      })
-    })
+    show: false
   },
 
-  /**
-   * 初始化页面 classmates 数据
-   */
+  handlerGohomeClick,
+  handlerGobackClick,
+
+  copyText,
+
+  // 初始化页面 classmates 数据
   pageDataInit: function () {
 
     let url = "";
@@ -84,30 +75,15 @@ Page({
         wx.hideLoading();
         return res;
       });
+
       getClassmates.then(
         () => console.log("请求加载完成")
-      ).catch(res => {
-        if (res.error === requestUtils.REQUEST_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: res.data,
-            showCancel: false,
-          });
-        }
-        if (res.error === requestUtils.NETWORK_ERROR) {
-          wx.showModal({
-            title: "哎呀，出错误了>.<",
-            content: "网络不在状态",
-            showCancel: false,
-          });
-        }
-      });
+      ).catch(catchError);
+
       // 阻塞页面渲染
-      Promise.all([getClassmates]).then(res => {
+      Promise.all([getClassmates]).then(() => {
         console.log("数据加载完成");
-        this.setData({
-          show: true,
-        })
+        this.setData({show: true})
       });
     } else {
       console.log("加载本地 classmates 数据");
@@ -163,33 +139,17 @@ Page({
       wx.hideLoading();
       return res;
     });
-    refleshClassmates.then((res) => {
+    refleshClassmates.then(() => {
       // 关闭刷新动画
       this.setData({show: true});
       this.onShow();
-    }).catch(res => {
-      // catch 用于捕捉最后错误
-      if (res.error === requestUtils.REQUEST_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: res.data,
-          showCancel: false,
-        });
-      }
-      if (res.error === requestUtils.NETWORK_ERROR) {
-        wx.showModal({
-          title: "哎呀，出错误了>.<",
-          content: "网络不在状态",
-          showCancel: false,
-        });
-      }
-    });
+    }).catch(catchError);
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
     console.log("页面 newClass onLoad...");
     this.setData({show: false});
     this.pageDataInit();
