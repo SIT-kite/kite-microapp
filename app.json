@@ -6,7 +6,8 @@
     "pages/about/about",
     "pages/signup/signup",
     "pages/consume/electricity/electricity",
-    "pages/share/share"
+    "pages/share/share",
+    "pages/car-pool/car-pool"
   ],
   "subpackages": [
     {
