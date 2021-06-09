@@ -1,5 +1,5 @@
-// pages/freshman/navigate/navigate.js
-import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
+// pages/navigate/navigate.js
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 
 Page({
 

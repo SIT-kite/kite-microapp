@@ -10,13 +10,13 @@
     {
       "root": "freshman",
       "pages": [
-        "pages/freshman/inputInfo/inputInfo",
-        "pages/freshman/welcome/welcome",
-        "pages/freshman/stuInfoDetail/stuInfoDetail",
-        "pages/freshman/newClass/newClass",
-        "pages/freshman/shareAnalysis/shareAnalysis",
-        "pages/freshman/newFriend/newFriend",
-        "pages/freshman/navigate/navigate"
+        "pages/inputInfo/inputInfo",
+        "pages/welcome/welcome",
+        "pages/stuInfoDetail/stuInfoDetail",
+        "pages/newClass/newClass",
+        "pages/shareAnalysis/shareAnalysis",
+        "pages/newFriend/newFriend",
+        "pages/navigate/navigate"
       ]
     },
     {

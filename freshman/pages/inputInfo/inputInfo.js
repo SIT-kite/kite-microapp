@@ -1,6 +1,6 @@
 //index.js
-import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
-const requestUtils = require("../../../../utils/requestUtils");
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+const requestUtils = require("../../../utils/requestUtils");
 
 const app = getApp();
 
@@ -102,7 +102,7 @@ Page({
           app.globalData.userInfo = data.userInfo;
           app.globalData.contact  = data.contact;
           wx.redirectTo({
-            url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
+            url: '/freshman/pages/stuInfoDetail/stuInfoDetail',
             success: () => console.log("跳转 stuInfoDetail 页面成功")
           });
           return res;
@@ -144,7 +144,7 @@ Page({
         app.globalData.visible = this.data.visible;
         app.globalData.contact = this.data.contact;
         wx.redirectTo({
-          url: '/freshman/pages/freshman/stuInfoDetail/stuInfoDetail',
+          url: '/freshman/pages/stuInfoDetail/stuInfoDetail',
           success: () => {
             console.log("跳转至页面 stuInfoDetail");
           },

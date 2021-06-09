@@ -3,10 +3,10 @@
 import {
   handlerGohomeClick,
   handlerGobackClick
-} from '../../../../utils/navBarUtils'
+} from '../../../utils/navBarUtils'
 
 var app = getApp();
-const requestUtils = require('../../../../utils/requestUtils');
+const requestUtils = require('../../../utils/requestUtils');
 
 Page({
   data: {
@@ -32,7 +32,7 @@ Page({
    */
   gotoNavigate: function () {
     wx.navigateTo({
-      url: '/freshman/pages/freshman/navigate/navigate'
+      url: '/freshman/pages/navigate/navigate'
     });
   },
 
@@ -91,7 +91,7 @@ Page({
 
   gotoAnalysis: function () {
     wx.navigateTo({
-      url: '/freshman/pages/freshman/shareAnalysis/shareAnalysis',
+      url: '/freshman/pages/shareAnalysis/shareAnalysis',
       success: () => console.log("跳转分享页面成功"),
       fail: () => { },
       complete: () => { }
@@ -101,21 +101,21 @@ Page({
   gotoModify(e) {
     console.log("gotoModify");
     wx.navigateTo({
-      url: '/freshman/pages/freshman/inputInfo/inputInfo?isHidden=none',
+      url: '/freshman/pages/inputInfo/inputInfo?isHidden=none',
     })
   },
 
   gotoNewFriend(e) {
     console.log("gotoNewFriend");
     wx.navigateTo({
-      url: '/freshman/pages/freshman/newFriend/newFriend',
+      url: '/freshman/pages/newFriend/newFriend',
     })
   },
 
   gotoClass(e) {
     console.log("gotoNewClass");
     wx.navigateTo({
-      url: '/freshman/pages/freshman/newClass/newClass',
+      url: '/freshman/pages/newClass/newClass',
     })
   },
 

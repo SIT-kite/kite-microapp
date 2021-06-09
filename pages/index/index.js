@@ -45,7 +45,7 @@ Page({
       "Authorization": `Bearer ${app.globalData.token}`
     };
 
-    doGET(url, data, header).then(res => {
+    requestUtils.doGET(url, data, header).then(res => {
       this.setData({notice: res.data.data});
       console.log("公告数据：", res.data.data);
     }).catch(
@@ -66,7 +66,7 @@ Page({
 
   router(pageId) {
     let url = new Map([
-        [ "welcome", "/freshman/pages/freshman/welcome/welcome"],
+        [ "welcome", "/freshman/pages/welcome/welcome"],
         [ "electricity", "/electricity/pages/show/show"],
         [ "avail-room", "/edu/pages/available-room/show"],
         [ "carpool", "/carpool/pages/car-pool/car-pool"]
@@ -119,7 +119,7 @@ Page({
 
   goTemp() {
     const userDetail = app.globalData.userDetail;
-    const url = "/pages/freshman" + (
+    const url = "/pages" + (
       userDetail != "" && userDetail != null
       ? "/stuInfoDetail/stuInfoDetail"
       : "/welcome/welcome"
@@ -138,7 +138,7 @@ Page({
 
   goNavigate() {
     wx.navigateTo({
-      url: '/pages/freshman/navigate/navigate'
+      url: '/pages/navigate/navigate'
     });
   },
   onShareAppMessage() {

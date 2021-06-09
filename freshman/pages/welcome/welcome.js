@@ -10,7 +10,7 @@ Page({
     // 第一次进入这个页面 则需要完善个人信息
     const userDetail = app.globalData.userDetail;
     wx.redirectTo({
-      url: "/freshman/pages/freshman" + (
+      url: "/freshman/pages" + (
         userDetail == '' || userDetail == null
         ? "/inputInfo/inputInfo?isHidden=flex"
         : "/stuInfoDetail/stuInfoDetail"

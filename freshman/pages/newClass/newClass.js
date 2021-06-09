@@ -1,9 +1,9 @@
 // pages/newClass/newClass.js
-import { handlerGohomeClick, handlerGobackClick } from "../../../../utils/navBarUtils";
-import copyText from "../../../../utils/copyText";
-import catchError from "../../../../utils/requestUtils.catchError";
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import copyText from "../../../utils/copyText";
+import catchError from "../../../utils/requestUtils.catchError";
 
-const utlls = "../../../../utils/";
+const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
 const requestUtils = require(utlls + "requestUtils");
 
