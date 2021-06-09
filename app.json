@@ -22,8 +22,7 @@
     {
       "root": "edu",
       "pages": [
-        "pages/available-room/show",
-        "pages/timetable/timetable"
+        "pages/available-room/show"
       ]
     },
     {
