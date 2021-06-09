@@ -1,7 +1,10 @@
 import {
   formatTime
 } from "../../utils/util"
-
+import {
+  handlerGohomeClick,
+  handlerGobackClick
+} from '../../utils/navBarUtils'
 Page({
   data:{
     currentView:0,
@@ -109,6 +112,12 @@ Page({
     subways:['奉贤新城','沈杜公路'],
     subwaySelected:"",
   },
+
+  // 导航栏函数
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
+
+
   //处理选择了那些过滤选项
   tagChange(e){
     const {groupBy,content,selected} = e.detail
@@ -119,7 +128,7 @@ Page({
   //切换拼车和我的
   toggleView(e){
     this.setData({
-      currentView:e.target.dataset.index || 1
+      currentView:e.target.dataset.index || e.detail.current
     })
   },
   //切换我参与的拼车和我发起的拼车
@@ -155,11 +164,12 @@ Page({
   },
   //TODO:发布拼车
   publish(){
-
+    
   },
   //TODO:拼车联系
   contact(e){
     console.log(e.detail)
+   
   }
 
 })

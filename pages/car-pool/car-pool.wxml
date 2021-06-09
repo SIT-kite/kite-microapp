@@ -1,11 +1,12 @@
-<navBar></navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
 <view class="container" bind:contact="contact">
   <view class="header" bind:tap="toggleView">
     <text class="title {{currentView == 0 ? 'currentView emText':''}}" data-index="0">拼车</text>
     <text class="title {{currentView == 1 ? 'currentView emText':''}}" data-index="1">我的</text>
   </view>
   <view class="body">
-    <swiper class="swiper" current="{{currentView}}">
+    <swiper class="swiper" current="{{currentView}}" bind:change="toggleView">
       <swiper-item class="car-pool-view">
         <view class="car-pool-filter {{isExpanding?'expanded':''}}" bind:onChange="tagChange">
           <view class="car-pool-filter-item">

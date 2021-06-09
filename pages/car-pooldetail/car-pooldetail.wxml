@@ -1,0 +1,14 @@
+<!--pages/car-pooldetail/car-pooldetail.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view>
+  <view class="container">
+  <map id="map" longitude="121.510643" latitude="30.84262" scale="14" markers="{{markers}} "    circles="{{circles}}" style="width:100%;height:300px;"></map>
+  <b-schedule-card schedule="{{schedule}}"></b-schedule-card>
+
+</view>
+
+
+
+
+</view>
