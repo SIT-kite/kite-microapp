@@ -1,8 +1,8 @@
 {
   "usingComponents": {
     "navBar" : "/components/navBar/navBar",
-    "b-tabs":"/components/tabs/tabs/index",
-    "b-tabpanel":"/components/tabs/tabpanel/index"
+    "b-tabs":"../../components/tabs/tabs/index",
+    "b-tabpanel":"../../components/tabs/tabpanel/index"
   }
  
 }
