@@ -91,7 +91,25 @@ Page({
       dates
     })
   },
+  gotoshare:function(){
+    wx.showLoading({
+      title: "加载中"
+    });
+      wx.hideLoading();
+    wx.navigateTo({
+      url: '/pages/share/share?url='+this.data.path+'&rank='+JSON.stringify(this.data.rank),
+    })
+    // this.onInstance(echarts);
+  },
 
+
+
+  // 导航栏函数
+  handlerGohomeClick: handlerGohomeClick,
+  handlerGobackClick: handlerGobackClick,
+
+
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
