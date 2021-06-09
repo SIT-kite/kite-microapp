@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "b-schedule-card": "../../components/schedule-card/index",
+		"l-calendar": "../../components/calendar/calendar/index",
+		"b-tag": "/components/tag/index",
+		"navBar": "/components/navBar/navBar"
+  }
+}
