@@ -29,13 +29,20 @@
       "root": "carpool",
       "pages": [
         "pages/car-pool/car-pool",
-        "pages/car-pooldetail/car-pooldetail"
+        "pages/car-pooldetail/car-pooldetail",
+        "pages/create/create"
       ]
     },
     {
       "root": "electricity",
       "pages": [
         "pages/share/share",
+        "pages/show/show"
+      ]
+    },
+    {
+      "root": "contact",
+      "pages": [
         "pages/show/show"
       ]
     }

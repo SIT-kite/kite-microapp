@@ -4,7 +4,6 @@ import {
   handlerGobackClick
 } from "../../../utils/navBarUtils";
 
-
 Page({
   data:{
     currentView:0,
@@ -123,7 +122,20 @@ Page({
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
 
+  onClickSubmit: () => {
+    wx.showModal({
+      title: '提交成功',
+      showCancel: false,
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
 
+  },
   //处理选择了那些过滤选项
   tagChange(e){
     const {groupBy,content,selected} = e.detail
@@ -170,9 +182,7 @@ Page({
   },
   //TODO:发布拼车
   publish(){
-    wx.navigateTo({
-      url: '../create/create',
-    })
+    
   },
   //TODO:拼车联系
   contact(e){
