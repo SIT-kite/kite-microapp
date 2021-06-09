@@ -28,6 +28,11 @@ Page({
         id: "carpool",
         text: "拼车",
         iconPath: "/asset/icon/main_icon/carpool.png"
+      },
+      {
+        id: "contact",
+        text: "常用电话",
+        iconPath: "/asset/icon/main_icon/tele.png"
       }
     ]
   },
@@ -69,7 +74,8 @@ Page({
         [ "welcome", "/freshman/pages/welcome/welcome"],
         [ "electricity", "/electricity/pages/show/show"],
         [ "avail-room", "/edu/pages/available-room/show"],
-        [ "carpool", "/carpool/pages/car-pool/car-pool"]
+        [ "carpool", "/carpool/pages/car-pool/car-pool"],
+        [ "contact", "/contact/pages/show/show"]
     ]).get(pageId);
     console.log(url)
     if (url === undefined) {

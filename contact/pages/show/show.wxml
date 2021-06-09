@@ -1,0 +1,32 @@
+<!--telephone/telephone.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view>
+  <view class="title">
+		<text>校内常用电话</text>
+	</view>
+
+  <text class="page">
+学校总值班: 60877226（非工作时间）
+
+保卫处: 60873075（24H）
+
+校医务室夜间值班电话: 60873290  
+（夜间值班时间16:30~次日凌晨7:30）
+
+校心理健康教育中心: 60873287  60877246   
+
+信息办: 60877222（24H）
+（一卡通卡机、寝室电费充值等、寝室用电模块控制）
+
+维修: 60873108（24H）（除信息办负责维修外）
+
+1-10号宿舍: 60873018
+
+11-24号学生宿舍: 60873072
+
+教学楼物业： 60873009
+
+学科楼物业： 60873464
+</text>
+</view>
