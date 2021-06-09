@@ -1,0 +1,87 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view class="container" bind:contact="contact">
+  <view class="header" bind:tap="toggleView">
+    <text class="title {{currentView == 0 ? 'currentView emText':''}}" data-index="0">拼车</text>
+    <text class="title {{currentView == 1 ? 'currentView emText':''}}" data-index="1">我的</text>
+  </view>
+  <view class="body">
+    <swiper class="swiper" current="{{currentView}}" bind:change="toggleView">
+      <swiper-item class="car-pool-view">
+        <view class="car-pool-filter {{isExpanding?'expanded':''}}" bind:onChange="tagChange">
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">日期</view>
+            <view class="calendarMockBox {{dateSelected?'emText':''}}" hover-class="press" hover-start-time="0"
+              hover-stay-time="200" bind:tap="selectedDate">{{dateSelected || '选择日期'}}</view>
+            <l-calendar show="{{calendarShowing}}" default-date="{{dateSelected}}" bind:linselect="dateSelect"
+              bind:linunselect="dateUnselect" color="#1296db"></l-calendar>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">方向</view>
+            <view class="tag-container">
+              <block wx:for="{{directions}}" wx:for-item="direction" wx:key="direction">
+                <b-tag groupBy="direction" content="{{direction}}" selected="{{directionSelected === direction}}">
+                </b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">校区</view>
+            <view class="tag-container">
+              <block wx:for="{{campuses}}" wx:for-item="campus" wx:key="campus">
+                <b-tag groupBy="campus" content="{{campus}}" selected="{{campusSelected === campus}}"></b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">机场&火车站</view>
+            <view class="tag-container">
+              <block wx:for="{{stations}}" wx:for-item="station" wx:key="station">
+                <b-tag groupBy="station" content="{{station}}" selected="{{stationSelected === station}}"></b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">地铁站</view>
+            <view class="tag-container">
+              <block wx:for="{{subways}}" wx:for-item="subway" wx:key="subway">
+                <b-tag groupBy="subway" content="{{subway}}" selected="{{subwaySelected === subway}}"></b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="expandItem" bind:tap="expand">
+            <view class="{{!isExpanding ? 'down':''}} icon iconUp"></view>
+            {{isExpanding?'收起':'展开'}}
+          </view>
+        </view>
+        <block wx:for="{{schedules}}" wx:for-item="schedule" wx:key="scheduleID">
+          <b-schedule-card schedule="{{schedule}}"></b-schedule-card>
+        </block>
+      </swiper-item>
+      <swiper-item class="profile-pool-view">
+        <view class="profile-header" bind:tap="toggleSubView">
+          <view class="profile-header-title {{inProfileType === 'initiate' ? 'currentProfileView':''}}"
+            data-subtype="initiate">我发起的拼车</view>
+          <view class="profile-header-title {{inProfileType === 'participate' ? 'currentProfileView':''}}"
+            data-subtype="participate">我参与的拼车</view>
+        </view>
+        <view class="initiate-container sub-container" hidden="{{inProfileType !== 'initiate'}}">
+          <block wx:for="{{initiateSchedules}}" wx:for-item="schedule" wx:key="scheduleID">
+            <b-schedule-card schedule="{{schedule}}"></b-schedule-card>
+          </block>
+          <view wx:if="{{!initiateSchedules}}" class="none-record-tip">尚未发起任何拼车哦</view>
+        </view>
+        <view class="participate-container sub-container" hidden="{{inProfileType !== 'participate'}}">
+          <block wx:for="{{participateSchedules}}" wx:for-item="schedule" wx:key="scheduleID">
+            <b-schedule-card schedule="{{schedule}}"></b-schedule-card>
+          </block>
+          <view wx:if="{{!participateSchedules}}" class="none-record-tip">尚未参与任何拼车哦</view>
+        </view>
+      </swiper-item>
+      <view class="initiate-car-pool-icon icon iconAdd" hover-class="press" hover-start-time="0" hover-stay-time="300" bind:tap="publish">
+      </view>
+    </swiper>
+  </view>
+  <!-- TODO:下拉刷新 reachBottom()+自定义组件loadmore实现分页查询 -->
+  <view></view>
+</view>

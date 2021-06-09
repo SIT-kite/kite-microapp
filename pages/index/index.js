@@ -15,29 +15,20 @@ Page({
         iconPath: "/asset/icon/main_icon/user.png"
       },
       {
-        id: "inquiry",
+        id: "electricity",
         text: "电费",
         iconPath: "/asset/icon/main_icon/electricity.png"
-      } /* ,
+      } ,
       {
-        id: "education",
-        text: "教务",
-        iconPath: "/asset/icon/main_icon/kecheng.png"
-      },
+        id: "avail-room",
+        text: "空教室",
+        iconPath: "/asset/icon/main_icon/availroom.png"
+      } ,
       {
-        id: "activity",
-        text: "活动",
-        iconPath: "/asset/icon/main_icon/tuandui.png"
-      },
-      {
-        id: "shopping",
-        text: "闲置",
-        iconPath: "/asset/icon/main_icon/dianpu.png"
-      }, {
-        id: "lost",
-        text: "失物",
-        iconPath: "/asset/icon/main_icon/sousuo.png"
-      } */
+        id: "carpool",
+        text: "拼车",
+        iconPath: "/asset/icon/main_icon/carpool.png"
+      }
     ]
   },
 
@@ -74,19 +65,13 @@ Page({
   },
 
   router(pageId) {
-
-    const url_freshman = "/freshman/pages/freshman";
-
     let url = new Map([
-        [ "welcome"   , url_freshman + "/welcome/welcome" ],
-        [ "qrcode"    , "/pages/qrcode/qrcode" ],
-        [ "education" , "/pages/education/education" ],
-        [ "activity"  , "/pages/activity/activity" ],
-        [ "shopping"  , "/pages/shopping/shopping" ],
-        [ "lost"      , "/pages/lost/lost" ],
-        [ "inquiry"   , "/pages/consume/electricity/electricity" ]
+        [ "welcome", "/freshman/pages/welcome/welcome"],
+        [ "electricity", "/electricity/pages/show/show"],
+        [ "avail-room", "/edu/pages/available-room/show"],
+        [ "carpool", "/carpool/pages/car-pool/car-pool"]
     ]).get(pageId);
-
+    console.log(url)
     if (url === undefined) {
       console.error("找不到对应的 url", {id: pageId, url});
       throw "找不到对应的 url";
@@ -94,7 +79,7 @@ Page({
 
     // 如果点击新生但是 userDetail 不为空，那么直接跳入到 stuInfoDetail
     const userDetail = app.globalData.userDetail;
-    if (pageId === "welcome" && userDetail != "" && userDetail != null) {
+    if (pageId === "welcome" && userDetail !== "" && userDetail != null) {
       url = url_freshman + "/stuInfoDetail/stuInfoDetail";
     }
 
@@ -134,7 +119,7 @@ Page({
 
   goTemp() {
     const userDetail = app.globalData.userDetail;
-    const url = "/pages/freshman" + (
+    const url = "/pages" + (
       userDetail != "" && userDetail != null
       ? "/stuInfoDetail/stuInfoDetail"
       : "/welcome/welcome"
@@ -153,7 +138,7 @@ Page({
 
   goNavigate() {
     wx.navigateTo({
-      url: '/pages/freshman/navigate/navigate'
+      url: '/pages/navigate/navigate'
     });
   },
   onShareAppMessage() {
