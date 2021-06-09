@@ -1,10 +1,10 @@
-import {
-  formatTime
-} from "../../utils/util"
+import { formatTime } from "../../../utils/util";
 import {
   handlerGohomeClick,
   handlerGobackClick
-} from '../../utils/navBarUtils'
+} from "../../../utils/navBarUtils";
+
+
 Page({
   data:{
     currentView:0,
@@ -107,7 +107,7 @@ Page({
     directionSelected:"",
     campuses:['奉贤校区','徐汇校区'],
     campusSelected:"",
-    stations:['虹桥机场','浦东机场','上海南站','上海西站','上海站'],
+    stations:['虹桥','浦东机场','上海南站','上海西站','上海站'],
     stationSelected:"",
     subways:['奉贤新城','沈杜公路'],
     subwaySelected:"",

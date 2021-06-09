@@ -1,4 +1,4 @@
-@import "/common/iconfont/iconfont.wxss";
+@import "/asset/iconfont/iconfont.wxss";
 .container{
   height: auto;
   width: 100vw;
