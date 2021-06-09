@@ -142,7 +142,7 @@ Page({
   showWrongTip:function(){
     wx.showModal({
       title: '数据错误提示',
-      content: `此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。`,
+      content: '此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。',
       showCancel: false,
     })
   },
@@ -152,7 +152,7 @@ Page({
     });
       wx.hideLoading();
     wx.navigateTo({
-      url: '/pages/share/share?url='+this.data.path+'&rank='+JSON.stringify(this.data.rank),
+      url: '/electricity/pages/share/share?url='+this.data.path+'&rank=' + JSON.stringify(this.data.rank),
     })
     // this.onInstance(echarts);
   },
