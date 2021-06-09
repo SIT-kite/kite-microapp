@@ -4,15 +4,12 @@
     "pages/index/index",
     "pages/person/person",
     "pages/about/about",
-    "pages/signup/signup",
-    "pages/consume/electricity/electricity",
-    "pages/share/share",
-    "pages/car-pool/car-pool"
+    "pages/signup/signup"
   ],
   "subpackages": [
     {
       "root": "freshman",
-       "pages": [
+      "pages": [
         "pages/freshman/inputInfo/inputInfo",
         "pages/freshman/welcome/welcome",
         "pages/freshman/stuInfoDetail/stuInfoDetail",
@@ -20,7 +17,28 @@
         "pages/freshman/shareAnalysis/shareAnalysis",
         "pages/freshman/newFriend/newFriend",
         "pages/freshman/navigate/navigate"
-       ]
+      ]
+    },
+    {
+      "root": "edu",
+      "pages": [
+        "pages/available-room/show",
+        "pages/timetable/timetable"
+      ]
+    },
+    {
+      "root": "carpool",
+      "pages": [
+        "pages/car-pool/car-pool",
+        "pages/car-pooldetail/car-pooldetail"
+      ]
+    },
+    {
+      "root": "electricity",
+      "pages": [
+        "pages/share/share",
+        "pages/show/show"
+      ]
     }
   ],
   "window": {
