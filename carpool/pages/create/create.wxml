@@ -1,14 +1,9 @@
+<!--carpool/pages/create/create.wxml-->
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
 </navBar>
-<view class="container" bind:contact="contact">
-  <view class="header" bind:tap="toggleView">
-    <text class="title {{currentView == 0 ? 'currentView emText':''}}" data-index="0">拼车</text>
-    <text class="title {{currentView == 1 ? 'currentView emText':''}}" data-index="1">我的</text>
-  </view>
-  <view class="body">
-    <swiper class="swiper" current="{{currentView}}" bind:change="toggleView">
-      <swiper-item class="car-pool-view">
-        <view class="car-pool-filter {{isExpanding?'expanded':''}}" bind:onChange="tagChange">
+
+<view style="width: 750rpx; height: 461rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+  <view class="car-pool-filter {{isExpanding?'expanded':''}}" bind:onChange="tagChange">
           <view class="car-pool-filter-item">
             <view class="car-pool-filter-title">日期</view>
             <view class="calendarMockBox {{dateSelected?'emText':''}}" hover-class="press" hover-start-time="0"
@@ -53,35 +48,18 @@
             <view class="{{!isExpanding ? 'down':''}} icon iconUp"></view>
             {{isExpanding?'收起':'展开'}}
           </view>
-        </view>
-        <block wx:for="{{schedules}}" wx:for-item="schedule" wx:key="scheduleID" >
-          <b-schedule-card schedule="{{schedule}}" bindtap="OnClickDetails"></b-schedule-card>
-        </block>
-      </swiper-item>
-      <swiper-item class="profile-pool-view">
-        <view class="profile-header" bind:tap="toggleSubView">
-          <view class="profile-header-title {{inProfileType === 'initiate' ? 'currentProfileView':''}}"
-            data-subtype="initiate">我发起的拼车</view>
-          <view class="profile-header-title {{inProfileType === 'participate' ? 'currentProfileView':''}}"
-            data-subtype="participate">我参与的拼车</view>
-        </view>
-        <view class="initiate-container sub-container" hidden="{{inProfileType !== 'initiate'}}">
-          <block wx:for="{{initiateSchedules}}" wx:for-item="schedule" wx:key="scheduleID">
-            <b-schedule-card schedule="{{schedule}}"></b-schedule-card>
-          </block>
-          <view wx:if="{{!initiateSchedules}}" class="none-record-tip">尚未发起任何拼车哦</view>
-        </view>
-        <view class="participate-container sub-container" hidden="{{inProfileType !== 'participate'}}">
-          <block wx:for="{{participateSchedules}}" wx:for-item="schedule" wx:key="scheduleID">
-            <b-schedule-card schedule="{{schedule}}"></b-schedule-card>
-          </block>
-          <view wx:if="{{!participateSchedules}}" class="none-record-tip">尚未参与任何拼车哦</view>
-        </view>
-      </swiper-item>
-      <view class="initiate-car-pool-icon icon iconAdd" hover-class="press" hover-start-time="0" hover-stay-time="300" bindtap="publish">
-      </view>
-    </swiper>
   </view>
-  <!-- TODO:下拉刷新 reachBottom()+自定义组件loadmore实现分页查询 -->
-  <view></view>
+
+
+<input value="{{roomID}}" bindinput="bindroomID" placeholder="姓名：" class="input_right" style="width: 750rpx; height: 100rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx"></input>
+<input value="{{roomID}}" bindinput="bindroomID" placeholder="手机号：" class="input_right" style="width: 750rpx; height: 100rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx"></input>
+
+<button class='btn1' bindtap="onClickSubmit">提交</button>
+
 </view>
+
+
+
+
+
+
