@@ -48,7 +48,7 @@ Page({
         var stuList = res.data.data.classmates;
         stuList.forEach(student => {
 
-          student.genderImage = "/asset/icon/" + (
+          student.genderImage = "/freshman/assets/" + (
             student.gender === "M"
             ? "male.png"
             : "female.png"
@@ -115,7 +115,7 @@ Page({
     var refleshClassmates = requestUtils.doGET(url, data, header).then(res => {
       var stuList = res.data.data.classmates;
       stuList.forEach(student => {
-        student.genderImage = student.gender === "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+        student.genderImage = student.gender === "M" ? "/freshman/assets/male.png" : "/freshman/assets/female.png";
         student.lastSeen = timeUtils.getIntervalToCurrentTime(student.lastSeen);
         student.isHidden = {
           "qq": null,

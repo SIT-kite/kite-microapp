@@ -24,7 +24,7 @@ Page({
      minusStatus: 'disabled',
 
       markers: [{
-        iconPath: "/asset/icon/main_icon/mark.png",
+        iconPath: "/carpool/assets/icons/map_arrow.png",
         id: 0,
         longitude: 120.640509,
         latitude: 31.304899,
@@ -32,7 +32,7 @@ Page({
         height: 33
       }],
       markers: [{ // 绘制浮标，传入JSON支持多个
-        iconPath: "/asset/icon/main_icon/mark.png", //浮标图片路径，推荐png图片
+        iconPath: "/carpool/assets/icons/map_arrow.png", //浮标图片路径，推荐png图片
         id: 0, // Id支持多个，方便后期点击浮标获取相关信息
         longitude: 121.510643, // 经度
         latitude: 30.84262, //纬度
@@ -40,7 +40,7 @@ Page({
         height: 50 // 浮标高度
       },
       {
-        iconPath: "/asset/icon/main_icon/mark.png",
+        iconPath: "/carpool/assets/icons/map_arrow.png",
         id: 0, 
         longitude: 121.429462,
         latitude: 31.153127,

@@ -2,7 +2,7 @@
 <view class="container">
 
 	<!-- 主页 -->
-	<image class='background' src="/asset/pic/background.png" mode="aspectFill"></image>
+	<image class='background' src="/assets/pic/background.png" mode="aspectFill"></image>
 	<view class="main">
 
 		<!-- 主页banner -->
@@ -10,20 +10,20 @@
 			circular="true">
 			<swiper-item>
 				<view class="box">
-					<image src="/asset/pic/temp_activity.png" style="width:100%;height:100%;" bindtap="goTemp"></image>
+					<image src="/assets/pic/temp_activity.png" style="width:100%;height:100%;" bindtap="goTemp"></image>
 				</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="box">
 					<!--删除 bindtap="goNavigate"， 使得点击 logo 不响应. 2020.9.10 -->
-					<image src="/asset/pic/logo.jpg" style="width:100%;height:100%;"></image>
+					<image src="/assets/pic/logo.jpg" style="width:100%;height:100%;"></image>
 				</view>
 			</swiper-item>
 		</swiper>
 
 		<!-- 滚动通知 -->
 		<view class="toast_wrap">
-			<image src="/asset/icon/main_icon/notice.png" />
+			<image src="/assets/icons/index/notice.png" />
 			<swiper class="" autoplay="true" current="0" interval="5000" duration="1000" circular="true" vertical="true">
 				<swiper-item wx:for="{{notice}}" wx:key="id">
 					<view class="text_wrap"><text>{{item.title}}</text></view>

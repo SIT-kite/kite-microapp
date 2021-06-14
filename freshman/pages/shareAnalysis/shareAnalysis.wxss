@@ -6,7 +6,7 @@
     height: 100vh;
     background-size: 100% 100%;
     background-image: linear-gradient(130deg,#fad4c1,#fdeee8,#fad4c1);
-    /* background-image: url(https://kite.sunnysab.cn/static/res/freshman/analysis-background.png); */
+    /* background-image: url(https://kite.sunnysab.cn/static/res/freshman/analysis_background.png); */
 }
 #wavebear{
     position: absolute;

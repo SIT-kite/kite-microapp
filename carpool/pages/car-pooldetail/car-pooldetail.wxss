@@ -1,5 +1,5 @@
 /* pages/car-pooldetail/car-pooldetail.wxss */
-@import "/asset/iconfont/iconfont.wxss";
+@import "/carpool/assets/iconfont/iconfont.wxss";
 .container{
   width: 100vw;
   height: 900rpx;

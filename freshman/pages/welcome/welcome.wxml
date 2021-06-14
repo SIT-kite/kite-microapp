@@ -3,7 +3,7 @@
 
     <!-- image -->
     <view class="img-wrap">
-        <image src="/asset/pic/person_bg.png" />
+        <image src="/freshman/assets/pic/welcome_bg.png" />
     </view>
     <view class="text-wrap">
         <text class="title">上应大欢迎你！</text>

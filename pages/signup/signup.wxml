@@ -3,7 +3,7 @@
 
 	<view class="main">
 
-		<image src="/asset/pic/signup.jpg" style="width:100%;height:60vw;margin-bottom:3vh;"></image>
+		<image src="/assets/pic/signup.jpg" style="width:100%;height:60vw;margin-bottom:3vh;"></image>
 		<view class="title_block" style="font-size:32px;font-weight:bold;">实名认证</view>
 
 		<input value="{{ uploadInfo.realName  }}" bindinput="bindName"   placeholder="请输入姓名"></input>
@@ -12,7 +12,7 @@
 		<input value="{{ uploadInfo.identityNumber }}" bindinput="bindidentity" placeholder="请输入身份证后六位"></input>
 
 		<button disable="{{ canUpload }}" class="v_button {{ canUpload ? '' : 'button_disable' }}" bindtap="signup">
-			<image src="/asset/icon/upload.png"></image>
+			<image src="/assets/icons/upload.png"></image>
 		</button>
 
 	</view>

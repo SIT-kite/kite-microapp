@@ -8,13 +8,13 @@ Component({
     list: [{
       pagePath: "/pages/index/index",
       text: "主页",
-      iconPath: "/asset/icon/home.png",
-      selectedIconPath: "/asset/icon/home_active.png"
+      iconPath: "/assets/icons/nav_bar/home.png",
+      selectedIconPath: "/assets/icons/nav_bar/home_active.png"
     }, {
       pagePath: "/pages/person/person",
       text: "我",
-      iconPath: "/asset/icon/user.png",
-      selectedIconPath: "/asset/icon/user_active.png"
+      iconPath: "/assets/icons/nav_bar/user.png",
+      selectedIconPath: "/assets/icons/nav_bar/user_active.png"
     }]
   },
 

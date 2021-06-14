@@ -1,4 +1,4 @@
-@import "/asset/iconfont/iconfont.wxss";
+@import "/carpool/assets/iconfont/iconfont.wxss";
 
 .container{
   width: 90vw;

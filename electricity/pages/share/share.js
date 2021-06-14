@@ -154,7 +154,7 @@ Page({
 
       ctx.restore();
 
-      // ctx.drawImage(img('../../asset/pic/bangdan.jpg'), main_x + 30 * px, main_y + 60 * px, 100 * px, 100 * px);
+      // ctx.drawImage(img('/electricity/assets/rank.png'), main_x + 30 * px, main_y + 60 * px, 100 * px, 100 * px);
 
       // 用户名
       ctx.fillStyle = 'black'; // 文字颜色
@@ -262,10 +262,10 @@ Page({
 
       // 图片 省电达人 / 空调才是本体
       drawImageBySrc(
-        "../../asset/pic/" + (
+        "/electricity/assets/" + (
           this.data.rank.percen / 100 > 0.5
-          ? 'nocold.png'
-          : 'shengdian.png'
+          ? 'power_user.png'
+          : 'power_saver.png'
         ),
         main_x + (main_w - 330 * px) / 2,
         main_y + 270 * px,
@@ -274,7 +274,7 @@ Page({
   
       // 图片 小程序码
       drawImageBySrc(
-        '../../asset/pic/share_code.png',
+        '/assets/share_code.png',
         main_w - 110 * px,
         main_y + main_h - 170 * px - avatar_h / 2,
         150 * px, 150 * px

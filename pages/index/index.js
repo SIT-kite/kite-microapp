@@ -12,27 +12,27 @@ Page({
     menu_list: [{
         id: "welcome",
         text: "迎新",
-        iconPath: "/asset/icon/main_icon/user.png"
+        iconPath: "/assets/icons/index/freshman.png"
       },
       {
         id: "electricity",
         text: "电费",
-        iconPath: "/asset/icon/main_icon/electricity.png"
+        iconPath: "/assets/icons/index/electricity.png"
       } ,
       {
         id: "avail-room",
         text: "空教室",
-        iconPath: "/asset/icon/main_icon/availroom.png"
+        iconPath: "/assets/icons/index/availroom.png"
       } ,
       {
         id: "carpool",
         text: "拼车",
-        iconPath: "/asset/icon/main_icon/carpool.png"
+        iconPath: "/assets/icons/index/carpool.png"
       },
       {
         id: "contact",
         text: "常用电话",
-        iconPath: "/asset/icon/main_icon/tele.png"
+        iconPath: "/assets/icons/index/telephone.png"
       }
     ]
   },
@@ -86,7 +86,7 @@ Page({
     // 如果点击新生但是 userDetail 不为空，那么直接跳入到 stuInfoDetail
     const userDetail = app.globalData.userDetail;
     if (pageId === "welcome" && userDetail !== "" && userDetail != null) {
-      url = url_freshman + "/stuInfoDetail/stuInfoDetail";
+      url = "/freshman/pages/stuInfoDetail/stuInfoDetail";
     }
 
     const isLogin = app.globalData.isLogin;

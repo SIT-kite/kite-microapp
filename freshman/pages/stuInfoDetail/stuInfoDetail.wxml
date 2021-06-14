@@ -10,11 +10,11 @@
 	<view class="stu_info">
 		<!-- 图片部分 -->
 		<view class="image_wrap">
-			<image mode="aspectFill" src="/asset/pic/background2.png" />
+			<image mode="aspectFill" src="/freshman/assets/pic/detail_bg.png" />
 		</view>
 		<!-- 文字部分 -->
 		<view class="info_wrap">
-			<image bindtap="gotoModify" mode="aspectFill" src="/asset/icon/modify.png" />
+			<image bindtap="gotoModify" mode="aspectFill" src="/freshman/assets/modify.png" />
 			<text selectable>姓名：{{userDetail.name}}</text>
 			<text selectable>学号：{{userDetail.studentId}}</text>
 			<text selectable>学院：{{userDetail.college}}</text>

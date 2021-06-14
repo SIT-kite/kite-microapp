@@ -25,8 +25,8 @@ Page({
 
   data: {
     iconUrl: {
-      wrong: "/asset/icon/wrong.png",
-      right: "/asset/icon/right.png"
+      wrong: "/assets/icons/wrong.png",
+      right: "/assets/icons/right.png"
     }
   },
 

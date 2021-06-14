@@ -85,7 +85,7 @@ Page({
         var getFamilies = requestUtils.doGET(url, data, header).then(res => {
           var familiarList = res.data.data.people_familiar;
           familiarList.forEach(familiar => {
-            familiar.genderImage = familiar.gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+            familiar.genderImage = familiar.gender == "M" ? "/freshman/assets/male.png" : "/freshman/assets/female.png";
             familiar.lastSeen = timeUtils.getIntervalToCurrentTime(familiar.lastSeen);
             familiar.isHidden = {
               qq: null,
@@ -198,7 +198,7 @@ Page({
       var getFamilies = requestUtils.doGET(url, data, header).then(res => {
         var familiarList = res.data.data.people_familiar;
         familiarList.forEach(familiar => {
-          familiar.genderImage = familiar.gender == "M" ? "/asset/icon/male.png" : "/asset/icon/female.png";
+          familiar.genderImage = familiar.gender == "M" ? "/freshman/assets/male.png" : "/freshman/assets/female.png";
           familiar.lastSeen = timeUtils.getIntervalToCurrentTime(familiar.lastSeen);
           familiar.isHidden = {
             qq: null,
