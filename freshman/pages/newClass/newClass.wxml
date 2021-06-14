@@ -1,45 +1,15 @@
 <!--pages/newFriend/newFriend.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-<view class="main" wx:if="{{show}}">
-	<scroll-view class="scbg" scroll-y="{{true}}">
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view class="main">
+	<scroll-view class="scbg" scroll-y="{{true}}" enable-flex="true">
 
 		<!-- 卡片 -->
-		<block wx:for="{{classmates}}" wx:for-index="id" wx:key="name">
-			<view class="card">
-				<view class="bed-wrap-1">
-					<text>{{item.building}}</text>
-					<text wx:if="{{item.lastSeen != null }}" class="lastSeen">{{item.lastSeen}}前来过</text>
-				</view>
-				<view class="info">
-					<view class="image-wrap">
-						<image class="avatar" src="{{item.avatar}}"></image>
-					</view>
-
-					<view class="detail">
-						<view class="detail-1">
-							<view class="basic_block">
-								<text selectable class="name">{{item.name}}</text>
-								<image src="{{item.genderImage}}"></image>
-							</view>
-							<view class="pos-wrap">
-								<text class="position">{{item.province}}</text>
-								<image src="/freshman/assets/location.png"></image>
-							</view>
-						</view>
-						<view class="contact">
-							<view class="qq" style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
-								<image src="/freshman/assets/icons/qq_logo.png"></image>
-								<text selectable>{{item.contact.qq}}</text>
-							</view>
-							<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
-								<image src="/freshman/assets/icons/wechat_logo.png"></image>
-								<text selectable>{{item.contact.wechat}}</text>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
+		<block wx:for="{{classmates}}" wx:key="name">
+			<!-- 参数：姓名，联系方式（QQ，Wechat），寝室楼号，家乡，性别，最近访问，头像图片 -->
+			<card qq="{{item.contact.qq}}" wechat="{{item.contact.wechat}}" name="{{item.name}}" building="{{item.building}}"
+				region="{{item.province}}" gender="{{item.gender}}" lastSeen="{{item.lastSeen}}" avatarImage="{{item.avatar}}">
+			</card>
 		</block>
-
 	</scroll-view>
 </view>
