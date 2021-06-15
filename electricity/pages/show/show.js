@@ -3,7 +3,8 @@
 import {
   handlerGohomeClick,
   handlerGobackClick
-} from '../../../utils/navBarUtils'
+} from '../../../utils/navBarUtils';
+import getHeader from "../../../utils/requestUtils.getHeader";
 
 const app = getApp();
 const electricitySuffix = `/pay/room/`;
@@ -220,10 +221,7 @@ Page({
       })
     } else {
       let url = `${app.globalData.commonUrl}${electricitySuffix}${room}/bill/${type}`;
-      let header = {
-        "content-type": "application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${app.globalData.token}`,
-      };
+      let header = getHeader("urlencoded", app.globalData.token);
       let data = {};
       let getdata = requestUtils.doGET(url, data, header);
       // console.log(e.currentTarget.dataset.type)
@@ -276,10 +274,7 @@ Page({
       return;
     }
     let url = `${app.globalData.commonUrl}${electricitySuffix}${room}/rank`;
-    let header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`,
-    };
+    let header = getHeader("urlencoded", app.globalData.token);
     let data = {};
     let getrank = requestUtils.doGET(url, data, header);
     getrank.then((res) => {
@@ -328,10 +323,7 @@ Page({
       return;
     }
     let url = `${app.globalData.commonUrl}${electricitySuffix}${room}`;
-    let header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`,
-    };
+    let header = getHeader("urlencoded", app.globalData.token);
     let data = {};
     let getEletricityConsume = requestUtils.doGET(url, data, header);
     getEletricityConsume.then((res) => {

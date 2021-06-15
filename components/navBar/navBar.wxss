@@ -1,13 +1,4 @@
-view,
-text,
-scroll-view,
-input,
-button,
-image,
-cover-view {
-  box-sizing: border-box;
-}
-page {
+.lxy-nav-bar {
   --height: 44px; /* 4*2+32 */
   --right: 97px; /* 10+87 */
   --navBarExtendHeight: 4px;
