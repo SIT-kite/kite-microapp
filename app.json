@@ -1,4 +1,22 @@
 {
+  "style": "v2",
+  "darkmode": false,
+  "resizable": false,
+  "singlePage": {},
+  "networkTimeout": {
+    "request":       15000,
+    "connectSocket": 15000,
+    "uploadFile":    30000,
+    "downloadFile":  30000
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json",
   "entryPagePath": "pages/index/index",
   "pages": [
     "pages/index/index",
@@ -47,19 +65,6 @@
       ]
     }
   ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
-  },
-  "plugins": {
-    "echarts": {
-      "version": "2.0.0",
-      "provider": "wx1db9e5ab1149ea03"
-    }
-  },
   "tabBar": {
     "custom": true,
     "list": [
@@ -73,6 +78,11 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap.json",
+  "plugins": {
+    "echarts": {
+      "version": "2.0.0",
+      "provider": "wx1db9e5ab1149ea03"
+    }
+  },
   "usingComponents": {}
 }
