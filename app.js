@@ -1,9 +1,8 @@
 //app.js
+import getHeader from "./utils/requestUtils.getHeader";
 const requestUtils = require('./utils/requestUtils');
-const promisify = require('./utils/promisifyUtils');
-const wxGetSetting = promisify(wx.getSetting);
+const promisify    = require('./utils/promisifyUtils');
 const wxGetUserInfo = promisify(wx.getUserInfo);
-const wxShowModal = promisify(wx.showModal);
 
 App({
   globalData: {
@@ -35,14 +34,12 @@ App({
     );
 
     updateManager.onUpdateReady(() => {
-      wxShowModal({
+      wx.showModal({
         title: "更新提示",
-        content: "新版本已经准备好，是否重启应用？",
+        content: "新版本已经准备好，是否重启应用？"
       }).then(res => {
         if (res.confirm) {
-          // 清理本地缓存
-          // wx.clearStorageSync();
-          // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+          // wx.clearStorageSync(); // 清理本地缓存
           updateManager.applyUpdate();
         }
       });
@@ -50,7 +47,7 @@ App({
 
     updateManager.onUpdateFailed(() => {
       // 新版本下载失败
-      wxShowModal({
+      wx.showModal({
         title: '更新提示',
         content: '新版本下载失败, 请稍后重试！',
         confirmText: '好的',
@@ -63,79 +60,87 @@ App({
   },
 
   onLaunch() {
+
     this.updateManager();
 
-    const globalData = this.globalData;
-  
-    // 获取本地变量
-    [
-      "userDetail", "userInfo", "token", "uid",
-      "isStudent", "isPrivacyConfirm", "freshmanPrivacyConfirm"
-    ].forEach(
-      key => wx.getStorage({
-        key,
-        success: res => globalData[key] = res.data,
-        fail: res => {
-          if (res === "getStorage:fail data not found") {
-            console.log(`找不到变量 ${key}，回退为空字符串`);
-          }
-          globalData[key] = "";
-        }
-      })
+    // setGlobalData(key): Promise
+    const setGlobalData = key => wx.getStorage({key}).then(
+      res => this.globalData[key] = res.data
+    ).catch(
+      res => {
+        console.warn(`key ${key} 获取失败，回退为空字符串`, res);
+        this.globalData[key] = "";
+      }
     );
-  
+
+    // 从本地缓存 Storage 中获取并设置全局数据 globalData
+    const keys = [
+      "uid", "token", "isStudent", "userInfo", "userDetail",
+      "isPrivacyConfirm", "freshmanPrivacyConfirm"
+    ];
+    Promise.allSettled( keys.map(setGlobalData) ).then(() => {
+
+      // 按照用户 id、token 和是否实名来判断登录状态
+      this.globalData.isLogin = [ "uid", "token", "isStudent" ].every(
+        key => !!this.globalData[key]
+      );
+
+      // 获取用户设置
+      // 到现在这里边只有用户授权设置啊…
+      // 微信就不能先单独来个 wx.getAuthSetting() 吗…
+      wx.getSetting().then(res => {
+        // console.log("用户设置 wx.getSetting():", res);
+
+        // 是否已授权获取用户信息
+        if (res.authSetting["scope.userInfo"]) {
+
+          // 使用 wx.getUserInfo() 获取并设置用户昵称与头像，并按 uid 更新用户数据
+          wxGetUserInfo({ lang: "zh_CN" }).then(res => {
+
+            const gData = this.globalData;
+            const userInfo = res.userInfo;
+
+            // 设置用户昵称与头像
+            gData.nickName   = userInfo.nickName;
+            gData.userAvatar = userInfo.avatarUrl;
+
+            // globalData 设置完成
+            console.log("全局数据 globalData:", gData);
+            console.log("用户信息 userInfo:", userInfo);
+
+            // 无视登录状态，只要有 uid，就向服务器更新用户数据
+            if (gData.uid !== 0) {
+
+              const putError = (msg, res) =>
+                console.error("用户信息更新失败，" + msg, res);
+
+              wx.request({
+                method: "PUT",
+                url: `${gData.commonUrl}/user/${gData.uid}`,
+                header: getHeader("urlencoded", gData.token),
+                data: res.userInfo,
+                success: res =>
+                res.data.code !== 0 &&
+                  putError(
+                    res.data.code === 120 ? "账号不存在" : "未知错误",
+                    res
+                  ),
+                fail: res => putError("请求失败", res)
+              });
+            }
+
+          });
+
+        }
+
+      });
+
+    });
+
   },
 
   onShow() {
-    // 更新
-    const gData = this.globalData;
-    const isAllStorageOk =
-      [ "uid", "token", "isStudent" ].every( key => gData[key] !== "" );
-
-    console.log("基本变量：", {
-      isAllStorageOk,
-      uid: gData.uid,
-      token: gData.token,
-      isStudent: gData.isStudent
-    });
-
-    wxGetSetting().then(res => {
-
-      if (res.authSetting['scope.userInfo']) {
-
-        wxGetUserInfo().then(res => {
-
-          gData.nickName = res.userInfo.nickName;
-          gData.userAvatar = res.userInfo.avatarUrl;
-          console.log("昵称与头像：", {
-            nickName: gData.nickName,
-            userAvatar: gData.userAvatar
-          });
-
-          // 确认所需全局变量正常 否则重新登录获取
-          if (isAllStorageOk) {
-            gData.isLogin = true;
-          }
-
-          if (gData.uid != "") {
-            // put 更新用户头像
-            const url = `${gData.commonUrl}/user/${gData.uid}`
-            const data = res.userInfo;
-            const header = {
-              "content-type": "application/x-www-form-urlencoded",
-              "Authorization": `Bearer ${gData.token}`
-            };
-            requestUtils.doPUT(url, data, header).catch(res => {
-              console.log("用户头像更新失败", res);
-            });
-          }
-
-        });
-
-      }
-
-    });
-
+    
   }
 
 })

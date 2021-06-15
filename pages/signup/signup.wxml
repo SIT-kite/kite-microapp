@@ -11,7 +11,8 @@
 		<input value="{{ uploadInfo.oaSecret  }}" bindinput="bindSecret" placeholder="请输入OA密码（与身份证二选一）" type="password"></input>
 		<input value="{{ uploadInfo.identityNumber }}" bindinput="bindidentity" placeholder="请输入身份证后六位"></input>
 
-		<button disable="{{ canUpload }}" class="v_button {{ canUpload ? '' : 'button_disable' }}" bindtap="signup">
+		<button disable="{{ canUpload }}" class="v_button {{ canUpload ? '' : 'button_disable' }}"
+		size="mini" bindtap="signup">
 			<image src="/assets/icons/upload.png"></image>
 		</button>
 

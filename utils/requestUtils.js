@@ -16,7 +16,7 @@ const DELETE = "DELETE";
 
 const    NETWORK_ERROR = "网络请求错误";
 const    REQUEST_ERROR = "业务逻辑错误";
-const NO_ACCOUNT_ERROR = "账号信息不存在错误";
+const NO_ACCOUNT_ERROR = "账号不存在";
 
 const    SUCCESS_STAT_CODE = 0;
 const NO_ACCOUNT_STAT_CODE = 120;
@@ -69,15 +69,15 @@ var wxLogin = () => new Promise(
 );
 
 module.exports = {
-  request: request,
-  doGET: doGET,
-  doPOST: doPOST,
-  doPUT: doPUT,
-  doHEAD: doHEAD,
-  doPATCH: doPATCH,
-  doDELETE: doDELETE,
-  wxLogin: wxLogin,
-  NETWORK_ERROR: NETWORK_ERROR,
-  REQUEST_ERROR: REQUEST_ERROR,
-  NO_ACCOUNT_ERROR: NO_ACCOUNT_ERROR
+  request,
+  doGET,
+  doPOST,
+  doPUT,
+  doHEAD,
+  doPATCH,
+  doDELETE,
+  wxLogin,
+  NETWORK_ERROR,
+  REQUEST_ERROR,
+  NO_ACCOUNT_ERROR
 };

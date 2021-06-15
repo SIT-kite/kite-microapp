@@ -1,27 +1,13 @@
-button {
-	margin: 0;
-	padding: 0;
-	background-color: white;
-	line-height: inherit;
-	height: 100rpx;
-	border-radius: 0;
-	border: none;
-	font-size: 60rpx;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-button::after {
-	border: none;
+.text-gray {
+	color: #9E9E9E;
 }
 
 .main {
 	display: flex;
-	padding-top: 12vh;
 	flex-direction: column;
-	width: 100%;
-	height: 100%;
+	box-sizing: border-box;
+	margin-top: 10vh;
+	padding: 2vh 5vw;
 }
 
 .personal {
@@ -29,7 +15,7 @@ button::after {
 	position: relative;
 	margin: 1vh auto 5vh;
 	height: 200rpx;
-	width: 90%;
+	width: 100%;
 	border-radius: 1vh;
 }
 
@@ -43,7 +29,6 @@ button::after {
 	background-color: white;
 	border-radius: 4px;
 	align-items: center;
-
 }
 
 .login {
@@ -129,22 +114,27 @@ button::after {
 	height: 100%;
 }
 
-.menu-option:active {
-	background: #f7f7f7;
-	opacity: 0.9;
+.signup {
+	padding: .5em 0 .5em .5em; /* 右侧为 0，避免影响文字与边缘的边距 */
 }
 
 .menu-option {
 	display: flex;
 	justify-content: space-between;
-	height: 6vh;
-	margin: 1vh 5vw;
+	box-sizing: border-box;
+	width: 100% !important;
+	margin: 1vh 0;
+	padding: .5vh 1vh;
 	background-color: white;
 	border-radius: 4px;
 	font-size: 40rpx;
 	font-weight: normal;
 	line-height: 6vh;
-	padding: 0.5vh 1vh;
+}
+
+.menu-option:active {
+	background: #f7f7f7;
+	opacity: 0.9;
 }
 
 .left {

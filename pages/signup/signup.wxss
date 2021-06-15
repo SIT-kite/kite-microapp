@@ -1,80 +1,85 @@
 /* pages/signup/signup.wxss */
 .main {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
 }
 
-.pop_class{
-  box-sizing: border-box;
-  height: 15vh;
-  width: 30vh;
-  padding:2.5vh;
-  border-radius: 1vh;
+.pop_class {
+	box-sizing: border-box;
+	height: 15vh;
+	width: 30vh;
+	padding: 2.5vh;
+	border-radius: 1vh;
 }
 
-.icon_bg{
-  width: 5vh;
-  height: 5vh;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icon_bg {
+	width: 5vh;
+	height: 5vh;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.right{
-  background-color: green;
+.right {
+	background-color: green;
 }
 
-.wrong{
-  background-color: red;
+.wrong {
+	background-color: red;
 }
 
-.icon_bg image{
-  width: 100%;
-  height: 100%;
+.icon_bg image {
+	width: 100%;
+	height: 100%;
 }
-.pop_container{
-  height: 10vh;
-  width: 25vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+
+.pop_container {
+	height: 10vh;
+	width: 25vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 }
-.v_button{
-  width: 15vw;
-  height: 15vw;
+
+.v_button {
+	width: 15vw !important;
+	height: 15vw;
   margin-top: 5vh;
-  border-radius: 50%;
-  background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.3);
+  padding: 0 !important;
+	border-radius: 50%;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.3);
 }
 
-.button_disable{
-  background-color: #e3e3e3;
+.button_disable {
+	background-color: #e3e3e3;
 }
-.v_button image{
-  height: 60%;
+
+.v_button image {
+	height: 60%;
   width: 60%;
+  margin: 20%;
 }
-.title_block{
-  text-align: left;
-  width: 80%;
-  margin-bottom: 2vh;
+
+.title_block {
+	text-align: left;
+	width: 80%;
+	margin-bottom: 2vh;
 }
-.main input{
-  background-color: rgb(246, 246, 251);
-  width: 80vw;
-  height: 5vh;
-  margin-top: 2vh;
-  font-size: 16px;
-  border-radius: px;
-  padding-left: 2vh;
+
+.main input {
+	background-color: rgb(246, 246, 251);
+	width: 80vw;
+	height: 5vh;
+	margin-top: 2vh;
+	font-size: 16px;
+	border-radius: px;
+	padding-left: 2vh;
 }

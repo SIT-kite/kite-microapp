@@ -3,47 +3,52 @@
 
 		<view class="personal">
 
+			<!-- 已登录 -->
 			<view wx:if="{{isLogin}}" class="help shadow">
+
 				<view class="personal_pic">
-					<image src="{{avatar}}" role="img"></image>
+					<!-- default-avatar： https://www.zhihu.com/question/30059362/answer/301792813 -->
+					<open-data class="avatar" type="userAvatarUrl"
+					default-avatar="https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.jpg"></open-data>
+					<!-- <image src="{{avatar}}" role="img"></image> -->
 				</view>
+
 				<view class="personal_main">
 					<view class="main_info">
-						<text style="font-size:40rpx;font-weight:500;text-align:left;font-weight:bold;">{{nickName}}</text>
+						<open-data class="nickname" type="userNickName"
+						default-text="微信用户" style="font-weight: bold;"></open-data>
+						<!-- <text style="font-weight: bold;">{{nickName}}</text> -->
 						<view class="true_basic {{ isStudent ? 'a_stu' : 'n_stu' }}">
 							<image src="{{ isStudent ? iconUrl.right : iconUrl.wrong }}"></image>
-							<text>{{isStudent? '已实名':'未实名'}}</text>
+							<text>{{ isStudent ? "已" : "未" }}实名</text>
 						</view>
 					</view>
-					<view bindtap="navigateToSignup" style="color:#e3e3e3;text-align:right;">
-						<text style="font-size:30rpx;">认证></text>
-					</view>
+					<navigator class="signup text-gray" url="/pages/signup/signup"
+					style="text-align: right; font-size: small;">认证 ></navigator>
 				</view>
+
 			</view>
 
+			<!-- 未登录 -->
 			<view wx:else style="height:100%;">
-				<button
-					class="login shadow"
-					bindgetuserinfo="login"
-					open-type="getUserInfo"
-				>
+				<button class="login shadow" bindgetuserinfo="login" open-type="getUserInfo">
 					<view class=" image_container">
 						<image src="/assets/icons/person/wechat.png" mode="aspectFit"></image>
 					</view>
-					<text style="font-size:20px;color:#e3e3e3;">点击左侧微信登录</text>
+					<text class="text-gray" style="font-size: x-large;">点此使用微信登录</text>
 				</button>
 			</view>
 
 		</view>
 
-		<button class="menu-option shadow" bindtap="navigateToAbout">
+		<navigator class="menu-option shadow" url="/pages/about/about">
 			<view class="left">关于我们</view>
-			<view class="right" style="color:#e3e3e3;">></view>
-		</button>
+			<view class="right text-gray">></view>
+		</navigator>
 
 		<button class="menu-option shadow" open-type="feedback">
 			<view class="left">意见反馈</view>
-			<view class="right" style="color:#e3e3e3;">></view>
+			<view class="right text-gray">></view>
 		</button>
 
 	</view>

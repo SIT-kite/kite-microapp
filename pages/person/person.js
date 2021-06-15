@@ -1,9 +1,10 @@
 // 我
 // pages/person/person.js
+import getHeader from "../../utils/requestUtils.getHeader";
 const app = getApp();
 const commonUrl = app.globalData.commonUrl;
 const requestUtils = require('../../utils/requestUtils');
-const promisify = require('../../utils/promisifyUtils');
+const promisify    = require('../../utils/promisifyUtils');
 const wxLogin = promisify(wx.login);
 var wxCode = "";
 
@@ -37,10 +38,7 @@ Page({
   getIdentityPromise: () => {
     const url = `${commonUrl}/user/${app.globalData.uid}/identity`;
     const data = {};
-    const header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`
-    };
+    const header = getHeader("urlencoded", app.globalData.token);
     return requestUtils.doGET(url, data, header);
   },
 
@@ -50,7 +48,7 @@ Page({
    */
   postSessionPromise: () => {
     const url = `${commonUrl}/session`;
-    const header = { "content-type": "application/x-www-form-urlencoded" };
+    const header = getHeader("urlencoded");
     const data = { loginType: 0, wxCode };
     return requestUtils.doPOST(url, data, header);
   },
@@ -63,7 +61,7 @@ Page({
   postUserPromise(wxUserInfo) {
     console.log('postUserPromise 调用注册逻辑');
     const url = `${commonUrl}/user`;
-    const header = { "content-type": "application/x-www-form-urlencoded" };
+    const header = getHeader("urlencoded");
     const data = wxUserInfo;
     return requestUtils.doPOST(url, data, header);
   },
@@ -75,15 +73,22 @@ Page({
   postUserAuthPromise: () => {
     const url = `${commonUrl}/user/${app.globalData.uid}/authentication`;
     const data = { loginType: 0, wxCode };
-    const header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`
-    };
+    const header = getHeader("urlencoded", app.globalData.token);
     return requestUtils.doPOST(url, data, header);
   },
 
-  navigateToSignup: () => wx.navigateTo({ url: '/pages/signup/signup' }),
-  navigateToAbout:  () => wx.navigateTo({ url: '/pages/about/about' }),
+  /*
+  feedback: () => wx.showModal({
+    title: "意见反馈",
+    content: "小程序反馈群: 943110696",
+    confirmText: "复制群号",
+    cancelText: "知道了",
+    success: () => wx.setClipboardData({
+      data: "943110696",
+      success: () => wx.showToast({ title: "群号复制成功" })
+    })
+  }),
+  */
 
   login(e) {
 
@@ -95,6 +100,11 @@ Page({
 
     var wxUserInfo = e.detail.userInfo;
 
+    wx.getUserInfo({
+      lang: "zh_CN",
+      success: res => console.log("login():", e.detail.userInfo, res.userInfo)
+    });
+
     if (e.detail.userInfo) {
 
       wxLogin().then(res => {
@@ -104,7 +114,7 @@ Page({
           wx.showLoading({ title: '加载中' });
           return this.postSessionPromise();
         } else {
-          return Promise.reject(`微信登录失败: ${res.errMsg}`)
+          return Promise.reject(`微信登录失败: ${res.errMsg}`);
         }
 
       }).then(res => {
@@ -164,13 +174,13 @@ Page({
       });
 
       // 设置全局 Avatar nickName isLogin
-      app.globalData.nickName = e.detail.userInfo.nickName;
+      app.globalData.nickName   = e.detail.userInfo.nickName;
       app.globalData.userAvatar = e.detail.userInfo.avatarUrl;
-      app.globalData.isLogin = true;
+      app.globalData.isLogin    = true;
       this.setData({
         nickName: app.globalData.nickName,
-        avatar: app.globalData.userAvatar,
-        isLogin: app.globalData.isLogin
+        avatar:   app.globalData.userAvatar,
+        isLogin:  app.globalData.isLogin
       });
 
     }
@@ -179,20 +189,17 @@ Page({
   onLoad() {
     const data = app.globalData;
     this.setData({
-      nickName: data.nickName,
-      avatar: data.userAvatar,
-      isLogin: data.isLogin,
-      isStudent: data.isStudent
+      nickName  : data.nickName,
+      avatar    : data.userAvatar,
+      isLogin   : data.isLogin,
+      isStudent : data.isStudent
     });
-    console.log(this.data, app.globalData);
-    // setUserData(this, app.globalData);
   },
 
   onReady() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({selected: 1});
+      this.getTabBar().setData({selected: 1}); // 选中第二个项目
     }
-    // setUserData(this, app.globalData);
   },
 
   onShow() {},

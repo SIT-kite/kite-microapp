@@ -1,5 +1,7 @@
 // 主页
 // pages/person/person.js
+import getHeader from "../../utils/requestUtils.getHeader";
+
 const app = getApp();
 const requestUtils = require("../../utils/requestUtils");
 
@@ -8,7 +10,7 @@ Page({
     selected: -1,
     id: "",
     animation_data: "",
-    notice:[],
+    notice: [],
     menu_list: [{
         id: "welcome",
         text: "迎新",
@@ -45,10 +47,7 @@ Page({
 
     const url = `${app.globalData.commonUrl}/notice`;
     const data = {};
-    const header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`
-    };
+    const header = getHeader("urlencoded", app.globalData.token);
 
     requestUtils.doGET(url, data, header).then(res => {
       this.setData({notice: res.data.data});
@@ -77,7 +76,6 @@ Page({
         [ "carpool", "/carpool/pages/car-pool/car-pool"],
         [ "contact", "/contact/pages/show/show"]
     ]).get(pageId);
-    console.log(url)
     if (url === undefined) {
       console.error("找不到对应的 url", {id: pageId, url});
       throw "找不到对应的 url";
@@ -88,6 +86,8 @@ Page({
     if (pageId === "welcome" && userDetail !== "" && userDetail != null) {
       url = "/freshman/pages/stuInfoDetail/stuInfoDetail";
     }
+
+    console.log("导航到：" + url);
 
     const isLogin = app.globalData.isLogin;
     if (isLogin) {
@@ -144,7 +144,7 @@ Page({
 
   goNavigate() {
     wx.navigateTo({
-      url: '/pages/navigate/navigate'
+      url: "/pages/navigate/navigate"
     });
   },
   onShareAppMessage() {
