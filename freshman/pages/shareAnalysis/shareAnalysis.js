@@ -55,7 +55,7 @@ Page({
     // 获取格言
     url = `${app.globalData.commonUrl}/motto?maxLength=12`;
     data = {};
-    header = { 'content-type': 'application/json' };
+    header = { 'Content-Type': 'application/json' };
     var getMotto = requestUtils.doGET(url, data, header);
     getMotto.then(res => {
       const data = res.data.data;
@@ -71,7 +71,7 @@ Page({
     url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/analysis?secret=${app.globalData.userInfo.secret}`;
     data = {};
     header = {
-      'content-type': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${app.globalData.token}`,
     };
     var getAnalysis = requestUtils.doGET(url, data, header);

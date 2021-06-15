@@ -30,15 +30,15 @@
 	display: flex;
 	flex-direction: row-reverse;
 	align-items: center;
-	margin-top: 30rpx;
-	background-color: rgb(246, 246, 251);
 	width: 86%;
-	margin-bottom: 6rpx;
+	margin-top: 30rpx;
+	margin-bottom: 4rpx;
+	padding: 4rpx 0;
+	background-color: rgb(246, 246, 251);
 }
 
 .bed-wrap-1 text {
 	padding-right: 10rpx;
-
 }
 
 .lastSeen {

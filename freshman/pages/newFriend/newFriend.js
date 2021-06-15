@@ -1,7 +1,8 @@
 // pages/newFriend/newFriend.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
-import copyText from "../../../utils/copyText.js";
+import copyText   from "../../../utils/copyText.js";
 import catchError from "../../../utils/requestUtils.catchError";
+import getHeader  from "../../../utils/requestUtils.getHeader";
 
 const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
@@ -38,13 +39,8 @@ Page({
         mask: true
       });
       url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
-      data = {
-        "secret": `${app.globalData.userInfo.secret}`
-      };
-      header = {
-        "content-type": "application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${app.globalData.token}`,
-      };
+      data = { "secret": `${app.globalData.userInfo.secret}` };
+      header = getHeader("urlencoded", app.globalData.token);
 
       // 获取室友信息
       var getRoommates = requestUtils.doGET(url, data, header).then(res => {
@@ -74,14 +70,11 @@ Page({
 
       // 可能认识的人
       if (app.globalData.userDetail.visible) {
+
         url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
-        data = {
-          "secret": `${app.globalData.userInfo.secret}`
-        },
-          header = {
-            "content-type": "application/x-www-form-urlencoded",
-            "Authorization": `Bearer ${app.globalData.token}`,
-          };
+        data = { "secret": `${app.globalData.userInfo.secret}` };
+        header = getHeader("urlencoded", app.globalData.token);
+
         var getFamilies = requestUtils.doGET(url, data, header).then(res => {
           var familiarList = res.data.data.people_familiar;
           familiarList.forEach(familiar => {
@@ -114,8 +107,8 @@ Page({
       // 等待所有进程结束
       Promise.all(promiseList).then(res => {
         // let [res1, res2] = res;
-        console.log("请求全部完成");
         wx.hideLoading();
+        console.log("请求全部完成");
         this.setData({ show: true });
       }).catch(res => {
         wx.hideLoading();
@@ -151,13 +144,8 @@ Page({
       mask: true
     });
     url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
-    data = {
-      "secret": `${app.globalData.userInfo.secret}`
-    };
-    header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`,
-    };
+    data = { "secret": `${app.globalData.userInfo.secret}` };
+    header = getHeader("urlencoded", app.globalData.token);
 
     // 获取室友信息
     var getRoommates = requestUtils.doGET(url, data, header).then(res => {
@@ -188,13 +176,9 @@ Page({
     // 可能认识的人
     if (app.globalData.userDetail.visible) {
       url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
-      data = {
-        "secret": `${app.globalData.userInfo.secret}`
-      },
-        header = {
-          "content-type": "application/x-www-form-urlencoded",
-          "Authorization": `Bearer ${app.globalData.token}`,
-        };
+      data = { "secret": `${app.globalData.userInfo.secret}` };
+      header = getHeader("urlencoded", app.globalData.token);
+
       var getFamilies = requestUtils.doGET(url, data, header).then(res => {
         var familiarList = res.data.data.people_familiar;
         familiarList.forEach(familiar => {

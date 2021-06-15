@@ -2,14 +2,17 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
 </navBar>
 <view class="main">
-	<scroll-view class="scbg" scroll-y="{{true}}" enable-flex="true">
+	<scroll-view class="scroll-view" scroll-y="{{true}}" enable-flex="true">
 
 		<!-- 卡片 -->
 		<block wx:for="{{classmates}}" wx:key="name">
 			<!-- 参数：姓名，联系方式（QQ，Wechat），寝室楼号，家乡，性别，最近访问，头像图片 -->
-			<card qq="{{item.contact.qq}}" wechat="{{item.contact.wechat}}" name="{{item.name}}" building="{{item.building}}"
-				region="{{item.province}}" gender="{{item.gender}}" lastSeen="{{item.lastSeen}}" avatarImage="{{item.avatar}}">
+			<card   qq="{{item.contact.qq}}"    wechat="{{item.contact.wechat}}"
+				    name="{{item.name}}"        building="{{item.building}}"
+				  region="{{item.province}}"      gender="{{item.gender}}"
+				lastSeen="{{item.lastSeen}}" avatarImage="{{item.avatar}}">
 			</card>
 		</block>
+
 	</scroll-view>
 </view>

@@ -4,7 +4,8 @@ import {
   handlerGobackClick
 } from "../../../utils/navBarUtils";
 import copyText from "../../../utils/copyText";
-import catchError from "../../../utils/requestUtils.catchError";
+// import catchError from "../../../utils/requestUtils.catchError";
+import getHeader from "../../../utils/requestUtils.getHeader";
 
 const utlls = "../../../utils/";
 const requestUtils = require(utlls + "requestUtils");
@@ -25,20 +26,15 @@ Page({
    * 请求班级同学信息
    */
   async _requestClassmateList() {
-    let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/classmate`;
-    let data = {
-      "secret": `${app.globalData.userInfo.secret}`
-    };
-    let header = {
-      "content-type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`,
-    };
+    const gData = app.globalData;
 
-    let  response = await requestUtils.doGET(url, data, header);
-    let  responsedData = response.data;
-    let  classmateList = responsedData.data.classmates;
+    let url = `${gData.commonUrl}/freshman/${gData.userInfo.account}/classmate`;
+    let data = { "secret": gData.userInfo.secret };
+    let header = getHeader("urlencoded", gData.token);
 
-    return classmateList;
+    let response = await requestUtils.doGET(url, data, header);
+
+    return response.data.data.classmates;
   },
 
   /**

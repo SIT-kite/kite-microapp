@@ -14,25 +14,38 @@
 		</view>
 		<!-- 文字部分 -->
 		<view class="info_wrap">
-			<image bindtap="gotoModify" mode="aspectFill" src="/freshman/assets/modify.png" />
-			<text selectable>姓名：{{userDetail.name}}</text>
-			<text selectable>学号：{{userDetail.studentId}}</text>
-			<text selectable>学院：{{userDetail.college}}</text>
-			<text selectable>专业：{{userDetail.major}}</text>
-			<text selectable>寝室：{{userDetail.building}}{{userDetail.room}}室</text>
-			<text selectable>辅导员姓名：{{userDetail.counselorName}}</text>
-			<text selectable>辅导员电话：{{userDetail.counselorTel}}</text>
+			<navigator url="/freshman/pages/inputInfo/inputInfo?isHidden=none">
+				<image mode="aspectFill" src="/freshman/assets/modify.png"/>
+			</navigator>
+			<text user-select>姓名：{{userDetail.name}}</text>
+			<text user-select>学号：{{userDetail.studentId}}</text>
+			<text user-select>学院：{{userDetail.college}}</text>
+			<text user-select>专业：{{userDetail.major}}</text>
+			<text user-select>寝室：{{userDetail.building}}{{userDetail.room}}室</text>
+			<text user-select>辅导员姓名：{{userDetail.counselorName}}</text>
+			<text user-select>辅导员电话：{{userDetail.counselorTel}}</text>
 		</view>
 	</view>
-	<view class="button_wrap_2">
-		<button style="width:38%" bindtap="gotoNewFriend">新的朋友</button>
-		<button style="width:38%" bindtap="gotoClass">新的班级</button>
+	<view class="navigators">
+
+		<navigator class="navigator blue"
+		url="/freshman/pages/newFriend/newFriend">新的朋友</navigator>
+		<navigator class="navigator blue"
+		url="/freshman/pages/newClass/newClass"  >新的班级</navigator>
+
+		<navigator class="navigator red"
+		url="/freshman/pages/shareAnalysis/shareAnalysis">迎新画像</navigator>
+
+		<button class="navigator red grayscale" size="mini" bindtap="unavaliableNotice">报到指南</button>
+		<!--
+		<navigator class="navigator red"
+		url="/freshman/pages/navigate/navigate"          >报到指南</navigator>
+		-->
+
 	</view>
-	<view class="button_wrap_3">
-		<button style="width:38%" bindtap="gotoAnalysis">迎新画像</button>
-		<button style="width:38%" bindtap="gotoNavigate">报到指南</button>
-	</view>
+
 	<!--半圆背景-->
-	<view class="background" style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
+	<view class="background"
+	style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
 
 </view>

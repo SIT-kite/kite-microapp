@@ -17,29 +17,13 @@ Page({
     nickName: "",
   },
 
-  /**
-   * 导航栏handler函数
-   */
-  handlerGohomeClick: handlerGohomeClick,
-  /**
-   * 导航栏handler函数
-   */
-  handlerGobackClick: handlerGobackClick,
-
-  /**
-   * 跳转至报到指南页面
-   *
-   */
-  gotoNavigate: function () {
-    wx.navigateTo({
-      url: '/freshman/pages/navigate/navigate'
-    });
-  },
+  handlerGohomeClick,
+  handlerGobackClick,
 
   /**
    * 页面数据重新加载
    */
-  pageDataInit: function () {
+  pageDataInit() {
     let url = "";
     let data = {};
     let header = {};
@@ -49,11 +33,9 @@ Page({
     });
 
     url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`;
-    data = {
-      "secret": `${app.globalData.userInfo.secret}`
-    };
+    data = { "secret": app.globalData.userInfo.secret };
     header = {
-      "content-type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/x-www-form-urlencoded",
       "Authorization": `Bearer ${app.globalData.token}`,
     };
 
@@ -89,42 +71,19 @@ Page({
 
   },
 
-  gotoAnalysis: function () {
-    wx.navigateTo({
-      url: '/freshman/pages/shareAnalysis/shareAnalysis',
-      success: () => console.log("跳转分享页面成功"),
-      fail: () => { },
-      complete: () => { }
-    });
-  },
+  unavaliableNotice: () => wx.showModal({
+    title: "暂不可用",
+    content: "报道指南更新中，暂不可用，敬请谅解~",
+    confirmText: "知道了",
+    showCancel: false
+  }),
 
-  gotoModify(e) {
-    console.log("gotoModify");
-    wx.navigateTo({
-      url: '/freshman/pages/inputInfo/inputInfo?isHidden=none',
-    })
-  },
-
-  gotoNewFriend(e) {
-    console.log("gotoNewFriend");
-    wx.navigateTo({
-      url: '/freshman/pages/newFriend/newFriend',
-    })
-  },
-
-  gotoClass(e) {
-    console.log("gotoNewClass");
-    wx.navigateTo({
-      url: '/freshman/pages/newClass/newClass',
-    })
-  },
-
-  onLoad: function () {
+  onLoad() {
     this.setData({ show: false });
     console.log('页面 stuInfoDetail onLoad...');
-
   },
-  onShow: function () {
+
+  onShow() {
     const {
       navBarHeight,
       navBarExtendHeight,
@@ -134,12 +93,13 @@ Page({
     })
     console.log("页面 stuInfoDetail onShow...");
     this.pageDataInit();
-
   },
-  onReady: function () {
+
+  onReady() {
     console.log("页面 stuInfoDetail onReady!");
   },
-  onShareAppMessage: function (e) {
+
+  onShareAppMessage() {
     return {
       title: "上应小风筝",
       path: "pages/index/index"

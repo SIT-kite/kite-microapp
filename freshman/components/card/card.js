@@ -72,7 +72,7 @@ Component({
      * 根据性别返回性别图标的路径
      * @param { String } gender 性别. "M" 为男, "F" 为女
      */
-    _getGenderIconPath: function(gender) {
+    _getGenderIconPath(gender) {
       if (gender === "M")
         return '/freshman/assets/male.png';
       else if (gender === "F")
@@ -85,12 +85,16 @@ Component({
   /**
    * 组件创建时的响应事件
    */
-  created: function() {
-    this.setData({
-      // 根据该用户上次访问时间, 算出时间差, 并转换成字符串
-      lastSeenText: timeUtils.getIntervalToCurrentTime(this.properties.lastSeen),
-      // 根据性别数据得到对应的 icon
-      genderImage: this._getGenderIconPath(this.properties.gender),
-    });
+  lifetimes: {
+
+    attached() {
+      this.setData({
+        // 根据该用户上次访问时间, 算出时间差, 并转换成字符串
+        lastSeenText: timeUtils.getIntervalToCurrentTime(this.properties.lastSeen),
+        // 根据性别数据得到对应的 icon
+        genderImage: this._getGenderIconPath(this.properties.gender),
+      });
+    }
+
   }
 })

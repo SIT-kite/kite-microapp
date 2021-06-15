@@ -1,46 +1,51 @@
 /* pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.wxss */
-.background{
-    overflow: hidden;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-size: 100% 100%;
-    background-image: linear-gradient(130deg,#fad4c1,#fdeee8,#fad4c1);
-    /* background-image: url(https://kite.sunnysab.cn/static/res/freshman/analysis_background.png); */
-}
-#wavebear{
-    position: absolute;
-    top: 8vh;
-    left: 7vw;
+.background {
+	overflow: hidden;
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	background-size: 100% 100%;
+	background-image: linear-gradient(130deg, #fad4c1, #fdeee8, #fad4c1);
+	/* background-image: url(https://kite.sunnysab.cn/static/res/freshman/analysis_background.png); */
 }
 
-#desktop{
-    position: absolute;
-    top: 15vh;
-    left: 22vw;
+#wavebear {
+	position: absolute;
+	top: 8vh;
+	left: 7vw;
 }
-#whitecircle{
-    position: absolute;
-    top: 20vh;
-    left: 11vw;
+
+#desktop {
+	position: absolute;
+	top: 15vh;
+	left: 22vw;
 }
-#qrcode{
-    position: absolute;
-    bottom: 3vh;
-    right: 6vw;
+
+#whitecircle {
+	position: absolute;
+	top: 20vh;
+	left: 11vw;
 }
-#text-area{
-    position: absolute;
-    bottom: 5vh;
-    left: 10vw;
-    height: 43vh;
-    width: 70vw;
-    font-size: medium;
-    line-height: 3vh;
-    letter-spacing: 0.2vw;
-    /* background-color: blueviolet; */
+
+#qrcode {
+	position: absolute;
+	bottom: 3vh;
+	right: 6vw;
 }
-.keyword{
-    color: #e9444a;
-    font-weight: bold;
+
+#text-area {
+	position: absolute;
+	bottom: .5em;
+	left: 10vw;
+    width: 80vw;
+    padding: 1em;
+	line-height: 1.15;
+	letter-spacing: 0.2vw;
+    background-color: rgba(255, 230, 230, .5);
+    box-shadow: 0 0 2em 2em rgba(255, 230, 230, .5);
+}
+
+.keyword {
+	color: #e9444a;
+	font-weight: bold;
 }
