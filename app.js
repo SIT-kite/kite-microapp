@@ -22,6 +22,10 @@ App({
     roommates: null,
     familiar: null,
     isPrivacyConfirmed: false,
+    searchResultList:[],
+    searchHistoryList:[],
+    searchKeyWord:"",
+    searchResultItemIndex: 0
   },
 
   updateManager() {

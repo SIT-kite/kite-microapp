@@ -40,6 +40,11 @@ Page({
         id: "contact",
         text: "常用电话",
         iconPath: "/assets/icons/index/telephone.png"
+      },
+      {
+        id: "search",
+        text: "搜索",
+        iconPath: "/assets/icons/index/search.png"
       }
     ]
   },
@@ -80,7 +85,8 @@ Page({
         [ "shop", "/shop/pages/index/index" ],
         [ "avail-room", "/edu/pages/available-room/show"],
         [ "carpool", "/carpool/pages/car-pool/car-pool"],
-        [ "contact", "/contact/pages/show/show"]
+        [ "contact", "/contact/pages/show/show"],
+        [ "search", "/search/pages/index/index"]
     ]).get(pageId);
     if (url === undefined) {
       console.error("找不到对应的 url", {id: pageId, url});

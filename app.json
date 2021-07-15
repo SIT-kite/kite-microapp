@@ -71,7 +71,15 @@
         "pages/index/index",
         "pages/launch/launch",
         "pages/search/search"
-
+      ]
+    },
+    {
+      "root": "search",
+      "pages": [
+        "pages/all/all",
+        "pages/details/details",
+        "pages/index/index",
+        "pages/mini-result/mini-result"
       ]
     }
   ],

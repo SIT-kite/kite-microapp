@@ -1,0 +1,13 @@
+<!--pages/all/all.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view class="all-block">
+    <view class="item" id="{{index}}" wx:for="{{resultList}}" bindtap="goDetails">
+      <text class="title">{{item.title}}</text>
+      <text class="digest">{{item.content}}</text>
+      <view class="dep-time">
+        <text class="department">{{item.department}}</text>
+        <text class="time">{{item.publish_time}}</text>
+      </view>
+    </view>
+</view>

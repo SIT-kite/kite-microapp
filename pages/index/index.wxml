@@ -39,7 +39,5 @@
 				<view class="menu_cell_text" hover-class="menu_cell_active">{{item.text}}</view>
 			</view>
 		</view>
-
 	</view>
-
 </view>
