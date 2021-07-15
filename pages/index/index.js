@@ -22,6 +22,11 @@ Page({
         iconPath: "/assets/icons/index/electricity.png"
       } ,
       {
+        id: "shop",
+        text: "商城",
+        iconPath: "/assets/icons/index/shop.png"
+      } ,
+      {
         id: "avail-room",
         text: "空教室",
         iconPath: "/assets/icons/index/availroom.png"
@@ -72,6 +77,7 @@ Page({
     let url = new Map([
         [ "welcome", "/freshman/pages/welcome/welcome"],
         [ "electricity", "/electricity/pages/show/show"],
+        [ "shop", "/shop/pages/index/index" ],
         [ "avail-room", "/edu/pages/available-room/show"],
         [ "carpool", "/carpool/pages/car-pool/car-pool"],
         [ "contact", "/contact/pages/show/show"]

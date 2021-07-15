@@ -63,6 +63,16 @@
       "pages": [
         "pages/show/show"
       ]
+    },
+    {
+      "root": "shop",
+      "pages": [
+        "pages/details/details",
+        "pages/index/index",
+        "pages/launch/launch",
+        "pages/search/search"
+
+      ]
     }
   ],
   "tabBar": {

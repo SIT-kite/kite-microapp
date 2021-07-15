@@ -26,13 +26,13 @@
 			<image src="/assets/icons/index/notice.png" />
 			<swiper class="" autoplay="true" current="0" interval="5000" duration="1000" circular="true" vertical="true">
 				<swiper-item wx:for="{{notice}}" wx:key="id">
-					<view class="text_wrap"><text>{{item.title}}</text></view>
+					<view class="text_wrap"><text style="width: 467rpx; height: 57rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">{{item.title}}</text></view>
 				</swiper-item>
 			</swiper>
 		</view>
 
 		<!-- 主页功能索引 -->
-		<view class="menuBlock">
+		<view class="menuBlock" style="position: relative; left: -2rpx; top: -33rpx">
 			<view wx:for="{{menu_list}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" class="menu_cell"
 				bindtap="move">
 				<image style="{{ index === selected ? animation_data : '' }}" src="{{item.iconPath}}"></image>
