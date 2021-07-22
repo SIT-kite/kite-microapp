@@ -3,8 +3,8 @@
 </navBar>
 <view class="all-block">
     <view class="item" id="{{index}}" wx:for="{{resultList}}" bindtap="goDetails">
-      <text class="title">{{item.title}}</text>
-      <text class="digest">{{item.content}}</text>
+      <text><text class="{{item == searchKeyWord ? 'searchHighTitle' : 'title' }}" wx:for="{{item.title}}">{{item}}</text></text>
+      <text><text class="{{item == searchKeyWord ? 'searchHighDigest' : 'digest' }}" wx:for="{{item.content}}">{{item}}</text></text>
       <view class="dep-time">
         <text class="department">{{item.department}}</text>
         <text class="time">{{item.publish_time}}</text>

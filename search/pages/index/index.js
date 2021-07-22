@@ -49,23 +49,25 @@ Page({
       let data = {};
       let contentConfirm = requestUtils.doGET(url, data, header);
       contentConfirm.then((res) => {
-        const data = res.data.data
-        // console.log(data)
+        
+        let data = res.data.data
+        const text = this.data.content
+        const getInf = (str, key) => str.replace(new RegExp(`<b>${key}</b>`, 'g'), `%%${key}%%`).split('%%');
+        for (let i = 0; i < data.length; i++) {
+          let words = data[i];
+          let title = words["title"];
+          words["title"] = getInf(title, text);
+        }
+        for (let i = 0; i < data.length; i++) {
+          let words = data[i];
+          let content = words["content"];
+          words["content"] = getInf(content, text);
+        }
+        
         wx.setStorageSync('searchResultList', data);
         wx.navigateTo({
           url: '../mini-result/mini-result',
         })
-        // console.log(data);
-        // this.setData({
-        //   resultList: {
-        //     date: dateTime[0],
-        //     time: dateTime[1].substr(0, 5),
-        //     balance: data.balance.toFixed(2),
-        //     power: data.power.toFixed(2)
-        //   },
-        //   show: true,
-        //   showtype: 'normal'
-        // });
       }).catch(res => {
         wxShowModal({
           content: "无相关内容",

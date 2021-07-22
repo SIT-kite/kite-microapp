@@ -36,11 +36,11 @@ Page({
         text: "拼车",
         iconPath: "/assets/icons/index/carpool.png"
       },
-      {
-        id: "contact",
-        text: "常用电话",
-        iconPath: "/assets/icons/index/telephone.png"
-      },
+      // {
+      //   id: "contact",
+      //   text: "常用电话",
+      //   iconPath: "/assets/icons/index/telephone.png"
+      // },
       {
         id: "search",
         text: "搜索",
@@ -85,7 +85,7 @@ Page({
         [ "shop", "/shop/pages/index/index" ],
         [ "avail-room", "/edu/pages/available-room/show"],
         [ "carpool", "/carpool/pages/car-pool/car-pool"],
-        [ "contact", "/contact/pages/show/show"],
+        // [ "contact", "/contact/pages/show/show"],
         [ "search", "/search/pages/index/index"]
     ]).get(pageId);
     if (url === undefined) {

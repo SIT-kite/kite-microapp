@@ -37,9 +37,13 @@
   justify-content: space-between;
   font-size: small;
 }
-.searchHigh {
+.searchHighTitle {
   font-size: large;
   font-weight: 600;
+  color: #f00;
+}
+
+.searchHighDigest {
   color: #f00;
 }
 
