@@ -44,6 +44,12 @@
       ]
     },
     {
+      "root": "class-room",
+      "pages": [
+        "pages/available-room"
+      ]
+    },
+    {
       "root": "carpool",
       "pages": [
         "pages/car-pool/car-pool",

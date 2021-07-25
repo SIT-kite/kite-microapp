@@ -83,7 +83,7 @@ Page({
         [ "welcome", "/freshman/pages/welcome/welcome"],
         [ "electricity", "/electricity/pages/show/show"],
         [ "shop", "/shop/pages/index/index" ],
-        [ "avail-room", "/edu/pages/available-room/show"],
+        [ "avail-room", "/class-room/pages/available-room"],
         [ "carpool", "/carpool/pages/car-pool/car-pool"],
         // [ "contact", "/contact/pages/show/show"],
         [ "search", "/search/pages/index/index"]

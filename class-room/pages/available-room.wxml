@@ -1,0 +1,69 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view>
+	<view class="nav">
+		<scroll-view scroll-x="{{true}}" class="sub-nav">
+			<view wx:for="{{dates}}" wx:key="index" class="nav-item date {{choosedDate == item ? 'choosed' : ''}}"
+				data-date="{{item}}" bindtap="tapDate">
+				{{ index == 0 ? "今天" : item }}
+			</view>
+		</scroll-view>
+		<scroll-view scroll-x="{{true}}" class="sub-nav">
+			<view wx:for="{{campuses}}" wx:key="index" class="nav-item {{choosedCampus == item ? 'choosed' : ''}}"
+				data-campus="{{item}}" bindtap="tapCampus">
+				{{item}}
+			</view>
+		</scroll-view>
+		<scroll-view scroll-x="true" class="sub-nav">
+			<view wx:for="{{buildings[choosedCampus]}}" wx:key="index"
+				class="nav-item {{choosedBuilding == item ? 'choosed' : ''}}" data-building="{{item}}" bindtap="tapBuilding">
+				{{item}}
+			</view>
+		</scroll-view>
+	</view>
+
+	<view class="tr comment">
+		<view class="comment-cell">
+			<view class="status free" />
+			<view class="comment-item c1">空闲</view>
+			<view class="status inuse" />
+			<view class="comment-item c2">有课</view>
+		</view>
+		<view class="comment-cell">
+			<view class="comment-item c3">| 上午</view>
+			<view class="comment-item c4">| 下午</view>
+			<view class="comment-item c5">| 晚上</view>
+		</view>
+	</view>
+	<scroll-view class="table" scroll-y="{{true}}">
+		<view wx:if="{{data}}">
+			<view wx:for="{{data[choosedBuilding]}}" wx:for-index="roomName" wx:for-item="statusList" wx:key="roomName"
+				class="tr">
+				<view class="td room-name-tuple">
+					<view class="room-name">{{roomName}}</view>
+				</view>
+				<view class="td status-list">
+					<view wx:for="{{[1, 2, 3, 4, 5]}}" wx:for-item="n" wx:key="n"
+						class="status {{statusList[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
+					<view class="delimiter" />
+					<view wx:for="{{[6, 7, 8, 9, 10]}}" wx:for-item="n" wx:key="n"
+						class="status {{statusList[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
+					<view class="delimiter" />
+					<view wx:for="{{[11, 12, 13, 14]}}" wx:for-item="n" wx:key="n"
+						class="status {{statusList[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
+				</view>
+			</view>
+		</view>
+		<view wx:else>
+			<view wx:for="{{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]}}" wx:key="index" class="tr">
+				<view class="td room-name">{{ index == 0 ? "数据加载中..." : "" }}</view>
+				<view class="td status-list">
+					<view wx:for="{{[1, 2, 3, 4, 5]}}" wx:key="item" class="status loading" />
+					<view class="delimiter" />
+					<view wx:for="{{[6, 7, 8, 9, 10]}}" wx:key="item" class="status loading" />
+					<view class="delimiter" />
+					<view wx:for="{{[11, 12, 13, 14]}}" wx:key="item" class="status loading" />
+				</view>
+			</view>
+		</view>
+	</scroll-view>
+</view>
