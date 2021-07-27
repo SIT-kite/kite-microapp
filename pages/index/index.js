@@ -94,7 +94,11 @@ Page({
     }
 
     // 如果点击新生但是 userDetail 不为空，那么直接跳入到 stuInfoDetail
-    const userDetail = app.globalData.userDetail;
+    try {
+      var userDetail = wx.getStorageSync('userDetail')
+    } catch (e) {
+      console.log(e)
+    }
     if (pageId === "welcome" && userDetail !== "" && userDetail != null) {
       url = "/freshman/pages/stuInfoDetail/stuInfoDetail";
     }
