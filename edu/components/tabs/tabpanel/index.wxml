@@ -1,3 +1,0 @@
-<view class="container" hidden="{{!isShowing}}">
-  <slot></slot>
-</view>
