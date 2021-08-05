@@ -49,6 +49,14 @@ Page({
         nickName: app.globalData.nickName
       });
       return res;
+    }).catch(res => {
+      wx.setStorage({
+        key:"userDetail",
+        data: null
+      })
+      wx.redirectTo({
+        url: '/freshman/pages/welcome/welcome',
+      })
     });
 
     getFreshman.then(() => {

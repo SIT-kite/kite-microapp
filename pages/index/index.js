@@ -88,8 +88,12 @@ Page({
     }
 
     // 如果点击“迎新”但是 userDetail 不为空，则直接跳转到 stuInfoDetail
-    const userDetail = app.globalData.userDetail;
-    if (pageName === "welcome" && userDetail !== "" && userDetail != null) {
+    try {
+      var userDetail = wx.getStorageSync('userDetail')
+    } catch (e) {
+      console.log(e)
+    }
+    if (pageId === "welcome" && userDetail !== "" && userDetail != null) {
       url = "/freshman/pages/stuInfoDetail/stuInfoDetail";
     }
 
