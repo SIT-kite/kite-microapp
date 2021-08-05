@@ -34,7 +34,7 @@ Page({
 
     console.log({
       options,
-      userAvatar: app.globalData.userAvatar,
+      avatarUrl: app.globalData.avatarUrl,
       nickName: app.globalData.nickName
     });
 
@@ -45,8 +45,8 @@ Page({
     that.data.rank = JSON.parse(options.rank);
 
     wx.downloadFile({
-      // url: `${app.globalData.userAvatar.replace('thirdwx','wx')}`,
-      url: app.globalData.userAvatar,
+      // url: `${app.globalData.avatarUrl.replace('thirdwx','wx')}`,
+      url: app.globalData.avatarUrl,
       success: res => {
           that.data.url = res.tempFilePath;
           console.log("url: ", that.data.url);
@@ -71,7 +71,7 @@ Page({
         console.log("头像获取失败", res);
         that.setData({
           err: JSON.stringify(res),
-          url: app.globalData.userAvatar
+          url: app.globalData.avatarUrl
         });
       }
     });
@@ -98,7 +98,7 @@ Page({
         onerror: console.error
       }
     );
-  
+
     // 预先载入头像，避免因在回调函数 onload 中绘制而无法按路径裁剪 clip()
     const avatar = canvas.createImage();
     avatar.src = this.data.url;
@@ -110,15 +110,15 @@ Page({
       const avatar_h = 150 * px;
       const avatar_x = cw / 2 - avatar_w / 2;
       const avatar_y = 20 * px;
-  
+
       const main_x = 50 * px;
       const main_y = avatar_h + avatar_y;
       const main_w = 550 * px;
       const main_h = ch - (avatar_h / 2 + avatar_y) - 40 * px;
-  
+
       // 背景
       ctx.beginPath();
-    
+
         var gra = ctx.createLinearGradient(0, 0, cw, ch);
         gra.addColorStop(0.1, "#ABDCFF");
         gra.addColorStop(1, "#0396FF");
@@ -135,11 +135,11 @@ Page({
         );
         ctx.fillStyle = 'white'
         ctx.fill()
-  
+
       ctx.closePath();
-  
+
       ctx.save();
-  
+
       // 头像
       ctx.beginPath();
         ctx.arc(
@@ -166,18 +166,18 @@ Page({
         main_x + main_w / 2 - name_metrics.width / 2,
         main_y + 60 * px
       );
-  
+
       // 第一行字
       // 昨日消耗电费 xx.xx 元
       // text1        bill  text2
       ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
       const text1 = "昨日消耗电费";
       const text1_metrics = ctx.measureText(text1);
-  
+
       ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
       const bill = `${this.data.rank.con}`;
       const bill_metrics = ctx.measureText(bill);
-  
+
       ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
       const text2 = "元";
       const text2_metrics = ctx.measureText(text2);
@@ -186,14 +186,14 @@ Page({
         text1_metrics.width +
         bill_metrics.width +
         text2_metrics.width + 20 * px + 40 * px;
-  
+
       ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
       ctx.fillText(
         text1,
         main_x + (main_w - line1_center) / 2,
         main_y + 160 * px
       );
-  
+
       ctx.fillStyle = "red"
       ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
       ctx.fillText(
@@ -201,7 +201,7 @@ Page({
         main_x + (main_w - line1_center) / 2 + text1_metrics.width + 20 * px,
         main_y + 160 * px
       );
-  
+
       ctx.fillStyle = 'black';
       ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
       ctx.fillText(
@@ -209,7 +209,7 @@ Page({
         main_x + (main_w - line1_center) / 2 + text1_metrics.width + bill_metrics.width + 40 * px,
         main_y + 160 * px
       );
-  
+
       // 第二行字
       // 超越了 yy.yy% 的寝室
       // text3 percent text4
@@ -231,7 +231,7 @@ Page({
         text3_metrics.width +
         percent_metrics.width +
         text4_metrics.width + 20 * px + 60 * px;
-  
+
       ctx.fillStyle = 'black';
       ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
       ctx.fillText(
@@ -239,7 +239,7 @@ Page({
         main_x + (main_w - line1_center) / 2 + (line1_center - line2_center) / 2,
         main_y + 230 * px
       );
-  
+
       ctx.fillStyle = 'red';
       ctx.font = `normal bold ${parseInt(50*px)}px Microsoft YaHei`;
       ctx.fillText(
@@ -249,7 +249,7 @@ Page({
         (line1_center - line2_center) / 2,
         main_y + 230 * px
       );
-  
+
       ctx.fillStyle = 'black';
       ctx.font = `normal bold ${parseInt(36*px)}px Microsoft YaHei`;
       ctx.fillText(
@@ -271,7 +271,7 @@ Page({
         main_y + 270 * px,
         330 * px, 330 * px
       );
-  
+
       // 图片 小程序码
       drawImageBySrc(
         '/assets/share_code.png',

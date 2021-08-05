@@ -1,5 +1,4 @@
-//index.js
-//获取应用实例
+// stuInfoDetail.js
 import {
   handlerGohomeClick,
   handlerGobackClick
@@ -46,7 +45,7 @@ Page({
       wx.setStorageSync("userDetail", res.data.data);
       this.setData({
         userDetail: app.globalData.userDetail,
-        avatarUrl: app.globalData.userAvatar,
+        avatarUrl: app.globalData.avatarUrl,
         nickName: app.globalData.nickName
       });
       return res;

@@ -45,13 +45,13 @@
 			<chart chart-class="chart" option="{{ option }}" notMerge />
 		</view>
 		<view class="slider_contianer">
-			<view class="help  {{selected==='hours' ? 'type_indication_to_left':' type_indication_to_right'}}"></view>
-			<view class="slider_button {{selected==='hours' ? 'slider_button_selected':' '}}" data-type="hours"
-				bindtap="getcostdata">
+			<view class="help {{selected === 'hours' ? 'type_indication_to_left' : ' type_indication_to_right'}}"></view>
+			<view class="slider_button {{selected === 'hours' ? 'slider_button_selected' : ''}}"
+			data-type="hours" bindtap="getcostdata">
 				过去一天
 			</view>
-			<view class="slider_button {{selected==='days' ? 'slider_button_selected':' '}}" data-type="days"
-				bindtap="getcostdata">
+			<view class="slider_button {{ selected === 'days' ? 'slider_button_selected' : ''}}"
+			data-type="days" bindtap="getcostdata">
 				过去一周
 			</view>
 		</view>

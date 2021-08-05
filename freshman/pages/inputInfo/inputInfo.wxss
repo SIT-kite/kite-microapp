@@ -7,7 +7,7 @@
 	z-index: 3;
 }
 
-.userinfo-avatar {
+.avatar {
 	width: 180rpx;
 	height: 180rpx;
 	margin-top: 70rpx;
@@ -17,7 +17,7 @@
 	z-index: 3;
 }
 
-.userinfo-nickname {
+.nickname {
 	font-size: 38rpx;
 	font-weight: 530;
 	margin-bottom: 20rpx;

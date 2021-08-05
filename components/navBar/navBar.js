@@ -15,6 +15,18 @@ Component({
 
   properties: {
     extClass: typeEmptyString,
+    title: typeEmptyString,
+    searchText: {
+      type: String,
+      value: '点我搜索'
+    },
+    searchBar: typeFalseBoolean,
+    back: typeFalseBoolean,
+    home: typeFalseBoolean,
+    iconTheme: {
+      type: String,
+      value: 'black'
+    },
     background: {
       type: String,
       value: 'rgba(255, 255, 255, 1)',
@@ -29,19 +41,10 @@ Component({
       type: String,
       value: 'rgba(0, 0, 0, 1)'
     },
-    title: typeEmptyString,
-    searchText: {
-      type: String,
-      value: '点我搜索'
-    },
-    searchBar: typeFalseBoolean,
-    back: typeFalseBoolean,
-    home: typeFalseBoolean,
-    iconTheme: {
-      type: String,
-      value: 'black'
-    },
-    /* animated: {
+    delta: {
+      type: Number,
+      value: 1
+    } /*, animated: {
       type: Boolean,
       value: true
     },
@@ -49,14 +52,10 @@ Component({
       type: Boolean,
       value: true,
       observer: '_showChange'
-    }, */
-    delta: {
-      type: Number,
-      value: 1
-    }
+    } */
   },
   created() { this.getSystemInfo(); },
-  attached() { this.setStyle();  }, // 设置样式
+  attached() { this.setStyle(); }, // 设置样式
 
   data: {},
 
@@ -200,7 +199,7 @@ Component({
         目前发现在大多机型都是固定值 为防止不一样 会使用动态值来计算nav元素大小 */
         systemInfo.ios = ios; //是否ios
 
-        app.globalSystemInfo = systemInfo; //将信息保存到全局变量中,后边再用就不用重新异步获取了
+        app.globalSystemInfo = systemInfo; //将信息保存到全局变量中，后边再用就不用重新异步获取了
 
         // console.log('systemInfo', systemInfo);
         return systemInfo;

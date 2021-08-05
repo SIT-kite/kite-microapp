@@ -6,14 +6,6 @@
 	background-color: white;
 }
 
-.pop_class {
-	box-sizing: border-box;
-	height: 15vh;
-	width: 30vh;
-	padding: 2.5vh;
-	border-radius: 1vh;
-}
-
 .icon_bg {
 	width: 5vh;
 	height: 5vh;
@@ -36,20 +28,11 @@
 	height: 100%;
 }
 
-.pop_container {
-	height: 10vh;
-	width: 25vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-}
-
 .v_button {
 	width: 15vw !important;
 	height: 15vw;
-  margin-top: 5vh;
-  padding: 0 !important;
+	margin-top: 5vh;
+	padding: 0 !important;
 	border-radius: 50%;
 	background-color: black;
 	display: flex;
@@ -64,8 +47,8 @@
 
 .v_button image {
 	height: 60%;
-  width: 60%;
-  margin: 20%;
+	width: 60%;
+	margin: 20%;
 }
 
 .title_block {

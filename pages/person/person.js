@@ -1,216 +1,188 @@
 // 我
 // pages/person/person.js
 import getHeader from "../../utils/requestUtils.getHeader";
+import promisifyNoArg from "../../utils/promisify.noArg";
+import request from "../../utils/request";
+
 const app = getApp();
-const commonUrl = app.globalData.commonUrl;
-const requestUtils = require('../../utils/requestUtils');
-const promisify    = require('../../utils/promisifyUtils');
-const wxLogin = promisify(wx.login);
-var wxCode = "";
-
-// const setUserData = (t, data) => t.setData({
-//   nickName: data.nickName,
-//   avatar: data.userAvatar,
-//   isLogin: data.isLogin,
-//   isStudent: data.isStudent
-// });
-
-const setTokenUid = (token, uid) => {
-  app.globalData.token = token;
-  app.globalData.uid = uid;
-  wx.setStorageSync("token", token);
-  wx.setStorageSync("uid", uid);
-};
 
 Page({
 
   data: {
-    iconUrl: {
-      wrong: "/assets/icons/wrong.png",
-      right: "/assets/icons/right.png"
+    isLogin: false,
+    isStudent: false
+  },
+
+  login() {
+  // https://github.com/SIT-Yiban/kite-server/blob/master/docs/APIv1/用户模块.md
+
+    const apiUrl = app.globalData.commonUrl;
+
+    const hasErrorMsg = err =>
+      "codeNotZero" in err &&
+      err.codeNotZero === request.symbols.codeNotZero &&
+      typeof err.res.msg === "string";
+
+    const errorHandler = (error, prefix, msg) => {
+      console.error(`${prefix} ${msg}`, error);
+      wx.showModal({
+        title: msg,
+        content: `登录渠道创建失败，请检查网络或稍后再试。${
+          hasErrorMsg(error) ? "\n错误信息：" + error.res.msg : ""
+        }`,
+        showCancel: false
+      });
     }
-  },
 
-  /**
-   * 返回获取用户实名认证请求的Promise
-   * @return {Promise}
-   */
-  getIdentityPromise: () => {
-    const url = `${commonUrl}/user/${app.globalData.uid}/identity`;
-    const data = {};
-    const header = getHeader("urlencoded", app.globalData.token);
-    return requestUtils.doGET(url, data, header);
-  },
-
-  /**
-   * 返回Post Session请求的Promise
-   * @return {Promise}
-   */
-  postSessionPromise: () => {
-    const url = `${commonUrl}/session`;
-    const header = getHeader("urlencoded");
-    const data = { loginType: 0, wxCode };
-    return requestUtils.doPOST(url, data, header);
-  },
-
-  /**
-   * 返回PostUser请求的Promise
-   * @param {Object} wxUserInfo 微信提供的用户信息
-   * @return {Promise}
-   */
-  postUserPromise(wxUserInfo) {
-    console.log('postUserPromise 调用注册逻辑');
-    const url = `${commonUrl}/user`;
-    const header = getHeader("urlencoded");
-    const data = wxUserInfo;
-    return requestUtils.doPOST(url, data, header);
-  },
-
-  /**
-   * 返回PostAuthentication请求的Promise
-   * @return {Promise}
-   */
-  postUserAuthPromise: () => {
-    const url = `${commonUrl}/user/${app.globalData.uid}/authentication`;
-    const data = { loginType: 0, wxCode };
-    const header = getHeader("urlencoded", app.globalData.token);
-    return requestUtils.doPOST(url, data, header);
-  },
-
-  /*
-  feedback: () => wx.showModal({
-    title: "意见反馈",
-    content: "小程序反馈群: 943110696",
-    confirmText: "复制群号",
-    cancelText: "知道了",
-    success: () => wx.setClipboardData({
-      data: "943110696",
-      success: () => wx.showToast({ title: "群号复制成功" })
-    })
-  }),
-  */
-
-  login(e) {
-
-    const setIsStudent = isStudent => {
-      this.setData({ isStudent });
-      app.globalData.isStudent = isStudent;
-      wx.setStorageSync("isStudent", isStudent);
+    const setData = (data, to) => {
+      to[0] && this.setData(data);
+      to[1] && Object.assign(app.globalData, data);
+      to[2] && Object.entries(data).forEach(
+        ([key, value]) => wx.setStorageSync(key, value)
+      );
     };
 
-    var wxUserInfo = e.detail.userInfo;
+    // 设置本地变量 token 和 uid
+    const setTokenAndUid = (token, uid) => setData({ token, uid }, [ 0, 1, 1 ]);
 
-    wx.getUserInfo({
-      lang: "zh_CN",
-      success: res => console.log("login():", e.detail.userInfo, res.userInfo)
-    });
+    // 从服务器端 GET user identity 并设置本地变量 isStudent
+    const setIsStudent = () => {
 
-    if (e.detail.userInfo) {
+      const set = isStudent => setData({ isStudent }, [ 1, 1, 1 ]);
 
-      wxLogin().then(res => {
-
-        if (res.code) {
-          wxCode = res.code;
-          wx.showLoading({ title: '加载中' });
-          return this.postSessionPromise();
-        } else {
-          return Promise.reject(`微信登录失败: ${res.errMsg}`);
+      // GET user identity
+      wx.request({
+        method: "GET",
+        url: `${apiUrl}/user/${app.globalData.uid}/identity`,
+        header: getHeader("urlencoded", app.globalData.token),
+        success: () => set(true),
+        fail: error => {
+          set(false);
+          console.error("GET user identity 失败", error);
         }
-
-      }).then(res => {
-
-        console.log("PostSession 成功", res);
-
-        const data = res.data.data;
-
-        // 设置本地变量 token uid
-        setTokenUid(data.token, data.data.uid);
-
-        // 设置本地变量 isStudent
-        this.getIdentityPromise().then(
-          () => setIsStudent(true)
-        ).catch(
-          () => setIsStudent(false)
-        );
-        wx.hideLoading();
-
-      }).catch(res => {
-
-        console.log("PostSession 失败 创建用户", res);
-
-        const hideAndCatch = msg => (
-          res => {
-            wx.hideLoading();
-            console.error(msg, res);
-          }
-        );
-
-        // 创建用户
-        this.postUserPromise(wxUserInfo).then(res => {
-
-          const data = res.data.data;
-          setTokenUid(data.token, data.data.uid);
-
-          wxLogin().then(res => {
-
-            // 更新全局 wxCode
-            wxCode = res.code;
-
-            this.postUserAuthPromise().then(() => {
-              // PostAuthentication 成功
-
-              // 设置本地变量 isStudent
-              this.getIdentityPromise().then(
-                () => setIsStudent(true)
-              ).catch(
-                () => setIsStudent(false)
-              );
-              wx.hideLoading();
-
-            }).catch( hideAndCatch("PostAuthentication 失败") );
-          }).catch( hideAndCatch("微信登录失败") );
-        }).catch( hideAndCatch("创建用户失败") );
-
-      });
-
-      // 设置全局 Avatar nickName isLogin
-      app.globalData.nickName   = e.detail.userInfo.nickName;
-      app.globalData.userAvatar = e.detail.userInfo.avatarUrl;
-      app.globalData.isLogin    = true;
-      this.setData({
-        nickName: app.globalData.nickName,
-        avatar:   app.globalData.userAvatar,
-        isLogin:  app.globalData.isLogin
       });
 
     }
-  },
 
+    const setIsLogin = isLogin => setData({ isLogin }, [1, 1, 0]);
+
+    promisifyNoArg(wx.login)().then(res => {
+
+      const wxCode = res.code;
+      wx.showLoading({ title: "加载中" });
+
+      // POST session 登录
+      request({
+        url: `${apiUrl}/session`,
+        method: "POST",
+        header: getHeader("urlencoded"),
+        data: { loginType: 0, wxCode }
+      }).then(res => {
+
+        console.log("POST session 登录成功", res);
+        const data = res.data.data;
+        setTokenAndUid(data.token, data.data.uid);
+        setIsStudent();
+        setIsLogin(true);
+        wx.hideLoading();
+
+      }).catch(error => {
+
+        console.log("POST session 登录失败", error);
+
+        // getUserProfile 获取微信用户信息
+        wx.getUserProfile({
+          lang: "zh_CN",
+          desc: "上应小风筝需要获得您的公开信息（昵称、头像、地区及性别）"
+        }).then(res => {
+
+          const wxUserInfo = res.userInfo;
+          console.log("用户信息 userinfo:", wxUserInfo);
+
+          // POST user 创建用户
+          request({
+            url: `${apiUrl}/user`,
+            method: "POST",
+            header: getHeader("urlencoded"),
+            data: wxUserInfo
+          }).then(res => {
+
+            console.log("POST user 用户创建成功", res);
+            const data = res.data;
+            setTokenAndUid(data.token, data.uid);
+            setIsLogin(true);
+
+            // POST user auth 创建登录渠道
+            wx.request({
+              url: `${apiUrl}/user/${app.globalData.uid}/authentication`,
+              method: "POST",
+              header: getHeader("urlencoded", app.globalData.token),
+              data: { loginType: 0, wxCode },
+              complete: () => wx.hideLoading(),
+              success(res) {
+                console.log("POST user auth 登录渠道创建成功", res);
+              },
+              fail(error) {
+                errorHandler(error, "POST user auth", "登录渠道创建失败");
+              }
+            });
+
+          }).catch(error => {
+            wx.hideLoading();
+            errorHandler(error, "POST user", "用户创建失败");
+          });
+
+        });
+
+      });
+
+    }).catch(
+      error => {
+        console.error("微信登录失败", error);
+        wx.showModal({
+          title: "微信登录失败",
+          content: "微信登录失败，请检查网络或稍后重试。",
+          showCancel: false
+        });
+      }
+    );
+
+  },
+/*
+  // 更新用户数据
+  updateUserInfo: () => wx.getUserProfile({
+    lang: "zh_CN",
+    desc: "上应小风筝需要获得您的公开信息（昵称、头像、地区及性别）"
+  }).then(
+    res => wx.request({
+      method: "PUT",
+      url: `${gData.commonUrl}/user/${gData.uid}`,
+      header: getHeader("urlencoded", gData.token),
+      data: res.userInfo
+    });
+  )
+*/
   onLoad() {
-    const data = app.globalData;
     this.setData({
-      nickName  : data.nickName,
-      avatar    : data.userAvatar,
-      isLogin   : data.isLogin,
-      isStudent : data.isStudent
+      isLogin   : app.globalData.isLogin,
+      isStudent : app.globalData.isStudent
     });
   },
 
   onReady() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({selected: 1}); // 选中第二个项目
+      this.getTabBar().setData({selected: 1}); // 选中第二个项目 "我"
     }
   },
 
-  onShow() {},
+  // onShow() {},
 
-  /**
-   * 用户点击右上角分享
-   */
+  // 用户点击右上角分享
   onShareAppMessage() {
     return {
       title: "上应小风筝",
       path: "pages/index/index"
     }
   }
+
 })

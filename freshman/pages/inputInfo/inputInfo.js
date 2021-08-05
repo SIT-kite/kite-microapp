@@ -172,14 +172,14 @@ Page({
         userInfo: app.globalData.userInfo,
         buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
-        avatarUrl: app.globalData.userAvatar,
+        avatarUrl: app.globalData.avatarUrl,
         nickName: app.globalData.nickName
       })
     } else {
       this.setData({
         buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
-        avatarUrl: app.globalData.userAvatar,
+        avatarUrl: app.globalData.avatarUrl,
         nickName: app.globalData.nickName
       })
     }

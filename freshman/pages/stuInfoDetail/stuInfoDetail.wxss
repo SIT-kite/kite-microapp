@@ -7,7 +7,7 @@
 	z-index: 3;
 }
 
-.userinfo-avatar {
+.avatar {
 	width: 180rpx;
 	height: 180rpx;
 	margin-top: 20rpx;

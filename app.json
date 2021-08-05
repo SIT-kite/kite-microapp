@@ -38,12 +38,6 @@
       ]
     },
     {
-      "root": "edu",
-      "pages": [
-        "pages/available-room/show"
-      ]
-    },
-    {
       "root": "class-room",
       "pages": [
         "pages/available-room"
@@ -104,7 +98,7 @@
   },
   "plugins": {
     "echarts": {
-      "version": "2.0.0",
+      "version": "2.1.1",
       "provider": "wx1db9e5ab1149ea03"
     }
   },

@@ -1,0 +1,34 @@
+
+.background {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 1rem;
+	left: 0;
+	z-index: -1;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	margin-top: 10vh;
+	padding: 1rem;
+	gap: 1rem;
+}
+
+.section {
+	box-sizing: border-box;
+	background-color: white;
+	border-radius: 2px;
+	box-shadow: var(--shadow-2dp);
+	opacity: 98%;
+	transition:
+		box-shadow 200ms cubic-bezier(.4, 0, 1, 1),
+		opacity 75ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.section:hover {
+	box-shadow: var(--shadow-4dp);
+	opacity: 100%;
+}
