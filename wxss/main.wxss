@@ -20,8 +20,8 @@
 	margin-bottom: 1rem;
 	box-sizing: border-box;
 	background-color: white;
-	border-radius: 2px;
-	box-shadow: var(--shadow-2dp);
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px 6px rgba(224, 224, 224, 0.37);
 	opacity: 98%;
 	transition:
 		box-shadow 200ms cubic-bezier(.4, 0, 1, 1),
