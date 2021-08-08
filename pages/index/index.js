@@ -53,7 +53,7 @@ Page({
   },
 
   onLoad() {
-    wx.login({success(res) {console.log(res)}});
+    // wx.login({success(res) {console.log(res)}});
     // 获取并设置通知 notice
     wx.request({
         method: "GET",
@@ -93,7 +93,7 @@ Page({
     } catch (e) {
       console.log(e)
     }
-    if (pageId === "welcome" && userDetail !== "" && userDetail != null) {
+    if (pageName === "welcome" && userDetail !== "" && userDetail != null) {
       url = "/freshman/pages/stuInfoDetail/stuInfoDetail";
     }
 
@@ -139,12 +139,6 @@ Page({
       this.getTabBar().setData({ selected: 0 });
     }
   },
-
-  // goNavigate() {
-  //   wx.navigateTo({
-  //     url: "/pages/navigate/navigate"
-  //   });
-  // },
 
   onShareAppMessage() {
     return {

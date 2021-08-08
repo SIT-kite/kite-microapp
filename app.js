@@ -84,16 +84,18 @@ App({
     const success = [];
     const notFound = [];
 
-    [
+    const keys = [
       "uid", "token", "isStudent", "userInfo", "userDetail",
       "signPrivacyConfirm", "freshmanPrivacyConfirm"
-    ].forEach(
+    ];
+    
+    keys.forEach(
       (key, index) => {
         if (key in storage) {
           this.globalData[key] = storage[key];
           success.push(index);
         } else {
-          notFound.push(index)
+          notFound.push(index);
         }
       }
     );
