@@ -53,7 +53,7 @@ Page({
   },
 
   onLoad() {
-    // wx.login({success(res) {console.log(res)}});
+    wx.login({success(res) {console.log(res)}});
     // 获取并设置通知 notice
     wx.request({
         method: "GET",
