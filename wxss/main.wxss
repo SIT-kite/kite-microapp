@@ -14,10 +14,10 @@
 	box-sizing: border-box;
 	margin-top: 10vh;
 	padding: 1rem;
-	gap: 1rem;
 }
 
 .section {
+	margin-bottom: 1rem;
 	box-sizing: border-box;
 	background-color: white;
 	border-radius: 2px;
