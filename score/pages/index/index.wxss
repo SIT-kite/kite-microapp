@@ -1,0 +1,64 @@
+/* score/pages/index/index.wxss */
+Page {
+  background-color: #F7F7F7;
+}
+.pageHeader {
+  display: flex;
+  padding: 20rpx;
+  align-items: center;
+}
+.select {
+  font-weight: bold;
+}
+
+picker.year {
+  margin-left: 20rpx;
+  margin-right: 50rpx;
+  box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
+}
+picker.term {
+  margin-right: 200rpx;
+  box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
+}
+
+
+.refer {
+  height: 60rpx;
+  width: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  border-radius: 5rpx;
+}
+.gpaContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.gpaWords {
+  padding: 5%;
+  width:55%;
+  color: #1c4587;
+  background-color: #ffe599;
+  box-shadow: 0rpx 0rpx 10rpx 1rpx #D1D1D1;
+  border-radius: 0rpx 20rpx 20rpx 0rpx;
+  
+}
+.showYearGpa {
+  font-weight: bold;
+  color: #337ab7;
+  background-color: #c9daf8;
+  border-radius: 20rpx 0rpx 0rpx 20rpx;
+  box-shadow: 0rpx 0rpx 10rpx 1rpx #D1D1D1;
+  padding: 10rpx;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+switch {
+  transform: scale(.8)
+
+}

@@ -1,0 +1,13 @@
+<!--score/components/card/card.wxml-->
+<card class="card">
+
+  <view class="leftContainer">
+    <text class="nameText">中国近代史</text>
+    <text class="creditText">学分：4.0</text>
+  </view>
+  <view class="rightContainer">
+    <text class="gradesText">100</text>
+  </view>
+
+</card>
+

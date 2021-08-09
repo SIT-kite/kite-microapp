@@ -4,10 +4,10 @@
   "resizable": false,
   "singlePage": {},
   "networkTimeout": {
-    "request":       15000,
+    "request": 15000,
     "connectSocket": 15000,
-    "uploadFile":    30000,
-    "downloadFile":  30000
+    "uploadFile": 30000,
+    "downloadFile": 30000
   },
   "window": {
     "backgroundTextStyle": "light",
@@ -80,6 +80,12 @@
         "pages/details/details",
         "pages/index/index",
         "pages/mini-result/mini-result"
+      ]
+    },
+    {
+      "root": "score",
+      "pages": [
+        "pages/index/index"
       ]
     }
   ],
