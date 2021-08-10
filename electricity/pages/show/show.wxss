@@ -78,10 +78,11 @@ input {
 	position: relative;
 	background-color: white;
 	margin-top: 60rpx;
-	width: 85%;
+	width: 87%;
 	height: 400rpx;
 	border-radius: 4px;
-	padding-left: 20rpx;
+	margin-left:10rpx;
+	margin-right:-10rpx; 
 	padding-top: 20rpx;
 }
 
@@ -216,12 +217,13 @@ page {
 .rank_container {
 	position: relative;
 	margin-top: 20rpx;
+	margin-right:-21rpx;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	width: 85%;
+	width: 260.62px;
 	background-color: white;
-	padding: 20rpx 30rpx;
+	padding: 20rpx 20rpx 20rpx 30rpx;
 	border-radius: 8px;
 	text-align: center;
 }

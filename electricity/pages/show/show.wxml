@@ -6,7 +6,7 @@
 		<text>电费余额查询</text>
 	</view>
 	<view
-		style="position: relative; white-space: nowrap; display:flex; align-items:center; box-sizing:border-box; margin-top:2vh; width:80vw; padding:0 20rpx;">
+		style="position: relative; white-space: nowrap; display:flex; align-items:center; box-sizing:border-box; margin-top:2vh; width:80vw; ">
 		<input value="{{floorID}}" bindinput="bindfloorID" placeholder="楼号" class="input_left"></input>
 		<input value="{{roomID}}" bindinput="bindroomID" placeholder="房间号" class="input_right"></input>
 		<!-- <image class="tips" src="../../../assets/icons/tips.png" bindtap="showtips"></image> -->
