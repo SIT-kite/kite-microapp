@@ -83,6 +83,12 @@
       ]
     },
     {
+      "root":"timetable",
+      "pages":[
+        "pages/index/index"
+      ]
+    },
+    {
       "root": "score",
       "pages": [
         "pages/index/index"
