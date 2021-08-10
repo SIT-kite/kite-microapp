@@ -22,7 +22,7 @@
     "pages/index/index",
     "pages/person/person",
     "pages/about/about",
-    "pages/signup/signup"
+    "pages/certification/certification"
   ],
   "subpackages": [
     {

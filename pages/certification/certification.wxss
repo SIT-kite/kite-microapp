@@ -1,4 +1,4 @@
-/* pages/signup/signup.wxss */
+/* pages/certification/certification.wxss */
 .main {
 	display: flex;
 	flex-direction: column;

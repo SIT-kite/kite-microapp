@@ -1,13 +1,12 @@
 // 注册
-// pages/signup/signup.js
+// pages/certification/certification.js
 import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils';
 const requestUtils = require("../../utils/requestUtils");
 
 const app = getApp();
 
 const getCanUpload = uploadInfo => Boolean(
-  uploadInfo.realName && uploadInfo.studentId &&
-  ( uploadInfo.oaSecret || uploadInfo.identityNumber )
+  uploadInfo.studentId && uploadInfo.oaSecret
 );
 
 Page({
@@ -18,8 +17,8 @@ Page({
   data: {
     canUpload: false,
     uploadInfo: {
-      realName: null,
-      studentId: null
+      studentId: null,
+      oaSecret: null,
     }
   },
 
@@ -27,12 +26,6 @@ Page({
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
 
-  bindName(e) {
-    const canUpload = getCanUpload(this.data.uploadInfo);
-    this.setData({
-      canUpload, 'uploadInfo.realName': e.detail.value
-    })
-  },
   bindId(e) {
     const canUpload = getCanUpload(this.data.uploadInfo);
     this.setData({
@@ -45,15 +38,8 @@ Page({
       canUpload, 'uploadInfo.oaSecret': e.detail.value
     })
   },
-  bindidentity(e) {
-    const canUpload = getCanUpload(this.data.uploadInfo);
-    const identityNumber = e.detail.value.toString().toUpperCase();
-    this.setData({
-      canUpload, 'uploadInfo.identityNumber': identityNumber
-    })
-  },
 
-  signup: function () {
+  certify: function () {
 
     const that = this;
 
@@ -125,9 +111,8 @@ Page({
       wx.showModal({
         title: "隐私信息提示",
         content:
-          "小程序部分功能(如闲置交易，课程表)需要验证并" +
-          "使用您的身份信息，以提供功能或保证交易安全。" +
-          "数据仅用于比对身份信息，保存期限为7天。",
+          "小程序部分功能（如闲置交易、课程表）需要验证并" +
+          "使用您的身份信息，以提供功能或保证交易安全。",
         showCancel: true,
         cancelText: "我拒绝",
         confirmText: "我已知晓",

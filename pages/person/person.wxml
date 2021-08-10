@@ -22,7 +22,7 @@
 						<text>{{ isStudent ? "已" : "未" }}实名</text>
 					</view>
 				</view>
-				<navigator class="verify" url="/pages/signup/signup">
+				<navigator class="verify" url="/pages/certification/certification">
 					认证 <text class="arrow">></text>
 				</navigator>
 			</view>

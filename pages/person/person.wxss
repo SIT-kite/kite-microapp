@@ -91,7 +91,7 @@
 	background-color: red;
 }
 
-.signup {
+.certification {
 	padding: .5em 0 .5em .5em; /* 右侧为 0，避免影响文字与边缘的边距 */
 }
 
