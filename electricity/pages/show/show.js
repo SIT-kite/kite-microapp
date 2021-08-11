@@ -336,7 +336,8 @@ Page({
           date: dateTime[0],
           time: dateTime[1].substr(0, 5),
           balance: data.balance.toFixed(2),
-          power: data.power.toFixed(2)
+          power: data.power.toFixed(2),
+          room:data.room
         },
         show: true,
         showtype: 'normal'
