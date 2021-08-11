@@ -34,7 +34,8 @@
         "pages/newClass/newClass",
         "pages/shareAnalysis/shareAnalysis",
         "pages/newFriend/newFriend",
-        "pages/navigate/navigate"
+        "pages/navigate/navigate",
+        "pages/guide/guide"
       ]
     },
     {

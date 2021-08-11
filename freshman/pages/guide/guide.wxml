@@ -1,0 +1,8 @@
+<!--freshman/pages/guide/guide.wxml-->
+<navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<view class="mapContainer">
+  <map class="map" setting="{{setting}}" markers="{{markers}}" enable-poi="{{false}}">
+  </map>
+  <image class="toNowLocation" src="../../assets/icons/location.svg" bindtap="toNowLocation"></image>
+  <view class="backToSchool" wx:if="{{locationChange}}" bindtap="backToSchool">回到学校</view>
+</view>

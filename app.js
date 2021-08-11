@@ -30,7 +30,9 @@ App({
     searchResultList: [],
     searchHistoryList: [],
     searchKeyWord: "",
-    searchResultItemIndex: 0
+    searchResultItemIndex: 0,
+
+    location: {}
 
   },
 
