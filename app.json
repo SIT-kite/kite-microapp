@@ -9,6 +9,11 @@
     "uploadFile": 30000,
     "downloadFile": 30000
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于报到指南服务."
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -34,7 +39,6 @@
         "pages/newClass/newClass",
         "pages/shareAnalysis/shareAnalysis",
         "pages/newFriend/newFriend",
-        "pages/navigate/navigate",
         "pages/guide/guide"
       ]
     },

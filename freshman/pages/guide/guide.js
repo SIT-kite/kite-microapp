@@ -229,18 +229,18 @@ Page({
     setting: {
       latitude: coordinate[0].latitude,
       longitude: coordinate[0].longitude,
-      scale: 15.5,
+      scale: 17,
       rotate: 10,
       showLocation: true,
     },
     markers: [{
       id: 1,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[27].latitude,
       longitude: coordinate[27].longitude,
       title: coordinate[27].name,
       alpha:  0.6,
-      width: 24,
+      width: 30,
       height: 30,
       label: {
         content: coordinate[27].name
@@ -248,12 +248,12 @@ Page({
     },
     {
       id: 2,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[28].latitude,
       longitude: coordinate[28].longitude,
       title: coordinate[28].name,
       alpha:  0.6,
-      width: 24,
+      width: 30,
       height: 30,
       label: {
         content: coordinate[28].name
@@ -261,12 +261,12 @@ Page({
     },
     {
       id: 3,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[29].latitude,
       longitude: coordinate[29].longitude,
       title: coordinate[29].name,
       alpha:  0.6,
-      width: 24,
+      width: 30,
       height: 30,
       label: {
         content: coordinate[29].name
@@ -274,12 +274,12 @@ Page({
     },
     {
       id: 4,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[30].latitude,
       longitude: coordinate[30].longitude,
       title: coordinate[30].name,
       alpha:  0.6,
-      width: 24,
+      width: 30,
       height: 30,
       label: {
         content: coordinate[30].name,
@@ -287,12 +287,12 @@ Page({
     },
     {
       id: 5,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[31].latitude,
       longitude: coordinate[31].longitude,
       title: coordinate[31].name,
       alpha:  0.6,
-      width: 24,
+      width: 30,
       height: 30,
       label: {
         content: coordinate[31].name,
@@ -300,7 +300,7 @@ Page({
     },
     {
       id: 6,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[32].latitude,
       longitude: coordinate[32].longitude,
       title: coordinate[32].name,
@@ -313,12 +313,12 @@ Page({
     },
     {
       id: 7,
-      iconPath: "../../assets/icons/yellow_arrow.svg",
+      iconPath: "/freshman/assets/icons/yellow_arrow.png",
       latitude: coordinate[33].latitude,
       longitude: coordinate[33].longitude,
       title: coordinate[33].name,
       alpha:  0.6,
-      width: 24,
+      width: 30,
       height: 30,
       label: {
         content: coordinate[33].name,
@@ -326,10 +326,12 @@ Page({
     },
     {
       id: 8,
-      iconPath: "../../assets/icons/red_arrow.svg",
+      iconPath: "/freshman/assets/icons/red_arrow.png",
       latitude: '',
       longitude: '',
       title: '',
+      width: 50,
+      height: 50,
       label: {
         content: '',
       }
