@@ -3,6 +3,7 @@ page {
   flex-direction: column;
   justify-content: flex-start;
   background-color: white;
+  height: 100%;
 }
 
 .nav {
@@ -178,7 +179,8 @@ page {
 .delimiter {
   width: 8px;
 }
-
+/*2021-8-12 保持小程序一致性删除深色模式*/
+/*
 @media (prefers-color-scheme: dark) {
   page {
     background-color: #08141F;
@@ -224,4 +226,4 @@ page {
   .status.loading {
     background-color: #555555;
   }
-}
+}*/

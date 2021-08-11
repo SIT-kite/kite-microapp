@@ -40,6 +40,9 @@
 				class="tr">
 				<view class="td room-name-tuple">
 					<view class="room-name">{{statusList.room}}</view>
+					<view class="room-metadata">
+						<view>座位数 {{statusList.capacity}}</view>
+						</view>
 				</view>
 				<view class="td status-list">
 					<view wx:for="{{[1, 2, 3, 4]}}" wx:for-item="n" wx:key="n"

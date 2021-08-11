@@ -39,7 +39,9 @@
 ## 联系我们
 
 1. 在本项目中[提交 issue](https://github.com/SIT-Yiban/kite-microapp/issues) 
-2. 在 QQ 群中联系管理员反馈。2021级易班新生群：[147239936](https://jq.qq.com/?_wv=1027&k=cIBUBgOT)
+2. 在 QQ 群中联系管理员反馈。
+   小程序反馈群：943110696
+   2021级易班新生群：[147239936](https://jq.qq.com/?_wv=1027&k=cIBUBgOT) （限本校学生加入）
 3. 地址：奉贤校区大学生活动中心309室
 
 ## 贡献者
@@ -65,6 +67,7 @@
 - 2019级 计算机科学与信息工程学院 [B635](https://github.com/B635)
 - 2019级 计算机科学与信息工程学院 [wzh](https://github.com/OneofFive-ops)
 - 2019级 计算机科学与信息工程学院 [EvilorLive](https://github.com/EvilorLive)
+- 2019级 机械工程学院 [zdy180108](https://github.com/zdy180108)
 - 2020级 计算机科学与信息工程学院 [Pony-Zhang](https://github.com/Pony-Zhang)
 - 2020级 计算机科学与信息工程学院 [Devin](https://github.com/Devinroot)
 

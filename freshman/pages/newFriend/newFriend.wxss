@@ -26,6 +26,26 @@
 	/* box-shadow: 1rpx 2rpx 3rpx 4rpx red; */
 }
 
+.card-0 {
+	background-color:rgb(246, 246, 251);
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.card-1{
+	background-color:white;
+	width: 86%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
 .bed-wrap-1 {
 	display: flex;
 	flex-direction: row-reverse;

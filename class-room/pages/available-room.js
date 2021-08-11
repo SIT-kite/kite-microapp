@@ -10,7 +10,6 @@ const app =  getApp();
 const availableSuffix = `/edu/classroom/available`;
 const requestUtils = require("../../utils/requestUtils");
 const promisify = require('../../utils/promisifyUtils');
-const wxShowModal = promisify(wx.wxShowModal);
 
 
 const timeIntervals = {
@@ -34,15 +33,15 @@ const campuses = ["奉贤校区", "徐汇校区"]
 let choosedCampus = "奉贤校区"
 
 const buildings = {
-  "奉贤校区": ["一教", "二教"],
+  "奉贤校区": ["A", "B","C","D","E","F","G","H","I"],
   "徐汇校区": ["教学楼","南图"]
 }
 
-let choosedBuilding= "一教"
+let choosedBuilding= "A"
 let data_content = {}
 
 Page({
-  data: { campuses, choosedCampus, buildings, choosedBuilding, hideBottom: true ,index:1,data_content},
+  data: { campuses, choosedCampus, buildings, choosedBuilding, hideBottom: true ,index:0,data_content},
 
   // 导航栏函数
   handlerGohomeClick: handlerGohomeClick,
@@ -51,38 +50,74 @@ Page({
   setcampuses: function (){
     return this.data.choosedCampus;
   },
+  
+  Choosed: function(){
+    let campus;
+    let building;
+    if (this.data.choosedCampus == "奉贤校区") {
+      campus = 1, building = "region";
+    } else if(this.data.choosedCampus == "徐汇校区")
+    { campus = 2, building = "building";}
+    return [campus,building];
+  },
+
+  setdata: function(Campus,building,index,date){
+    let _this=this
+    let available = `?campus=${Campus}&date=${date}&${building}=${this.data.choosedBuilding}&index=${index}`;
+    _this.setData({
+      data: 0
+    })
+    let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
+    let header = getHeader("urlencoded", app.globalData.token);
+    let data = {};
+    let data_initial = {};
+    let data_content = _this.data.data_content
+    _this.setData({
+      data_content:[]
+    })
+    let tapDate = requestUtils.doGET(url, data, header);
+    tapDate.then((res) => {
+      data_initial = res.data.data
+      for (var i = 0; i < data_initial.length; i++) {
+        let datas = data_initial[i];
+        datas.busy_time = this.ten_two(datas.busy_time);
+      }
+      data_content = data_initial
+      _this.setData({
+        data: data_content
+      })
+    })
+  },
 
   loadmore: function(){
-    let self = this;
+    let _this = this;
     setTimeout(function(){
       console.log('上拉加载更多');
-      let pages = self.data.index;
+      let pages = _this.data.index;
       pages = pages+1;
-      self.setData({
+      _this.setData({
         index: pages,
         hideBottom:false
       })
-      let campus;
-      if (self.data.choosedCampus == "奉贤校区") {
-        campus = 1;
-      } else if(self.data.choosedCampus == "徐汇校区")
-      { campus = 2 ;}
-      let index = self.data.index;
-      let available = `?campus=${campus}&date=${this.data.choosedDate}&building=${self.data.choosedBuilding}&index=${index}`;
+      let campus = _this.Choosed()[0];
+      let building = _this.Choosed()[1];
+      let index = _this.data.index;
+      let available = `?campus=${campus}&date=${this.data.choosedDate}&${building}=${_this.data.choosedBuilding}&index=${index}`;
       let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
       let header = getHeader("urlencoded", app.globalData.token);
       let data = {};
       let data_initial = {};
-      let data_content = self.data.data_content;
+      let data_content = _this.data.data_content;
       let tapDate = requestUtils.doGET(url, data, header);
       tapDate.then((res) => {
         data_initial = res.data.data
         for (var i = 0; i < data_initial.length; i++) {
           let datas = data_initial[i];
-          datas.busy_time = self.ten_two(datas.busy_time);
+          datas.busy_time = _this.ten_two(datas.busy_time);
         }
-        data_content=data_content.concat(data_initial);
-        self.setData({
+        if(Array.isArray(data_content)){
+        data_content=data_content.concat(data_initial);}
+        _this.setData({
           data: data_content,
           data_content:data_content,
           hideBottom :true
@@ -105,47 +140,25 @@ Page({
 　　　　Point.push(two.charAt(k))
 
 　　}
-　　return Point;
+　　return Point; 
   },
 
   onLoad: function(options) {
     let _this = this
     let now = dayjs()
     let today = now.startOf('day')
-    let data = {};
-    let data_initial = {};
     let dates = []
+    let index = _this.data.index;
     for (let i of [0, 1, 2, 3, 4, 5, 6]) {
       let day = today.add(i, 'day')
       dates.push(day.format('YYYY-MM-DD'))
     }
-    let campus;
-    if (this.data.choosedCampus == "奉贤校区") {
-      campus = 1;
-    } else if(this.data.choosedCampus == "徐汇校区")
-    { campus = 2 ;}
+    let campus = _this.Choosed()[0];
+    let building = _this.Choosed()[1];
     _this.setData({
       data: 0
     })
-    let  available = `?campus=${campus}&date=${dates[0]}&building=${this.data.choosedBuilding}`;
-    let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let tapDate = requestUtils.doGET(url, data, header);
-    let data_content = _this.data.data_content
-    tapDate.then((res) => {
-      data_initial = res.data.data
-      for (var i = 0; i < data_initial.length; i++) {
-        let datas = data_initial[i];
-        datas.busy_time = this.ten_two(datas.busy_time);
-      }
-      data_content = data_initial
-      _this.setData({
-        data: data_content,
-        data_content :data_initial
-      })
-    })
-
-
+    this.setdata(campus,building,index,dates[0])
   },
 
   onShow: function() {
@@ -176,44 +189,15 @@ Page({
     let _this = this
     const date = event.currentTarget.dataset.date
     this.setData({ choosedDate: date })
-    _this.setData({
-      data: 0
-    })
     let pages = _this.data.index;
     pages=0;
     _this.setData({
       index :pages
     })
-    let campus;
-    if (this.data.choosedCampus == "奉贤校区") {
-      campus = 1;
-    } else if(this.data.choosedCampus == "徐汇校区")
-    { campus = 2 ;}
-    let available = `?campus=${campus}&date=${this.data.choosedDate}&building=${this.data.choosedBuilding}`;
-    _this.setData({
-      data: 0
-    })
-    let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let data = {};
-    let data_initial = {};
-    let data_content = _this.data.data_content
-    _this.setData({
-      data_content:[]
-    })
-    let tapDate = requestUtils.doGET(url, data, header);
-    tapDate.then((res) => {
-      data_initial = res.data.data
-      for (var i = 0; i < data_initial.length; i++) {
-        let datas = data_initial[i];
-        datas.busy_time = this.ten_two(datas.busy_time);
-      }
-      data_content = data_initial
-      _this.setData({
-        data: data_content
-      })
-    })
-
+    let campus = _this.Choosed()[0];
+    let building = _this.Choosed()[1];
+    let Date = this.data.choosedDate;
+    this.setdata(campus,building,pages,Date)
   },
 
   tapCampus: function(event) {
@@ -225,76 +209,25 @@ Page({
     _this.setData({
       index :pages
     })
-    let Campus;
-    if (this.data.choosedCampus == "奉贤校区") {
-      Campus = 1;
-    } else if(this.data.choosedCampus == "徐汇校区")
-    { Campus = 2; }
-    let available = `?campus=${Campus}&date=${this.data.choosedDate}&building=${this.data.choosedBuilding}`;
-    _this.setData({
-      data: 0
-    })
-    let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let data = {};
-    let data_initial = {};
-    let data_content = _this.data.data_content
-    _this.setData({
-      data_content:[]
-    })
-    let tapDate = requestUtils.doGET(url, data, header);
-    tapDate.then((res) => {
-      data_initial = res.data.data
-      for (var i = 0; i < data_initial.length; i++) {
-        let datas = data_initial[i];
-        datas.busy_time = this.ten_two(datas.busy_time);
-      }
-      data_content = data_initial
-      _this.setData({
-        data: data_content
-      })
-    })
+    let Campus = _this.Choosed()[0];
+    let building = _this.Choosed()[1];
+    let date = _this.data.choosedDate;
+    this.setdata(Campus,building,pages,date)
   },
 
   tapBuilding: function(event) {
     let _this = this
     const building = event.currentTarget.dataset.building;
     this.setData({ choosedBuilding: building });
-    let campus;
     let pages = _this.data.index;
     pages=0;
     _this.setData({
       index :pages
     })
-    if (this.data.choosedCampus == "奉贤校区") {
-      campus = 1 ;
-    } else if(this.data.choosedCampus == "徐汇校区")
-    { campus = 2 ;}
-    let available = `?campus=${campus}&date=${this.data.choosedDate}&building=${this.data.choosedBuilding}`;//${this.data.choosedDate}
-    _this.setData({
-      data: 0
-    })
-    let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let data = {};
-    let data_initial = {};
-    let data_content = _this.data.data_content
-    _this.setData({
-      data_content:[]
-    })
-    let tapDate = requestUtils.doGET(url, data, header);
-    tapDate.then((res) => {
-      data_initial = res.data.data
-      for (var i = 0; i < data_initial.length; i++) {
-        let datas = data_initial[i];
-        datas.busy_time = this.ten_two(datas.busy_time);
-      }
-      data_content=data_initial
-      _this.setData({
-        data: data_content
-      })
-    })
-
+    let campus = _this.Choosed()[0];
+    let Building = _this.Choosed()[1];
+    let date = _this.data.choosedDate;
+    this.setdata(campus,Building,pages,date)
   }
 })
 
