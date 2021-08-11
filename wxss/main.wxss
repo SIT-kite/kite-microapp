@@ -1,4 +1,8 @@
 /* /wxss/main.wxss */
+page {
+	height: auto;
+}
+
 .background {
 	position: fixed;
 	top: 1rem;

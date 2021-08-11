@@ -6,7 +6,7 @@ const app = getApp();
 
 Page({
   data: {
-    isLogin: app.globalData.isLogin,
+    isLogin: false,
     clicked: -1, // 被点击功能的索引
     notice: [], // 通知
     items: [{
@@ -42,6 +42,7 @@ Page({
   },
 
   onLoad() {
+    this.setData({isLogin: app.globalData.isLogin});
     // 获取并设置通知 notice
     wx.request({
       method: "GET",
