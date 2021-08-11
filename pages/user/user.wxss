@@ -57,7 +57,8 @@
 
 .verify {
 	grid-area: verify;
-	display: flex;
+	display: grid;
+	grid-template-columns: auto 1fr;
 	align-items: center;
 	gap: .25ch;
 	padding-left: .5em; /* 添加边距，方便点击 */
