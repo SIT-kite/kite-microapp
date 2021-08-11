@@ -4,6 +4,7 @@ page {
   justify-content: flex-start;
   background-color: white;
   height: 100%;
+  width: 100%;
 }
 
 .nav {
@@ -178,6 +179,20 @@ page {
 
 .delimiter {
   width: 8px;
+}
+.images{
+  width: 70px;
+  height: 70px;
+
+}
+.loading-free{
+  background-color:white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+  border: 0.1px solid #58A2E7;
 }
 /*2021-8-12 保持小程序一致性删除深色模式*/
 /*

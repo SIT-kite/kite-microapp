@@ -35,7 +35,7 @@
 		</view>
 	</view>
 	<scroll-view class="table" scroll-y="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}" bindscrolltolower="loadmore">
-		<view wx:if="{{data}}">
+		<view wx:if="{{data && data != 0}}">
 			<view wx:for="{{data}}" wx:for-index="room" wx:for-item="statusList" wx:key="room"
 				class="tr">
 				<view class="td room-name-tuple">
@@ -61,6 +61,10 @@
 		<view class="room-name">加载更多...</view>
 		</view>
 		</view>
+		<view wx:elif= "{{data == 0}}" class="loading-free">
+				<image src="../assets/free.png" class="images"></image>
+				<view class="td room-name">今天休息ヾ(^▽^*)))</view>
+			</view>
 		<view wx:else>
 			<view wx:for="{{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]}}" wx:key="index" class="tr">
 				<view class="td room-name">{{ index == 0 ? "数据加载中..." : "" }}</view>
