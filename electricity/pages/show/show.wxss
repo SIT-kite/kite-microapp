@@ -223,7 +223,7 @@ page {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	width: 260.62px;
+	width: 335px;
 	background-color: white;
 	padding: 20rpx 20rpx 20rpx 30rpx;
 	border-radius: 8px;
