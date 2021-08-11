@@ -61,7 +61,14 @@ Page({
           console.error("GET user identity 失败", error);
         }
       });
+    }
 
+    // 设置全局变量中的个人信息
+    const setProfile = wxUserInfo => {
+      const nickName = wxUserInfo.nickName;
+      const avatarUrl = wxUserInfo.avatar;
+
+      setData({ nickName, avatarUrl}, [0, 1, 1]);
     }
 
     const setIsLogin = isLogin => setData({ isLogin }, [1, 1, 0]);
@@ -84,6 +91,7 @@ Page({
         setTokenAndUid(data.token, data.data.uid);
         setIsStudent();
         setIsLogin(true);
+        setProfile(data.data);
         wx.hideLoading();
 
       }).catch(error => {
@@ -111,6 +119,7 @@ Page({
             const data = res.data;
             setTokenAndUid(data.token, data.uid);
             setIsLogin(true);
+            setProfile(data);
 
             // POST user auth 创建登录渠道
             wx.request({
