@@ -1,23 +1,19 @@
 // 电费查询
-// pages/consume/electricity/electricity.js
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../utils/navBarUtils';
-import getHeader from "../../../utils/requestUtils.getHeader";
+// electricity/pages/show/show.js
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
-const electricitySuffix = `/pay/room/`;
 const requestUtils = require("../../../utils/requestUtils");
-const promisify = require('../../../utils/promisifyUtils');
-const wxShowModal = promisify(wx.showModal);
-const { echarts } = requirePlugin('echarts');
+// const { echarts } = requirePlugin('echarts');
+
+const urlSuffix = "/pay/room/";
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
+  handlerGohomeClick,
+  handlerGobackClick,
+
   data: {
     show: false,
     roomID: "",
@@ -131,50 +127,46 @@ Page({
     },
     path:''
   },
-  // 导航栏函数
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
 
-  onClose: function () {
-    this.setData({
-      show: false,
-    })
+  onClose() {
+    this.setData({ show: false });
   },
-  showWrongTip:function(){
+
+  showWrongTip() {
     wx.showModal({
-      title: '数据错误提示',
-      content: '此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。',
+      title: "数据错误提示",
+      content: "此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。",
       showCancel: false,
     })
   },
-  gotoshare:function(){
-    wx.showLoading({
-      title: "加载中"
-    });
-      wx.hideLoading();
+
+  gotoshare() {
     wx.navigateTo({
-      url: '/electricity/pages/share/share?url='+this.data.path+'&rank=' + JSON.stringify(this.data.rank),
+      url: `/electricity/pages/share/share?url=${this.data.path}&rank=${JSON.stringify(this.data.rank)}`,
     })
     // this.onInstance(echarts);
   },
 
-  rpx2px:function(rpx){
+  rpx2px(rpx) {
     const pixelRatio1 = 750 / wx.getSystemInfoSync().windowWidth;
     return rpx / pixelRatio1;
   },
-  bindroomID: function (e) {
+
+  bindroomID(e) {
     this.setData({
       roomID: e.detail.value,
       show: false
     })
   },
-  bindfloorID: function (e) {
+
+  bindfloorID(e) {
     this.setData({
       floorID: e.detail.value,
       show: false
     })
   },
-  setroom: function () {
+
+  setroom() {
     const floor = parseInt(this.data.floorID);
     const room = parseInt(this.data.roomID);
     if (
@@ -189,7 +181,8 @@ Page({
       return 'error';
     }
   },
-  getcostdata: function (e) {
+
+  getcostdata(e) {
     const that = this;
     const type = e.currentTarget.dataset.type;
     const init = e.currentTarget.dataset.init;
@@ -210,7 +203,7 @@ Page({
         ['mdays.series[0].data']: []
       })
     }
-    if (that.data[`m${type}`].series[0].data.length != 0) {
+    if (that.data[`m${type}`].series[0].data.length !== 0) {
       const temp = that.data[`m${type}`]
       console.log(`m${type}`)
       console.log(temp)
@@ -220,7 +213,7 @@ Page({
         showtype: 'history'
       })
     } else {
-      let url = `${app.globalData.commonUrl}${electricitySuffix}${room}/bill/${type}`;
+      let url = `${app.globalData.commonUrl}${urlSuffix}${room}/bill/${type}`;
       let header = getHeader("urlencoded", app.globalData.token);
       let data = {};
       let getdata = requestUtils.doGET(url, data, header);
@@ -257,27 +250,31 @@ Page({
           // console.log(that.data.mhours)
           console.log(sum)
         }
-      }).catch(res => {
-        wxShowModal({
+      }).catch(() => {
+        wx.showModal({
           content: "无对应房间数据",
+          showCancel: false
         });
       })
     }
   },
-  getrank: function () {
+
+  getrank() {
     const that = this;
+
     const room = that.setroom();
-    if (room === 'error') {
+    if (room === "error") {
       wx.showModal({
         content: "输入格式有误",
+        showCancel: false
       })
       return;
     }
-    let url = `${app.globalData.commonUrl}${electricitySuffix}${room}/rank`;
+
+    let url = `${app.globalData.commonUrl}${urlSuffix}${room}/rank`;
     let header = getHeader("urlencoded", app.globalData.token);
     let data = {};
-    let getrank = requestUtils.doGET(url, data, header);
-    getrank.then((res) => {
+    requestUtils.doGET(url, data, header).then((res) => {
       const data = res.data.data
       const rank = data.rank;
       const total = data.room_count;
@@ -286,17 +283,20 @@ Page({
         'rank.con': data.consumption.toFixed(2),
         'rank.percen': `${percen}`
       })
-    }).catch(res => {
+    }).catch(() => {
       that.setData({
         'rank.con':0,
         'rank.percen': 0
       })
-      wxShowModal({
+      wx.showModal({
         content: "无对应房间数据",
+        showCancel: false
       });
     })
+
   },
-  sethours: function (moption) {
+
+  sethours(moption) {
     console.log("保存了hours")
     this.setData({
       option: moption,
@@ -305,7 +305,8 @@ Page({
       showtype: 'history'
     })
   },
-  setdays: function (moption) {
+
+  setdays(moption) {
     console.log("保存了days")
     this.setData({
       option: moption,
@@ -314,7 +315,8 @@ Page({
       showtype: 'history'
     })
   },
-  getEletricityConsume: function () {
+
+  getEletricityConsume() {
     const room = this.setroom();
     if (room === 'error') {
       wx.showModal({
@@ -322,7 +324,7 @@ Page({
       })
       return;
     }
-    let url = `${app.globalData.commonUrl}${electricitySuffix}${room}`;
+    let url = `${app.globalData.commonUrl}${urlSuffix}${room}`;
     let header = getHeader("urlencoded", app.globalData.token);
     let data = {};
     let getEletricityConsume = requestUtils.doGET(url, data, header);
@@ -339,42 +341,34 @@ Page({
         show: true,
         showtype: 'normal'
       });
-    }).catch(res => {
-      wxShowModal({
+    }).catch(() => {
+      wx.showModal({
         content: "无对应房间数据",
+        showCancel: false
       });
     })
 
   },
-  showtips: function () {
+
+  showtips() {
     const tips = "'10'+1~2位楼号+3~4位房间号"
-    wxShowModal({
+    wx.showModal({
       title: "填写格式",
       content: tips,
       showCancel: false
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+
+  onLoad() {
     this.setData({
       floorID: wx.getStorageSync('electricity_floor'),
       roomID: wx.getStorageSync('electricity_room')
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  // onReady() {},
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  onShow() {
     const {
       navBarHeight,
       navBarExtendHeight,
@@ -384,38 +378,10 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
 
-  },
+  onShareAppMessage: () => ({
+    title: "上应小风筝",
+    path: "pages/index/index"
+  })
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

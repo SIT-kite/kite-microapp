@@ -1,20 +1,40 @@
 page {
-	--shadow-2dp:
-		0 3px 1px -2px rgba(0, 0, 0, .2),
-		0 2px 2px  0   rgba(0, 0, 0, .14),
-		0 1px 5px  0   rgba(0, 0, 0, .12);
-	--shadow-4dp:
-		0 2px 4px -1px rgba(0, 0, 0, .2),
-		0 4px 5px  0   rgba(0, 0, 0, .14),
-		0 1px 10px 0   rgba(0, 0, 0, .12);
-	--shadow-8dp:
-		0 5px 5px -3px rgba(0, 0, 0, .2),
-		0 8px 10px 1px rgba(0, 0, 0, .14),
-		0 3px 14px 2px rgba(0, 0, 0, .12);
-}
 
-page {
+	height: 100%;
 	background-color: #FAFAFA;
 	line-height: 1.5;
 	font-family: system-ui, sans-serif;
+
+	--shadow: 0 0  8px  4px rgba(127, 127, 127, .1);
+	--shadow-hover: 0 0 16px  8px rgba(127, 127, 127, .2);
+	--shadow-modal: 0 0 32px 16px rgba(127, 127, 127, .3);
+
+	--transition: 200ms cubic-bezier(.4, 0, .2, 1);
+	--transition-shadow: box-shadow 200ms cubic-bezier(.4, 0, 1, 1);
+	--transition-opacity: opacity 75ms cubic-bezier(.4, 0, .2, 1);
+
+}
+
+.card, .button {
+	border-radius: 4px;
+}
+
+.card {
+	background-color: white;
+	transition:
+		var(--transition-shadow),
+		var(--transition-opacity);
+  box-shadow: var(--shadow);
+	opacity: 98%;
+}
+
+.card:hover {
+	box-shadow: var(--shadow-hover);
+	opacity: 100%;
+}
+
+.ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }

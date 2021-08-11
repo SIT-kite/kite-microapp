@@ -1,8 +1,5 @@
-// pages/freshman/share/share.js
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../utils/navBarUtils'
+// electricity/pages/share/share.js
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 
 const app = getApp();
 
@@ -321,7 +318,7 @@ Page({
 
   },
 
-  share: function () {
+  share() {
     const that = this;
     wx.previewImage({
       current: `${that.data.tempfile}`, // 当前显示图片的http链接
@@ -333,7 +330,7 @@ Page({
     });
   },
 
-  saveShareImg: function () {
+  saveShareImg() {
 
     const saveImage = () => wx.saveImageToPhotosAlbum({
       filePath: this.data.tempfile,
@@ -389,14 +386,12 @@ Page({
             saveImage();
           }
         },
-        fail(err) {
-          console.log(err)
-        }
+        fail: console.error
       })
     }
   },
 
-  onReady: function () {},
-  onShow: function () {}
+  // onReady() {},
+  // onShow() {}
 
 })

@@ -1,0 +1,98 @@
+@import "/wxss/main.wxss";
+
+.background {
+	opacity: .75;
+}
+
+.card {
+	width: 100% !important;
+	padding: .5rem;
+}
+
+.user {
+	height: 5rem;
+}
+
+/* 已登录 */
+.user.info {
+	display: grid;
+	grid-template-columns: auto auto 1fr auto;
+	grid-template-areas:
+		"avatar nickname nickname verify"
+		"avatar nothing1 nothing2 verify"
+		"avatar verified nothing3 verify";
+	justify-items: start;
+	gap: 0 .5rem;
+}
+
+.avatar {
+	grid-area: avatar;
+	box-sizing: border-box;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 4px;
+	contain: paint;
+}
+
+.nickname {
+	max-width: 40vw;
+	font-weight: bold;
+}
+
+.verified {
+	grid-area: verified;
+	display: flex;
+	align-items: center;
+	padding: 1px .5ch;
+	color: white;
+	font-size: .8em;
+	border-radius: 3px;
+}
+.verified.true  { background-color: lightblue; }
+.verified.false { background-color: lightcoral; }
+.verified image {
+	width: 1.5em;
+	height: 1.5em;
+}
+
+.verify {
+	grid-area: verify;
+	display: flex;
+	align-items: center;
+	gap: .25ch;
+	padding-left: .5em; /* 添加边距，方便点击 */
+	font-size: .9em;
+	color: #9E9E9E;
+}
+
+/* 未登录 */
+.user.login {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: .5em;
+	font-size: 1.5em;
+	color: #9E9E9E;
+}
+
+.login-icon {
+	width: 2em;
+	height: 2em;
+}
+
+.menu-option {
+	display: flex;
+	justify-content: space-between;
+	font: inherit; /* 覆盖 <button> 字体 */
+}
+
+.menu-option:active {
+	background-color: #f7f7f7;
+}
+
+.arrow {
+	font-size: medium;
+	font-weight: 300;
+	color: #9E9E9E;
+	user-select: none;
+}

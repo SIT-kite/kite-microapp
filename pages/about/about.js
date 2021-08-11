@@ -1,7 +1,7 @@
 // 关于
 // pages/about/about.js
 
-import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils"
+import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
 
 const html =
 `<h1 class="title">关于上应小风筝</h1>
@@ -47,14 +47,10 @@ const html =
 </ul>
 
 <h2 class="title">开源代码</h2>
-<p>github.com/SIT-Yiban/kite-microapp</p>`
+<p class="p center">github.com/SIT-Yiban/kite-microapp</p>`;
 
 Page({
-
-  data: { html },
-
-  // navBar handler
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
-
-})
+  handlerGohomeClick,
+  handlerGobackClick,
+  data: { html }
+});

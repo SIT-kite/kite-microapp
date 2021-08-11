@@ -1,8 +1,8 @@
-// pages/newFriend/newFriend.js
+// freshman/pages/newFriend/newFriend.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import copyText   from "../../../utils/copyText.js";
 import catchError from "../../../utils/requestUtils.catchError";
-import getHeader  from "../../../utils/requestUtils.getHeader";
+import getHeader  from "../../../utils/getHeader";
 
 const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
@@ -25,99 +25,102 @@ Page({
 
   copyText,
 
-  // 用于初始化页面数据
+  getPageData() {
 
-  pageDataInit: function () {
-    let url = "";
-    let data = {};
-    let header = {};
+    wx.showLoading({
+      title: "加载中",
+      mask: true
+    });
+
     let promiseList = [];
 
-    if (app.globalData.roommates == null) {
-      wx.showLoading({
-        title: '加载中',
-        mask: true
+    let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
+    let data = { "secret": `${app.globalData.userInfo.secret}` };
+    let header = getHeader("urlencoded", app.globalData.token);
+
+    // 获取室友信息
+    var getRoommates = requestUtils.doGET(url, data, header).then(res => {
+      var roommatesList = res.data.data.roommates;
+      roommatesList.forEach(roommate => {
+        roommate.lastSeen = timeUtils.getIntervalToCurrentTime(roommate.lastSeen);
+        roommate.isHidden = {
+          "qq": null,
+          "wechat": null
+        }
+        if (roommate.contact === null) {
+          roommate.isHidden.qq = true;
+          roommate.isHidden.wechat = true;
+        } else {
+          roommate.isHidden.qq = roommate.contact.qq === "";
+          roommate.isHidden.wechat = roommate.contact.wechat === "";
+        }
       });
-      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
+      this.setData({
+        roommates: roommatesList,
+        isHidden: true
+      });
+      app.globalData.roommates = roommatesList;
+      return res;
+    });
+
+    promiseList.push(getRoommates);
+
+    // 可能认识的人
+    if (app.globalData.userDetail.visible) {
+
+      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
       data = { "secret": `${app.globalData.userInfo.secret}` };
       header = getHeader("urlencoded", app.globalData.token);
 
-      // 获取室友信息
-      var getRoommates = requestUtils.doGET(url, data, header).then(res => {
-        var roommatesList = res.data.data.roommates;
-        roommatesList.forEach(roommate => {
-          roommate.lastSeen = timeUtils.getIntervalToCurrentTime(roommate.lastSeen);
-          roommate.isHidden = {
-            "qq": null,
-            "wechat": null
+      var getFamilies = requestUtils.doGET(url, data, header).then(res => {
+        var familiarList = res.data.data.people_familiar;
+        familiarList.forEach(familiar => {
+          familiar.genderImage =
+            familiar.gender === "M"
+            ? "/freshman/assets/male.png"
+            : "/freshman/assets/female.png";
+          familiar.lastSeen = timeUtils.getIntervalToCurrentTime(familiar.lastSeen);
+          familiar.isHidden = {
+            qq: null,
+            wechat: null,
+            padding: null
           }
-          if (roommate.contact == null) {
-            roommate.isHidden.qq = true;
-            roommate.isHidden.wechat = true;
+          if (familiar.contact === null) {
+            familiar.isHidden.qq = true;
+            familiar.isHidden.wechat = true;
           } else {
-            roommate.isHidden.qq = roommate.contact.qq == "" ? true : false;
-            roommate.isHidden.wechat = roommate.contact.wechat == "" ? true : false;
+            familiar.isHidden.qq = familiar.contact.qq === "" ;
+            familiar.isHidden.wechat = familiar.contact.wechat === "";
+            familiar.isHidden.padding = familiar.isHidden.wechat === true ? 25 : 0;
           }
         });
+
         this.setData({
-          roommates: roommatesList,
-          isHidden: true
+          familiar: familiarList,
+          isHidden: false
         });
-        app.globalData.roommates = roommatesList;
-        return res;
-      });
-      promiseList.push(getRoommates);
-
-      // 可能认识的人
-      if (app.globalData.userDetail.visible) {
-
-        url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
-        data = { "secret": `${app.globalData.userInfo.secret}` };
-        header = getHeader("urlencoded", app.globalData.token);
-
-        var getFamilies = requestUtils.doGET(url, data, header).then(res => {
-          var familiarList = res.data.data.people_familiar;
-          familiarList.forEach(familiar => {
-            familiar.genderImage = familiar.gender == "M" ? "/freshman/assets/male.png" : "/freshman/assets/female.png";
-            familiar.lastSeen = timeUtils.getIntervalToCurrentTime(familiar.lastSeen);
-            familiar.isHidden = {
-              qq: null,
-              wechat: null,
-              padding: null
-            }
-            if (familiar.contact == null) {
-              familiar.isHidden.qq = true;
-              familiar.isHidden.wechat = true;
-            } else {
-              familiar.isHidden.qq = familiar.contact.qq == "" ? true : false;
-              familiar.isHidden.wechat = familiar.contact.wechat == "" ? true : false;
-              familiar.isHidden.padding = familiar.isHidden.wechat == true ? 25 : 0;
-            }
-          });
-
-          this.setData({
-            familiar: familiarList,
-            isHidden: false
-          });
-          app.globalData.familiar = familiarList;
-        });
-        promiseList.push(getFamilies);
-      }
-
-      // 等待所有进程结束
-      Promise.all(promiseList).then(res => {
-        // let [res1, res2] = res;
-        wx.hideLoading();
-        console.log("请求全部完成");
-        this.setData({ show: true });
-      }).catch(res => {
-        wx.hideLoading();
-        catchError(res);
+        app.globalData.familiar = familiarList;
       });
 
+      promiseList.push(getFamilies);
+
+    }
+
+    // 等待所有进程结束
+    Promise.all(promiseList)
+      .then(() => this.setData({ show: true }))
+      .catch(catchError)
+      .finally( () => wx.hideLoading() );
+  },
+
+  // 初始化页面数据
+  pageDataInit() {
+
+    if (app.globalData.roommates === null) {
+      // 本地没有缓存的信息
+      this.groupSetData();
     } else {
       // 本地有可能认识人和室友的信息
-      console.log("本地已有信息！");
       if (app.globalData.userDetail.visible) {
         this.setData({
           roommates: app.globalData.roommates,
@@ -134,153 +137,31 @@ Page({
     }
   },
 
-  pageDataFresh: function () {
-    let url = "";
-    let data = {};
-    let header = {};
-    let promiseList = [];
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
-    url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
-    data = { "secret": `${app.globalData.userInfo.secret}` };
-    header = getHeader("urlencoded", app.globalData.token);
-
-    // 获取室友信息
-    var getRoommates = requestUtils.doGET(url, data, header).then(res => {
-      var roommatesList = res.data.data.roommates;
-      roommatesList.forEach(roommate => {
-        roommate.lastSeen = timeUtils.getIntervalToCurrentTime(roommate.lastSeen);
-        roommate.isHidden = {
-          "qq": null,
-          "wechat": null
-        }
-        if (roommate.contact == null) {
-          roommate.isHidden.qq = true;
-          roommate.isHidden.wechat = true;
-        } else {
-          roommate.isHidden.qq = roommate.contact.qq == "" ? true : false;
-          roommate.isHidden.wechat = roommate.contact.wechat == "" ? true : false;
-        }
-      });
-      this.setData({
-        roommates: roommatesList,
-        isHidden: true
-      });
-      app.globalData.roommates = roommatesList;
-      return res;
-    });
-    promiseList.push(getRoommates);
-
-    // 可能认识的人
-    if (app.globalData.userDetail.visible) {
-      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
-      data = { "secret": `${app.globalData.userInfo.secret}` };
-      header = getHeader("urlencoded", app.globalData.token);
-
-      var getFamilies = requestUtils.doGET(url, data, header).then(res => {
-        var familiarList = res.data.data.people_familiar;
-        familiarList.forEach(familiar => {
-          familiar.genderImage = familiar.gender == "M" ? "/freshman/assets/male.png" : "/freshman/assets/female.png";
-          familiar.lastSeen = timeUtils.getIntervalToCurrentTime(familiar.lastSeen);
-          familiar.isHidden = {
-            qq: null,
-            wechat: null,
-            padding: null
-          }
-          if (familiar.contact == null) {
-            familiar.isHidden.qq = true;
-            familiar.isHidden.wechat = true;
-          } else {
-            familiar.isHidden.qq = familiar.contact.qq == "" ? true : false;
-            familiar.isHidden.wechat = familiar.contact.wechat == "" ? true : false;
-            familiar.isHidden.padding = familiar.isHidden.wechat == true ? 25 : 0;
-          }
-        });
-
-        this.setData({
-          familiar: familiarList,
-          isHidden: false
-        });
-        app.globalData.familiar = familiarList;
-      });
-      promiseList.push(getFamilies);
-    }
-
-    // 等待所有进程结束
-    Promise.all(promiseList).then(res => {
-      let [res1, res2] = res;
-      console.log("请求全部完成");
-      wx.hideLoading();
-      this.setData({ show: true });
-    }).catch(res => {
-      wx.hideLoading();
-      catchError(res);
-    });
+  pageDataFresh() {
+    this.groupSetData();
     this.onLoad();
     this.onShow();
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  onLoad() {
     console.log("页面 newFriend onLoad...");
     this.setData({ show: false });
     this.pageDataInit();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  // onReady() {},
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  onShow() {
     wx.stopPullDownRefresh();
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    console.log("页面 newClass 刷新中...")
+  onPullDownRefresh() {
     this.pageDataFresh();
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
+  onShareAppMessage: () => ({
+    title: "上应小风筝",
+    path: "pages/index/index"
+  })
 
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function (e) {
-    return {
-      title: "上应小风筝",
-      path: "pages/index/index"
-    }
-  }
 })

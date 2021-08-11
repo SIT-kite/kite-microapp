@@ -1,17 +1,16 @@
-// stuInfoDetail.js
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../utils/navBarUtils'
+// freshman/pages/stuInfoDetail/stuInfoDetail.js
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import getHeader from "../../../utils/getHeader";
 
 var app = getApp();
 const requestUtils = require('../../../utils/requestUtils');
 
+
 Page({
   data: {
     show: false,
-    userDetail: null,
     motto: 'Hey!',
+    userDetail: null,
     avatarUrl: "",
     nickName: "",
   },
@@ -23,23 +22,18 @@ Page({
    * 页面数据重新加载
    */
   pageDataInit() {
-    let url = "";
-    let data = {};
-    let header = {};
     wx.showLoading({
       title: '加载中',
       mask: true
     });
 
-    url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}`;
-    data = { "secret": app.globalData.userInfo.secret };
-    header = {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": `Bearer ${app.globalData.token}`,
-    };
-
+    const gData = app.globalData;
     // 获取新生信息
-    var getFreshman = requestUtils.doGET(url, data, header).then(res => {
+    const url = `${gData.commonUrl}/freshman/${gData.userInfo.account}`;
+    const data = { "secret": gData.userInfo.secret };
+    const header = getHeader("urlencoded", gData.token);
+    requestUtils.doGET(url, data, header).then(res => {
+
       // 更新全局变量
       app.globalData.userDetail = res.data.data;
       wx.setStorageSync("userDetail", res.data.data);
@@ -48,32 +42,32 @@ Page({
         avatarUrl: app.globalData.avatarUrl,
         nickName: app.globalData.nickName
       });
-      return res;
-    }).catch(res => {
-      wx.setStorage({
-        key:"userDetail",
-        data: null
-      })
-      wx.redirectTo({
-        url: '/freshman/pages/welcome/welcome',
-      })
-    });
 
-    getFreshman.then(() => {
+    }).catch(error => {
+
+      console.error("新生信息获取失败", error);
+      wx.setStorage({ key: "userDetail", data: null });
+      wx.redirectTo({ url: "/freshman/pages/welcome/welcome" });
+
+    }).then(() => {
+
       wx.hideLoading();
       console.log("数据处理完成");
       this.setData({ show: true });
+
     }).catch(res => {
-      wx.hideLoading(); // 取消加载框
+
+      wx.hideLoading();
       wx.showModal({
         title: "哎呀，出错误了 >.<",
         content: (
-          res.error == requestUtils.REQUEST_ERROR ? "业务逻辑错误"
-          : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+          res.error === requestUtils.REQUEST_ERROR ? "业务逻辑错误"
+          : res.error === requestUtils.NETWORK_ERROR ? "网络不在状态"
           : "未知错误"
         ),
         showCancel: false
       });
+
     });
 
   },
@@ -102,15 +96,11 @@ Page({
     this.pageDataInit();
   },
 
-  onReady() {
-    console.log("页面 stuInfoDetail onReady!");
-  },
+  onReady() {},
 
-  onShareAppMessage() {
-    return {
-      title: "上应小风筝",
-      path: "pages/index/index"
-    }
-  }
+  onShareAppMessage: () => ({
+    title: "上应小风筝",
+    path: "pages/index/index"
+  })
 
 })

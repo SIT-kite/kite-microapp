@@ -1,36 +1,40 @@
 <navBar  background='#fff' back="{{true}}" home="{{true}}"  bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
-	<!--微信用户信息昵称 头像 问候语（hey!）-->
-	<view  bindtap="bindViewTap" class="userinfo">
 
-		<!-- default-avatar:
-			https://www.zhihu.com/question/30059362/answer/301792813
-			https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.png -->
-		<open-data class="avatar" type="userAvatarUrl"
-		default-avatar="/assets/pic/default-avatar.png" />
+<!--微信用户信息昵称 头像 问候语（hey!）-->
+<view bindtap="bindViewTap" class="userinfo">
 
-		<text class="greetings">Hey!</text>
-		<open-data class="nickname" type="userNickName" default-text="微信用户" />
-	</view>
+<!-- default-avatar:
+	https://www.zhihu.com/question/30059362/answer/301792813
+	https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.png -->
+<open-data class="avatar" type="userAvatarUrl"
+default-avatar="/assets/pic/default-avatar.png" />
+
+<text class="greetings">Hey!</text>
+<open-data class="nickname" type="userNickName" default-text="微信用户" />
+
+</view>
+
+<scroll-view class="scroll-container" scroll-y="true">
 
 	<view class="all-input">
 		<view class="input-wrap" style="display:{{isHidden}};">
-			<image src="/freshman/assets/user_grey.png" style="height:50rpx;width:50rpx;"></image>
+			<image src="/freshman/assets/user_grey.png"></image>
 			<input  value="{{userInfo.account}}" bindinput= "getName" placeholder="姓名/考生号/准考证号" type="text"></input>
 		</view>
 		<view class="input-wrap" style="display:{{isHidden}};" >
-			<image src="/freshman/assets/idcard_grey.png" style="height:50rpx;width:50rpx"></image>
-			 <input value="{{userInfo.secret}}" bindinput= "getSecret" placeholder="身份证后六位" type="text"></input>
+			<image src="/freshman/assets/idcard_grey.png"></image>
+				<input value="{{userInfo.secret}}" bindinput= "getSecret" placeholder="身份证后六位" type="text"></input>
 		</view>
 		<view class="input-wrap" >
-			<image src="/freshman/assets/telphone_grey.png" style="height:50rpx;width:50rpx"></image>
+			<image src="/freshman/assets/telphone_grey.png"></image>
 			<input value="{{contact.tel}}" bindinput= "getPhoneNumber" placeholder="手机号" type="number"></input>
 		</view>
 		<view class="input-wrap" >
-			<image src="/freshman/assets/qq_grey.png" style="height:50rpx;width:50rpx"></image>
+			<image src="/freshman/assets/qq_grey.png"></image>
 			<input value="{{contact.qq}}" bindinput= "getQQ" placeholder="QQ" type="number"></input>
 		</view>
 		<view class="input-wrap">
-			<image src="/freshman/assets/wechat_grey.png" style="height:50rpx;width:50rpx"></image>
+			<image src="/freshman/assets/wechat_grey.png"></image>
 			<input value="{{contact.wechat}}" bindinput= "getWechatId" placeholder="微信" type="text"></input>
 		</view>
 		<checkbox-group bindchange="checkBoxChange">
@@ -38,5 +42,8 @@
 		</checkbox-group>
 		<button class="button" bindtap="gotoStuInfoDetail">{{buttonText}}</button>
 	</view>
+
 	<!--半圆背景-->
-	<view class="background" style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
+	<view class="background"></view>
+
+</scroll-view>

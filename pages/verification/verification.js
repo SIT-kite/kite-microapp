@@ -1,6 +1,6 @@
-// 注册
-// pages/certification/certification.js
-import { handlerGohomeClick, handlerGobackClick } from '../../utils/navBarUtils';
+// 实名认证
+// pages/verification/verification.js
+import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
 const requestUtils = require("../../utils/requestUtils");
 
 const app = getApp();
@@ -22,33 +22,33 @@ Page({
     }
   },
 
-  // navBar按钮函数
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+  handlerGohomeClick,
+  handlerGobackClick,
 
   bindId(e) {
-    const canUpload = getCanUpload(this.data.uploadInfo);
     this.setData({
-      canUpload, 'uploadInfo.studentId': e.detail.value
+      canUpload: getCanUpload(this.data.uploadInfo),
+      "uploadInfo.studentId": e.detail.value
     })
   },
+
   bindSecret(e) {
-    const canUpload = getCanUpload(this.data.uploadInfo);
     this.setData({
-      canUpload, 'uploadInfo.oaSecret': e.detail.value
+      canUpload: getCanUpload(this.data.uploadInfo),
+      "uploadInfo.oaSecret": e.detail.value
     })
   },
 
-  certify: function () {
-
-    const that = this;
+  verify() {
 
     // 删除 uploadInfo 中值为空字符串的属性
-    for (let i in that.data.uploadInfo) {
-      if (that.data.uploadInfo[i] === "") {
-        delete that.data.uploadInfo[i];
+    for (let i in this.data.uploadInfo) {
+      if (this.data.uploadInfo[i] === "") {
+        delete this.data.uploadInfo[i];
       }
     }
+
+    const that = this;
 
     that.setData({
       uploadInfo: that.data.uploadInfo
@@ -95,17 +95,10 @@ Page({
     });
 
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function () {
 
-  },
+  // onLoad() {},
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  onReady() {
     const handlerGobackClick = this.handlerGobackClick;
     if (!app.globalData.signPrivacyConfirm) {
       wx.showModal({
@@ -124,9 +117,7 @@ Page({
             app.globalData.signPrivacyConfirm = true;
             wx.setStorageSync("signPrivacyConfirm", true);
           }
-        },
-        // fail: () => {},
-        // complete: () => {}
+        }
       });
     }
 
@@ -135,12 +126,11 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow() {
     const that = this;
     wx.getStorage({
       key: "uploadInfo",
       success(res) {
-        console.log(res);
         that.setData({
           uploadInfo: res.data,
           canUpload: getCanUpload(that.data.uploadInfo)

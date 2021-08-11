@@ -33,7 +33,7 @@
 	right: 6vw;
 }
 
-#text-area {
+#text {
 	position: absolute;
 	bottom: .5em;
 	left: 10vw;
@@ -45,7 +45,17 @@
     box-shadow: 0 0 2em 2em rgba(255, 230, 230, .5);
 }
 
+.name {
+	color: #795548;
+	font-weight: bold;
+}
+
 .keyword {
 	color: #e9444a;
 	font-weight: bold;
+}
+
+.motto {
+	font-style: italic;
+	margin-bottom: 10vh;
 }

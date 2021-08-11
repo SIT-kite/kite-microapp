@@ -11,7 +11,7 @@ Component({
       iconPath: "/assets/icons/nav_bar/home.png",
       selectedIconPath: "/assets/icons/nav_bar/home_active.png"
     }, {
-      pagePath: "/pages/person/person",
+      pagePath: "/pages/user/user",
       text: "我",
       iconPath: "/assets/icons/nav_bar/user.png",
       selectedIconPath: "/assets/icons/nav_bar/user_active.png"

@@ -1,6 +1,6 @@
 // 我
 // pages/person/person.js
-import getHeader from "../../utils/requestUtils.getHeader";
+import getHeader from "../../utils/getHeader";
 import promisifyNoArg from "../../utils/promisify.noArg";
 import request from "../../utils/request";
 
@@ -9,8 +9,8 @@ const app = getApp();
 Page({
 
   data: {
-    isLogin: false,
-    isStudent: false
+    isLogin: app.globalData.isLogin,
+    isStudent: app.globalData.isStudent
   },
 
   login() {
@@ -162,12 +162,7 @@ Page({
     });
   )
 */
-  onLoad() {
-    this.setData({
-      isLogin   : app.globalData.isLogin,
-      isStudent : app.globalData.isStudent
-    });
-  },
+  onLoad() {},
 
   onReady() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
@@ -177,12 +172,9 @@ Page({
 
   // onShow() {},
 
-  // 用户点击右上角分享
-  onShareAppMessage() {
-    return {
-      title: "上应小风筝",
-      path: "pages/index/index"
-    }
-  }
+  onShareAppMessage: () => ({
+    title: "上应小风筝",
+    path: "pages/index/index"
+  })
 
 })

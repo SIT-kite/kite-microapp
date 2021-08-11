@@ -14,7 +14,6 @@ Component({
   },
 
   properties: {
-    extClass: typeEmptyString,
     title: typeEmptyString,
     searchText: {
       type: String,
@@ -26,20 +25,6 @@ Component({
     iconTheme: {
       type: String,
       value: 'black'
-    },
-    background: {
-      type: String,
-      value: 'rgba(255, 255, 255, 1)',
-      observer: '_showChange'
-    },
-    backgroundColorTop: {
-      type: String,
-      value: 'rgba(255, 255, 255, 1)',
-      observer: '_showChangeBackgroundColorTop'
-    },
-    color: {
-      type: String,
-      value: 'rgba(0, 0, 0, 1)'
     },
     delta: {
       type: Number,
@@ -86,8 +71,6 @@ Component({
       let leftWidth     = windowWidth - capsulePosition.left;  // 胶囊按钮左侧到屏幕右侧的边距
 
       const navigationbarinnerStyle = [
-        `color: ${this.data.color}`,
-        `background: ${this.data.background}`,
         `height: ${navBarHeight + navBarExtendHeight}px`,
         `padding-top: ${statusBarHeight}px`,
         `padding-right: ${leftWidth}px`,
@@ -173,7 +156,7 @@ Component({
         }
 
         /* 导航栏高度 = 胶囊高度 + 高度差 * 2
-        menu = wx.getMenuButtonBoundingClientRect() 
+        menu = wx.getMenuButtonBoundingClientRect()
         system = wx.getSystemInfo
         导航栏高度 = menu.statusBarHeight + menu.height + (menu.top - menu.statusBarHeight) * 2
         */

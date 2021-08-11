@@ -1,14 +1,14 @@
-// pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.js
+// freshman/pages/shareAnalysis/shareAnalysis.js
+import request from "../../../utils/request";
+import getHeader from "../../../utils/getHeader";
+
 var app = getApp();
-const requestUtils = require("../../../utils/requestUtils");
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     pageReady: false,
+    // 格言
     motto: {
       source: "",
       content: ""
@@ -35,49 +35,40 @@ Page({
 
   onLoad() {
 
-    this.data.pageReady = false;
     wx.showLoading({ title: "加载中", mask: true });
 
-    // 判定全局变量是否含有需要的信息
-    if (undefined === app.globalData.userDetail.major
-      && undefined === app.globalData.userDetail.college
-      && undefined === app.globalData.userDetail.name) {
-      console.log("全局变量不包含userDetail信息");
-    } else {
-      console.log("全局变量存在userDetail")
-      this.setData({ userDetail: app.globalData.userDetail });
+    const gData = app.globalData;
+
+    if (gData.userDetail !== null) {
+      this.setData({ userDetail: gData.userDetail });
     }
 
-    let url = "";
-    let data = {};
-    let header = {};
-
     // 获取格言
-    url = `${app.globalData.commonUrl}/motto?maxLength=12`;
-    data = {};
-    header = { 'Content-Type': 'application/json' };
-    var getMotto = requestUtils.doGET(url, data, header);
-    getMotto.then(res => {
+    var getMotto = request({
+      method: "GET",
+      url: `${gData.commonUrl}/motto?maxLength=12`,
+      header: getHeader("json")
+    }).then(res => {
       const data = res.data.data;
       this.setData({
         motto: {
-          source: data.source == null ? "佚名" : source,
+          source: data.source ?? "佚名",
           content: data.content,
         }
       });
-    }).catch( res => console.log("获取格言失败", res) );
+    }).catch( res => console.log("格言获取失败", res) );
 
     // 获取分析数据
-    url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/analysis?secret=${app.globalData.userInfo.secret}`;
-    data = {};
-    header = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${app.globalData.token}`,
-    };
-    var getAnalysis = requestUtils.doGET(url, data, header);
-    getAnalysis
-      .then(res => this.setData({ freshman: res.data.data.freshman }))
-      .catch(res => console.log("获取分析数据失败", res));
+    const {account, secret} = gData.userInfo;
+    var getAnalysis = request({
+      method: "GET",
+      url: `${gData.commonUrl}/freshman/${account}/analysis?secret=${secret}`,
+      header: getHeader("json", app.globalData.token)
+    }).then(
+      res => this.setData({ freshman: res.data.data.freshman })
+    ).catch(
+      res => console.log("分析数据获取失败", res)
+    );
 
     // 等待全部请求完成
     Promise.all([getMotto, getAnalysis])
@@ -85,18 +76,16 @@ Page({
       .catch( res => console.log("请求未全部成功", res) );
 
     this.setData({ pageReady: true });
+    wx.hideLoading();
+
   },
 
   onReady() {},
   onShow() {},
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function (e) {
-    return {
-      title: "点击查看你的新生画像",
-      path: "pages/index/index"
-    }
-  }
+  onShareAppMessage: () => ({
+    title: "点击查看你的新生画像",
+    path: "pages/index/index"
+  })
+
 })

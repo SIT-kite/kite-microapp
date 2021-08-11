@@ -83,6 +83,7 @@
 
 .avatar {
 	border-radius: 50%;
+	contain: paint;
 	width: 150rpx;
 	height: 150rpx;
 	/* border: solid 6rpx red; */
@@ -158,10 +159,10 @@
 	flex-direction: column;
 	align-items: flex-start;
 	/* box-shadow:0 1px 1px rgba(0,0,0,0.07),
-            0 1px 2px rgba(0,0,0,0.07), 
+            0 1px 2px rgba(0,0,0,0.07),
             0 2px 4px rgba(0,0,0,0.07),
-            0 4px 8px rgba(0,0,0,0.07), 
-            0 8px 16px rgba(0,0,0,0.07), 
+            0 4px 8px rgba(0,0,0,0.07),
+            0 8px 16px rgba(0,0,0,0.07),
             0 16px 32px rgba(0,0,0,0.07); */
 }
 

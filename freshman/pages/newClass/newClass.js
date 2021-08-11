@@ -1,11 +1,8 @@
-// pages/newClass/newClass.js
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from "../../../utils/navBarUtils";
+// freshman/pages/newClass/newClass.js
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import copyText from "../../../utils/copyText";
 // import catchError from "../../../utils/requestUtils.catchError";
-import getHeader from "../../../utils/requestUtils.getHeader";
+import getHeader from "../../../utils/getHeader";
 
 const utlls = "../../../utils/";
 const requestUtils = require(utlls + "requestUtils");
@@ -37,21 +34,19 @@ Page({
     return response.data.data.classmates;
   },
 
-  /**
-   * 请求班级同学信息并更新页面. 请求出错时弹出错误提示.
-   */
+  // 请求班级同学信息并更新页面. 请求出错时弹出错误提示.
   async _getClassmates() {
     try {
       // 直接返回接口更新的列表
       return await this._requestClassmateList();
-    }
-    catch(error) {
+    } catch(res) {
+      console.error("班级同学获取错误", res)
       // 请求出现网络错误, 弹窗提示
       wx.showModal({
         title: "哎呀，出错误了 >.<",
         content: (
-          res.error == requestUtils.REQUEST_ERROR ? res.data
-          : res.error == requestUtils.NETWORK_ERROR ? "网络不在状态"
+          res.error === requestUtils.REQUEST_ERROR ? res.data
+          : res.error === requestUtils.NETWORK_ERROR ? "网络不在状态"
           : "未知错误"
         ),
         showCancel: false
@@ -59,44 +54,31 @@ Page({
     }
   },
 
-  /**
-   * 页面数据刷新
-   */
-  async onPullDownRefresh () {
-    // 加载数据
+  async onPullDownRefresh() {
+
     this.setData({
       classmates: await this._getClassmates()
     });
-    // 关闭刷新动画
     wx.stopPullDownRefresh();
+
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  async onLoad () {
-    console.log("页面 newClass onLoad...");
-    
-    // 显示加载提示框
+  async onLoad() {
+
     wx.showLoading({
       title: '加载中',
       mask: true
     });
-    // 加载并设置数据
     this.setData({
       classmates: await this._getClassmates()
     });
-    // 取消加载提示框
     wx.hideLoading();
+
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: "在上应小风筝开启大学生活第一站！",
-      path: "/freshman/pages/welcome"
-    }
-  }
-})
+  onShareAppMessage: () => ({
+    title: "在上应小风筝开启大学生活第一站！",
+    path: "/freshman/pages/welcome"
+  })
+
+});

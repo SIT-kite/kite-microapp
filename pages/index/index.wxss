@@ -1,4 +1,4 @@
-@import "/wxss/main.wxss";
+@import "/wxss/main";
 
 /* swiper */
 /* 横向边距：左右各 1rem */
@@ -19,6 +19,7 @@
 	height: 2em;
 	padding: 0 .5em;
 	gap: .5em;
+	font-size: .9em;
 }
 
 .notice image {
@@ -41,7 +42,7 @@
 	text-overflow: ellipsis;
 }
 
-.menu-block {
+.menu {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(2, 1fr);
@@ -54,8 +55,9 @@
 	align-items: center;
 	padding: 1.5em;
 	gap: .75em;
-	font-size: 14px;
+	font-size: .9em;
 	color: #616161;
+	transition: background-color var(--transition);
 }
 
 .menu-cell:hover {
@@ -65,6 +67,25 @@
 .menu-cell image {
 	width: 2em;
 	height: 2em;
+}
+
+.tip-login {
+	position: relative;
+	padding: .25em;
+	text-align: center;
+	color: #212121;
+	font-size: .9em;
+}
+.tip-login::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	background-color: rgba(255, 255, 255, .8);
+	filter: blur(.25em);
 }
 
 @keyframes living {

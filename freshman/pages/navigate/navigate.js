@@ -1,4 +1,4 @@
-// pages/navigate/navigate.js
+// freshman/navigate/navigate.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 
 Page({
@@ -8,13 +8,13 @@ Page({
   handlerGohomeClick,
   handlerGobackClick,
 
-  onLoad: function () {},
+  // onLoad() {},
 
-  onReady: function () {
+  onReady() {
     wx.showLoading({ title: "正在加载" });
-    setTimeout(() => wx.hideLoading(), 1500);
+    setTimeout(() => wx.hideLoading(), 500);
   },
 
-  onShow: function () {},
+  // onShow() {},
 
 })

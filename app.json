@@ -20,9 +20,9 @@
   "entryPagePath": "pages/index/index",
   "pages": [
     "pages/index/index",
-    "pages/person/person",
+    "pages/user/user",
     "pages/about/about",
-    "pages/certification/certification"
+    "pages/verification/verification"
   ],
   "subpackages": [
     {
@@ -96,17 +96,20 @@
     }
   ],
   "tabBar": {
-    "custom": true,
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "主页"
-      },
-      {
-        "pagePath": "pages/person/person",
-        "text": "我"
-      }
-    ]
+    "color": "#9E9E9E",
+    "selectedColor": "#000",
+    "custom": false,
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "主页",
+      "iconPath": "/assets/icons/nav_bar/home.png",
+      "selectedIconPath": "/assets/icons/nav_bar/home_active.png"
+    }, {
+      "pagePath": "pages/user/user",
+      "text": "我",
+      "iconPath": "/assets/icons/nav_bar/user.png",
+      "selectedIconPath": "/assets/icons/nav_bar/user_active.png"
+    }]
   },
   "plugins": {
     "echarts": {

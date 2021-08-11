@@ -11,10 +11,10 @@
         <text class="text">完善信息、查阅寝室</text>
         <text class="text">开启大学生活的第一站</text>
     </view>
-    
+
     <!-- button -->
     <view class="button-wrap">
-        <button bindtap="gotoStuInfoDetail">进入系统</button>
+        <button bindtap="router">进入系统</button>
     </view>
 
 </view>

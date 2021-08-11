@@ -4,7 +4,7 @@ import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../utils/navBarUtils';
-import getHeader from "../../utils/requestUtils.getHeader";
+import getHeader from "../../utils/getHeader";
 
 const app =  getApp();
 const availableSuffix = `/edu/classroom/available`;
@@ -51,7 +51,7 @@ Page({
   setcampuses: function (){
     return this.data.choosedCampus;
   },
-  
+
   loadmore: function(){
     let self = this;
     setTimeout(function(){
@@ -105,7 +105,7 @@ Page({
 　　　　Point.push(two.charAt(k))
 
 　　}
-　　return Point; 
+　　return Point;
   },
 
   onLoad: function(options) {
@@ -123,7 +123,7 @@ Page({
     if (this.data.choosedCampus == "奉贤校区") {
       campus = 1;
     } else if(this.data.choosedCampus == "徐汇校区")
-    { campus = 2 ;} 
+    { campus = 2 ;}
     _this.setData({
       data: 0
     })
@@ -145,7 +145,7 @@ Page({
       })
     })
 
-    
+
   },
 
   onShow: function() {
@@ -267,7 +267,7 @@ Page({
       index :pages
     })
     if (this.data.choosedCampus == "奉贤校区") {
-      campus = 1 ;  
+      campus = 1 ;
     } else if(this.data.choosedCampus == "徐汇校区")
     { campus = 2 ;}
     let available = `?campus=${campus}&date=${this.data.choosedDate}&building=${this.data.choosedBuilding}`;//${this.data.choosedDate}

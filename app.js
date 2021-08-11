@@ -1,7 +1,5 @@
 //app.js
-import getHeader from "./utils/requestUtils.getHeader";
-const promisify = require('./utils/promisifyUtils');
-const wxGetUserInfo = promisify(wx.getUserInfo);
+import updateManager from "./utils/updateManager";
 
 App({
   globalData: {
@@ -36,42 +34,11 @@ App({
 
   },
 
-  updateManager() {
-
-    // 更新版本
-    const updateManager = wx.getUpdateManager();
-
-    updateManager.onCheckForUpdate(
-      res => console.log(`是否有新版本：${res.hasUpdate}`)
-    );
-
-    updateManager.onUpdateReady(() => {
-      wx.showModal({
-        title: "更新提示",
-        content: "新版本已经准备好，是否重启应用？"
-      }).then(res => {
-        if (res.confirm) {
-          // wx.clearStorageSync(); // 清空本地存储；用户将重新登录
-          updateManager.applyUpdate();
-        }
-      });
-    });
-
-    updateManager.onUpdateFailed(() => {
-      console.log("新版本下载失败");
-      wx.showModal({
-        title: "更新提示",
-        content: "新版本下载失败, 请稍后重试！",
-        confirmText: "好的",
-        showCancel: false
-      });
-    });
-
-  },
-
   onLaunch() {
 
-    this.updateManager();
+    updateManager();
+
+    // 从本地存储 Storage 中获取重要属性，设置全局数据 globalData
 
     const storage = Object.fromEntries(
       wx.getStorageInfoSync().keys.map(
@@ -79,30 +46,22 @@ App({
       )
     );
 
-    // 从本地存储 Storage 中获取并设置全局数据 globalData
-
-    const success = [];
-    const notFound = [];
-
-    const keys = [
+    [
       "uid", "token", "isStudent", "userInfo", "userDetail",
       "signPrivacyConfirm", "freshmanPrivacyConfirm"
-    ];
-    
-    keys.forEach(
-      (key, index) => {
+    ].forEach(
+      key => {
         if (key in storage) {
           this.globalData[key] = storage[key];
-          success.push(index);
-        } else {
-          notFound.push(index);
         }
       }
     );
 
-    new Map([[ success, "成功设置" ], [ notFound, "不存在" ]]).forEach(
-      (msg, arr) => console.log(
-        `Storage -> globalData ${msg}：${arr.map(i => keys[i]).join(", ")}`
+    console.log(
+      "本地存储 Storage:", Object.fromEntries(
+        wx.getStorageInfoSync().keys.map(
+          key => [ key, wx.getStorageSync(key) ]
+        )
       )
     );
 
@@ -113,13 +72,6 @@ App({
 
     // globalData 设置完成
     console.log("全局数据 globalData:", this.globalData);
-    console.log(
-      "本地存储 Storage:", Object.fromEntries(
-        wx.getStorageInfoSync().keys.map(
-          key => [ key, wx.getStorageSync(key) ]
-        )
-      )
-    );
 
   },
 

@@ -10,7 +10,7 @@ const searchSuffix = `/search/notice/?query=`;
 const requestUtils = require("../../../utils/requestUtils");
 const promisify = require('../../../utils/promisifyUtils');
 const wxShowModal = promisify(wx.showModal);
-import getHeader from "../../../utils/requestUtils.getHeader";
+import getHeader from "../../../utils/getHeader";
 
 
 Page({
@@ -49,7 +49,7 @@ Page({
       let data = {};
       let contentConfirm = requestUtils.doGET(url, data, header);
       contentConfirm.then((res) => {
-        
+
         let data = res.data.data
         const text = this.data.content
         const getInf = (str, key) => str.replace(new RegExp(`<b>${key}</b>`, 'g'), `%%${key}%%`).split('%%');
@@ -63,7 +63,7 @@ Page({
           let content = words["content"];
           words["content"] = getInf(content, text);
         }
-        
+
         wx.setStorageSync('searchResultList', data);
         wx.navigateTo({
           url: '../mini-result/mini-result',

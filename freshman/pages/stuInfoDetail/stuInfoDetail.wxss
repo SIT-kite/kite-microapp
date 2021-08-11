@@ -13,6 +13,7 @@
 	margin-top: 20rpx;
 	margin-bottom: 40rpx;
 	border-radius: 50%;
+	contain: paint;
 	z-index: 3;
 }
 

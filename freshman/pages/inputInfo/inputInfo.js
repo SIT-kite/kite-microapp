@@ -1,7 +1,7 @@
-//index.js
+// freshman/pages/inputInfo/inputInfo.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 const requestUtils = require("../../../utils/requestUtils");
-import getHeader  from "../../../utils/requestUtils.getHeader";
+import getHeader  from "../../../utils/getHeader";
 import catchError from "../../../utils/requestUtils.catchError";
 
 const app = getApp();
@@ -35,7 +35,7 @@ Page({
 
     const text = ["向您推送可能认识的人", "将您推送给他人（同城，同乡…）"];
     wx.showModal(
-      e.detail.value[0] == undefined ? {
+      e.detail.value[0] === undefined ? {
         title: "取消勾选",
         content: `我们将不会${ text[0] }，也不会${ text[1] }`,
         showCancel: false,
@@ -53,7 +53,8 @@ Page({
       }
     );
   },
-  onShow: function () {
+
+  onShow() {
     const {
       navBarHeight,
       navBarExtendHeight,
@@ -65,13 +66,13 @@ Page({
   gotoStuInfoDetail() {
     const data = this.data;
     // 没有隐藏输入框（第一次输入个人信息）
-    if (data.isHidden == "flex") {
+    if (data.isHidden === "flex") {
       const errorModal = content => wx.showModal({
         title: "哎呀，出错误了 >.<",
         content,
         showCancel: false
       });
-      if (data.userInfo.account == "") {
+      if (data.userInfo.account === "") {
         // 账号未填写
         errorModal("请输入姓名/考生号/准考证号其中的一个");
       } else if (!/^[0-9]{5}[0-9X]$/.test(data.userInfo.secret)) {
@@ -134,34 +135,37 @@ Page({
     }
   },
 
-  // 获得用户输入的姓名
   getName(e) {
     this.setData({
       'userInfo.account': e.detail.value
     });
   },
+
   getSecret(e) {
     this.setData({
       'userInfo.secret': e.detail.value.toString().toUpperCase()
     })
   },
+
   getPhoneNumber(e) {
     this.setData({
       'contact.tel': e.detail.value
     });
   },
+
   getQQ(e) {
     this.setData({
       'contact.qq': e.detail.value
     });
   },
+
   getWechatId(e) {
     this.setData({
       'contact.wechat': e.detail.value
     });
   },
 
-  onLoad: function (option) {
+  onLoad(option) {
     console.log("onLoad(): option.isHidden = ", option.isHidden);
     console.log("onLoad(): this.data.userInfo = ", this.data.userInfo);
     console.log("onLoad(): this.data.visible = ", this.data.visible);
@@ -185,12 +189,13 @@ Page({
     }
     console.log("onload(): over")
   },
-  onReady: function () {
+
+  onReady() {
     console.log("onReady(): this.data.isHidden = ", this.data.isHidden);
 
     if (
-      "flex" == this.data.isHidden &&
-      app.globalData.freshmanPrivacyConfirm != true
+      "flex" === this.data.isHidden &&
+      app.globalData.freshmanPrivacyConfirm !== true
     ) {
       wx.showModal({
         title: "隐私信息提示",
@@ -211,10 +216,10 @@ Page({
       });
     }
   },
-  onShareAppMessage: function () {
-    return {
-      title: "上应小风筝",
-      path: "pages/index/index"
-    }
-  }
+
+  onShareAppMessage: () => ({
+    title: "上应小风筝",
+    path: "pages/index/index"
+  })
+
 })
