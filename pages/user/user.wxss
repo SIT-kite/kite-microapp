@@ -67,8 +67,8 @@
 
 /* 未登录 */
 .user.login {
-	display: flex;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: auto 1fr;
 	align-items: center;
 	gap: .5em;
 	font-size: 1.5em;

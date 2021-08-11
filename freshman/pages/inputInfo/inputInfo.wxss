@@ -5,9 +5,8 @@
 }
 
 .userinfo {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	display: grid;
+	justify-items: center;
 	gap: .5em;
 }
 
@@ -36,9 +35,8 @@
 .all-input {
 	position: absolute;
 	top: 15em;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	display: grid;
+	justify-items: center;
 	box-sizing: border-box;
 	width: calc(100% - 2em);
 	margin: 1em;

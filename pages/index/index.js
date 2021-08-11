@@ -5,8 +5,8 @@ import getHeader from "../../utils/getHeader";
 const app = getApp();
 
 Page({
-  isLogin: app.globalData.isLogin,
   data: {
+    isLogin: app.globalData.isLogin,
     clicked: -1, // 被点击功能的索引
     notice: [], // 通知
     items: [{

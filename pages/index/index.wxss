@@ -14,7 +14,8 @@
 }
 
 .notice {
-	display: flex;
+	display: grid;
+	grid-template-columns: auto 1fr;
 	align-items: center;
 	height: 2em;
 	padding: 0 .5em;
@@ -49,10 +50,8 @@
 }
 
 .menu-cell {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	justify-items: center;
 	padding: 1.5em;
 	gap: .75em;
 	font-size: .9em;
