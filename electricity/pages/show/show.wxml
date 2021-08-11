@@ -55,8 +55,8 @@
 				过去一周
 			</view>
 		</view>
-		<view class="share_button" bindtap="gotoshare">
+		<!-- <view class="share_button" bindtap="gotoshare">
 			<text>点此生成分享海报</text>
-		</view>
+		</view> -->
 	</view>
 </view>

@@ -10,35 +10,35 @@ Page({
     clicked: -1, // 被点击功能的索引
     notice: [], // 通知
     items: [{
-      text: "迎新",
+      text: "查寝室",
       url: "/freshman/pages/welcome/welcome",
       iconPath: "/assets/icons/index/freshman.png"
     }, {
       text: "电费",
       url: "/electricity/pages/show/show",
       iconPath: "/assets/icons/index/electricity.png"
-    }, {
+    }, /*{
       text: "商城",
       url: "/shop/pages/index/index",
       iconPath: "/assets/icons/index/shop.png"
-    }, {
+    }, */ {
       text: "空教室",
       url: "/class-room/pages/available-room",
       iconPath: "/assets/icons/index/availroom.png"
-    }, {
+    },/* {
       text: "拼车",
       url: "/carpool/pages/car-pool/car-pool",
       iconPath: "/assets/icons/index/carpool.png"
-    }, /* {
+    }, {
       text: "常用电话",
       url: "/contact/pages/show/show",
       iconPath: "/assets/icons/index/telephone.png"
-    }, */
+    }, 
     {
       text: "搜索",
       url: "/search/pages/index/index",
       iconPath: "/assets/icons/index/search.png"
-    }]
+    } */ ]
   },
 
   onLoad() {
