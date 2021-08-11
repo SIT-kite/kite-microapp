@@ -23,7 +23,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* box-shadow: 1rpx 2rpx 3rpx 4rpx red; */
+	box-shadow: none !important;
 }
 
 .card-0 {
@@ -141,6 +141,7 @@
 
 .position {
 	margin-left: 5rpx;
+	font-size: .8em;
 }
 
 .pos-wrap {

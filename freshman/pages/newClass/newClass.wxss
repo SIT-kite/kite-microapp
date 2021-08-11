@@ -8,9 +8,16 @@
 .scroll-view {
 	display: flex;
 	flex-direction: column;
-  justify-content: start;
+	justify-content: start;
+	height: 100%;
   box-sizing: border-box;
 	background-color: rgb(246, 246, 251);
+}
+
+.title {
+	padding: .5em;
+	font-size: 1.5em;
+	font-weight: 500;
 }
 
 card {

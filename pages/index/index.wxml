@@ -26,7 +26,7 @@
 	<!-- 功能索引 -->
 	<view class="card menu">
 		<view class="menu-cell" wx:for="{{items}}" wx:key="url"
-			data-url="{{item.url}}" bindtap="router">
+			data-index="{{index}}" data-url="{{item.url}}" bindtap="router">
 			<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" />
 			<view class="menu-cell-text">{{item.text}}</view>
 		</view>

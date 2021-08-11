@@ -118,7 +118,7 @@ Page({
 
     if (app.globalData.roommates === null) {
       // 本地没有缓存的信息
-      this.groupSetData();
+      this.getPageData();
     } else {
       // 本地有可能认识人和室友的信息
       if (app.globalData.userDetail.visible) {
@@ -138,7 +138,7 @@ Page({
   },
 
   pageDataFresh() {
-    this.groupSetData();
+    this.getPageData();
     this.onLoad();
     this.onShow();
   },

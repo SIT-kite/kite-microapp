@@ -38,9 +38,9 @@ Page({
       app.globalData.userDetail = res.data.data;
       wx.setStorageSync("userDetail", res.data.data);
       this.setData({
-        userDetail: app.globalData.userDetail,
-        avatarUrl: app.globalData.avatarUrl,
-        nickName: app.globalData.nickName
+        userDetail: gData.userDetail,
+        avatarUrl: gData.avatarUrl,
+        nickName: gData.nickName
       });
 
     }).catch(error => {
