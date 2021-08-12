@@ -272,6 +272,7 @@ Page({
 
         markers.push({
           id: point.id,
+          joinCluster: true,
           iconPath: "/freshman/assets/icons/yellow_arrow.png",
           latitude: point.latitude,
           longitude: point.longitude,
@@ -305,6 +306,7 @@ Page({
     markers.push({
       id: 0,
       iconPath: "/freshman/assets/icons/red_arrow.png",
+      joinCluster: true,
       width: 50,
       height: 50,
       longitude: target.longitude,
