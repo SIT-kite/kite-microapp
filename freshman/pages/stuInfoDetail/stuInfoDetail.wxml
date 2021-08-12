@@ -42,7 +42,7 @@
 		<navigator class="navigator red"
 		url="/freshman/pages/shareAnalysis/shareAnalysis">迎新画像</navigator>
 
-		<navigator class="navigator red" url="/freshman/pages/guide/guide">报到指南</navigator>
+		<navigator class="navigator red" url="/freshman/pages/guide/guide?campus={{userDetail.campus}}&building={{userDetail.building}}">报到指南</navigator>
 
 	</view>
 
