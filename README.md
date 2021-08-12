@@ -39,7 +39,9 @@
 ## 联系我们
 
 1. 在本项目中[提交 issue](https://github.com/SIT-Yiban/kite-microapp/issues) 
-2. 在 QQ 群中联系管理员反馈。2020级易班新生群：[962202486](https://jq.qq.com/?_wv=1027&k=Zyokh4KP)
+2. 在 QQ 群中联系管理员反馈。
+   小程序反馈群：943110696
+   2021级易班新生群：[147239936](https://jq.qq.com/?_wv=1027&k=cIBUBgOT) （限本校学生加入）
 3. 地址：奉贤校区大学生活动中心309室
 
 ## 贡献者
@@ -56,15 +58,20 @@
 
 **程序设计与编写**
 
-- 2018级 材料科学与工程学院 [rainslide](https://github.com/Crystal-RainSlide)
-- 2019级 化学与环境工程学院 [wzh](https://github.com/OneofFive-ops)
-- 2018级 计算机科学与信息工程学院 [alenying](https://github.com/AlenYing)
+- 2017级 理学院 [snowstar cyan](https://github.com/snomiao)
 - 2017级 计算机科学与信息工程学院 [peanut996](https://github.com/peanut996/)
+- 2018级 材料科学与工程学院 [rainslide](https://github.com/Crystal-RainSlide)
+- 2018级 计算机科学与信息工程学院 [alenying](https://github.com/AlenYing)
 - 2018级 计算机科学与信息工程学院 [sunnysab](https://sunnysab.cn)
 - 2018级 计算机科学与信息工程学院 [wanfengcxz](https://github.com/wanfengcxz)
-- 2017级 理学院 [snowstar cyan](https://github.com/snomiao)
+- 2019级 计算机科学与信息工程学院 [B635](https://github.com/B635)
+- 2019级 计算机科学与信息工程学院 [wzh](https://github.com/OneofFive-ops)
+- 2019级 计算机科学与信息工程学院 [EvilorLive](https://github.com/EvilorLive)
+- 2019级 机械工程学院 [zdy180108](https://github.com/zdy180108)
+- 2020级 计算机科学与信息工程学院 [Pony-Zhang](https://github.com/Pony-Zhang)
+- 2020级 计算机科学与信息工程学院 [Devin](https://github.com/Devinroot)
 
-（按学院、昵称排序）
+（按年级、学院、昵称排序）
 
 在功能和细节设计时，也有很多朋友与同学给予了我们肯定，并提出许多宝贵的意见和建议，在此一并表示感谢。
 
@@ -72,7 +79,7 @@
 
 在每年招新期间，你可以关注一下“上海应用技术大学易班”公众号，或有关QQ群了解招新信息加入校易班工作站（欢迎来技术部！）。
 
-你也可以直接对有关项目提交 issue 或 pull request，留下你的痕迹。
+你也可以直接联系我们，联系方式见 “[上方](#联系我们)” 或对有关项目提交 issue、 pull request，留下你的痕迹。
 
 ## 有关项目
 

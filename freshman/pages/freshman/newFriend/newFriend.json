@@ -1,7 +1,0 @@
-{
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark",
-  "usingComponents": {
-    "navBar" : "/components/navBar/navBar"
-  }
-}

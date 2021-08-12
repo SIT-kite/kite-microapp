@@ -1,0 +1,44 @@
+<!-- phone/pages/phone.wxml -->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="search">
+    <view class="menu_list">
+        <image src="../../assets/icon/menu.png" class="icon1" bindtap=""></image>
+    </view>
+    <view class="search_data">
+        <icon class="icon1" type="search" size="25"></icon>
+        <input class="search_" confirm-type="search" placeholder="搜索电话或关键字"></input>
+    </view>
+</view>
+<view class="table">
+    <scroll-view scroll-y="{{true}}" class="menu">
+        <view class="men1" wx:for="{{department}}" wx:key="index" data-department="{{item}}">
+            <view class="me1">{{item}}</view>
+        </view>
+    </scroll-view>
+    <view class="list">
+        <scroll-view scroll-y="{{true}}" class="list_phone">
+            <view class="phone_list" wx:if="{{data}}">
+                <view wx:for="{{data}}" wx:for-index="project" wx:for-item="list_phone" wx:key="project" class="table-cell">
+                    <view class="td">
+                        <view class="department">
+                            <image src="../../assets/icon/department.png" class="icon2"></image>
+                            {{list_phone.department}}
+                        </view>
+                        <view class="project">
+                            <image src="../../assets/icon/project.png" class="icon2"></image>
+                            {{list_phone.description}}
+                        </view>
+                        <view class="phone">
+                            <image src="../../assets/icon/telephone.png" class="icon2"></image>
+                            {{list_phone.phone}} ({{list_phone.name}})
+                        </view>
+                    </view>
+                    <view class="copy">
+                        <image src="../../assets/icon/copy.png" class="icon" mode="scaleToFill"></image>
+                        <image src="../../assets/icon/phone.png" class="icon" mode="scaleToFill"></image>
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+</view>

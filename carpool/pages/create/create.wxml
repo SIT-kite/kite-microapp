@@ -1,0 +1,65 @@
+<!--carpool/pages/create/create.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+
+<view style="width: 750rpx; height: 461rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx">
+  <view class="car-pool-filter {{isExpanding?'expanded':''}}" bind:onChange="tagChange">
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">日期</view>
+            <view class="calendarMockBox {{dateSelected?'emText':''}}" hover-class="press" hover-start-time="0"
+              hover-stay-time="200" bind:tap="selectedDate">{{dateSelected || '选择日期'}}</view>
+            <l-calendar show="{{calendarShowing}}" default-date="{{dateSelected}}" bind:linselect="dateSelect"
+              bind:linunselect="dateUnselect" color="#1296db"></l-calendar>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">方向</view>
+            <view class="tag-container">
+              <block wx:for="{{directions}}" wx:for-item="direction" wx:key="direction">
+                <b-tag groupBy="direction" content="{{direction}}" selected="{{directionSelected === direction}}">
+                </b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">校区</view>
+            <view class="tag-container">
+              <block wx:for="{{campuses}}" wx:for-item="campus" wx:key="campus">
+                <b-tag groupBy="campus" content="{{campus}}" selected="{{campusSelected === campus}}"></b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">机场&火车站</view>
+            <view class="tag-container">
+              <block wx:for="{{stations}}" wx:for-item="station" wx:key="station">
+                <b-tag groupBy="station" content="{{station}}" selected="{{stationSelected === station}}"></b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="car-pool-filter-item">
+            <view class="car-pool-filter-title">地铁站</view>
+            <view class="tag-container">
+              <block wx:for="{{subways}}" wx:for-item="subway" wx:key="subway">
+                <b-tag groupBy="subway" content="{{subway}}" selected="{{subwaySelected === subway}}"></b-tag>
+              </block>
+            </view>
+          </view>
+          <view class="expandItem" bind:tap="expand">
+            <view class="{{!isExpanding ? 'down':''}} icon iconUp"></view>
+            {{isExpanding?'收起':'展开'}}
+          </view>
+  </view>
+
+
+<input value="{{roomID}}" bindinput="bindroomID" placeholder="姓名：" class="input_right" style="width: 750rpx; height: 100rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx"></input>
+<input value="{{roomID}}" bindinput="bindroomID" placeholder="手机号：" class="input_right" style="width: 750rpx; height: 100rpx; display: block; box-sizing: border-box; left: NaNrpx; top: NaNrpx"></input>
+
+<button class='btn1' bindtap="onClickSubmit">提交</button>
+
+</view>
+
+
+
+
+
+

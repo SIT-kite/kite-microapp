@@ -1,6 +1,6 @@
 # Windows
 [Dd]esktop.ini
-Thumbs.db
+[Tt]humbs.db
 $RECYCLE.BIN/
 
 # macOS
@@ -13,6 +13,6 @@ $RECYCLE.BIN/
 # Node.js
 node_modules/
 
-# IDE Platform
+# IDE
 .vscode/
 .idea/

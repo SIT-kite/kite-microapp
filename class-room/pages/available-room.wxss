@@ -1,0 +1,244 @@
+page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: #58a2e7;
+  color: white;
+  z-index: 1000;
+  padding-left: 5px;
+
+}
+
+.sub-nav {
+  white-space: nowrap;
+  display: flex;
+  padding-bottom: 8px;
+  font-weight: bold;
+}
+
+.nav-item {
+  display: inline-block;
+  font-size: small;
+  border-radius: 12px;
+  padding: 6px 14px;
+}
+
+.nav-item.date {
+  font-size: 12px;
+}
+
+.nav-item:first-child {
+  margin-left: 16px;
+}
+
+.nav-item:last-child {
+  margin-right: 16px;
+}
+
+.nav-item.choosed {
+  background-color: #276eb1;
+}
+.room{
+  height: 300rpx;
+
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 16px;
+  margin-right: 16px;
+  width: auto;
+  height: 67vh;
+}
+
+.tr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 28px;
+  width: auto;
+  padding: 8px 16px;
+  background-color: #DFE7EE;
+  border-radius: 16px;
+}
+
+.tr:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.tr.comment {
+  height: 16px;
+  background: linear-gradient(to right, #90c2ee, white 70%);
+  font-size: small;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.comment-cell {
+  display: flex;
+}
+
+.comment-item {
+  color: #1B4B78;
+  font-weight: bold;
+  
+}
+
+.c1 {
+  margin-left: 4px;
+  margin-right: 16px;
+}
+
+.c2 {
+  margin-left: 4px;
+}
+
+.c3 {
+  margin-right: 32px;
+}
+
+.c4 {
+  margin-right: 25px;
+}
+
+.c5 {
+  margin-right: 5px;
+}
+
+.td.room-name-tuple {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-name {
+  color: #377ec0;
+  font-weight: bold;
+}
+
+.room-metadata {
+  display: flex;
+  color: #7795b1;
+  font-size: 8px;
+  margin-top: -3px;
+}
+
+.room-metadata view {
+  margin-right: 3px;
+}
+
+.td.status-list {
+  display: flex;
+}
+
+.status {
+  width: 10px;
+  height: 16px;
+  border-radius: 6px;
+  margin: 1px;
+}
+
+.status.free {
+  background-color: #79B663;
+}
+
+
+.status.inuse {
+  background-color: #E95858;
+}
+
+.status.now:after {
+  content: '∙';
+  color: #1B4B78;
+  position: relative;
+  top: 9px;
+  display: flex;
+  justify-content: center;
+  width: 10px;
+  border-radius: 50%;
+}
+
+.status.loading {
+  background-color: #AAAAAA;
+}
+
+.delimiter {
+  width: 8px;
+}
+.images{
+  width: 70px;
+  height: 70px;
+
+}
+.loading-free{
+  background-color:white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+  border: 0.1px solid #58A2E7;
+}
+/*2021-8-12 保持小程序一致性删除深色模式*/
+/*
+@media (prefers-color-scheme: dark) {
+  page {
+    background-color: #08141F;
+  }
+  .nav {
+    color: #B2C3D2;
+    background-color: #0B2843;
+  }
+  .nav-item.choosed {
+    background-color: #08141F;
+  }
+  .tr {
+    background-color: #102e4b;
+  }
+  .tr.comment {
+    background: linear-gradient(to right, #102e4b, #08141F 70%);
+  }
+  .comment-item {
+    color: #B2C3D2;
+  }
+  .room-name {
+    color: #B2C3D2;
+    font-weight: bold;
+  }
+  .room-metadata {
+    color: #7597b6;
+    font-size: 8px;
+    margin-top: -3px;
+  }
+
+  .status.free {
+    background-color: #4B8437;
+  }
+  
+  .status.inuse {
+    background-color: #A72F2F;
+  }
+
+  .status.now:after {
+    color: #7597b6;
+  }
+  
+  .status.loading {
+    background-color: #555555;
+  }
+}*/

@@ -1,0 +1,27 @@
+/* /wxss/main.wxss */
+page {
+	height: auto;
+}
+
+.background {
+	position: fixed;
+	top: 1rem;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	margin-top: 10vh;
+	padding: 1rem;
+	z-index: 1;
+}
+
+.card {
+	margin-bottom: 1rem;
+	box-sizing: border-box;
+}

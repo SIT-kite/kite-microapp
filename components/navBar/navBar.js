@@ -14,21 +14,6 @@ Component({
   },
 
   properties: {
-    extClass: typeEmptyString,
-    background: {
-      type: String,
-      value: 'rgba(255, 255, 255, 1)',
-      observer: '_showChange'
-    },
-    backgroundColorTop: {
-      type: String,
-      value: 'rgba(255, 255, 255, 1)',
-      observer: '_showChangeBackgroundColorTop'
-    },
-    color: {
-      type: String,
-      value: 'rgba(0, 0, 0, 1)'
-    },
     title: typeEmptyString,
     searchText: {
       type: String,
@@ -41,7 +26,10 @@ Component({
       type: String,
       value: 'black'
     },
-    /* animated: {
+    delta: {
+      type: Number,
+      value: 1
+    } /* , animated: {
       type: Boolean,
       value: true
     },
@@ -49,14 +37,10 @@ Component({
       type: Boolean,
       value: true,
       observer: '_showChange'
-    }, */
-    delta: {
-      type: Number,
-      value: 1
-    }
+    } */
   },
   created() { this.getSystemInfo(); },
-  attached() { this.setStyle();  }, // 设置样式
+  attached() { this.setStyle(); }, // 设置样式
 
   data: {},
 
@@ -87,8 +71,6 @@ Component({
       let leftWidth     = windowWidth - capsulePosition.left;  // 胶囊按钮左侧到屏幕右侧的边距
 
       const navigationbarinnerStyle = [
-        `color: ${this.data.color}`,
-        `background: ${this.data.background}`,
         `height: ${navBarHeight + navBarExtendHeight}px`,
         `padding-top: ${statusBarHeight}px`,
         `padding-right: ${leftWidth}px`,
@@ -174,7 +156,7 @@ Component({
         }
 
         /* 导航栏高度 = 胶囊高度 + 高度差 * 2
-        menu = wx.getMenuButtonBoundingClientRect() 
+        menu = wx.getMenuButtonBoundingClientRect()
         system = wx.getSystemInfo
         导航栏高度 = menu.statusBarHeight + menu.height + (menu.top - menu.statusBarHeight) * 2
         */
@@ -194,13 +176,13 @@ Component({
           systemInfo.navBarExtendHeight = ios ? 4 : 0;
         }
 
-        systemInfo.navBarHeight = navBarHeight; //导航栏高度不包括statusBarHeight
+        systemInfo.navBarHeight = navBarHeight; // 导航栏高度不包括statusBarHeight
         systemInfo.capsulePosition = rect; /* 右上角胶囊按钮信息：
         bottom: 58 height: 32 left: 317 right: 404 top: 26 width: 87
         目前发现在大多机型都是固定值 为防止不一样 会使用动态值来计算nav元素大小 */
-        systemInfo.ios = ios; //是否ios
+        systemInfo.ios = ios; // 是否ios
 
-        app.globalSystemInfo = systemInfo; //将信息保存到全局变量中,后边再用就不用重新异步获取了
+        app.globalSystemInfo = systemInfo; // 将信息保存到全局变量中，后边再用就不用重新异步获取了
 
         // console.log('systemInfo', systemInfo);
         return systemInfo;

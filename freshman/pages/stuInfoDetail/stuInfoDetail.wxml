@@ -1,0 +1,53 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<view wx:if="{{show}}">
+
+	<!--微信用户信息昵称  问候语 头像-->
+	<view bindtap="bindViewTap" class="userinfo">
+		<!-- default-avatar:
+			https://www.zhihu.com/question/30059362/answer/301792813
+			https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.png -->
+		<open-data class="avatar" type="userAvatarUrl"
+		default-avatar="/assets/pic/default-avatar.png" />
+		<text class="greetings">Hey!</text>
+	</view>
+
+	<!-- 学生详细信息 -->
+	<view class="stu_info">
+		<!-- 图片部分 -->
+		<view class="image_wrap">
+			<image mode="aspectFill" src="/freshman/assets/pic/detail_bg.png" />
+		</view>
+		<!-- 文字部分 -->
+		<view class="info_wrap">
+			<navigator url="/freshman/pages/inputInfo/inputInfo?isHidden=none">
+				<image mode="aspectFill" src="/freshman/assets/modify.png"/>
+			</navigator>
+			<text user-select>姓名：{{userDetail.name}}</text>
+			<text user-select>学号：{{userDetail.studentId}}</text>
+			<text user-select>学院：{{userDetail.college}}</text>
+			<text user-select>专业：{{userDetail.major}}</text>
+			<text user-select>寝室：{{userDetail.building}}{{userDetail.room}}室</text>
+			<text user-select>辅导员姓名：{{userDetail.counselorName}}</text>
+			<text user-select>辅导员电话：{{userDetail.counselorTel}}</text>
+		</view>
+	</view>
+
+	<view class="navigators">
+
+		<navigator class="navigator blue"
+		url="/freshman/pages/newFriend/newFriend">新的朋友</navigator>
+		<navigator class="navigator blue"
+		url="/freshman/pages/newClass/newClass"  >新的班级</navigator>
+
+		<navigator class="navigator red"
+		url="/freshman/pages/shareAnalysis/shareAnalysis">迎新画像</navigator>
+
+		<navigator class="navigator red" url="/freshman/pages/guide/guide?campus={{userDetail.campus}}&building={{userDetail.building}}">报到指南</navigator>
+
+	</view>
+
+	<!--半圆背景-->
+	<view class="background"
+	style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
+
+</view>

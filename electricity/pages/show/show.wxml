@@ -1,0 +1,62 @@
+<!-- pages/consume/electricity/electricity.wxml -->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view class="main" style="height: calc( 100vh - {{navBarCurrentHeight}}px )">
+	<view class="title">
+		<text>电费余额查询</text>
+	</view>
+	<view
+		style="position: relative; white-space: nowrap; display:flex; align-items:center; box-sizing:border-box; margin-top:2vh; width:80vw; ">
+		<input value="{{floorID}}" bindinput="bindfloorID" placeholder="楼号" class="input_left"></input>
+		<input value="{{roomID}}" bindinput="bindroomID" placeholder="房间号" class="input_right"></input>
+		<!-- <image class="tips" src="../../../assets/icons/tips.png" bindtap="showtips"></image> -->
+
+	</view>
+	<view class="button_container">
+		<view class="s_button" bindtap="getEletricityConsume">
+			查询
+		</view>
+		<view class="s_button" data-init="true" data-type="hours" bindtap="getcostdata">
+			查看使用情况
+		</view>
+	</view>
+	<view class="show_block" wx:if="{{show&&showtype==='normal'}}">
+		<view class="img_wrap">
+			<image src="/electricity/assets/icons/light.png" alt=""></image>
+		</view>
+		<view style="position:absolute;top:33.75rpx;right:10rpx;color:#d3d3d3;margin-left:10rpx;" bindtap="showWrongTip">数据不一致？</view>
+		<view class="text_block">
+			<text style="margin-bottom:20rpx;">房间号：{{electricityData.room}}</text>
+			<text style="margin-bottom:20rpx;">剩余金额：{{electricityData.balance}} 元</text>
+			<text>剩余电量：{{electricityData.power}} 度</text>
+		</view>
+		<text style="color:#d3d3d3;margin-left:10rpx;padding-left:10px;">更新时间：{{electricityData.date}} {{electricityData.time}}</text>
+	</view>
+	<view class="main" style="width:100%;" wx:if="{{show&&showtype==='history'}}">
+		<view class="rank_container">
+			<view class="icon_container">
+				<image src="/electricity/assets/rank.png" alt=""></image>
+			</view>
+			<!-- <text >过去24小时中花费</text> -->
+			<text class="cost">{{rank.con}}<text style="font-size:18px;color:#e3e3e3;font-weight:unset!important;">元</text></text>
+			<text>24小时消费超越了<text style="font-weight:bold;"> {{rank.percen}}% </text>的寝室</text>
+		</view>
+		<view class="show_block" style="margin-top:30rpx;">
+			<chart chart-class="chart" option="{{ option }}" notMerge />
+		</view>
+		<view class="slider_contianer">
+			<view class="help {{selected === 'hours' ? 'type_indication_to_left' : ' type_indication_to_right'}}"></view>
+			<view class="slider_button {{selected === 'hours' ? 'slider_button_selected' : ''}}"
+			data-type="hours" bindtap="getcostdata">
+				过去一天
+			</view>
+			<view class="slider_button {{ selected === 'days' ? 'slider_button_selected' : ''}}"
+			data-type="days" bindtap="getcostdata">
+				过去一周
+			</view>
+		</view>
+		<!-- <view class="share_button" bindtap="gotoshare">
+			<text>点此生成分享海报</text>
+		</view> -->
+	</view>
+</view>

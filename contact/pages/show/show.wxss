@@ -1,0 +1,120 @@
+/* phone/pages/phone.wxss */
+page{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+}
+.menu_list{
+    width: 30px;
+    height: 20px;
+    margin-left: 5px;
+}
+.icon1{
+    width:25px;
+    height: 25px;
+}
+.search{
+    display: flex;
+    box-shadow:0px 3px 3px 1px #aaa;
+    padding-bottom: 7px ;
+    z-index:1;
+}
+.search_data{
+    display: flex;
+    flex-direction: row;
+    background-color: #EAEAEA;
+    border-radius: 16px;
+    width: 90vw;
+    align-items: right;
+    padding-left: 0px;
+    margin-right: 7px;
+}
+.menu{
+    background-color:#dee2e6;
+    width: 20vw;
+    height: 88vh;
+
+}
+.me1{
+    color: #6C7A89;
+    height: 40px;
+    font-size:13px;
+    text-align:center;
+    padding-top: 10px;
+    padding-left:5px ;
+    padding-right: 5px;
+}
+.table{
+    display: flex;
+    flex-direction: row;
+}
+.table-cell{
+    display: flex;
+    padding: 5px;
+    flex-direction: row;
+    height: 90px;
+    justify-content: space-between;
+    border-bottom: 1px solid #787878 ;
+    align-items: center;
+    width: 105%;
+}
+.list_phone{
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    height: 84.7vh;
+
+}
+.phone_list{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    height: 28px;
+    width: auto;
+    background-color: #f8f9fa;
+
+}
+.td{
+    display: flex;
+    flex-direction: column;
+    width: 160px;
+    flex-wrap: wrap;
+    color:#6C7A89;
+    font-size: 14px;
+
+}
+.copy{
+    font-size: 14px;
+    color:rgb(74, 79, 88);
+    align-items: center;
+    text-align: center;
+    padding-top: 8px;
+    margin-right: 15px;
+    box-sizing: content-box;
+    width: 90px;
+}
+.icon{
+    width: 25px;
+    height: 25px;
+    margin-left: 15px;
+}
+.icon2{
+    width: 20px;
+    height: 20px;
+}
+.department{
+    display: flex;
+    align-items: center;
+}
+.project{
+    display: flex;
+    align-items: center;
+}
+.phone{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}

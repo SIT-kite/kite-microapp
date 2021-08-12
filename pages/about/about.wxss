@@ -1,25 +1,28 @@
 /* pages/about/about.wxss */
-#container{
-	margin: 0vh 5vw;
-	width: 90vw;
-	height: 80vh;
+.container {
+	margin: 1em;
+	line-height: 1.618;
 }
 
-.title {
-	margin: 2vh 0vw;
-}
-
-.p {
-	text-align: justify;
+.list {
+	padding-inline-start: 1.2em;
 }
 
 .blockquote {
-	margin: 1vh 3vw;
-	padding: 15rpx 30rpx;
-	border-left: 5px solid #dfe2e5;
-	font-size: 14px;
-	color: #6a737d;
-} 
-.blockquote p {
-	margin: 0;
+	padding-inline-start: .75em;
+	border-inline-start: .25em solid #BDBDBD;
+	color: #616161;
 }
+
+/* 文本对齐方式 */
+.p { text-align: justify; }
+.title, .center { text-align: center; }
+
+/* 首行缩进 */
+.p { text-indent: 2em; }
+.center, .blockquote > .p { text-indent: 0; }
+
+/* 纵向外边距 */
+.title, .p, .blockquote { margin-block: .5em; }
+.li, .blockquote > .p  { margin-block: .1em; }
+

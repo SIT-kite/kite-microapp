@@ -1,0 +1,184 @@
+@import "/carpool/assets/iconfont/iconfont.wxss";
+.container{
+  height: auto;
+  width: 100vw;
+}
+
+.header{
+  width: 100vw;
+  height: 80rpx;
+  box-shadow: 0 20rpx 20rpx #bfbfbf;
+  line-height: 80rpx;
+  padding-left: 25rpx;
+  position: sticky;
+  top: 0rpx;
+  z-index: 999;
+  background-color: white;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+}
+
+.title{
+  display: inline-block;
+  height: 100%;
+  padding: 0 20rpx;
+  color: #666;
+  position: relative;
+}
+
+.currentView::after{
+  content: '';
+  display: block;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background: linear-gradient(45deg,#129600,#1296db);
+  position: absolute;
+  bottom: 5rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.calendarMockBox{
+  width: 250rpx;
+  height: 65rpx;
+  line-height: 65rpx;
+  text-align: center;
+  font-size: 26rpx;
+  background-color: #f0f0f0;
+  color: #aaa;
+  margin: 20rpx 50rpx;
+  transition: all linear 0.1s;
+}
+.emText{
+  font-weight: bold;
+  color: black;
+}
+
+.swiper{
+  width: 100vw;
+  min-height: calc(1246rpx - 88rpx);
+  overflow: scroll;
+}
+
+.car-pool-view{
+  width: 100vw;
+  height: auto;
+  background-color: rgba(108, 108, 108, .1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+}
+
+.car-pool-filter{
+  flex-shrink: 0;
+  height:160rpx;
+  width: 650rpx;
+  padding: 20rpx;
+  margin: 30rpx 0;
+  background-color: white;
+  box-shadow: 5rpx 5rpx 10rpx #bfbfbf,
+  -5rpx -5rpx 10rpx whitesmoke;
+  position: relative;
+  overflow: hidden;
+  transition: height linear 0.2s;
+}
+
+.expanded{
+  height: 800rpx ;
+
+}
+
+.car-pool-filter-title{
+  color: #333;
+  font-weight: bold;
+  padding-left: 30rpx;
+  position: relative;
+}
+
+.car-pool-filter-title::before{
+  content: '';
+  display: block;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: linear-gradient(45deg,#105050,#1296db);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+
+.press{
+  transform: scale(0.95);
+}
+
+.expandItem{
+  position: absolute;
+  bottom: 15rpx;
+  right: 15rpx;
+  color: #bfbfbf;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform linear 0.2s;
+}
+
+.down{
+  transform: rotateZ(180deg);
+}
+
+.initiate-car-pool-icon{
+  position: absolute;
+  bottom: 50rpx;
+  right: 50rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 10rpx 10rpx 10rpx #f0f0f0;
+}
+
+.profile-header{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.profile-header-title{
+  width: 50%;
+  height: 100%;
+  line-height: 100rpx;
+  text-align: center;
+  position: relative;
+}
+
+.currentProfileView::after{
+  content: '';
+  display: block;
+  position: absolute;
+  width: 200rpx;
+  height: 5rpx;
+  background: linear-gradient(45deg,#129600,#1296db);
+  border-radius: 50%;
+  bottom: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.none-record-tip{
+  margin: 100rpx;
+  color:#bfbfbf;
+  text-align: center;
+}
+
+.sub-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

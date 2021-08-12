@@ -1,0 +1,14 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
+<image class="background" src="/assets/pic/background_verification.jpg" mode="widthFix" />
+
+<view class="title">实名认证</view>
+
+<input value="{{ uploadInfo.studentId }}" bindinput="bindId"     placeholder="学号" />
+<input value="{{ uploadInfo.oaSecret  }}" bindinput="bindSecret" placeholder="OA 密码" type="password" />
+
+<button disable="{{ canUpload }}" class="upload {{ canUpload ? '' : 'disable' }}"
+	size="mini" bindtap="verify">
+	<image src="/assets/icons/upload.png" />
+</button>

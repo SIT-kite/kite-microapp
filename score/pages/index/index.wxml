@@ -1,0 +1,22 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
+</navBar>
+<view class="indexPage">
+  <view class="pageHeader">
+    <picker class="select year" mode="selector"><text class="selectText year">2020-2021</text></picker>
+    <picker class="select term" mode="selector"><text class="selectText term">第二学期</text></picker>
+    <view class="refer">查询</view>
+  </view>
+  <view class="gpaContainer">
+    <view class="gpaWords"><text>该学期绩点为4.0</text></view>
+    <view class="showYearGpa">
+      <text>显示学年绩点</text>
+      <switch></switch>
+    </view>
+  </view>
+  <card></card>
+  <card></card>
+  <card></card>
+  <card></card>
+  <card></card>
+  <card></card>
+</view>

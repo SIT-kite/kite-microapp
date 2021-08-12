@@ -1,0 +1,24 @@
+/* freshman/pages/guide/guide.wxss */
+.mapContainer {
+  font-weight: bold;
+  height: 100%;
+}
+.map {
+  height: 100%;
+  width: 100%;
+}
+.toNowLocation {
+  width: 10%;
+  height: 10%;
+  position: absolute;
+  left: 5%;
+  bottom: 0%;
+}
+.backToSchool {
+  background-color: #d9d9d9;
+  box-shadow: 0 0 10rpx 1rpx #D1D1D1;
+  border-radius: 10rpx;
+  position: absolute;
+  left: 45%;
+  bottom: 3%;
+}

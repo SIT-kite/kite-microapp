@@ -10,11 +10,11 @@ const getTimeStamp = GMTTime => {
 // getIntervalToCurrentTime(GivenTime: String): intervalTime: String
 // 获取给定时间到现在的时间间隔
 // 返回形式为 XX年XX月XX日XX:XX:XX
-const getIntervalToCurrentTime = GivenTime => {
+const getIntervalToCurrentTime = givenTime => {
 
-  if (null == GivenTime) return null;
+  if (null == givenTime) return null;
 
-  var givenTimeStamp = getTimeStamp(GivenTime) / 1000;
+  var givenTimeStamp = getTimeStamp(givenTime) / 1000;
   var currTimeStamp = parseInt(new Date().getTime() / 1000);
   var interval = currTimeStamp - givenTimeStamp;
 

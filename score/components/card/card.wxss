@@ -1,0 +1,35 @@
+/* score/components/card/card.wxss */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40rpx;
+  margin: 20rpx;
+  border-radius: 10rpx;
+  background-color:#9fc5e8;
+  box-shadow: 0rpx 0rpx 10rpx 1rpx #D1D1D1;
+}
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  
+}
+.nameText {
+  margin-bottom: 10rpx;
+  font-weight: bold;
+  font-size: large;
+  box-shadow: 0rpx 5rpx 0rpx 0rpx #ffe599;
+}
+.rightContainer {
+  display: flex;
+  align-items: center;
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  background-color: #ffe599;
+}
+.gradesText {
+  margin:auto;
+  font-weight: bold;
+  font-size:x-large;
+}

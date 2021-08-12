@@ -1,0 +1,8 @@
+{
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar",
+    "card": "/freshman/components/card/card"
+  }
+}

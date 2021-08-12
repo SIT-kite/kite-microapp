@@ -1,0 +1,45 @@
+{
+	"root": true,
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": "eslint:recommended",
+	"parserOptions": {
+		"ecmaVersion": 12,
+		"sourceType": "module"
+	},
+	"rules": {
+		"eqeqeq": "warn",
+		"no-lonely-if": "warn",
+		"no-unneeded-ternary": "warn",
+		"no-use-before-define": "warn",
+		"no-useless-rename": "warn",
+		"object-shorthand": "warn",
+		"spaced-comment": "warn"
+	},
+	"globals": {
+		"App": "writable",
+		"Behavior": "writable",
+		"Component": "writable",
+		"NativeGlobal": "writable",
+		"Page": "writable",
+		"WXWebAssembly": "writable",
+		"WeAppWorker": "writable",
+		"chrome": "writable",
+		"debugInfo": "writable",
+		"decodePathName": "writable",
+		"define": "writable",
+		"definePlugin": "writable",
+		"document": "readonly",
+		"getApp": "writable",
+		"getCurrentPages": "writable",
+		"innerHeight": "writable",
+		"innerWidth": "writable",
+		"module": "writable",
+		"require": "writable",
+		"requireOnce": "writable",
+		"requirePlugin": "writable",
+		"wx": "writable"
+	}
+}

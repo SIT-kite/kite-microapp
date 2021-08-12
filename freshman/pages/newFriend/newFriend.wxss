@@ -1,0 +1,162 @@
+/* pages/newFriend/newFriend.wxss */
+
+.main {
+	width: 100%;
+	height: 100%;
+	/* margin-top: 110rpx; */
+	margin-bottom: 50rpx;
+}
+
+.title {
+	margin: .5rem 1rem;
+	font-size: 1.5em;
+	font-weight: 500;
+}
+
+.block {
+	width: 100%;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem;
+	background-color: rgb(246, 246, 251);
+}
+
+.card-blank {
+	justify-content: center;
+	padding: 1rem;
+	background-color: white;
+}
+
+.bed-wrap-1 {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	margin-bottom: 1px;
+	padding: .125em .5ch;
+	background-color: rgb(246, 246, 251);
+}
+
+.bed-wrap-1 text {
+	padding-right: 10rpx;
+}
+
+.lastSeen {
+	padding-left: 10rpx;
+	font-size: 25rpx;
+}
+
+.bed-wrap-1 {
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.info {
+	background-color: white;
+	display: flex;
+	align-items: start;
+}
+
+.image-wrap {
+	width: 150rpx;
+	height: 150rpx;
+}
+
+.image-wrap image {
+	border-radius: 50%;
+	width: 130rpx;
+	height: 130rpx;
+	/* border: solid 6rpx red; */
+}
+
+.gender {
+	/* left: 150rpx;
+    top: 150rpx; */
+	bottom: 0rpx;
+	right: 0rpx;
+	z-index: 5;
+	position: absolute;
+}
+
+.avatar {
+	border-radius: 50%;
+	contain: paint;
+	width: 150rpx;
+	height: 150rpx;
+	/* border: solid 6rpx red; */
+	margin-top: 12rpx;
+	margin-left: 20rpx;
+}
+
+.detail {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.basic_block {
+	display: flex;
+	align-items: center;
+}
+
+.basic_block image {
+	margin-left: 14rpx;
+}
+
+.detail-1 {
+	padding: .25em .5em 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.name {
+	font-size: 38rpx;
+	font-weight: 550;
+}
+
+.position {
+	font-size: .8em;
+}
+
+.pos-wrap {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+}
+
+.detail-1 image {
+	width: 1em;
+	height: 1em;
+}
+
+.detail-2,
+.detail-3 {
+	margin: 0 .5rem;
+	font-size: .8em;
+}
+
+.contact {
+	margin: .25em .5em .5em;
+	color: #616161;
+	font-family: Consolas, monospace;
+}
+
+.qq,
+.wx {
+	display: flex;
+	align-items: center;
+}
+.qq image,
+.wx image {
+	width: 1em;
+	height: 1em;
+}
+.qq text,
+.wx text {
+	padding-left: 1ch;
+}

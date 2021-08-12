@@ -1,0 +1,108 @@
+.userinfo {
+	padding-top: 30rpx;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 3;
+}
+
+.avatar {
+	width: 180rpx;
+	height: 180rpx;
+	margin-top: 20rpx;
+	margin-bottom: 40rpx;
+	border-radius: 50%;
+	contain: paint;
+	z-index: 3;
+}
+
+.greetings {
+	text-align: center;
+	font-size: 60rpx;
+	font-weight: 550;
+	z-index: 3;
+}
+
+.background {
+	position: absolute;
+	left: 0;
+	top: calc(30rpx + 60rpx + 180rpx + 40rpx + 64px);
+	border-top-left-radius: 32rpx;
+	border-top-right-radius: 32rpx;
+	background-color: white;
+	width: 100%;
+	height: 90vh;
+	z-index: -1;
+}
+
+.stu_info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin-top: 80rpx;
+	width: 100%;
+	z-index: 3;
+}
+
+.info_wrap {
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	z-index: 3;
+}
+.info_wrap image {
+	position: absolute;
+	right: 20rpx;
+	width: 65rpx;
+	height: 65rpx;
+	margin-right: 30rpx;
+}
+.info_wrap text {
+	margin: 2.5px;
+	font-size: 33rpx;
+	z-index: 3;
+	word-wrap: break-word;
+	word-break: break-all;
+	white-space: pre-line;
+}
+
+.image_wrap {
+	padding-top: 3vh;
+	width: 35%;
+	z-index: 3;
+}
+.image_wrap image {
+	width: 100%;
+	height: 80%;
+	z-index: 3;
+}
+
+.navigators {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 50rpx;
+	padding: 50rpx;
+	z-index: 3;
+}
+.navigators .navigator {
+	width: 100%;
+	text-align: center;
+	font-weight: 500;
+	line-height: 100rpx;
+	color: white;
+	background-color: #9E9E9E;
+	border-radius: 4px;
+	z-index: 3;
+}
+
+.navigator.blue {
+	background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+}
+.navigator.red {
+	background-image: linear-gradient(135deg, #FCCF31 10%, #F55555 100%);
+}
+.grayscale {
+	filter: grayscale();
+}
