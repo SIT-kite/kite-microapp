@@ -61,6 +61,7 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
+	background-color: white;
 	border-radius: 16px;
 	border: 1rpx solid rgba(204, 204, 204, 0.6);
 	position: relative;

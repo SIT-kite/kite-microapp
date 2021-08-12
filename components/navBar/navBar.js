@@ -29,7 +29,7 @@ Component({
     delta: {
       type: Number,
       value: 1
-    } /*, animated: {
+    } /* , animated: {
       type: Boolean,
       value: true
     },
@@ -176,13 +176,13 @@ Component({
           systemInfo.navBarExtendHeight = ios ? 4 : 0;
         }
 
-        systemInfo.navBarHeight = navBarHeight; //导航栏高度不包括statusBarHeight
+        systemInfo.navBarHeight = navBarHeight; // 导航栏高度不包括statusBarHeight
         systemInfo.capsulePosition = rect; /* 右上角胶囊按钮信息：
         bottom: 58 height: 32 left: 317 right: 404 top: 26 width: 87
         目前发现在大多机型都是固定值 为防止不一样 会使用动态值来计算nav元素大小 */
-        systemInfo.ios = ios; //是否ios
+        systemInfo.ios = ios; // 是否ios
 
-        app.globalSystemInfo = systemInfo; //将信息保存到全局变量中，后边再用就不用重新异步获取了
+        app.globalSystemInfo = systemInfo; // 将信息保存到全局变量中，后边再用就不用重新异步获取了
 
         // console.log('systemInfo', systemInfo);
         return systemInfo;

@@ -16,6 +16,7 @@ page {
 }
 
 .card, .button {
+	contain: paint;
 	border-radius: 4px;
 }
 

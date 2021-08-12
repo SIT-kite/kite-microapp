@@ -240,20 +240,18 @@ Page({
     markers: []
   },
 
-  toNowLocation: function () {
+  toNowLocation() {
 
   },
 
-  backToSchool: function () {
+  backToSchool() {
+    // 未完成
+    const coordinate = [];
     this.setData({
-      "setting.latitude": coordinate[0].latitude
-    })
-    this.setData({
-      "setting.longitude": coordinate[0].longitude
-    })
-    this.setData({
+      "setting.latitude": coordinate[0].latitude,
+      "setting.longitude": coordinate[0].longitude,
       locationChange: false
-    })
+    });
   },
 
 
@@ -262,11 +260,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad(options) {
     let markers = [];
 
     // 加载默认 Markers
-    if (options.campus == "奉贤校区") {
+    if(options.campus === "奉贤校区") {
 
       constPositions.forEach(point => {
         console.log("Const point = ", point);
@@ -289,12 +287,12 @@ Page({
 
     let target = null;
     // 加载当前宿舍楼位置. 若为奉贤校区, 设置标记点, 并将地图中心设置为该宿舍楼位置
-    if (options.campus == "奉贤校区") {
+    if(options.campus === "奉贤校区") {
       let building_num = options.building.replace("号楼", "");
       let building_pos = dormitoryBuildingMapping[building_num];
 
       target = building_pos;
-    } else if (options.campus == "徐汇校区") {
+    } else if(options.campus === "徐汇校区") {
       target = defaultXuhuiCenter;
       this.setData({"setting.enablePoi": true})
     } else {
@@ -305,7 +303,7 @@ Page({
     console.log("当前目标点: ", target);
 
     // 添加宿舍楼的点位
-    if(target == defaultXuhuiCenter) {
+    if(target === defaultXuhuiCenter) {
       markers.push({
         id: 0,
         iconPath: "/freshman/assets/icons/red_arrow.png",
@@ -329,7 +327,7 @@ Page({
         }
       })
     }
-    
+
 
     let context = wx.createMapContext('campusMap', this);
 
@@ -344,32 +342,32 @@ Page({
     console.log("设置标记点: ", markers);
     context.addMarkers({
       markers,
-      success: (res) => {
+      success:(res) => {
         console.log(res);
       },
-      fail: (err) => {
+      fail:(err) => {
         console.error(err);
       },
-      complete: (res) => console.log("设置标记点完成: ", res),
+      complete:(res) => console.log("设置标记点完成: ", res),
     });
 
     // 启用微信定位, 以显示当前位置
     wx.getLocation({
       // type: 'gcj02',//默认wgs84
-      success: function (location) {
+      success(location) {
         console.log(location);
       },
-      fail: function () {
+      fail() {
         wx.hideLoading();
 
         wx.getSetting({
-          success: function (res) {
-            if (!res.authSetting['scope.userLocation']) {
+          success(res) {
+            if(!res.authSetting['scope.userLocation']) {
               wx.showModal({
                 content: '我们需要获取位置信息, 以显示您的位置',
                 confirmText: '好的',
-                success: function (res) {
-                  if (res.confirm) {
+                success(res) {
+                  if(res.confirm) {
                     this.openSetting();
                   } else {
                     console.log('get location fail');
@@ -377,12 +375,11 @@ Page({
                 }
               })
             } else {
-              //用户已授权，但是获取地理位置失败，提示用户去系统设置中打开定位
+              // 用户已授权，但是获取地理位置失败，提示用户去系统设置中打开定位
               wx.showModal({
                 title: '',
                 content: '请在系统设置中打开定位服务',
-                confirmText: '确定',
-                success: function (res) {}
+                showCancel: false
               })
             }
           }
@@ -394,49 +391,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage() {
 
   }
 })

@@ -1,17 +1,9 @@
 <!--pages/newFriend/newFriend.wxml-->
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
 <view class="main" wx:if="{{show}}">
-	<view style="margin-top:30rpx;margin-left:30rpx">
-		<text style="font-size:50rpx;font-weight:600">我的室友</text>
-	</view>
+	<view class="title">我的室友</view>
 	<!-- 卡片 -->
-<view wx:if="{{roommates == 0}}">
-	<block>
-		<view class="card-0">
-		<text class="card-1">✧(≖ ◡ ≖✿) 你可能和学长/学姐一块儿噢!</text>
-		</view>
-	</block>
- </view>
+<view wx:if="{{roommates == 0}}" class="card card-blank">✧(≖ ◡ ≖✿) 你可能和学长/学姐一块儿噢!</view>
 <view wx:else>
 	<block wx:for="{{roommates}}" wx:key="bed" wx:for-index="id">
 		<view class="card">
@@ -41,36 +33,30 @@
 					<view class="detail-3">
 						<text selectable >{{item.college}}</text>
 					</view>
+
+					<!-- 联系方式 -->
+					<view class="contact">
+						<view class="qq" style="padding-top: {{item.isHidden.padding}}rpx;"
+							hidden="{{item.isHidden.qq}}" bindtap="copyText"
+							data-text="{{item.contact.qq}}" data-type="QQ">
+							<image src="/freshman/assets/icons/qq_logo.png"></image>
+							<text selectable>{{item.contact.qq}}</text>
+						</view>
+						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
+							<image src="/freshman/assets/icons/wechat_logo.png"></image>
+							<text selectable >{{item.contact.wechat}}</text>
+						</view>
+					</view>
 				</view>
 			</view>
-			</view>
-			<!-- 联系方式 -->
-			<view class="contact">
-							<view class="qq"  style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
-								<image src="/freshman/assets/icons/qq_logo.png"></image>
-								<text selectable>{{item.contact.qq}}</text>
-							</view>
-				<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
-					<image src="/freshman/assets/icons/wechat_logo.png"></image>
-					<text selectable >{{item.contact.wechat}}</text>
-				</view>
-			</view>
-			<!-- </view> -->
+		</view>
 	</block>
 </view>
 
-	<view style="margin-top:30rpx;margin-left:30rpx" hidden="{{isHidden}}">
-		<text style="font-size:50rpx;font-weight:600;">可能认识的人</text>
-	</view>
+	<view class="title" hidden="{{isHidden}}">可能认识的人</view>
 
-<view wx:if="{{familiar == 0}}">
-	<block>
-		<view class="card-0">
-		<text class="card-1">ヾ(●゜ⅴ゜)ﾉ开学以后就会认识很多朋友啦</text>
-		</view>
-	</block>
- </view>
- <view wx:else>
+<view wx:if="{{familiar == 0}}" class="card card-blank">ヾ(●゜ⅴ゜)ﾉ开学以后就会认识很多朋友啦</view>
+<view wx:else>
 	<block wx:for="{{familiar}}" wx:key="name" wx:for-index="id">
 		<view class="card">
 			<view class="bed-wrap-1">
@@ -93,7 +79,7 @@
 							<image src="/freshman/assets/location.png"></image>
 						</view>
 					</view>
-					<view class="detail-3" style="padding-top:10rpx">
+					<view class="detail-3">
 						<text selectable >{{item.college}}</text>
 					</view>
 					<view class="contact">

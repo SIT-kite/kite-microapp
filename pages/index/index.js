@@ -17,7 +17,7 @@ Page({
       text: "电费",
       url: "/electricity/pages/show/show",
       iconPath: "/assets/icons/index/electricity.png"
-    }, /*{
+    }, /* {
       text: "商城",
       url: "/shop/pages/index/index",
       iconPath: "/assets/icons/index/shop.png"
@@ -33,7 +33,7 @@ Page({
       text: "常用电话",
       url: "/contact/pages/show/show",
       iconPath: "/assets/icons/index/telephone.png"
-    }, 
+    },
     {
       text: "搜索",
       url: "/search/pages/index/index",

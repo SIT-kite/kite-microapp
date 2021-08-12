@@ -123,7 +123,7 @@ Page({
       // 本地有可能认识人和室友的信息
       if (app.globalData.userDetail.visible) {
         this.setData({
-          roommates: app.globalData.roommates,
+          roommates: app.globalData.familiar,
           familiar: app.globalData.familiar,
           isHidden: false
         });

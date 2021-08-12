@@ -16,7 +16,7 @@
 }
 .backToSchool {
   background-color: #d9d9d9;
-  box-shadow: 0rpx 0rpx 10rpx 1rpx #D1D1D1;
+  box-shadow: 0 0 10rpx 1rpx #D1D1D1;
   border-radius: 10rpx;
   position: absolute;
   left: 45%;
