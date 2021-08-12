@@ -32,8 +32,6 @@ App({
     searchKeyWord: "",
     searchResultItemIndex: 0,
 
-    location: {}
-
   },
 
   onLaunch() {

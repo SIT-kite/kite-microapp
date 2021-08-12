@@ -15,7 +15,7 @@ const defaultXuhuiCenter = {
   id: 0,
   name: "徐汇校区",
   latitude: 31.166975,
-  longtitude: 121.422453,
+  longitude: 121.422453,
 }
 
 const constPositions = [{
@@ -235,6 +235,7 @@ Page({
       scale: 17,
       rotate: 10,
       showLocation: true,
+      enablePoi: false,
     },
     markers: []
   },
@@ -295,6 +296,7 @@ Page({
       target = building_pos;
     } else if (options.campus == "徐汇校区") {
       target = defaultXuhuiCenter;
+      this.setData({"setting.enablePoi": true})
     } else {
       console.error("无法获取校区信息, 使用默认奉贤校区目标点");
       target = defaultFengxianCenter;
@@ -303,18 +305,31 @@ Page({
     console.log("当前目标点: ", target);
 
     // 添加宿舍楼的点位
-    markers.push({
-      id: 0,
-      iconPath: "/freshman/assets/icons/red_arrow.png",
-      joinCluster: true,
-      width: 50,
-      height: 50,
-      longitude: target.longitude,
-      latitude: target.latitude,
-      label: {
-        content: target.name,
-      }
-    });
+    if(target == defaultXuhuiCenter) {
+      markers.push({
+        id: 0,
+        iconPath: "/freshman/assets/icons/red_arrow.png",
+        joinCluster: true,
+        width: 50,
+        height: 50,
+        longitude: target.longitude,
+        latitude: target.latitude,
+      })
+    }else {
+      markers.push({
+        id: 0,
+        iconPath: "/freshman/assets/icons/red_arrow.png",
+        joinCluster: true,
+        width: 50,
+        height: 50,
+        longitude: target.longitude,
+        latitude: target.latitude,
+        label: {
+          content: target.name,
+        }
+      })
+    }
+    
 
     let context = wx.createMapContext('campusMap', this);
 
@@ -333,48 +348,47 @@ Page({
         console.log(res);
       },
       fail: (err) => {
-        console.log(err);
+        console.error(err);
       },
-      complete: (res) => console.error("设置标记点完成: ", res),
+      complete: (res) => console.log("设置标记点完成: ", res),
     });
 
-    // // 启用微信定位, 以显示当前位置
-    // wx.getLocation({
-    //   // type: 'gcj02',//默认wgs84
-    //   success: function (location) {
-    //     wx.setStorageSync('location', location)
-    //     console.log(location);
-    //   },
-    //   fail: function () {
-    //     wx.hideLoading();
+    // 启用微信定位, 以显示当前位置
+    wx.getLocation({
+      // type: 'gcj02',//默认wgs84
+      success: function (location) {
+        console.log(location);
+      },
+      fail: function () {
+        wx.hideLoading();
 
-    //     wx.getSetting({
-    //       success: function (res) {
-    //         if (!res.authSetting['scope.userLocation']) {
-    //           wx.showModal({
-    //             content: '我们需要获取位置信息, 以显示您的位置',
-    //             confirmText: '好的',
-    //             success: function (res) {
-    //               if (res.confirm) {
-    //                 this.openSetting();
-    //               } else {
-    //                 console.log('get location fail');
-    //               }
-    //             }
-    //           })
-    //         } else {
-    //           //用户已授权，但是获取地理位置失败，提示用户去系统设置中打开定位
-    //           wx.showModal({
-    //             title: '',
-    //             content: '请在系统设置中打开定位服务',
-    //             confirmText: '确定',
-    //             success: function (res) {}
-    //           })
-    //         }
-    //       }
-    //     })
-    //   }
-    // });
+        wx.getSetting({
+          success: function (res) {
+            if (!res.authSetting['scope.userLocation']) {
+              wx.showModal({
+                content: '我们需要获取位置信息, 以显示您的位置',
+                confirmText: '好的',
+                success: function (res) {
+                  if (res.confirm) {
+                    this.openSetting();
+                  } else {
+                    console.log('get location fail');
+                  }
+                }
+              })
+            } else {
+              //用户已授权，但是获取地理位置失败，提示用户去系统设置中打开定位
+              wx.showModal({
+                title: '',
+                content: '请在系统设置中打开定位服务',
+                confirmText: '确定',
+                success: function (res) {}
+              })
+            }
+          }
+        })
+      }
+    });
   },
 
   /**
