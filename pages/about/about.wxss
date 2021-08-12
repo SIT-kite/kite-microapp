@@ -1,4 +1,17 @@
 /* pages/about/about.wxss */
+
+.background {
+	position: fixed;
+	top: 25%;
+	left: 25%;
+	z-index: -1;
+	width: 50%;
+	height: 50%;
+	opacity: .1;
+	border-radius: 50%;
+	box-shadow: var(--shadow);
+}
+
 .container {
 	margin: 1em;
 	line-height: 1.618;
@@ -14,6 +27,11 @@
 	color: #616161;
 }
 
+.contributor {
+	font-size: .8em;
+	letter-spacing: -0.075em;
+}
+
 /* 文本对齐方式 */
 .p { text-align: justify; }
 .title, .center { text-align: center; }
@@ -25,4 +43,3 @@
 /* 纵向外边距 */
 .title, .p, .blockquote { margin-block: .5em; }
 .li, .blockquote > .p  { margin-block: .1em; }
-

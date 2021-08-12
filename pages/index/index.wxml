@@ -1,4 +1,5 @@
-<!-- index.wxml -->
+<!-- pages/index/index.wxml -->
+
 <image class="background" src="/assets/pic/background.png" mode="aspectFill"></image>
 
 <view class="main">
@@ -27,7 +28,7 @@
 	<view class="card menu">
 		<view class="menu-cell" wx:for="{{items}}" wx:key="url"
 			data-index="{{index}}" data-url="{{item.url}}" bindtap="router">
-			<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" />
+			<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" mode="aspectFit" />
 			<view class="menu-cell-text">{{item.text}}</view>
 		</view>
 	</view>

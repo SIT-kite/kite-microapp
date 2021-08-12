@@ -1,12 +1,13 @@
-//app.js
+// app.js
 import updateManager from "./utils/updateManager";
 
 App({
   globalData: {
 
+    apiUrl: "https://kite.sunnysab.cn/api/v1",
     commonUrl: "https://kite.sunnysab.cn/api/v1",
 
-    uid: 0,    // 用户 ID
+    uid: -1,   // 用户 ID
     token: "", // 登录需要的授权码
 
     isLogin:   false, // 是否已登录
@@ -22,10 +23,10 @@ App({
     userInfo: {},   // 迎新 inputInfo 页面 验证信息 姓名/考生号/准考证号，身份证后六位
     contact: {},    // 迎新 inputInfo 页面 联系方式 手机号 tel，qq，微信 wechat
 
-    userDetail: null, // 迎新 stuInfoDetail 页面 用户详情
-    classmates: null, // 迎新      newClass 页面 同班同学
-    roommates:  null, // 迎新     newFriend 页面 我的室友
-    familiar:   null, // 迎新     newFriend 页面 可能认识的人
+    userDetail: null, // {} 迎新 stuInfoDetail 页面 用户详情
+    classmates: null, // [] 迎新      newClass 页面 同班同学
+    roommates:  null, // [] 迎新     newFriend 页面 我的室友
+    familiar:   null, // [] 迎新     newFriend 页面 可能认识的人
 
     searchResultList: [],
     searchHistoryList: [],
@@ -65,10 +66,11 @@ App({
       )
     );
 
-    // 按照 uid、token 和 isStudent 来判断并设置登录状态
-    this.globalData.isLogin = [ "uid", "token", "isStudent" ].every(
-      key => !!this.globalData[key]
-    );
+    // 按照 uid 和 token 来判断并设置登录状态
+    this.globalData.isLogin =
+      this.globalData.uid > 0 &&
+      typeof this.globalData.token === "string"
+      this.globalData.token !== "";
 
     // globalData 设置完成
     console.log("全局数据 globalData:", this.globalData);

@@ -3,12 +3,14 @@ import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUti
 import copyText   from "../../../utils/copyText.js";
 import catchError from "../../../utils/requestUtils.catchError";
 import getHeader  from "../../../utils/getHeader";
+import onShareAppMessage from "../../js/onShareAppMessage";
 
 const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
 const requestUtils = require(utlls + "requestUtils");
 
 const app = getApp();
+const gData = app.globalData;
 
 Page({
 
@@ -22,21 +24,18 @@ Page({
   // navBar handler
   handlerGohomeClick,
   handlerGobackClick,
-
+  onShareAppMessage,
   copyText,
 
   getPageData() {
 
-    wx.showLoading({
-      title: "加载中",
-      mask: true
-    });
+    wx.showLoading({ title: "正在加载…", mask: true });
 
-    let promiseList = [];
+    const promiseList = [];
 
-    let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
-    let data = { "secret": `${app.globalData.userInfo.secret}` };
-    let header = getHeader("urlencoded", app.globalData.token);
+    let url = `${gData.apiUrl}/freshman/${gData.userInfo.account}/roommate`;
+    let data = { "secret": `${gData.userInfo.secret}` };
+    let header = getHeader("urlencoded", gData.token);
 
     // 获取室友信息
     var getRoommates = requestUtils.doGET(url, data, header).then(res => {
@@ -59,18 +58,18 @@ Page({
         roommates: roommatesList,
         isHidden: true
       });
-      app.globalData.roommates = roommatesList;
+      gData.roommates = roommatesList;
       return res;
     });
 
     promiseList.push(getRoommates);
 
     // 可能认识的人
-    if (app.globalData.userDetail.visible) {
+    if (gData.userDetail.visible) {
 
-      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
-      data = { "secret": `${app.globalData.userInfo.secret}` };
-      header = getHeader("urlencoded", app.globalData.token);
+      url = `${gData.apiUrl}/freshman/${gData.userInfo.account}/familiar`;
+      data = { "secret": `${gData.userInfo.secret}` };
+      header = getHeader("urlencoded", gData.token);
 
       var getFamilies = requestUtils.doGET(url, data, header).then(res => {
         var familiarList = res.data.data.people_familiar;
@@ -99,7 +98,7 @@ Page({
           familiar: familiarList,
           isHidden: false
         });
-        app.globalData.familiar = familiarList;
+        gData.familiar = familiarList;
       });
 
       promiseList.push(getFamilies);
@@ -116,20 +115,20 @@ Page({
   // 初始化页面数据
   pageDataInit() {
 
-    if (app.globalData.roommates === null) {
+    if (gData.roommates === null) {
       // 本地没有缓存的信息
       this.getPageData();
     } else {
       // 本地有可能认识人和室友的信息
-      if (app.globalData.userDetail.visible) {
+      if (gData.userDetail.visible) {
         this.setData({
-          roommates: app.globalData.roommates,
-          familiar: app.globalData.familiar,
+          roommates: gData.roommates,
+          familiar: gData.familiar,
           isHidden: false
         });
       } else {
         this.setData({
-          roommates: app.globalData.roommates,
+          roommates: gData.roommates,
           isHidden: true
         });
       }
@@ -157,11 +156,6 @@ Page({
 
   onPullDownRefresh() {
     this.pageDataFresh();
-  },
-
-  onShareAppMessage: () => ({
-    title: "上应小风筝",
-    path: "pages/index/index"
-  })
+  }
 
 })

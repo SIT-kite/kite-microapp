@@ -1,3 +1,5 @@
+// updateManager.js
+
 export default () => {
 
 	// 更新版本

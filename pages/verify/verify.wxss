@@ -1,23 +1,30 @@
-/* pages/verification/verification.wxss */
+/* pages/verify/verify.wxss */
 
 page {
-	display: grid;
-	align-content: start;
-	justify-items: center;
-	gap: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-top: -2em;
 	background-color: white;
 }
 
 .background {
 	width: 90vw;
+	margin: 5vw;
+}
+
+.container {
+	display: grid;
+	align-content: start;
+	justify-items: center;
+	gap: 1rem;
 }
 
 .title {
 	margin-bottom: .5rem;
 	text-align: center;
-	font-size: 1.5em;
 	font-weight: bold;
-	line-height: 1;
 }
 
 input {

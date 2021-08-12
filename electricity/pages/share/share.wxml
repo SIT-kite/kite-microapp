@@ -1,12 +1,15 @@
-<!--pages/freshman/share/share.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
-</navBar>
+<!-- electricity/pages/share/share.wxml -->
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
 <view class="canvas_block">
-	<canvas id="canvas" type="2d" style="width: 650rpx;height:1000rpx;"></canvas>
+	<canvas id="canvas" type="2d" style="width: 650rpx; height: 1000rpx;"></canvas>
 </view>
+
 <view class="button_container">
 	<view class="s_button" bindtap="share">分享</view>
-	<view class="s_button" data-init="true" data-type="hours" bindtap="saveShareImg">保存到手机</view>
+	<view class="s_button" data-init="true" data-type="hours"
+		bindtap="saveShareImg">保存到手机</view>
 </view>
-<view>{{err}}</view>
-<view>{{url}}</view>
+
+<view>{{error}}</view>

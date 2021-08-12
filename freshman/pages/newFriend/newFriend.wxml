@@ -1,9 +1,10 @@
 <!--pages/newFriend/newFriend.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="main" wx:if="{{show}}">
 	<view class="title">我的室友</view>
 	<!-- 卡片 -->
-<view wx:if="{{roommates == 0}}" class="card card-blank">✧(≖ ◡ ≖✿) 你可能和学长/学姐一块儿噢!</view>
+<view wx:if="{{roommates.length === 0}}" class="card card-blank">✧(≖ ◡ ≖✿) 你可能和学长/学姐一块儿噢!</view>
 <view wx:else>
 	<block wx:for="{{roommates}}" wx:key="bed" wx:for-index="id">
 		<view class="card">
@@ -55,7 +56,7 @@
 
 	<view class="title" hidden="{{isHidden}}">可能认识的人</view>
 
-<view wx:if="{{familiar == 0}}" class="card card-blank">ヾ(●゜ⅴ゜)ﾉ开学以后就会认识很多朋友啦</view>
+<view wx:if="{{familiar.length === 0}}" class="card card-blank">ヾ(●゜ⅴ゜)ﾉ开学以后就会认识很多朋友啦</view>
 <view wx:else>
 	<block wx:for="{{familiar}}" wx:key="name" wx:for-index="id">
 		<view class="card">

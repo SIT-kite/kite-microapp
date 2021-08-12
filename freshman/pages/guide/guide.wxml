@@ -1,5 +1,5 @@
 <!-- freshman/pages/guide/guide.wxml -->
-<navBar  background='#fff' back="{{true}}" home="{{true}}"
+<navBar background='#fff' back="{{true}}" home="{{true}}"
 bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
 <view class="mapContainer">

@@ -1,6 +1,7 @@
 // freshman/pages/stuInfoDetail/stuInfoDetail.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import getHeader from "../../../utils/getHeader";
+import onShareAppMessage from "../../js/onShareAppMessage";
 
 var app = getApp();
 const requestUtils = require('../../../utils/requestUtils');
@@ -17,19 +18,17 @@ Page({
 
   handlerGohomeClick,
   handlerGobackClick,
+  onShareAppMessage,
 
   /**
    * 页面数据重新加载
    */
   pageDataInit() {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    wx.showLoading({ title: "正在加载…", mask: true });
 
     const gData = app.globalData;
     // 获取新生信息
-    const url = `${gData.commonUrl}/freshman/${gData.userInfo.account}`;
+    const url = `${gData.apiUrl}/freshman/${gData.userInfo.account}`;
     const data = { "secret": gData.userInfo.secret };
     const header = getHeader("urlencoded", gData.token);
     requestUtils.doGET(url, data, header).then(res => {
@@ -96,11 +95,6 @@ Page({
     this.pageDataInit();
   },
 
-  onReady() {},
-
-  onShareAppMessage: () => ({
-    title: "上应小风筝",
-    path: "pages/index/index"
-  })
+  // onReady() {},
 
 })

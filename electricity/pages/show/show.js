@@ -4,10 +4,12 @@ import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUti
 import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
+const gData = app.globalData;
+
 const requestUtils = require("../../../utils/requestUtils");
 // const { echarts } = requirePlugin('echarts');
 
-const urlSuffix = "/pay/room/";
+const electricityApiUrl = `${gData.apiUrl}/pay/room/`;
 
 Page({
 
@@ -166,7 +168,7 @@ Page({
     })
   },
 
-  setroom() {
+  getRoom() {
     const floor = parseInt(this.data.floorID);
     const room = parseInt(this.data.roomID);
     if (
@@ -178,6 +180,9 @@ Page({
       wx.setStorageSync('electricity_room', room);
       return result;
     } else {
+      wx.showModal({
+        content: "输入格式有误"
+      })
       return 'error';
     }
   },
@@ -189,11 +194,8 @@ Page({
     that.setData({
       selected: type
     })
-    const room = that.setroom();
+    const room = that.getRoom();
     if (room === 'error') {
-      wx.showModal({
-        content: "输入格式有误",
-      })
       return;
     }
     that.getrank();
@@ -213,8 +215,8 @@ Page({
         showtype: 'history'
       })
     } else {
-      let url = `${app.globalData.commonUrl}${urlSuffix}${room}/bill/${type}`;
-      let header = getHeader("urlencoded", app.globalData.token);
+      let url = `${electricityApiUrl}${room}/bill/${type}`;
+      let header = getHeader("urlencoded", gData.token);
       let data = {};
       let getdata = requestUtils.doGET(url, data, header);
       // console.log(e.currentTarget.dataset.type)
@@ -262,17 +264,13 @@ Page({
   getrank() {
     const that = this;
 
-    const room = that.setroom();
+    const room = that.getRoom();
     if (room === "error") {
-      wx.showModal({
-        content: "输入格式有误",
-        showCancel: false
-      })
       return;
     }
 
-    let url = `${app.globalData.commonUrl}${urlSuffix}${room}/rank`;
-    let header = getHeader("urlencoded", app.globalData.token);
+    let url = `${electricityApiUrl}${room}/rank`;
+    let header = getHeader("urlencoded", gData.token);
     let data = {};
     requestUtils.doGET(url, data, header).then((res) => {
       const data = res.data.data
@@ -317,27 +315,23 @@ Page({
   },
 
   getEletricityConsume() {
-    const room = this.setroom();
+    const room = this.getRoom();
     if (room === 'error') {
-      wx.showModal({
-        content: "输入格式有误",
-      })
       return;
     }
-    let url = `${app.globalData.commonUrl}${urlSuffix}${room}`;
-    let header = getHeader("urlencoded", app.globalData.token);
+    let url = `${electricityApiUrl}${room}`;
+    let header = getHeader("urlencoded", gData.token);
     let data = {};
-    let getEletricityConsume = requestUtils.doGET(url, data, header);
-    getEletricityConsume.then((res) => {
-      const data = res.data.data
-      const dateTime = data.ts.split('T')
+    requestUtils.doGET(url, data, header).then((res) => {
+      const data = res.data.data;
+      const dateTime = data.ts.split('T');
       this.setData({
         electricityData: {
           date: dateTime[0],
           time: dateTime[1].substr(0, 5),
           balance: data.balance.toFixed(2),
           power: data.power.toFixed(2),
-          room:data.room
+          room: data.room
         },
         show: true,
         showtype: 'normal'
@@ -351,14 +345,14 @@ Page({
 
   },
 
-  showtips() {
+  /* showtips() {
     const tips = "'10'+1~2位楼号+3~4位房间号"
     wx.showModal({
       title: "填写格式",
       content: tips,
       showCancel: false
     })
-  },
+  }, */
 
   onLoad() {
     this.setData({
@@ -381,7 +375,7 @@ Page({
 
 
   onShareAppMessage: () => ({
-    title: "上应小风筝",
+    title: "试试用上应小风筝查电费吧！支持用电历史哦！",
     path: "pages/index/index"
   })
 

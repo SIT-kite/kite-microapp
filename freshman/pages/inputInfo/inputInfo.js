@@ -3,8 +3,10 @@ import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUti
 const requestUtils = require("../../../utils/requestUtils");
 import getHeader  from "../../../utils/getHeader";
 import catchError from "../../../utils/requestUtils.catchError";
+import onShareAppMessage from "../../js/onShareAppMessage";
 
 const app = getApp();
+const gData = app.globalData;
 
 Page({
   data: {
@@ -54,15 +56,8 @@ Page({
     );
   },
 
-  onShow() {
-    const {
-      navBarHeight,
-      navBarExtendHeight,
-    } = getApp().globalSystemInfo;
-    this.setData({
-      navBarCurrentHeight: navBarExtendHeight + navBarHeight
-    })
-  },
+  onShareAppMessage,
+
   gotoStuInfoDetail() {
     const data = this.data;
     // 没有隐藏输入框（第一次输入个人信息）
@@ -81,69 +76,65 @@ Page({
       } else {
         // 满足输入框要求 发送PUT请求
         const PUT = {
-          url: `${app.globalData.commonUrl}/freshman/${data.userInfo.account}`,
+          url: `${gData.apiUrl}/freshman/${data.userInfo.account}`,
           data: {
             "secret": `${data.userInfo.secret}`,
             "contact": JSON.stringify(data.contact),
             "visible": data.visible
           },
-          header: getHeader("urlencoded", app.globalData.token)
+          header: getHeader("urlencoded", gData.token)
         };
         // putFreshman
         requestUtils.doPUT(PUT.url, PUT.data, PUT.header).then(() => {
           // 本地Storage存储userInfo
           wx.setStorageSync("userInfo", data.userInfo);
-          // 全局同时更新
-          app.globalData.visible  = data.visible;
-          app.globalData.userInfo = data.userInfo;
-          app.globalData.contact  = data.contact;
+          // 同时更新全局
+          gData.visible  = data.visible;
+          gData.userInfo = data.userInfo;
+          gData.contact  = data.contact;
           wx.redirectTo({
             url: "/freshman/pages/stuInfoDetail/stuInfoDetail"
           });
           console.log("putFreshman 数据加载完成")
-        }).catch(
-          res => catchError(res)
-        );
+        }).catch(catchError);
       }
     } else {
 
       //  非第一次进入 修改信息
       const PUT = {
-        url: `${app.globalData.commonUrl}/freshman/${data.userInfo.account}`,
+        url: `${gData.apiUrl}/freshman/${data.userInfo.account}`,
         data: {
-          "secret": `${app.globalData.userInfo.secret}`,
+          "secret": `${gData.userInfo.secret}`,
           "contact": JSON.stringify(data.contact),
           "visible": data.visible
         },
-        header: getHeader("urlencoded", app.globalData.token)
+        header: getHeader("urlencoded", gData.token)
       };
 
       // patchFreshman
       requestUtils.doPUT(PUT.url, PUT.data, PUT.header).then(() => {
         // Storage 和 globalData 同时更新
         wx.setStorageSync("userInfo", this.data.userInfo);
-        app.globalData.visible = this.data.visible;
-        app.globalData.contact = this.data.contact;
+        gData.visible = this.data.visible;
+        gData.contact = this.data.contact;
         wx.redirectTo({
           url: "/freshman/pages/stuInfoDetail/stuInfoDetail"
         });
         console.log("patchFreshman 数据加载完成")
-      }).catch(
-        res => catchError(res)
-      );
+      }).catch(catchError);
 
     }
   },
 
   getName(e) {
     this.setData({
-      'userInfo.account': e.detail.value
+      "userInfo.account": e.detail.value
     });
   },
 
   getSecret(e) {
     this.setData({
-      'userInfo.secret': e.detail.value.toString().toUpperCase()
+      "userInfo.secret": e.detail.value.toString().toUpperCase()
     })
   },
 
@@ -172,19 +163,19 @@ Page({
     // 如果为none，说明现在执行修改功能，需要把全局变量中的contact拷贝一份,展示在input框中
     if (option.isHidden === "none") {
       this.setData({
-        contact: app.globalData.contact,
-        userInfo: app.globalData.userInfo,
+        contact: gData.contact,
+        userInfo: gData.userInfo,
         buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
-        avatarUrl: app.globalData.avatarUrl,
-        nickName: app.globalData.nickName
+        avatarUrl: gData.avatarUrl,
+        nickName: gData.nickName
       })
     } else {
       this.setData({
         buttonText: option.isHidden === "flex" ? "提交" : "确定",
         isHidden: option.isHidden,
-        avatarUrl: app.globalData.avatarUrl,
-        nickName: app.globalData.nickName
+        avatarUrl: gData.avatarUrl,
+        nickName: gData.nickName
       })
     }
     console.log("onload(): over")
@@ -195,7 +186,7 @@ Page({
 
     if (
       "flex" === this.data.isHidden &&
-      app.globalData.freshmanPrivacyConfirm !== true
+      gData.freshmanPrivacyConfirm !== true
     ) {
       wx.showModal({
         title: "隐私信息提示",
@@ -207,7 +198,7 @@ Page({
         confirmColor: "#4B6DE9",
         success: result => {
           if (result.confirm) {
-            app.globalData.freshmanPrivacyConfirm = true;
+            gData.freshmanPrivacyConfirm = true;
             wx.setStorageSync("freshmanPrivacyConfirm", true);
           } else {
             this.handlerGohomeClick();
@@ -217,9 +208,14 @@ Page({
     }
   },
 
-  onShareAppMessage: () => ({
-    title: "上应小风筝",
-    path: "pages/index/index"
-  })
+  onShow() {
+    const {
+      navBarHeight,
+      navBarExtendHeight,
+    } = getApp().globalSystemInfo;
+    this.setData({
+      navBarCurrentHeight: navBarExtendHeight + navBarHeight
+    })
+  }
 
 })

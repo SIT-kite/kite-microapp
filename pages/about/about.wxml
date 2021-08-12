@@ -1,6 +1,11 @@
-<!--pages/about/about.wxml-->
-<navBar background='white' back="{{true}}" home="{{true}}"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<!-- pages/about/about.wxml -->
+
+<navBar background="white" back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
+<image class="background" src="/assets/pic/kite.svg" />
+
 <view class="container">
-	<rich-text nodes="{{html}}"></rich-text>
+	<view class="title">关于上应小风筝</view>
+	<rich-text nodes="{{html}}" />
 </view>

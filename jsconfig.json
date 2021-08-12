@@ -2,9 +2,10 @@
 	"compilerOptions": {
 		"checkJs": true,
 		"noEmit": true,
-		"target": "esnext",
-		"module": "commonjs",
-		"strict": false
+		"target": "ESNext",
+		"module": "ESNext",
+		"strict": false,
+		"esModuleInterop": true
 	},
 	"include": [ "*" ],
 	"exclude": [ "node_modules" ]

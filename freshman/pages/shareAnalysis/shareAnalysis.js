@@ -35,7 +35,7 @@ Page({
 
   onLoad() {
 
-    wx.showLoading({ title: "加载中", mask: true });
+    wx.showLoading({ title: "正在加载…", mask: true });
 
     const gData = app.globalData;
 
@@ -45,9 +45,7 @@ Page({
 
     // 获取格言
     var getMotto = request({
-      method: "GET",
-      url: `${gData.commonUrl}/motto?maxLength=12`,
-      header: getHeader("json")
+      url: `${gData.apiUrl}/motto?maxLength=12`
     }).then(res => {
       const data = res.data.data;
       this.setData({
@@ -62,7 +60,7 @@ Page({
     const {account, secret} = gData.userInfo;
     var getAnalysis = request({
       method: "GET",
-      url: `${gData.commonUrl}/freshman/${account}/analysis?secret=${secret}`,
+      url: `${gData.apiUrl}/freshman/${account}/analysis?secret=${secret}`,
       header: getHeader("json", app.globalData.token)
     }).then(
       res => this.setData({ freshman: res.data.data.freshman })
@@ -80,11 +78,11 @@ Page({
 
   },
 
-  onReady() {},
-  onShow() {},
+  // onReady() {},
+  // onShow() {},
 
   onShareAppMessage: () => ({
-    title: "点击查看你的新生画像",
+    title: "用上应小风筝，查看你的新生画像",
     path: "pages/index/index"
   })
 

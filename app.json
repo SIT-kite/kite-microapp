@@ -11,13 +11,13 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于报到指南服务."
+      "desc": "你的位置信息将用于报到指南服务。"
     }
   },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "上应小风筝",
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
@@ -27,7 +27,7 @@
     "pages/index/index",
     "pages/user/user",
     "pages/about/about",
-    "pages/verification/verification"
+    "pages/verify/verify"
   ],
   "subpackages": [
     {

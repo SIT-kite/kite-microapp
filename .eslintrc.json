@@ -11,7 +11,9 @@
 	},
 	"rules": {
 		"eqeqeq": "warn",
+		"no-irregular-whitespace": "off",
 		"no-lonely-if": "warn",
+		"no-unused-vars": "warn",
 		"no-unneeded-ternary": "warn",
 		"no-use-before-define": "warn",
 		"no-useless-rename": "warn",

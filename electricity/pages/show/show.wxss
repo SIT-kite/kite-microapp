@@ -1,8 +1,7 @@
 /* pages/consume/electricity/electricity.wxss */
 .title {
-	margin: 2vh auto;
-	font-weight: bold;
-	font-size: 32px;
+	margin: .5rem auto;
+	font-size: 2em;
 	text-align: center;
 }
 
@@ -30,7 +29,6 @@
 }
 
 .main {
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -74,17 +72,6 @@ input {
   background-color: white;
 }
 
-.show_block {
-	position: relative;
-	background-color: white;
-	margin-top: 60rpx;
-	width: 87%;
-	height: 400rpx;
-	border-radius: 4px;
-	margin-left:10rpx;
-	margin-right:-10rpx; 
-	padding-top: 20rpx;
-}
 
 .img_wrap {
 	width: calc(750rpx * 0.1);
@@ -97,6 +84,12 @@ input {
 	padding-left: 10px;
 }
 
+.result {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .text_block {
 	display: flex;
 	flex-direction: column;
@@ -106,6 +99,16 @@ input {
 	font-weight: bold;
 	font-size: 35rpx;
 	padding-left: 10px;
+}
+
+.input-group {
+	position: relative;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	margin-top: 2vh;
+	width: 80vw;
 }
 
 .input_left {
@@ -143,16 +146,33 @@ input {
 	z-index: 100;
 }
 
-.slider_contianer {
+.slider_container {
 	position: relative;
 	margin-top: 30rpx;
 	width: 60%;
-	/* background-color: white; */
 	height: 100rpx;
-	padding: 10rpx 5rpx;
 	border-radius: 4px;
 	display: flex;
 	justify-content: space-between;
+}
+
+.slider_button {
+	width: 50%;
+	background-image: none;
+	color: #7367F0;
+	height: 80rpx;
+	font-weight: bold;
+	line-height: 79rpx;
+	z-index: 3;
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	transition: all 0.5s ease;
+}
+
+.slider_button_selected {
+	color: white;
+	/* background: #6076ff; */
 }
 
 page {
@@ -192,63 +212,44 @@ page {
 	100% { right: 50%; width: 50%; }
 }
 
-.slider_button {
-	width: 50%;
-	background-image: none;
-	color: #7367F0;
-	height: 80rpx;
-	font-weight: bold;
-	line-height: 79rpx;
-	z-index: 3;
-	border-radius: 4px;
-	display: flex;
-	justify-content: center;
-	transition: all 0.5s ease;
+.rank_container {
+	box-sizing: border-box;
+	width: 100%;
+	padding: .5em;
+	margin: 1rem 0;
+	border-radius: 8px;
+	background-color: white;
+	text-align: center;
 }
 
-.slider_button_selected {
-	color: white;
-	/* background: #6076ff; */
+.show_block {
+	position: relative;
+	width: 100%;
+	height: 450rpx;
+	margin: 1rem 0;
+	border-radius: 8px;
+	background-color: white;
 }
 
 .chart {
-	width: 105%;
+	position: static;
+	width: 100%;
 	height: 115%;
 }
 
-.rank_container {
-	position: relative;
-	margin-top: 20rpx;
-	margin-right:-21rpx;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 80vw;
-	background-color: white;
-	padding: 20rpx 20rpx 20rpx 30rpx;
-	border-radius: 8px;
-	text-align: center;
-}
-
-.icon_container {
-	position: absolute;
-	top: 10rpx;
-	left: 10rpx;
-	width: calc(750rpx * 0.1);
-	height: calc(750rpx * 0.11);
-}
-
-.icon_container image {
-	width: 100%;
-	height: 100%;
-}
-
 .cost {
-	/* color:red; */
-	font-size: 32px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2em;
 	font-weight: bold;
-	/* margin-left: 20rpx; */
 	width: 85vw;
 	text-align: center;
-	margin-bottom: 10rpx;
+	margin-bottom: .5rem;
+}
+
+.cost > image {
+	width: 1.5em;
+	height: 1.5em;
+	margin-inline-end: .5rem;
 }
