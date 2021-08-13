@@ -46,6 +46,7 @@ Page({
 
       console.error("新生信息获取失败", error);
       wx.setStorage({ key: "userDetail", data: null });
+      app.globalData.userDetail = null;
       wx.redirectTo({ url: "/freshman/pages/welcome/welcome" });
 
     }).then(() => {
