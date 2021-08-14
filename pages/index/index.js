@@ -13,7 +13,7 @@ Page({
     clicked: -1, // 被点击功能的索引
     notice: [], // 通知
     items: [{
-      text: "查寝室",
+      text: "新生",
       url: "/freshman/pages/welcome/welcome",
       iconPath: "/assets/icons/index/freshman.png"
     }, {

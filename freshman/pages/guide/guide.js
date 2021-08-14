@@ -103,15 +103,15 @@ const constPositions = [{
   {
     id: 1010,
     name: '大学生活动中心',
-    latitude: 30.842337,
-    longitude: 121.506976,
+    latitude: 30.842282,
+    longitude: 121.506992,
     iconPath: "../../assets/icons/studentActivity.png"
   },
   {
     id: 1011,
     name: '易班工作站',
-    latitude: 30.842305,
-    longitude: 121.50697,
+    latitude: 30.842286,
+    longitude: 121.506368,
     iconPath: "../../assets/icons/yibanStation.png"
   },
   {
