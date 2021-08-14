@@ -162,24 +162,29 @@ Page({
       }).then(res => {
 
         console.log("POST user 用户创建成功", res);
-        const data = res.data;
+        const data = res.data.data;
 
         // 新注册用户肯定没实名，所以跳过 setIsStudent()
-        this.setUserData(data);
+        this.setUserData(data, data.token);
         this.setIsLogin();
 
-        // POST user auth 创建登录渠道
-        request({
-          url: `${gData.apiUrl}/user/${gData.uid}/authentication`,
-          method: "POST",
-          header: getHeader("urlencoded", gData.token),
-          data: { loginType: 0, wxCode },
-          complete: () => wx.hideLoading()
-        }).then(
-          () => console.log("POST user auth 登录渠道创建成功", res)
-        ).catch(
-          err => catchError("POST user auth", "登录渠道创建失败", err)
-        );
+        // 之前获取的 wxCode 无效了，要再获取一次
+        promisify(wx.login)().then(res => {
+          wxCode = res.code;
+
+          // POST user auth 创建登录渠道
+          request({
+            url: `${gData.apiUrl}/user/${gData.uid}/authentication`,
+            method: "POST",
+            header: getHeader("urlencoded", gData.token),
+            data: { loginType: 0, wxCode },
+            complete: () => wx.hideLoading()
+          }).then(
+            () => console.log("POST user auth 登录渠道创建成功", res)
+          ).catch(
+            err => catchError("POST user auth", "登录渠道创建失败", err)
+          );
+        });
 
       }).catch(err => {
         wx.hideLoading();
