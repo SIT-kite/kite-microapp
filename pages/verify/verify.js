@@ -53,7 +53,7 @@ Page({
     }
 
     this.setData({ uploadInfo });
-    wx.wx.setStorageSync("uploadInfo", uploadInfo);
+    wx.setStorageSync("uploadInfo", uploadInfo);
 
     // 认证
     request({
