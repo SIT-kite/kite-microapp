@@ -647,7 +647,7 @@ Page({
                 confirmText: '好的',
                 success(res) {
                   if(res.confirm) {
-                    this.openSetting();
+                    wx.openSetting();
                   } else {
                     console.log('get location fail');
                   }
