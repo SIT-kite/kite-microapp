@@ -31,9 +31,8 @@ page{
     margin-right: 7px;
 }
 .menu{
+    height: 85vh;
     background-color:#dee2e6;
-    width: 20vw;
-    height: 88vh;
 
 }
 .me1{
@@ -45,6 +44,9 @@ page{
     padding-left:5px ;
     padding-right: 5px;
 }
+.choosed{
+    background-color:white;
+}
 .table{
     display: flex;
     flex-direction: row;
@@ -54,15 +56,14 @@ page{
     padding: 5px;
     flex-direction: row;
     height: 90px;
+    width: 100vw;
     justify-content: space-between;
     border-bottom: 1px solid #787878 ;
     align-items: center;
-    width: 105%;
 }
 .list_phone{
     display: flex;
     flex-direction: column;
-    width: 80vw;
     height: 84.7vh;
 
 }
@@ -70,10 +71,7 @@ page{
     display: flex;
     flex-direction: column;
     padding: 10px;
-    display: flex;
     align-items: center;
-    height: 28px;
-    width: auto;
     background-color: #f8f9fa;
 
 }
@@ -81,6 +79,8 @@ page{
     display: flex;
     flex-direction: column;
     width: 160px;
+    margin-right: 10px;
+    padding-right: 10px;
     flex-wrap: wrap;
     color:#6C7A89;
     font-size: 14px;
@@ -89,21 +89,36 @@ page{
 .copy{
     font-size: 14px;
     color:rgb(74, 79, 88);
+    justify-content: center;
     align-items: center;
     text-align: center;
     padding-top: 8px;
-    margin-right: 15px;
+    margin-right: 10px; 
     box-sizing: content-box;
-    width: 90px;
+    width: 100px;
 }
 .icon{
     width: 25px;
     height: 25px;
     margin-left: 15px;
+    padding-bottom: 5px;
 }
 .icon2{
     width: 20px;
     height: 20px;
+}
+.icon3{
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+}
+.text1{
+    color:#6C7A89;
+    text-align:left;
+    font-size: 16px;
+    width: 100vw;
+    height: 20px;
+    font-weight:bolder;
 }
 .department{
     display: flex;
@@ -117,4 +132,44 @@ page{
     display: flex;
     align-items: center;
     flex-direction: row;
+    color: #6C7A89;
+}
+@keyframes living {
+	0% { transform: scale(1); }
+	25% { transform: scale(1.5); }
+	50% { transform: scale(1); }
+	75% { transform: scale(1.25); }
+	100% { transform: scale(1); }
+}
+
+.living {
+	animation: living .5s ease;
+}
+@keyframes start {
+    from {width: 20vw;}
+    to {width: 0vw;}
+}
+.start{
+    animation: start .5s ease forwards;
+}
+@keyframes end {
+    from {width: 0vw;}
+    to {width: 20vw;}
+}
+.end{
+    animation: end .5s ease forwards;
+}
+@keyframes start1 {
+    from {width: 82vw;}
+    to {width: 100vw;}
+}
+.start1{
+    animation: start1 .5s ease forwards;
+}
+@keyframes end1 {
+    from {width: 100vw;}
+    to {width: 82vw;}
+}
+.end1{
+    animation: end1 .5s ease forwards;
 }
