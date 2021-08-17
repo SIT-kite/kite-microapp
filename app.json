@@ -98,6 +98,12 @@
       "pages": [
         "pages/index/index"
       ]
+    },
+    {
+      "root": "edu",
+      "pages": [
+        "course/pages/index/index"
+      ]
     }
   ],
   "tabBar": {
