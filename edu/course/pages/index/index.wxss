@@ -18,9 +18,10 @@ page {
     display: flex;
     width: 100%;
     height: 65px;
-    padding-top: 10px;
     white-space: nowrap;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 .set{
     margin-right: 2vw;
@@ -35,6 +36,14 @@ page {
     height: 28px;
     /* border-radius: 15px 15px 15px 15px; */
 }
+.icon1{
+    display: flex;
+    margin-top: 5px;
+    margin-left:15px;
+    width: 28px;
+    height: 35px;
+    /* border-radius: 15px 15px 15px 15px; */
+}
 .time {
     width: 100%;
     display: flex;
@@ -44,10 +53,10 @@ page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20px;
+    width: 4vw;
     height: 50px;
-    padding-right:5px ;
-    margin-left: 6px;
+    padding-right:1vw;
+    margin-left: 1vw;
     border-right: 0.8px solid #FCD244;
 }
 .date{
@@ -62,30 +71,32 @@ page {
     display: flex;
     /* background-color: #ECF0F1; */
 }
+.choose_time{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 92.5vw;
+}
 .days{
-    display: inline-block;
-    margin-left: 3.5px;
-    width: 40px;
-    height: 40px;
-    padding: 5px;
-    font-size: 20px;
-    border-radius: 40px 40px 40px 40px;
+    width: 13.7vw;
+    height: 13.1vw;
+    font-size: 18px;
+    border-radius: 6.85vw 6.85vw 6.55vw 6.55vw;
 }
 .day{
-    width: 30px; 
-    height: 20px;
     display: flex;
     align-items: center;
     justify-content:center;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
+    height: 7.818vw;
 }
 .week{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 5.21vw;
+    justify-content:center;
     font-size: 14px;
+    color:#EEEEEE;
 }
 .choosed{
     border: 2px solid #ffffff;
