@@ -212,6 +212,13 @@ const constPositions = [{
     longitude: 121.517679,
     iconPath: "../../assets/icons/post.png"
   },
+  {
+    id: 1026,
+    name: '植物园',
+    latitude: 30.844338,
+    longitude: 121.517064,
+    iconPath: "../../assets/icons/plant.png"
+  },
 ]
 
 const dormitoryBuildingMapping = {
