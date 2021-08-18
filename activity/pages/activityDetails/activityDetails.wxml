@@ -1,0 +1,8 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+  bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="main">
+  <view class="header">
+    
+  </view>
+  <view class="content"></view>
+</view>

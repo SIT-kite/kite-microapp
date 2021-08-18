@@ -18,10 +18,17 @@ const getIntervalToCurrentTime = givenTime => {
   var currTimeStamp = parseInt(new Date().getTime() / 1000);
   var interval = currTimeStamp - givenTimeStamp;
 
+  //负值判断，增加通用性
+  if (interval < 0) {
+    interval= Math.abs(interval);
+  }
+
   // 解决时区问题
   interval -= 8 * 3600;
   var intervalTime;
   var tmp;
+
+
   if (interval < 60) {
     intervalTime = "1分钟";
   }
@@ -37,15 +44,14 @@ const getIntervalToCurrentTime = givenTime => {
     tmp = parseInt(interval / (3600 * 24));
     intervalTime = tmp + "天";
   }
-  else if (interval < 3600 * 24 * 30 * 365) {
+  else if (interval < 3600 * 24 * 30 * 12) {
     tmp = parseInt(interval / (3600 * 24 * 30));
     intervalTime = tmp + "月";
   }
   else {
-    tmp = parseInt(interval / (3600 * 24 * 30 * 365));
+    tmp = parseInt(interval / (3600 * 24 * 30 * 12));
     intervalTime = tmp + "年";
   }
-
   return intervalTime;
 
 };
