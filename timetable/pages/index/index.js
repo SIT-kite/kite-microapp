@@ -53,7 +53,21 @@ let list = [
 },
 ]
 Page({
-  data:{
+  data:{colorArrays: [ "#81ecec", "rgba(116, 185, 255,5.0)", "#bfa", "rgba(162, 155, 254,1.0)", "rgba(255, 118, 117,1.0)", "rgba(85, 239, 196,1.0)", "rgba(232, 67, 147,1.0)", "rgba(116, 185, 255,1.0)"],
+  wlist: [
+    { "week_what": 1, "section_what": 1, "time": 3, "content": "高等数学@一教A-302" },
+    { "week_what": 1, "section_what": 5, "time": 3, "content": "大学物理@教A-301" },
+    { "week_what": 2, "section_what": 1, "time": 2,"content":"初级通用学术英语@教A-301"},
+    { "week_what": 2, "section_what": 8, "time": 2, "content": "计算机网络@教A-301" },
+    { "week_what": 3, "section_what": 4, "time": 1, "content": "计算机组成原理@教A-301" },
+    { "week_what": 3, "section_what": 8, "time": 1, "content": "高等数学@教A-301" },
+    { "week_what": 3, "section_what": 5, "time": 2, "content": "线性代数@教A-301" },
+    { "week_what": 4, "section_what": 2, "time": 3, "content": "巫术@教A-301" },
+    { "week_what": 4, "section_what": 8, "time": 2, "content": "高等数学@教A-301" },
+    { "week_what": 5, "section_what": 1, "time": 2, "content": "羽毛球@教A-301" },
+    { "week_what": 6, "section_what": 3, "time": 2, "content": "三国杀@教A-301" },
+    { "week_what": 7, "section_what": 5, "time": 3, "content": "高等数学@教A-301" },
+  ],
   date,days,chooseActivity,list
   },
   //导航栏函数
