@@ -1,0 +1,29 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="background">
+    <view class="time">
+        <view class="date">
+            {{date[6]}}
+            <view class="set">
+                <image src="../../../assets/icons/calendar.png" class="icon1"></image>
+                <image src="../../../assets/icons/set.png" class="icon"></image>
+            </view>
+        </view>
+        <view class="scroll_time">
+            <view class="this_week">
+                <view>{{this_week}}</view>
+                <text>周</text>
+            </view>
+            <view class="choose_time">
+                <view class="days {{choosedday.day == days.day? 'choosed':''}}" wx:for="{{days}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                    <view class="day">{{days.day}}</view>
+                    <view class="week">{{days.week}}</view>
+                </view>
+            </view>
+        </view>
+        <!-- <view class="couple">
+            <view class="couple_free">我的</view>
+            <view class="couple_free choose_couple">她的</view>
+        </view> -->
+    </view>
+    <view class="main"></view>
+</view>
