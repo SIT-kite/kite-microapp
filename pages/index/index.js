@@ -9,7 +9,7 @@ const gData = app.globalData;
 
 Page({
   data: {
-    isLogin: false,
+    isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
     notice: [], // 通知
     items: [{
@@ -99,7 +99,6 @@ Page({
   },
 
   onLoad() {
-    this.setData({ isLogin: gData.isLogin });
     // 获取并设置通知 notice；目前不检查错误代码，所以直接用 wx.request()
     wx.request({
       method: "GET",
@@ -113,8 +112,6 @@ Page({
       fail: console.error
     });
   },
-
-  // onReady() {},
 
   onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {

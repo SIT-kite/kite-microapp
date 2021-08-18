@@ -12,4 +12,4 @@
 		bindtap="saveShareImg">保存到手机</view>
 </view>
 
-<view>{{error}}</view>
+<view class="error">{{error}}</view>

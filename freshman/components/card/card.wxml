@@ -29,12 +29,12 @@
 
         <view class="contact" style="padding-top: {{isHidden.padding}}rpx;"
           wx:if="{{ qq !== undefined && qq !== '' }}"
-          bindtap="copyText" data-text="{{ qq }}" data-type="QQ">
+          bindtap="copy" data-text="{{ qq }}" data-type="QQ">
           <image class="contact-image" src="/freshman/assets/icons/qq_logo.png"></image>
           <text class="contact-text">{{qq}}</text>
         </view>
 
-        <view class="contact" bindtap="copyText" data-text="{{contact.wechat}}"
+        <view class="contact" bindtap="copy" data-text="{{contact.wechat}}"
           wx:if="{{ wechat !== undefined && wechat !== '' }}" data-type="微信号">
           <image class="contact-image" src="/freshman/assets/icons/wechat_logo.png"></image>
           <text class="contact-text">{{wechat}}</text>

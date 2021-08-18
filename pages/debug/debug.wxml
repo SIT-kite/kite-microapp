@@ -1,0 +1,50 @@
+<!--pages/debug/debug.wxml-->
+
+<view class="container">
+
+	<view class="group title">调试工具</view>
+
+	<view class="group">
+		<button class="button clear" type="warn" bindtap="clearStorage"
+			data-clear="some">清理本地数据</button>
+		<view class="note">清除除登录信息以外的本地数据，例如在电费查询页面输入的寝室号。</view>
+	</view>
+
+	<view class="group">
+		<button class="button clear" type="warn" bindtap="clearStorage"
+			data-clear="all">清空本地数据</button>
+		<view class="note">清空全部本地数据；清空后，关闭并重新进入小程序时，需要重新登录。</view>
+	</view>
+
+	<view class="group title">调试信息</view>
+
+	<view class="group note">
+		虽然调试工具已隐藏部分敏感信息，但可能有遗漏，或者对其他人而言有利用价值。<!--
+		-->请不要向陌生人分享你的调试信息。
+	</view>
+
+	<view class="group">
+		<view class="name">
+			globalData
+			<button class="button copy" bindtap="copy" data-name="globalData">复制</button>
+		</view>
+		<textarea class="value" maxlength="8192" disabled="true" value="{{globalData}}"></textarea>
+	</view>
+
+	<view class="group">
+		<view class="name">
+			Storage
+			<button class="button copy" bindtap="copy" data-name="globalData">复制</button>
+		</view>
+		<textarea class="value" maxlength="8192" disabled="true" value="{{storage}}"></textarea>
+	</view>
+
+	<view class="group">
+		<view class="name">
+			SystemInfo
+			<button class="button copy" bindtap="copy" data-name="globalData">复制</button>
+		</view>
+		<textarea class="value" maxlength="8192" disabled="true" value="{{systemInfo}}"></textarea>
+	</view>
+
+</view>

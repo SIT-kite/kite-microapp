@@ -16,9 +16,9 @@
 		<open-data class="nickname ellipsis" type="userNickName"
 			default-text="微信用户" />
 
-		<view class="verified {{ isStudent }}">
-			<image src="/assets/icons/{{ isStudent ? 'right' : 'wrong' }}.png" />
-			{{ isStudent ? "已" : "未" }}实名
+		<view class="verified {{ verified }}">
+			<image src="/assets/icons/{{ verified ? 'right' : 'wrong' }}.png" />
+			{{ verified ? "已" : "未" }}实名
 		</view>
 
 		<navigator class="verify" url="/pages/verify/verify">
@@ -48,5 +48,9 @@
 	<button class="card menu-option" open-type="feedback">
 		意见反馈<text class="arrow">></text>
 	</button>
+
+	<navigator class="card menu-option" url="/pages/debug/debug">
+		调试工具<text class="arrow">></text>
+	</navigator>
 
 </view>

@@ -79,7 +79,18 @@ Component({
         return '/freshman/assets/female.png';
 
       console.error(`Invalid gender string ${gender} passed to _getGenderIconPath`);
+    },
+
+    copy(e) {
+      const dataset = e.target.dataset;
+      wx.setClipboardData({
+        data: dataset.text,
+        success: () => wx.showToast({
+          title: `复制${dataset.type}成功`
+        })
+      });
     }
+
   },
 
   /**

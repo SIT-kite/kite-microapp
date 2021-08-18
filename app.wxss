@@ -1,3 +1,5 @@
+/* app.wxss */
+
 page {
 
 	height: 100%;
