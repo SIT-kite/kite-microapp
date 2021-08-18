@@ -88,8 +88,8 @@
       ]
     },
     {
-      "root":"timetable",
-      "pages":[
+      "root": "timetable",
+      "pages": [
         "pages/index/index"
       ]
     },
@@ -105,29 +105,26 @@
         "pages/index/index",
         "pages/activityDetails/activityDetails"
       ]
-    },
-    {
-      "root": "edu",
-      "pages": [
-        "course/pages/index/index"
-      ]
     }
   ],
   "tabBar": {
     "color": "#9E9E9E",
     "selectedColor": "#000",
     "custom": false,
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "主页",
-      "iconPath": "/assets/icons/nav_bar/home.png",
-      "selectedIconPath": "/assets/icons/nav_bar/home_active.png"
-    }, {
-      "pagePath": "pages/user/user",
-      "text": "我",
-      "iconPath": "/assets/icons/nav_bar/user.png",
-      "selectedIconPath": "/assets/icons/nav_bar/user_active.png"
-    }]
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页",
+        "iconPath": "/assets/icons/nav_bar/home.png",
+        "selectedIconPath": "/assets/icons/nav_bar/home_active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我",
+        "iconPath": "/assets/icons/nav_bar/user.png",
+        "selectedIconPath": "/assets/icons/nav_bar/user_active.png"
+      }
+    ]
   },
   "plugins": {
     "echarts": {
