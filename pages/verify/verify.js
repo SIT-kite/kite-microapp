@@ -55,7 +55,7 @@ Page({
     this.setData({ uploadInfo });
     wx.setStorageSync("uploadInfo", uploadInfo);
 
-    // 认证
+    // 认证 POST identity
     request({
       method: "POST",
       url: `${gData.apiUrl}/user/${gData.uid}/identity`,
@@ -63,8 +63,8 @@ Page({
       data: uploadInfo,
     }).then(() => {
 
-      gData.isStudent = true;
-      wx.setStorageSync("isStudent", true);
+      gData.verified = true;
+      wx.setStorageSync("verified", true);
 
       wx.showModal({
         title: "认证成功",

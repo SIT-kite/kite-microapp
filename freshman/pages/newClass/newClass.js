@@ -1,7 +1,5 @@
 // freshman/pages/newClass/newClass.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
-import copyText from "../../../utils/copyText";
-// import catchError from "../../../utils/requestUtils.catchError";
 import getHeader from "../../../utils/getHeader";
 import request from "../../../utils/request";
 import onShareAppMessage from "../../js/onShareAppMessage";
@@ -23,7 +21,6 @@ Page({
   handlerGohomeClick,
   handlerGobackClick,
   onShareAppMessage,
-  copyText,
 
   async setClassmates() {
 

@@ -14,6 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showText: false,
     details: []
 
   },
@@ -89,5 +90,22 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  //滚动事件
+  onPageScroll: function(e) {
+    let query = wx.createSelectorQuery()
+        query.select('#title').boundingClientRect( (rect) => {
+            let bottom = rect.bottom
+            if (bottom + 300 <= e.scrollTop) {  
+                this.setData({
+                    showText: true
+                })
+            } else {
+                this.setData({
+                  showText: false
+                })
+            }
+        }).exec()
   }
 })

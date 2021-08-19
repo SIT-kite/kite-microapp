@@ -30,7 +30,7 @@ Page({
 
   data: {
     isLogin: gData.isLogin,
-    isStudent: gData.isStudent,
+    verified: gData.verified,
     needRegister: false
   },
 
@@ -50,10 +50,10 @@ Page({
     this.setDataTo({ uid, token, nickName, avatarUrl }, [0, 1, 1]);
   },
 
-  // 从服务器端 GET user identity 并向所有位置设置变量 isStudent
-  setIsStudent() {
+  // 从服务器端 GET user identity 并向所有位置设置变量 verified
+  setVerified() {
 
-    const set = isStudent => this.setDataTo({ isStudent }, [1, 1, 1]);
+    const set = verified => this.setDataTo({ verified }, [1, 1, 1]);
 
     // GET user identity
     request({
@@ -97,12 +97,12 @@ Page({
           // res: { data: { code, data: { token, data: { uid, ... } } } }
           const data = res.data.data;
 
-          // setIsStudent() 会用到 setOthers() 向全局变量 globalData 设置的
-          // uid 和 token，所以必须先执行 setOthers()，再执行 setIsStudent()；
-          // setIsStudent() 会设置用户元素中的“已/未实名”，setIsLogin() 会显示
-          // 整个用户元素，所以最好先执行 setIsStudent()，再执行 setIsLogin()。
+          // setVerified() 会用到 setOthers() 向全局变量 globalData 设置的
+          // uid 和 token，所以必须先执行 setOthers()，再执行 setVerified()；
+          // setVerified() 会设置用户元素中的“已/未实名”，setIsLogin() 会显示
+          // 整个用户元素，所以最好先执行 setVerified()，再执行 setIsLogin()。
           this.setUserData(data.data, data.token);
-          this.setIsStudent();
+          this.setVerified();
           this.setIsLogin();
 
         }).catch(err => {
@@ -164,7 +164,7 @@ Page({
         console.log("POST user 用户创建成功", res);
         const data = res.data.data;
 
-        // 新注册用户肯定没实名，所以跳过 setIsStudent()
+        // 新注册用户肯定没实名，所以跳过 setVerified()
         this.setUserData(data, data.token);
         this.setIsLogin();
 

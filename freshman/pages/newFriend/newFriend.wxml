@@ -38,12 +38,12 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 					<!-- 联系方式 -->
 					<view class="contact">
 						<view class="qq" style="padding-top: {{item.isHidden.padding}}rpx;"
-							hidden="{{item.isHidden.qq}}" bindtap="copyText"
+							hidden="{{item.isHidden.qq}}" bindtap="copy"
 							data-text="{{item.contact.qq}}" data-type="QQ">
 							<image src="/freshman/assets/icons/qq_logo.png"></image>
 							<text selectable>{{item.contact.qq}}</text>
 						</view>
-						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
+						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copy" data-text="{{item.contact.wechat}}" data-type="微信号">
 							<image src="/freshman/assets/icons/wechat_logo.png"></image>
 							<text selectable >{{item.contact.wechat}}</text>
 						</view>
@@ -84,11 +84,11 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 						<text selectable >{{item.college}}</text>
 					</view>
 					<view class="contact">
-							<view class="qq"  style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copyText" data-text="{{item.contact.qq}}" data-type="QQ">
+							<view class="qq"  style="padding-top:{{item.isHidden.padding}}rpx;" hidden="{{item.isHidden.qq}}" bindtap="copy" data-text="{{item.contact.qq}}" data-type="QQ">
 								<image src="/freshman/assets/icons/qq_logo.png"></image>
 								<text selectable>{{item.contact.qq}}</text>
 							</view>
-						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copyText" data-text="{{item.contact.wechat}}" data-type="微信号">
+						<view class="wx" hidden="{{item.isHidden.wechat}}" bindtap="copy" data-text="{{item.contact.wechat}}" data-type="微信号">
 							<image src="/freshman/assets/icons/wechat_logo.png"></image>
 							<text selectable>{{item.contact.wechat}}</text>
 						</view>

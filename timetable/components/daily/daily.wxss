@@ -1,4 +1,77 @@
 /* timetable/components/daily/daily.wxss */
-.text{
+
+.daily{
     color: #000;
+    /* background:#EEEE; */
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    width: 97vw;
+    height: 70vh;
+    border-radius: 25px 25px 25px 25px;
+}
+.icon_1{
+    margin-top: 3vh;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #EEEE;
+    /* border:1px solid rgb(160, 158, 158); */
+}
+.text{
+    margin-top: 1.5vh;
+    margin-left: 4vw;
+    display: flex;
+    flex-direction:column;
+    /* background:rgb(168, 158, 158); */
+    height: 10vh;
+    width: 60vw;
+}
+.course{
+    display: flex;
+    margin-left: 2vw;
+    margin-top: 15vh;
+    height: 70vh;
+    width: 97vw;
+}
+.list {
+    color: #000;
+}
+.table {
+    display: flex;
+    flex-direction: row;
+    /* justify-content:center; */
+    align-items: center;
+    border-radius: 15px;
+    margin-bottom: 1vh;
+    width: 92vw;
+    height: 13vh;
+    background:hsl(0, 0%, 100%);
+    /* border: 1px solid #d4d4d4; */
+    border: 1px solid #F5F5F5;
+    /* box-shadow:0px 1px 1px 1px #aaa; */
+    border-left:3px solid #568BE5;
+}
+.td {
+    display: flex;
+    width: 70vw;
+    margin-left: 4vw;
+    height: 13vh;
+    /* background:#EEEE; */
+}
+.course_name{
+    font-size:20px;
+    font-weight: bolder;
+    color: #14446A;
+}
+.course_time{
+    margin-top: 0.1vh;
+    font-weight: bolder;
+    font-size: 15px;
+    color:#fcd144d2;
+}
+.course_teacher{
+    font-size: 15px;
+    font-weight:bolder;
+    color: #568BE5;
 }

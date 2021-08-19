@@ -1,0 +1,1 @@
+declare const getAllStorageAsArray: Array<[string, string]>

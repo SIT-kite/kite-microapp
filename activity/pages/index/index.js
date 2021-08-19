@@ -87,7 +87,7 @@ Page({
     let eventId = this.data.itemList[e.currentTarget.dataset.index].id;
     console.log(eventId)
     wx.navigateTo({
-      url: `/activity/pages/activityDetails/activityDetails?eventId=${eventId}`,
+      url: `/activity/pages/detail/detail?eventId=${eventId}`,
     })
   },
 

@@ -23,7 +23,7 @@
     </view>
     <view class="main">
         <view wx:if="{{chooseActivity == 1}}">
-            <daily></daily>
+            <daily list="{{list}}"></daily>
         </view>
         <view wx:elif="{{chooseActivity == 2}}"> 
             <weekly>
