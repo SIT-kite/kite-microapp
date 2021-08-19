@@ -103,7 +103,7 @@
       "root": "activity",
       "pages": [
         "pages/index/index",
-        "pages/activityDetails/activityDetails"
+        "pages/detail/detail"
       ]
     },
     {

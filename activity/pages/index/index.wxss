@@ -7,7 +7,6 @@
 
 
 .navigators {
-  background-color: #f8f8f8;
   display: flex;
   position: relative;
   font-size: large;
@@ -74,6 +73,7 @@
 
 .activity_item_time_interval {
   float: right;
+  color: #666666;
 }
 
 .notice {
