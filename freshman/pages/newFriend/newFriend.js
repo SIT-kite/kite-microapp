@@ -1,6 +1,5 @@
 // freshman/pages/newFriend/newFriend.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
-import copyText   from "../../../utils/copyText.js";
 import catchError from "../../../utils/requestUtils.catchError";
 import getHeader  from "../../../utils/getHeader";
 import onShareAppMessage from "../../js/onShareAppMessage";
@@ -25,7 +24,16 @@ Page({
   handlerGohomeClick,
   handlerGobackClick,
   onShareAppMessage,
-  copyText,
+
+  copy(e) {
+    const dataset = e.target.dataset;
+    wx.setClipboardData({
+      data: dataset.text,
+      success: () => wx.showToast({
+        title: `复制${dataset.type}成功`
+      })
+    });
+  },
 
   getPageData() {
 

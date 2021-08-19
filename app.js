@@ -1,17 +1,23 @@
 // app.js
+
 import updateManager from "./utils/updateManager";
+import { isNonEmptyString } from "./utils/type";
+import { getAllStorageAsObject } from "./utils/storage";
 
 App({
+
   globalData: {
 
     apiUrl: "https://kite.sunnysab.cn/api/v1",
     commonUrl: "https://kite.sunnysab.cn/api/v1",
 
+    isDev: false, // 是否在微信开发者工具中
+
     uid: -1,   // 用户 ID
     token: "", // 登录需要的授权码
 
-    isLogin:   false, // 是否已登录
-    isStudent: false, // 是否已实名
+    isLogin:  false, // 是否已登录
+    verified: false, // 是否已实名
 
     nickName:  null, // 昵称
     avatarUrl: null, // 头像
@@ -39,44 +45,45 @@ App({
 
     updateManager();
 
+    const gData = this.globalData;
+    const storage = getAllStorageAsObject();
+    const systemInfo = wx.getSystemInfoSync();
+
     // 从本地存储 Storage 中获取重要属性，设置全局数据 globalData
+    [ "uid", "token", "verified",
+      "nickName", "avatarUrl", "userInfo", "userDetail",
+      "signPrivacyConfirm", "freshmanPrivacyConfirm" ]
+    .filter(  key => key in storage )
+    .forEach( key => gData[key] = storage[key] );
 
-    const storage = Object.fromEntries(
-      wx.getStorageInfoSync().keys.map(
-        key => [ key, wx.getStorageSync(key) ]
-      )
+    // 将 isStudent 属性更新为 verified
+    // 这段代码到 2022 年的时候大概就可以移除了
+    if ("isStudent" in storage) {
+      gData.verified = storage.isStudent;
+      wx.setStorageSync("verified", gData.verified);
+      wx.removeStorageSync("isStudent");
+    }
+
+    // 按照 uid 和 token 来判断并设置 isLogin
+    gData.isLogin = (
+      gData.uid > 0 &&
+      isNonEmptyString(gData.token)
     );
 
-    [
-      "uid", "token", "isStudent", "userInfo", "userDetail",
-      "signPrivacyConfirm", "freshmanPrivacyConfirm"
-    ].forEach(
-      key => {
-        if (key in storage) {
-          this.globalData[key] = storage[key];
-        }
-      }
-    );
+    // 设置 isDev，按照 isDev 打印调试信息
+    gData.isDev = systemInfo.platform === "devtools"
+    if (gData.isDev) {
+      console.groupCollapsed("%c调试信息", "color: #0075E8");
+      new Map([
+        [ "全局数据 globalData" , gData ],
+        [ "本地存储 Storage"    , storage ],
+        [ "系统信息 SystemInfo" , systemInfo ]
+      ]).forEach(
+        (value, name) => console.log(`${name}:`, value)
+      );
+      console.groupEnd();
+    }
 
-    console.log(
-      "本地存储 Storage:", Object.fromEntries(
-        wx.getStorageInfoSync().keys.map(
-          key => [ key, wx.getStorageSync(key) ]
-        )
-      )
-    );
+  }
 
-    // 按照 uid 和 token 来判断并设置登录状态
-    this.globalData.isLogin =
-      this.globalData.uid > 0 &&
-      typeof this.globalData.token === "string"
-      this.globalData.token !== "";
-
-    // globalData 设置完成
-    console.log("全局数据 globalData:", this.globalData);
-
-  },
-
-  onShow() {}
-
-})
+});

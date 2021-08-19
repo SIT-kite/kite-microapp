@@ -1,30 +1,30 @@
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
-</navBar>
-<!--article-->
-<view class="top">
-  <view wx:for="{{['一','二','三','四','五','六','日']}}" class="top-text">周{{item}}</view>
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="background">
+    <view class="time">
+        <view class="date">
+            {{date[6]}}
+            <view class="set">
+                <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
+                <image src="../../assets/icons/set5.png" class="icon"></image>
+            </view>
+        </view>
+        <view class="scroll_time">
+            <view class="this_week">
+                <view>{{this_week}}</view>
+                <text>周</text>
+            </view>
+            <view class="choose_time">
+                <view class="days {{choosedday.day == days.day? 'choose_couple':''}}" wx:for="{{days}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                    <view class="day">{{days.day}}</view>
+                    <view class="week">{{days.week}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="main">
+        <view wx:if="{{chooseActivity == 1}}">
+            <daily></daily>
+        </view>
+        <view wx:elif="{{chooseActivity == 2}}"></view>
+    </view>
 </view>
-<scroll-view scroll-y="true" class="scroll">
-  <view style="height:1200rpx;width:730rpx;display:flex;">
-    <view style="background-color:#bfa;color:purple;">
-      <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}" class="left">
-        {{item}}
-      </view>
-    </view>
-    <!-- 1.周数切换
-    2.课程时间一致
-    3.style-->
-    <!--虚线分割-->
-    <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}">
-      <view style="width:750rpx;margin-top:{{(index+1)*100}}rpx;  position: absolute;border-bottom:1rpx solid {{index==3?'red':'lightgray'}};">
-      </view>
-    </view>
-
-    <!--Schedule_Main-->
-    <view wx:for="{{wlist}}">
-      <view class="flex-item schedule-item" bindtap="showCardView" data-statu="open" data-index="{{index}}" style="margin-left:{{(item.week_what-1)*100}}rpx;margin-top:{{(item.section_what-1)*100+5}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[index%9]}}">
-        <view class="smalltext" >{{item.content}}</view>
-      </view>
-    </view>
-  </view>
-</scroll-view>

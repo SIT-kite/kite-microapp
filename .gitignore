@@ -16,3 +16,6 @@ node_modules/
 # IDE
 .vscode/
 .idea/
+
+# Wechat DevTool
+project.private.config.json

@@ -1,0 +1,4 @@
+/* timetable/components/daily/daily.wxss */
+.text{
+    color: #000;
+}

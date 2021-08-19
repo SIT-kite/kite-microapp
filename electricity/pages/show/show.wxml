@@ -14,7 +14,7 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 		<view class="s_button" bindtap="getEletricityConsume">
 			查询
 		</view>
-		<view class="s_button" data-init="true" data-type="hours" bindtap="getcostdata">
+		<view class="s_button" data-init="true" data-type="hours" bindtap="getCostData">
 			查看使用情况
 		</view>
 	</view>
@@ -46,15 +46,15 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 		<view class="slider_container">
 			<view class="help {{selected === 'hours' ? 'type_indication_to_left' : ' type_indication_to_right'}}"></view>
 			<view class="slider_button {{selected === 'hours' ? 'slider_button_selected' : ''}}"
-			data-type="hours" bindtap="getcostdata">
+				data-type="hours" bindtap="getCostData">
 				过去一天
 			</view>
 			<view class="slider_button {{ selected === 'days' ? 'slider_button_selected' : ''}}"
-			data-type="days" bindtap="getcostdata">
+				data-type="days" bindtap="getCostData">
 				过去一周
 			</view>
 		</view>
-		<view class="share_button" bindtap="gotoshare">
+		<view class="share_button" bindtap="goToShare">
 			<text>点此生成分享海报</text>
 		</view>
 	</view>

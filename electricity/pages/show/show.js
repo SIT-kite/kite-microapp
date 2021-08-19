@@ -126,8 +126,7 @@ Page({
     rank: {
       con: 0,
       percen: ' '
-    },
-    path:''
+    }
   },
 
   onClose() {
@@ -142,10 +141,10 @@ Page({
     })
   },
 
-  gotoshare() {
+  goToShare() {
     wx.navigateTo({
-      url: `/electricity/pages/share/share?url=${this.data.path}&rank=${JSON.stringify(this.data.rank)}`,
-    })
+      url: `/electricity/pages/share/share?rank=${JSON.stringify(this.data.rank)}`
+    });
     // this.onInstance(echarts);
   },
 
@@ -187,7 +186,7 @@ Page({
     }
   },
 
-  getcostdata(e) {
+  getCostData(e) {
     const that = this;
     const type = e.currentTarget.dataset.type;
     const init = e.currentTarget.dataset.init;

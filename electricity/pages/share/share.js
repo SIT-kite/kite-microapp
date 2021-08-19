@@ -1,20 +1,23 @@
+// 电费分享
 // electricity/pages/share/share.js
+
+// TODO: 支持选择是否显示用户名、头像和寝室号
+
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import promisify from "../../../utils/promisify";
-import loading from "../../../utils/loading";
+import loading   from "../../../utils/loading";
 import drawCanvas from "./drawCanvas";
 
 const app = getApp();
 
 const noIconToast = title => wx.showToast({ title, icon: "none" });
 
-let hasPermission = true;
-
 Page({
 
   data: {
-    imagePath: "",
+    nickName: app.globalData.nickName,
     avatarPath: "",
+    imagePath: "",
     rank: {
       con: 0,
       percen: ' '
@@ -38,29 +41,25 @@ Page({
 
   draw() {
 
+    // 选中 canvas 元素
     wx.createSelectorQuery().select("#canvas").node(res => {
 
       const canvas = res.node;
 
+      // 绘制 canvas 并将 canvas 保存为临时文件
       loading({
-
         title: "正在绘制分享图…",
         callback: async () => {
 
-          await drawCanvas(canvas, this.data, app.globalData.nickName);
+          await drawCanvas(canvas, this.data);
 
-          // 保存为临时文件
           await wx.canvasToTempFilePath({ canvas }).then(
-            res => {
-              console.log("canvas success", res);
-              this.setData({ imagePath: res.tempFilePath });
-            }
+            res => this.setData({ imagePath: res.tempFilePath })
           ).catch(
             err => this.catchError("分享图绘制失败", err)
           );
 
         }
-
       });
 
     }).exec();
@@ -69,26 +68,22 @@ Page({
 
   onLoad(options) {
 
-    console.log({
-      options,
-      avatarUrl: app.globalData.avatarUrl,
-      nickName: app.globalData.nickName
-    });
+    console.log("传入参数:", options);
 
     this.data.rank = JSON.parse(options.rank);
 
+    // 预先缓存头像
     promisify(wx.downloadFile)({ url: app.globalData.avatarUrl }).then(
       res => {
-        console.log("url: ", res.tempFilePath);
         this.data.avatarPath = res.tempFilePath;
-        this.draw();
       }
     ).catch(
       err => {
-        this.catchError("头像获取失败", err);
+        this.catchError("头像获取失败，改用默认头像", err);
         this.data.avatarPath = "/assets/pic/default-avatar.png";
-        this.draw();
       }
+    ).finally(
+      () => this.draw()
     );
 
   },
@@ -108,15 +103,13 @@ Page({
         duration: 3000
       })
     ).catch(
-      () => wx.showToast({
-        title: "图片保存失败",
-        icon: "error"
-      })
+      err => this.catchError("图片保存失败", err)
     );
 
-    const scope = "scope.writePhotosAlbum";
-
     // 获取用户是否已授权相册权限
+    const scope = "scope.writePhotosAlbum";
+    let hasPermission = true;
+
     if (!hasPermission) {
       wx.openSetting({
         success: result => {
