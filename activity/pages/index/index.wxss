@@ -57,11 +57,21 @@
 }
 
 .activity_item_title {
+  color: black;
   position: absolute;
-  bottom: 0;
+  bottom: 10rpx;
   left: 20rpx;
   font-size: large;
   font-weight: bold;
+  z-index: 2;
+}
+
+.black_shadow {
+  width: 100%;
+  height: 25%;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
 }
 
 .activity_item_footer {

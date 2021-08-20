@@ -41,7 +41,14 @@ Page({
       text: "搜索",
       url: "/search/pages/index/index",
       iconPath: "/assets/icons/index/search.png"
-    } */ ]
+    } */ 
+    {
+      text: "活动",
+      url: "/activity/pages/index/index",
+      iconPath: "/assets/icons/index/activity.png"
+    },
+    ]
+    
   },
 
   onShareAppMessage,

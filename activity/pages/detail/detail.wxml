@@ -2,7 +2,7 @@
   bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="main">
 
-  <view class="text_fixed" wx:if="{{showText}}">全国信息技术应用水平大赛</view>
+  <!-- <view class="text_fixed" wx:if="{{showText}}">全国信息技术应用水平大赛</view> -->
 
   <view class="container_header">
 
@@ -34,10 +34,29 @@
           <view class="text_max_people">最大人数: 200</view>
         </view>
 
+        <view class="container_activity_id">
+          <image class="icon_activity_id" src="../../assets/icons/number.svg"></image>
+          <view class="text_activity_id">活动编号: 200234235</view>
+        </view>
+
         <view class="container_department">
           <view class="text_department">计算机学院</view>
         </view>
 
+      </view>
+
+      <view class="container_like">
+
+          <view class="container_like_population">
+            <view class='container_like_heades'>
+                <image class='img_like_head head_1' src='../../assets/pic/activityItem.jpeg'></image>
+                <image class='img_like_head head_2' src='../../assets/pic/activityItem.jpeg'></image>
+                <image class='img_like_head head_3' src='../../assets/pic/activityItem.jpeg'></image>
+            </view>
+            <view class="text_like_population">等17人觉得很赞</view>
+          </view>
+
+          <view class="btn_like">赞</view>
       </view>
 
     </view>
@@ -53,6 +72,6 @@
     </view>
   </view>
   <view class="container_fixed_bar">
-    <view class="btn_join">报名</view>
+    <view class="btn_join">报 名</view>
   </view>
 </view>
