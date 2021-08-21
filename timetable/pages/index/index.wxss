@@ -148,8 +148,8 @@ page {
   }
   
   .smalltext {
-    font-size: 10pt;
-    color:black;
+    font-size: 9pt;
+    color:white;
     padding-left: 2px;
   }
   
