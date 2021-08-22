@@ -1,3 +1,32 @@
-.text{
-  color: #000;
+.courseName{
+  color:black;
+  font-size:25px;
+  padding:15rpx;
+}
+.table{
+  position:relative; 
+  width: 100%; 
+  background: #d3d3d3; 
+  min-height: 100px
+}
+.detail{
+  color:grey;
+  padding-left:36rpx;
+}
+
+.time{
+  font-size: 20px;
+
+}
+.tutor{
+  font-size: 20px;
+
+}
+.location{
+  font-size: 20px;
+
+}
+.week{
+  font-size: 20px;
+
 }

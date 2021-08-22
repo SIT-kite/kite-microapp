@@ -198,6 +198,7 @@ newdate = new Date(nowdate);
   })
 },
 
+
 onLoad: function(options) {
   let _this = this
   _this.time();

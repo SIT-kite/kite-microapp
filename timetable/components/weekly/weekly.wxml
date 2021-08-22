@@ -1,0 +1,10 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="courseName">大学物理C2</view>
+  <view class="detail">详情</view>
+<view class="table"> 
+  <view class="week">周数:</view>
+  <view class="time">课程时间:</view>
+  <view class="tutor">教师:</view>
+  <view class="location">上课地点:</view>
+</view>
+
