@@ -13,9 +13,6 @@ Page({
     promptText: "",
     buttonText: "",
     isHidden: "flex",
-    motto: 'Hey!',
-    avatarUrl: "",
-    nickName: "",
     userInfo: {
       account: "",
       secret: ""
@@ -43,7 +40,6 @@ Page({
         showCancel: false,
         success() {
           that.data.visible = false;
-          console.log("checkBoxChange(): that.data.visible = ", that.data.visible);
         }
       } : {
         title: "勾选",
@@ -157,40 +153,33 @@ Page({
   },
 
   onLoad(option) {
-    console.log("onLoad(): option.isHidden = ", option.isHidden);
-    console.log("onLoad(): this.data.userInfo = ", this.data.userInfo);
-    console.log("onLoad(): this.data.visible = ", this.data.visible);
+    this.setData({
+      buttonText: option.isHidden === "flex" ? "提交" : "确定",
+      isHidden: option.isHidden
+    })
     // 如果为none，说明现在执行修改功能，需要把全局变量中的contact拷贝一份,展示在input框中
     if (option.isHidden === "none") {
       this.setData({
         contact: gData.contact,
-        userInfo: gData.userInfo,
-        buttonText: option.isHidden === "flex" ? "提交" : "确定",
-        isHidden: option.isHidden,
-        avatarUrl: gData.avatarUrl,
-        nickName: gData.nickName
-      })
-    } else {
-      this.setData({
-        buttonText: option.isHidden === "flex" ? "提交" : "确定",
-        isHidden: option.isHidden,
-        avatarUrl: gData.avatarUrl,
-        nickName: gData.nickName
+        userInfo: gData.userInfo
       })
     }
-    console.log("onload(): over")
+    console.log("onLoad(): option = ", option);
+    console.log("onLoad(): this.data = ", this.data);
   },
 
   onReady() {
-    console.log("onReady(): this.data.isHidden = ", this.data.isHidden);
-
     if (
       "flex" === this.data.isHidden &&
       gData.freshmanPrivacyConfirm !== true
     ) {
       wx.showModal({
         title: "隐私信息提示",
-        content: "您的身份证号后6位和准考证号将用于身份验证、查询寝室位置、查找舍友信息等用途。您的手机号、QQ、微信为可选项，填写后，同寝室的同学可以看到你的手机号、QQ、微信，同班同学可以看到你的QQ和微信。如果您授权，您可能认识的人也可以查看您的QQ和微信。",
+        content:
+        "您的身份证号后6位和准考证号将用于身份验证、查询寝室位置、查找舍友信息" +
+        "等用途。您的手机号、QQ、微信为可选项，填写后，同寝室的同学可以看到" +
+        "你的手机号、QQ、微信，同班同学可以看到你的QQ和微信。如果您授权，" +
+        "您可能认识的人也可以查看您的QQ和微信。",
         showCancel: true,
         cancelText: "拒绝",
         cancelColor: "#000000",
@@ -209,13 +198,10 @@ Page({
   },
 
   onShow() {
-    const {
-      navBarHeight,
-      navBarExtendHeight,
-    } = getApp().globalSystemInfo;
+    const { navBarHeight, navBarExtendHeight } = getApp().globalSystemInfo;
     this.setData({
       navBarCurrentHeight: navBarExtendHeight + navBarHeight
-    })
+    });
   }
 
 })

@@ -1,10 +1,8 @@
 {
-  "description": "项目配置文件",
-  "packOptions": {
-    "ignore": []
-  },
+  "description": "项目配置文件 https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "compileType": "miniprogram",
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": false,
@@ -15,13 +13,12 @@
     "nodeModules": true,
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
+    "scopeDataCheck": true,
     "uglifyFileName": false,
     "checkInvalidKey": true,
     "checkSiteMap": false,
-    "uploadWithSourceMap": true,
+    "uploadWithSourceMap": false,
     "compileHotReLoad": true,
-    "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": false,
@@ -36,14 +33,36 @@
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": false,
-    "showES6CompileOption": false
+    "showES6CompileOption": true
   },
-  "compileType": "miniprogram",
   "libVersion": "2.19.1",
   "appid": "wxfbc5fc9c0a0be9f9",
   "projectname": "kite-microapp",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "archive"
+      },
+      {
+        "type": "file",
+        "value": "project.private.config.json"
+      },
+      {
+        "type": "file",
+        "value": ".eslintrc.json"
+      },
+      {
+        "type": "file",
+        "value": "jsconfig.json"
+      }
+    ]
+  },
   "debugOptions": {
     "hidedInDevtools": []
+  },
+  "watchOptions": {
+    "ignore": []
   },
   "isGameTourist": false,
   "simulatorType": "wechat",

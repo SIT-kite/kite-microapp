@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"checkJs": true,
+		"checkJs": false,
 		"noEmit": true,
 		"target": "ESNext",
 		"module": "ESNext",

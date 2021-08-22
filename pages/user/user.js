@@ -2,10 +2,10 @@
 // pages/user/user.js
 
 import onShareAppMessage from "../../utils/onShareAppMessage";
-import request from "../../utils/request";
+import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
 import promisify from "../../utils/promisify";
-import loading from "../../utils/loading";
+import loading   from "../../utils/loading";
 
 const app = getApp();
 const gData = app.globalData;
@@ -45,12 +45,12 @@ Page({
   },
 
   // 向全局变量 globalData 和本地缓存 Storage 设置 uid、token、nickName 和 avatarUrl
-  setUserData(data, token) { // token 不一定在 data 内，故单独设置参数获取
+  setUserData(data, token) { // token 不一定在 data 对象内，故单独设置参数获取
     const { uid, nickName } = data, avatarUrl = data.avatar;
     this.setDataTo({ uid, token, nickName, avatarUrl }, [0, 1, 1]);
   },
 
-  // 从服务器端 GET user identity 并向所有位置设置变量 verified
+  // 从服务器端 GET user identity，并向所有位置设置变量 verified
   setVerified() {
 
     const set = verified => this.setDataTo({ verified }, [1, 1, 1]);
@@ -85,7 +85,7 @@ Page({
 
         title: "正在登录…",
 
-        callback: async () => await request({
+        callback: request({
           url: `${gData.apiUrl}/session`,
           method: "POST",
           header: getHeader("urlencoded"),
@@ -109,7 +109,7 @@ Page({
 
           // 判断是用户不存在，还是出错了
           if (
-            // res.codeNotZero === request.symbols.codeNotZero &&
+            err.symbol === request.symbols.codeNotZero &&
             err.res.data.code === 51
           ) {
             // 用户不存在，准备请求授权并注册用户
@@ -214,9 +214,8 @@ Page({
   // onReady() {},
 
   onShow() {
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({selected: 1}); // 选中第二个项目 "我"
-    }
+    this.data.verified !== gData.verified &&
+    this.setData({ verified: gData.verified });
   }
 
 })

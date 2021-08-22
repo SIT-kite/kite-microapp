@@ -20,7 +20,8 @@
 		<image src="/assets/icons/index/notice.png" />
 		<swiper autoplay="true"
 			interval="7500" duration="500" circular="true" vertical="true">
-			<swiper-item wx:for="{{notice}}" wx:key="id">{{item.title}}</swiper-item>
+			<swiper-item wx:for="{{notice}}" wx:key="id" data-id="{{item.id}}"
+			bindtap="showNotice">{{item.title}}</swiper-item>
 		</swiper>
 	</view>
 

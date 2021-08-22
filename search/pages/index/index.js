@@ -98,9 +98,11 @@ Page({
     wx.showModal({
       title: "是否清空搜索历史",
       content: "确定要清空搜索历史吗？",
-      success() {
-        wx.removeStorageSync("searchHistoryList");
-        this.setData({ history_content: [] });
+      success(res) {
+        if (res.confirm) {
+          wx.removeStorageSync("searchHistoryList");
+          this.setData({ history_content: [] });
+        }
       }
     })
   },

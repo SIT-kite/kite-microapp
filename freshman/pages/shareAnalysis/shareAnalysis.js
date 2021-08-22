@@ -1,4 +1,5 @@
 // freshman/pages/shareAnalysis/shareAnalysis.js
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import request from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 
@@ -80,7 +81,8 @@ Page({
 
   // onReady() {},
   // onShow() {},
-
+  handlerGohomeClick,
+  handlerGobackClick,
   onShareAppMessage: () => ({
     title: "用上应小风筝，查看你的新生画像",
     path: "pages/index/index"

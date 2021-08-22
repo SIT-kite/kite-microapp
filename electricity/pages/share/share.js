@@ -48,7 +48,7 @@ Page({
 
       // 绘制 canvas 并将 canvas 保存为临时文件
       loading({
-        title: "正在绘制分享图…",
+        title: "正在绘制…",
         callback: async () => {
 
           await drawCanvas(canvas, this.data);
@@ -99,7 +99,7 @@ Page({
       filePath: this.data.imagePath
     }).then(
       () => wx.showToast({
-        title: "图片保存成功，快去分享吧~",
+        title: "图片保存成功",
         duration: 3000
       })
     ).catch(

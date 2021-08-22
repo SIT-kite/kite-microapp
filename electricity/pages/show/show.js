@@ -137,7 +137,7 @@ Page({
     wx.showModal({
       title: "数据错误提示",
       content: "此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。",
-      showCancel: false,
+      showCancel: false
     })
   },
 
@@ -180,7 +180,8 @@ Page({
       return result;
     } else {
       wx.showModal({
-        content: "输入格式有误"
+        content: "输入格式有误",
+        showCancel: false
       })
       return 'error';
     }
@@ -363,15 +364,11 @@ Page({
   // onReady() {},
 
   onShow() {
-    const {
-      navBarHeight,
-      navBarExtendHeight,
-    } = getApp().globalSystemInfo;
+    const { navBarHeight, navBarExtendHeight } = getApp().globalSystemInfo;
     this.setData({
       navBarCurrentHeight: navBarExtendHeight + navBarHeight
-    })
+    });
   },
-
 
   onShareAppMessage: () => ({
     title: "试试用上应小风筝查电费吧！支持用电历史哦！",

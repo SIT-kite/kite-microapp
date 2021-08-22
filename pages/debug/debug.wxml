@@ -4,16 +4,31 @@
 
 <view class="container">
 
+	<view class="error">{{error}}</view>
+
 	<view class="group title">调试工具</view>
 
 	<view class="group">
-		<button class="button clear" type="warn" bindtap="clearStorage"
-			data-clear="some">清理本地数据</button>
-		<view class="note">清除除登录信息以外的本地数据，例如在电费查询页面输入的寝室号。</view>
+		<button class="button" type="primary" bindtap="getUserInfo"
+			data-clear="some">获取用户信息</button>
+		<view class="note">从小程序服务器获取您授权提供的微信昵称与头像。</view>
 	</view>
 
 	<view class="group">
-		<button class="button clear" type="warn" bindtap="clearStorage"
+		<button class="button" type="primary" bindtap="updateUserInfo"
+			data-clear="some">更新用户信息</button>
+		<view class="error">{{error}}</view>
+		<view class="note">向小程序服务器重新授权更新您的微信昵称与头像。</view>
+	</view>
+
+	<view class="group">
+		<button class="button" type="warn" bindtap="clearStorage"
+			data-clear="some">清理本地数据</button>
+		<view class="note">清除除登录信息以外的本地数据，例如在电费查询页面中输入的寝室号。</view>
+	</view>
+
+	<view class="group">
+		<button class="button" type="warn" bindtap="clearStorage"
 			data-clear="all">清空本地数据</button>
 		<view class="note">清空全部本地数据；清空后，关闭并重新进入小程序时，需要重新登录。</view>
 	</view>
