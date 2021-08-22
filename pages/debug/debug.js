@@ -2,103 +2,174 @@
 
 import onShareAppMessage from "../../utils/onShareAppMessage";
 import { getAllStorageAsObject } from "../../utils/storage";
-import copyText from "../../utils/copyText";
+import request   from "../../utils/request";
+import getHeader from "../../utils/getHeader";
+import copyText  from "../../utils/copyText";
 
 const app = getApp();
+const gData = app.globalData;
+
+const loginModal = () => wx.showModal({
+  title: "尚未登录",
+  content: "您尚未登录，请先返回并登录。",
+  showCancel: false
+});
 
 Page({
 
-	data: {
-		globalData: "",
-		storage: "",
-		systemInfo: ""
-	},
+  data: {
+    error: "",
+    globalData: "",
+    storage: "",
+    systemInfo: ""
+  },
 
-	onShareAppMessage,
+  onShareAppMessage,
 
-	clearStorage(e) {
+  catchError(msg, res, err) {
+    this.setData({
+      error:
+        JSON.stringify(res) + "\n\n" +
+        JSON.stringify(err)
+    });
+    console.error(msg, {res, err});
+    wx.showModal({
+      title: msg,
+      content: `${msg}，已在页面上方显示错误信息。`,
+      showCancel: false
+    })
+  },
 
-		const clearStorageAndToast = title => wx.clearStorage({
-			success: () => wx.showToast({ title })
-		});
+  getUserInfo() {
+    gData.isLogin
+    ? request({
+      url: `${gData.apiUrl}/user/${gData.uid}`,
+      header: getHeader("urlencoded", gData.token)
+    }).then(
+      res => {
+        const data = res.data.data;
+        const nickName = data.nickName;
+        const avatarUrl = data.avatar;
+        Object.assign(gData, { nickName, avatarUrl });
+        wx.setStorageSync("nickname", nickName);
+        wx.setStorageSync("avatarUrl", avatarUrl);
+        wx.showToast({ title: "获取成功" });
+      },
+    ).catch(
+      err => this.catchError("用户信息获取失败", {}, err)
+    ) : loginModal();
+  },
 
-		wx.showModal(
-			({
-				some: {
-					title: "是否清理本地数据",
-					content: "确定要清理本地数据吗？",
-					success: () => {
-						const keyMap = new Map(
-							[ "uid", "token", "verified", "userInfo" ].map(
-								key => [ key, wx.getStorageSync(key) ]
-							)
-						);
-						clearStorageAndToast("已清理本地数据");
-						keyMap.forEach(
-							(data, key) => wx.setStorageSync(key, data)
-						);
-					}
-				},
-				all: {
-					title: "是否清空本地数据",
-					content: "清空后，再次进入小程序时需要重新登录。确定要清空吗？",
-					success: () => clearStorageAndToast("已清空本地数据")
-				}
-			})[e.target.dataset.clear]
-		);
+  updateUserInfo() {
+    gData.isLogin
+    ? wx.getUserProfile({
+      lang: "zh_CN",
+      desc: "上应小风筝需要获得您的公开信息"
+    }).then(
+      res => {
+        const { nickName, avatarUrl } = res.userInfo;
+        Object.assign(gData, { nickName, avatarUrl });
+        wx.setStorageSync("nickname", nickName);
+        wx.setStorageSync("avatarUrl", avatarUrl);
+        request({
+          method: "PUT",
+          url: `${gData.apiUrl}/user/${gData.uid}`,
+          header: getHeader("urlencoded", gData.token),
+          data: res.userInfo
+        }).then(
+          () => wx.showToast({ title: "更新成功" })
+        ).catch(
+          err => this.catchError("用户信息更新失败", res.userInfo, err)
+        )
+      }
+    ) : loginModal();
+  },
 
-	},
+  clearStorage(e) {
 
-	copy(e) {
-		copyText(this.data[e.target.dataset.name]);
-	},
+    const clearStorageAndToast = title => wx.clearStorage({
+      success: () => wx.showToast({ title })
+    });
 
-	onLoad() {
+    wx.showModal(
+      ({
+        some: {
+          title: "是否清理本地数据",
+          content: "确定要清理本地数据吗？",
+          success(res) {
+            if (res.confirm) {
+              const keyMap = new Map(
+                [ "uid", "token", "verified", "userInfo" ].map(
+                  key => [ key, wx.getStorageSync(key) ]
+                )
+              );
+              clearStorageAndToast("已清理本地数据");
+              keyMap.forEach(
+                (data, key) => wx.setStorageSync(key, data)
+              );
+            }
+          }
+        },
+        all: {
+          title: "是否清空本地数据",
+          content: "清空后，再次进入小程序时需要重新登录。确定要清空吗？",
+          success: res => res.confirm && clearStorageAndToast("已清空本地数据")
+        }
+      })[e.target.dataset.clear]
+    );
 
-		const has = (array, value) => array.some(item => item === value);
+  },
 
-		const is = {
-			api: (key, value) => (
-				has([ "apiUrl", "commonUrl" ], key) ||
-				value.includes("kite.sunnysab.cn")
-			),
-			token: (key, value) => (
-				key === "token" &&
-				value !== ""
-			),
-			userInfo: (key, value) => (
-				has([ "userInfo", "contact" ], key) &&
-				JSON.stringify(value) !== "{}"
-			),
-			userDetail: (key, value) => (
-				has([ "userDetail", "classmates", "roommates", "familiar" ], key) &&
-				value !== null
-			)
-		};
+  copy(e) {
+    copyText(this.data[e.target.dataset.name]);
+  },
 
-		const removeToken =
-			app.globalData.isDev
-			? null
-			: (key, value) => (
-				is.api(key, value) ||
-				is.token(key, value) ||
-				is.userInfo(key, value) ||
-				is.userDetail(key, value)
-				? "[已隐藏]"
-				: value
-			);
+  onLoad() {
 
-		const stringify = (data, replacer = null) => JSON.stringify(data, replacer, 2);
+    const has = (array, value) => array.some(item => item === value);
 
-		this.setData({
-			globalData: stringify(app.globalData, removeToken),
-			storage:    stringify(getAllStorageAsObject(), removeToken),
-			systemInfo: stringify(wx.getSystemInfoSync())
-		});
+    const is = {
+      api: (key, value) => (
+        has([ "apiUrl", "commonUrl" ], key) ||
+        value.includes("kite.sunnysab.cn")
+      ),
+      token: (key, value) => (
+        key === "token" &&
+        value !== ""
+      ),
+      userInfo: (key, value) => (
+        has([ "userInfo", "contact" ], key) &&
+        JSON.stringify(value) !== "{}"
+      ),
+      userDetail: (key, value) => (
+        has([ "userDetail", "classmates", "roommates", "familiar" ], key) &&
+        value !== null
+      )
+    };
 
-	},
+    const removeToken =
+      gData.isDev
+      ? null
+      : (key, value) => (
+        is.api(key, value) ||
+        is.token(key, value) ||
+        is.userInfo(key, value) ||
+        is.userDetail(key, value)
+        ? "[已隐藏]"
+        : value
+      );
 
-	// onReady() {},
-	// onShow() {}
+    const stringify = (data, replacer = null) => JSON.stringify(data, replacer, 2);
+
+    this.setData({
+      globalData: stringify(gData, removeToken),
+      storage:    stringify(getAllStorageAsObject(), removeToken),
+      systemInfo: stringify(wx.getSystemInfoSync())
+    });
+
+  },
+
+  // onReady() {},
+  // onShow() {}
 
 })

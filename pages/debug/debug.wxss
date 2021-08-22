@@ -6,17 +6,38 @@
 
 .group > .name,
 .group > .button {
-	margin-bottom: 1em;
+	margin-bottom: .5em;
 }
 
 .button {
 	padding: .5em;
 	font-size: inherit;
 	font-weight: 500;
+	box-shadow: var(--shadow);
 }
 
 .title {
 	font-size: 1.25em;
+}
+
+.error {
+	margin: 1rem;
+	font-size: .75em;
+	white-space: pre-wrap;
+	word-break: break-all;
+	font-family: Consolas, monospace;
+}
+
+.note {
+	font-size: .975em;
+	line-height: 1.638;
+	margin-bottom: .5em;
+	text-align: justify;
+	text-shadow: 0 0 1px white;
+}
+
+.strong {
+	font-weight: bold;
 }
 
 .name {

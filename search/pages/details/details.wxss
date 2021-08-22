@@ -1,25 +1,29 @@
 /* pages/details/details.wxss */
-.details-page{
-  height: 100rem;
-  background-color: #f7f7f7;
+.details-page {
+	height: 100rem;
+	background-color: #f7f7f7;
 }
+
 .header {
-  display: flex;
-  flex-direction: column;
-  padding: 30rpx;
+	display: flex;
+	flex-direction: column;
+	padding: 30rpx;
 }
+
 .title {
-  font-size: large;
-  font-weight: bold;
-  text-align: center;
+	font-size: large;
+	font-weight: bold;
+	text-align: center;
 }
-.dep-time{
-  display: flex;
-  justify-content: space-between;
-  margin: 10rpx;
-  font-size: small;
+
+.dep-time {
+	display: flex;
+	justify-content: space-between;
+	margin: 10rpx;
+	font-size: small;
 }
-.content{
-  display: flex;
-  padding: 20rpx;
+
+.content {
+	display: flex;
+	padding: 20rpx;
 }

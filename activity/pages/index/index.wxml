@@ -13,11 +13,13 @@
   <scroll-view class="list_activity" scroll-x="{{false}}" scroll-y="{{true}}"   scroll-anchoring="{{true}}" bindscrolltolower="getNextPage" lower-threshold="200">
     <view class="activity_item" wx:for="{{itemList}}" data-index="{{index}}" bindtap="toItemDetails">
       <view class="activity_item_header">
-        <image class="activity_item_img" src="/activity/assets/pic/activityItem.jpeg"></image>
+        <image class="activity_item_img" src="/activity/assets/pic/activityItem.jpeg" lazy-load="{{true}}"></image>
         <view class="activity_item_title">{{item.title}}</view>
+        <view class="black_shadow"></view>
       </view> 
       <view class="activity_item_footer">
         <!-- <view class="activity_item_position">{{item.place}}</view> -->
+        <view class="block_state state_over">已结束</view>
         <view class="activity_item_time_interval">{{item.timeInterval}}</view>
       </view>
     </view>

@@ -14,11 +14,13 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
 	<!-- 学生详细信息 -->
 	<view class="stu_info">
-		<!-- 图片部分 -->
+
+		<!-- 配图 -->
 		<view class="image_wrap">
 			<image mode="aspectFill" src="/freshman/assets/pic/detail_bg.png" />
 		</view>
-		<!-- 文字部分 -->
+
+		<!-- 文本 -->
 		<view class="info_wrap">
 			<navigator url="/freshman/pages/inputInfo/inputInfo?isHidden=none">
 				<image mode="aspectFill" src="/freshman/assets/modify.png"/>
@@ -43,12 +45,14 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 		<navigator class="navigator red"
 		url="/freshman/pages/shareAnalysis/shareAnalysis">迎新画像</navigator>
 
-		<navigator class="navigator red" url="/freshman/pages/guide/guide?campus={{userDetail.campus}}&building={{userDetail.building}}">报到指南</navigator>
+		<navigator class="navigator red"
+			url="/freshman/pages/guide/guide?campus={{userDetail.campus}}&building={{userDetail.building}}"
+			>报到指南</navigator>
 
 	</view>
 
 	<!--半圆背景-->
 	<view class="background"
-	style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
+	style="top: calc( 30rpx + 60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
 
 </view>

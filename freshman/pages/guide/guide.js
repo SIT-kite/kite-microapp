@@ -477,7 +477,7 @@ Page({
   onShareAppMessage,
 
   showCarRoute() {
-    if(this.data.showCarRoute == "显示短驳车") {
+    if(this.data.showCarRoute === "显示短驳车") {
       this.setData({polyline: [{points: carPoints, color: "#ff9900", width: 4}]})
       this.setData({showCarRoute: "隐藏短驳车"})
     }else {
@@ -485,8 +485,8 @@ Page({
       this.setData({showCarRoute: "显示短驳车"})
     }
   },
-  
-  jumpToApp: function(){},
+
+  jumpToApp() {},
 
   toNowLocation() {
 
@@ -508,6 +508,7 @@ Page({
     // 加载默认 Markers
     if(options.campus === "奉贤校区") {
 
+      console.groupCollapsed("地点数据");
       constPositions.forEach(point => {
         console.log("Const point = ", point);
 
@@ -525,6 +526,7 @@ Page({
           }
         });
       });
+      console.groupEnd();
     }
 
     this.setData({campus: options.campus});
@@ -533,7 +535,7 @@ Page({
     if(options.campus === "奉贤校区") {
       let building_num = options.building.replace("号楼", "");
       let building_pos = dormitoryBuildingMapping[building_num];
-      
+
       target = building_pos;
     } else if(options.campus === "徐汇校区") {
       target = defaultXuhuiCenter;
@@ -564,7 +566,7 @@ Page({
         longitude: target.longitude,
         latitude: target.latitude,
       })
-    }else if(target == defaultFengxianCenter || options.campus === "奉贤校区"){
+    }else if(target === defaultFengxianCenter || options.campus === "奉贤校区"){
       markers.push({
         id: 0,
         iconPath: "/freshman/assets/icons/red_arrow.png",
@@ -575,10 +577,10 @@ Page({
         latitude: target.latitude,
         label: {
           content: target.name,
-          
+
         }
       })
-    }else if(target == defaultMeilongCenter) {
+    }else if(target === defaultMeilongCenter) {
       markers.push({
         id: 0,
         iconPath: "/freshman/assets/icons/red_arrow.png",
@@ -588,7 +590,7 @@ Page({
         longitude: target.longitude,
         latitude: target.latitude,
       })
-    }else if(target == defaultChangqiaoCenter) {
+    }else if(target === defaultChangqiaoCenter) {
       markers.push({
         id: 0,
         iconPath: "/freshman/assets/icons/red_arrow.png",
@@ -599,7 +601,7 @@ Page({
         latitude: target.latitude,
         label: {
           content: target.name,
-          
+
         }
       })
     }
@@ -607,10 +609,10 @@ Page({
 
     this.jumpToApp = function() {
       wx.openLocation({
-        latitude: target.latitude,	
-        longitude: target.longitude, 
-        name: target.name,	
-        scale: 17,	
+        latitude: target.latitude,
+        longitude: target.longitude,
+        name: target.name,
+        scale: 17,
         address: target.name
       })
     }

@@ -3,6 +3,7 @@
 import updateManager from "./utils/updateManager";
 import { isNonEmptyString } from "./utils/type";
 import { getAllStorageAsObject } from "./utils/storage";
+import getHeader from "./utils/getHeader";
 
 App({
 
@@ -45,8 +46,8 @@ App({
 
     updateManager();
 
-    const gData = this.globalData;
-    const storage = getAllStorageAsObject();
+    const gData      = this.globalData;
+    const storage    = getAllStorageAsObject();
     const systemInfo = wx.getSystemInfoSync();
 
     // 从本地存储 Storage 中获取重要属性，设置全局数据 globalData
@@ -70,8 +71,35 @@ App({
       isNonEmptyString(gData.token)
     );
 
+    // 如果用户已登录但昵称或头像缺失，则获取昵称和头像
+
+    if (
+      gData.isLogin && !(
+        isNonEmptyString(gData.nickName) &&
+        isNonEmptyString(gData.avatarUrl)
+      )
+    ) {
+      console.warn("用户已登录，但昵称或头像缺失", {
+        nickName: gData.nickName,
+        avatarUrl: gData.avatarUrl
+      });
+      wx.request({
+        url: `${gData.apiUrl}/user/${gData.uid}`,
+        header: getHeader("urlencoded", gData.token),
+        success: res => {
+          const data = res.data.data;
+          const nickName = data.nickName;
+          const avatarUrl = data.avatar;
+          Object.assign(gData, { nickName, avatarUrl });
+          wx.setStorageSync("nickname", nickName);
+          wx.setStorageSync("avatarUrl", avatarUrl);
+        },
+        fail: console.error
+      });
+    }
+
     // 设置 isDev，按照 isDev 打印调试信息
-    gData.isDev = systemInfo.platform === "devtools"
+    gData.isDev = systemInfo.platform === "devtools";
     if (gData.isDev) {
       console.groupCollapsed("%c调试信息", "color: #0075E8");
       new Map([

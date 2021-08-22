@@ -1,20 +1,9 @@
 /* pages/about/about.wxss */
 
-.background {
-	position: fixed;
-	top: 25%;
-	left: 25%;
-	z-index: -1;
-	width: 50%;
-	height: 50%;
-	opacity: .1;
-	border-radius: 50%;
-	box-shadow: var(--shadow);
-}
-
 .container {
 	margin: 1em;
 	line-height: 1.618;
+	text-shadow: 0 0 1px white;
 }
 
 .list {

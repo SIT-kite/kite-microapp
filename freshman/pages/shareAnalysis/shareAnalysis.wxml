@@ -1,4 +1,6 @@
 <!--pages/share/shareFreshmanAnalysis/shareFreshmanAnalysis.wxml-->
+<navBar background="#fff" back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
 <view class="background" wx:if="{{pageReady}}">
 

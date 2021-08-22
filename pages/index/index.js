@@ -2,6 +2,7 @@
 // pages/index/index.js
 
 import onShareAppMessage from "../../utils/onShareAppMessage";
+import { isNonEmptyString } from "../../utils/type";
 import getHeader from "../../utils/getHeader";
 
 const app = getApp();
@@ -41,10 +42,41 @@ Page({
       text: "搜索",
       url: "/search/pages/index/index",
       iconPath: "/assets/icons/index/search.png"
-    } */ ]
+    } */
+    {
+      text: "活动",
+      url: "/activity/pages/index/index",
+      iconPath: "/assets/icons/index/activity.png"
+    },
+    ]
+
   },
 
   onShareAppMessage,
+
+  goTemp() {
+    wx.navigateTo({
+      url: "/freshman/pages" + (
+        gData.userDetail !== null
+          ? "/stuInfoDetail/stuInfoDetail"
+          : "/welcome/welcome"
+      )
+    });
+  },
+
+  showNotice(e) {
+    const notice = this.data.notice.find(
+      item => item.id === e.target.dataset.id
+    );
+    notice !== undefined &&
+    notice.title.length > 20 &&
+    wx.showModal({
+      title: "通知详情",
+      content: notice.title,
+      confirmText: "关闭",
+      showCancel: false
+    });
+  },
 
   router(e) {
 
@@ -88,16 +120,6 @@ Page({
 
   },
 
-  goTemp() {
-    wx.navigateTo({
-      url: "/freshman/pages" + (
-        gData.userDetail !== null
-          ? "/stuInfoDetail/stuInfoDetail"
-          : "/welcome/welcome"
-      )
-    });
-  },
-
   onLoad() {
     // 获取并设置通知 notice；目前不检查错误代码，所以直接用 wx.request()
     wx.request({
@@ -114,9 +136,8 @@ Page({
   },
 
   onShow() {
-    if (typeof this.getTabBar === "function" && this.getTabBar()) {
-      this.getTabBar().setData({ selected: 0 });
-    }
+    this.data.isLogin !== gData.isLogin &&
+    this.setData({ isLogin: gData.isLogin });
   }
 
 })

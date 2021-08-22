@@ -70,7 +70,7 @@ Page({
         title: "认证成功",
         content: "认证成功！",
         confirmText: "回到主页",
-        success: () => wx.navigateBack({delta: 1})
+        success: res => res.confirm && wx.navigateBack({delta: 1})
       });
 
     }).catch(
