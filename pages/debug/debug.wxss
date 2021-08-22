@@ -19,6 +19,18 @@
 	font-size: 1.25em;
 }
 
+.note {
+	font-size: .975em;
+	line-height: 1.638;
+	margin-bottom: .5em;
+	text-align: justify;
+	text-shadow: 0 0 1px white;
+}
+
+.strong {
+	font-weight: bold;
+}
+
 .name {
 	display: flex;
 	justify-content: space-between;

@@ -1,5 +1,7 @@
 <!--pages/debug/debug.wxml-->
 
+<background />
+
 <view class="container">
 
 	<view class="group title">调试工具</view>
@@ -18,9 +20,11 @@
 
 	<view class="group title">调试信息</view>
 
-	<view class="group note">
-		虽然调试工具已隐藏部分敏感信息，但可能有遗漏，或者对其他人而言有利用价值。<!--
-		-->请不要向陌生人分享你的调试信息。
+	<view class="group">
+		<view class="note">以下调试信息主要用于开发者自行查看，<!--
+		-->或直接向本小程序的开发者当面提供或私下发送，以协助开发者调试问题。</view>
+		<view class="note strong">虽然调试工具已隐藏部分敏感信息，但可能有遗漏，<!--
+		-->或是对其他人而言有利用价值。请不要向陌生人分享你的调试信息。</view>
 	</view>
 
 	<view class="group">

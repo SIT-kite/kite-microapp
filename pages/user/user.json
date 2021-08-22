@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+	"usingComponents": {
+		"background": "/components/background/background"
+	}
 }

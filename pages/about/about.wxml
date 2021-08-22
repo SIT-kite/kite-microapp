@@ -3,9 +3,9 @@
 <navBar background="white" back="{{true}}" home="{{true}}"
 	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
-<image class="background" src="/assets/pic/kite.svg" />
+<background />
 
 <view class="container">
 	<view class="title">关于上应小风筝</view>
-	<rich-text nodes="{{html}}" />
+	<rich-text class="content" nodes="{{html}}" />
 </view>

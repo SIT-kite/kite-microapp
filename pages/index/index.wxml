@@ -1,6 +1,6 @@
 <!-- pages/index/index.wxml -->
 
-<image class="background" src="/assets/pic/background.png" mode="aspectFill"></image>
+<background type="index" />
 
 <view class="main">
 

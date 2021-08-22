@@ -1,0 +1,23 @@
+/* components/background-index/background-index.wxss */
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+
+.index {
+	top: 1rem;
+}
+
+.plain {
+	top: 25%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	opacity: .1;
+	border-radius: 50%;
+	box-shadow: var(--shadow);
+}
