@@ -1,21 +1,21 @@
 <!--pages/mini-result/mini-result.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
-</navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view id="mini-result-page">
-  <view class="mini-result-block">
-    <view class="header">
-      <text class="category">公告</text>
-      <image class="more-icon" src="/search/images/more.png" bindtap="goAll"></image>
-    </view>
-    <view class="body">
-      <view class="item" id="{{index}}" wx:for="{{miniResultList}}" bindtap="goDetails">
-        <text><text class="{{item == searchKeyWord ? 'searchHighTitle' : 'title' }}" wx:for="{{item.title}}">{{item}}</text></text>
-        <text><text class="{{item == searchKeyWord ? 'searchHighDigest' : 'digest' }}" wx:for="{{item.content}}">{{item}}</text></text>
-        <view class="dep-time">
-          <text class="department">{{item.department}}</text>
-          <text class="time">{{item.publish_time}}</text>
-        </view>
-      </view>
-    </view>
-  </view>
+	<view class="mini-result-block">
+		<view class="header">
+			<text class="category">公告</text>
+			<image class="more-icon" src="/search/images/more.png" bindtap="goAll"></image>
+		</view>
+		<view class="body">
+			<view class="item" id="{{index}}" wx:for="{{miniResultList}}" bindtap="goDetails">
+				<text><text class="{{ item === searchKeyWord ? 'searchHighTitle' : 'title' }}" wx:for="{{item.title}}">{{item}}</text></text>
+				<text><text class="{{ item === searchKeyWord ? 'searchHighDigest' : 'digest' }}" wx:for="{{item.content}}">{{item}}</text></text>
+				<view class="dep-time">
+					<text class="department">{{item.department}}</text>
+					<text class="time">{{item.publish_time}}</text>
+				</view>
+			</view>
+		</view>
+	</view>
 </view>
