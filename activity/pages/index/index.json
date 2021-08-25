@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "navBar" : "/components/navBar/navBar"
-  },
-  "disableScroll": true
+    "navBar" : "/components/navBar/navBar",
+    "chart": "plugin://echarts/chart",
+    "card": "../../components/card"
+  }
 }

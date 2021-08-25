@@ -16,7 +16,7 @@ Page({
   data: {
     // showText: false,
     details: []
-
+    
   },
 
   //获取活动详细页面

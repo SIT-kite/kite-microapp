@@ -16,11 +16,48 @@ Page({
    * 页面的初始数据
    */
   data: {
-    selected: 'school',
+    selected: '0',
     itemList: [],
     pageIndex: 800,
     showNotice: false,
     notice: "已经到底部了哦",
+    option: {
+      padding: 10,
+      legend: {
+        data: ['现有分数', '达标分数'],
+        top: 5,
+      },
+      radar: {
+        radius: "65%",
+        indicator: [
+            { name: '主题报告', max: 1.5},
+            { name: '社会实践', max: 2},
+            { name: '校园文化', max: 1},
+            { name: '三创', max: 1.5},
+            { name: '公益志愿', max: 1},
+            { name: '安全文明', max: 1}
+        ],
+      },
+      series: [{
+          type: 'radar',
+          data: [
+              {
+                  value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+                  name: '现有分数',
+                  label: {
+                    show: true,
+                  }
+              },
+              {
+                  value: [1.5, 2, 1, 1.5, 1, 1],
+                  name: '达标分数',
+                  label: {
+                    show: true,
+                  }
+              }
+          ]
+      }]
+    }
   },
 
   //发请求获取初始活动列表
@@ -89,6 +126,17 @@ Page({
     wx.navigateTo({
       url: `/activity/pages/detail/detail?eventId=${eventId}`,
     })
+  },
+
+  switch(e) {
+    // console.log(e.detail.current)
+    if(e.currentTarget.dataset.selected === undefined) {
+      this.setData({selected: e.detail.current})
+    }else {
+      this.setData({selected: e.currentTarget.dataset.selected})
+    }
+    
+    
   },
 
   handlerGohomeClick,

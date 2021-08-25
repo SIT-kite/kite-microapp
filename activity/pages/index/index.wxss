@@ -29,7 +29,19 @@
   box-shadow: 0rpx 5rpx 0rpx 0rpx #6fa8dc;
 }
 
-.list_activity {
+swiper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+swiper-item {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.scroll_space {
   display: flex;
   flex-direction: column;
   height: 100vh;

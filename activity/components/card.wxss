@@ -1,0 +1,81 @@
+/* activity/components/card.wxss */
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 20rpx;
+  background-color: rgba(202, 225, 255, 0.5);
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.container_header {
+  display: flex;
+  flex-direction: column;
+  margin: 20rpx;
+  margin-bottom: 10rpx;
+}
+
+.container_title {
+  display: flex;
+  flex-direction: row;
+}
+
+.text_title {
+  font-size: larger;
+  font-weight: bold;
+  margin: 10rpx;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.text_condition {
+  font-size: small;
+  align-self: center;
+  border-radius: 5rpx;
+  padding: 5rpx;
+  color: rgba(0, 0, 0, 0.8);
+  background: #76b852;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8DC26F, #76b852);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8DC26F, #76b852); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.text_id {
+  padding-left: 10rpx;
+  font-size: small;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.text_date {
+  padding-left: 10rpx;
+  font-size: small;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.container_placeholder {
+  align-self: center;
+}
+
+.placeholder {
+  width: 90vw;
+  height: 2px;
+  background: #457fca;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #5691c8, #457fca);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #5691c8, #457fca); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.container_detail_item {
+  margin: 10rpx;
+  margin-left: 30rpx;
+  margin-right: 60rpx;
+  font-size: small;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text_detail_item_date {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.text_detail_item_score {
+  color: #6aa84f;
+}
