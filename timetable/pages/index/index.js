@@ -159,13 +159,13 @@ Page({
     if (_this.data.startWeek == 0) { _this.data.startWeek = this_week }
     date = timeUtils.getTimeOfWeek(giventime);
     date.map(el => {
-      if (el.week == 0) { el.weeks = '一'; return el; }
-      else if (el.week == 1) { el.weeks = '二'; return el; }
-      else if (el.week == 2) { el.weeks = '三'; return el; }
-      else if (el.week == 3) { el.weeks = '四'; return el; }
-      else if (el.week == 4) { el.weeks = '五'; return el; }
-      else if (el.week == 5) { el.weeks = '六'; return el; }
-      else if (el.week == 6) { el.weeks = '日'; return el; }
+      if (el.week == 0) { el.weeks = '日'; return el; }
+      else if (el.week == 1) { el.weeks = '一'; return el; }
+      else if (el.week == 2) { el.weeks = '二'; return el; }
+      else if (el.week == 3) { el.weeks = '三'; return el; }
+      else if (el.week == 4) { el.weeks = '四'; return el; }
+      else if (el.week == 5) { el.weeks = '五'; return el; }
+      else if (el.week == 6) { el.weeks = '六'; return el; }
     })
     let nowdate = new Date();
     nowdate = nowdate.getDay();
@@ -191,6 +191,7 @@ Page({
   onLoad: function (options) {
     let _this = this
     _this.time(_this.data.toschool, new Date());
+    console.log(new Date('2021.8.29').getDay())
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     _this.setData({ list: _this.data.list, course_data: course_data });
   },

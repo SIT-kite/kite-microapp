@@ -1,6 +1,6 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="background">
-    <swiper class="time" bindchange="bindchange" duration="750" easing-function="east-out" circular="true">
+    <swiper class="time" bindchange="bindchange" duration="500" easing-function="east-out" circular="true">
         <swiper-item>
             <view class="time">
                 <view class="date">
@@ -72,7 +72,7 @@
         </swiper-item>
     </swiper>
     <block wx:if="{{chooseActivity == 1}}">
-    <swiper class="main" bindchange="bindchangeday" duration="750" easing-function="east-out" circular="true" >
+    <swiper class="main" bindchange="bindchangeday" duration="300" easing-function="ease-in-out" circular="true" >
         <swiper-item>
             <view class="main1">
                 <view wx:if="{{chooseActivity == 1}}">

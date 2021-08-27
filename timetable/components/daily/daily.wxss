@@ -68,7 +68,8 @@
     font-size:20px;
     font-weight: bolder;
     color: #14446A;
-    overflow:auto;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 .course_time{
     margin-top: 0.1vh;
