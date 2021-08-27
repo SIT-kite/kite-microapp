@@ -168,7 +168,6 @@ page {
   
   .scroll {
     height: 1170rpx;
-    z-index: 101;
     position: fixed;
     background-color: white;
     border-radius: 25px 25px 0px 0px;
@@ -184,7 +183,7 @@ page {
   }
   .tapSet{ 
     position: absolute; 
-    background:#f0f1f1dc; 
+    background:#f0f1f1ec; 
     /* background-color: #05070a; */ 
     display: flex; 
     flex-direction: column; 
@@ -237,3 +236,28 @@ page {
     flex-direction: row; 
     height: 70px; 
 } 
+.QRcode{
+    margin-top: 3vh;
+    width: 68.7vw;
+    height: 68.1vw;
+    /* border-radius: 20px;  */
+}
+.QR_couple{
+    padding: 4vw;
+    padding-top: 0vw;
+    z-index: 99;
+    position: absolute; 
+    display: flex;
+    flex-direction:column;
+    bottom: 18vh; 
+    left: 11.65vw; 
+    width: 68.7vw;
+    height: 81.1vw;
+    border-radius: 20px; 
+    background: #eb9797ad;
+}
+.QRcode_text{
+    font-size:20px;
+    font-weight: bolder;
+    margin-left: 9vw;
+}

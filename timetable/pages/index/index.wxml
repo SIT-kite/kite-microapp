@@ -133,11 +133,11 @@
 
                     <!--虚线分割-->
                     <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}">
-                        <view style="width:750rpx; margin-top:{{(index+1)*100}}rpx;  position: absolute; border-bottom:1rpx solid {{index==3?'red':'lightgrey'}};">
+                        <view style="width:750rpx; margin-top:{{(index+1)*100}}rpx;  position: absolute; border-bottom: 1rpx solid {{index==3?'red':'lightgrey'}};">
                         </view>
                     </view>
 
-                     <!--Schedule_Main-->
+                    <!--Schedule_Main-->
                     <view wx:for="{{wlist}}">
                         <view class="flex-item schedule-item" bindtap="showCardView" data-statu="open" data-index="{{index}}" style="margin-left:{{(item.week_what-1)*100}}rpx;margin-top:{{(item.section_what-1)*100+5}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[index%9]}}">
                             <view class="smalltext" >{{item.content}}</view>
@@ -145,5 +145,9 @@
                     </view>
                     </view>
                 </scroll-view>
+        </view>
+        <view class = "QR_couple" wx:if="{{choosedCouple}}">
+            <image class="QRcode" src="{{QRCode}}" ></image>
+            <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
         </view>
 </view>

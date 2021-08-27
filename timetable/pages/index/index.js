@@ -4,6 +4,8 @@ import {
   handlerGobackClick
 } from '../../../utils/navBarUtils';
 import getHeader from "../../../utils/getHeader";
+// import QR from "f:/wechat/kite-microapp/node_modules/qrcode-base64/index";
+// import QRCode from 'qrcode-base64'
 
 const app = getApp();
 const availableSuffix = `/contact`;
@@ -11,6 +13,7 @@ const requestUtils = require("../../../utils/requestUtils");
 const timeUtils = require("../../../utils/timeUtils");
 const transformationsUtils = require("../../../utils/transformationsUtils");
 const discipline = require('./discipline')
+const QR = require("../../../utils/weapp-qrcode")
 
 let date = []
 let days = []
@@ -19,11 +22,15 @@ let page_day = 0
 let chooseActivity = 1
 let course_data = []
 let tapSet = false
+let choosedCouple= false
 let this_week = 0
 let startWeek = 0
 let choosedday = []
 let toschool = '2021-6-5'
 let code = false
+let qrcodeWidth= 150
+const quality = 1
+let codeText = 'dwdwefewfw'
 let list = [
   {
     course_name: "机械原理",
@@ -146,7 +153,7 @@ let wlist = [
 
 Page({
   data: {
-    date, days, chooseActivity, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays
+    date, days, chooseActivity, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple
   },
   //导航栏函数
   handlerGohomeClick: handlerGohomeClick,
@@ -226,9 +233,15 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    var imgData = QR.drawImg(this.data.codeText, {
+      typeNumber: 4,
+      errorCorrectLevel: 'M',
+      size: 500
+    })
+    this.setData({
+      QRCode: imgData
+    })
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -440,6 +453,10 @@ Page({
     })
   },
   code: function (e) {
-
-  }
+    if(this.data.choosedCouple == false){
+    this.setData({choosedCouple:true})}
+    else{
+      this.setData({choosedCouple:false})
+    }
+  },
 })
