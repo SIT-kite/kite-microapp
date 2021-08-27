@@ -25,29 +25,37 @@ Page({
       text: "商城",
       url: "/shop/pages/index/index",
       iconPath: "/assets/icons/index/shop.png"
-    }, */ {
+    }, */    
+    {
+      text: "活动",
+      url: "/activity/pages/index/index",
+      iconPath: "/assets/icons/index/activity.png"
+    }, {
       text: "空教室",
       url: "/class-room/pages/available-room",
       iconPath: "/assets/icons/index/availroom.png"
-    }, /* {
-      text: "拼车",
-      url: "/carpool/pages/car-pool/car-pool",
-      iconPath: "/assets/icons/index/carpool.png"
-    }, {
+    }, 
+
+    {
+      text: "课表",
+      url: "/timetable/pages/index/index",
+      iconPath: "/assets/icons/index/timetable.png"
+    },
+    {
       text: "常用电话",
       url: "/contact/pages/show/show",
       iconPath: "/assets/icons/index/telephone.png"
+    },
+    /* {
+      text: "拼车",
+      url: "/carpool/pages/car-pool/car-pool",
+      iconPath: "/assets/icons/index/carpool.png"
     },
     {
       text: "搜索",
       url: "/search/pages/index/index",
       iconPath: "/assets/icons/index/search.png"
     } */
-    {
-      text: "活动",
-      url: "/activity/pages/index/index",
-      iconPath: "/assets/icons/index/activity.png"
-    },
     ]
 
   },
