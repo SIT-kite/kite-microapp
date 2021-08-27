@@ -9,6 +9,7 @@ import getHeader from "../../utils/getHeader";
 const app =  getApp();
 const availableSuffix = `/edu/classroom/available`;
 const requestUtils = require("../../utils/requestUtils");
+const transformationsUtils = require("../../utils/transformationsUtils") 
 const promisify = require('../../utils/promisifyUtils');
 
 
@@ -80,7 +81,7 @@ Page({
       data_initial = res.data.data
       for (var i = 0; i < data_initial.length; i++) {
         let datas = data_initial[i];
-        datas.busy_time = this.ten_two(datas.busy_time);
+        datas.busy_time = transformationsUtils.transformations(datas.busy_time); 
       }
       data_content = data_initial
       _this.setData({
@@ -113,7 +114,7 @@ Page({
         data_initial = res.data.data
         for (var i = 0; i < data_initial.length; i++) {
           let datas = data_initial[i];
-          datas.busy_time = _this.ten_two(datas.busy_time);
+          datas.busy_time = transformationsUtils.transformations(datas.busy_time,11); 
         }
         if(Array.isArray(data_content)){
         data_content=data_content.concat(data_initial);}
@@ -126,21 +127,6 @@ Page({
     },100);
 
 
-  },
-
-  ten_two: function(times){
-　　var two=parseInt(times).toString(2);
-　　var Point=[];
-　　if(two.length<11){
-　　　　for(var j=0;j<(11-two.length);j++){
-　　　　　　Point.push('0')
-　　　　}
-　　}
-　　for(var k=0;k<two.length;k++){
-　　　　Point.push(two.charAt(k))
-
-　　}
-　　return Point; 
   },
 
   onLoad: function(options) {

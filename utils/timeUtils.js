@@ -71,10 +71,63 @@ const formatNumber = n => {
   return n[1] ? n : `0${n}`;
 };
 
-// 在XXX.js通过 var util = require("../../utils/utils.js") 和
-// util.XXX() 来引用
+// getIntervalToCurrentWeek(Giventime: String): intervalWeek : number
+// 获得给定时间的周数间隔（有余进一）
+// 传入格式为 'yyyy-MM-dd'
+const getIntervalToCurrentWeek = (givenTime,giveTime) => {
+  if (null == givenTime) return null;
+  let startTime = Date.parse(new Date(givenTime));
+  var CurrentTime = Date.parse(giveTime);
+  let intervalWeek = Math.ceil((CurrentTime-startTime)/604800000);
+  return intervalWeek;
+}
+
+// getTimeOfWeek(Giventime: String): intervalWeek :array
+// 获得给定时间对应一周的日期和星期
+// 返回格式 [{year:yyyy,month:MM,day:dd,week:number}]
+const getTimeOfWeek = giventime => {
+  if(null == giventime) return null;
+  let week = giventime.getDay();
+  let nowDate = Date.parse(giventime);
+  let newDate=0,day=0,year=0,month=0
+  let intervalWeek =[]
+  for(let i =0;i <week;i++){
+    newDate = nowDate - 86400000*(week-i);
+    newDate = new Date(newDate);
+    day = newDate.getDate();
+    year = newDate.getFullYear();
+    month = newDate.getMonth() +1;
+    intervalWeek.push({
+      year : year,
+      month : month,
+      day : day,
+      week : i
+    })
+  }
+  for (let i = week; i <7;i++) {
+    newDate = nowDate + 86400000*(i-week);
+    newDate = new Date(newDate);
+    day = newDate.getDate();
+    year = newDate.getFullYear();
+    month = newDate.getMonth() +1;
+    intervalWeek.push({
+      year : year,
+      month : month,
+      day : day,
+      week : i
+    })
+  }
+  return intervalWeek;
+}
+
+
+//
+// 在XXX.js通过 var timeUtils = require("../../utils/timeUtils") 和
+// timeUtils.XXX() 来引用
 module.exports = {
   getTimeStamp,
   getIntervalToCurrentTime,
-  formatTime
+  formatTime,
+  getIntervalToCurrentWeek,
+  getTimeOfWeek
 };
