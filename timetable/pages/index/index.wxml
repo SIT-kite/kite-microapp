@@ -1,32 +1,125 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="background">
-    <view class="time">
-        <view class="date">
-            {{date[6]}}
-            <view class="set">
-                <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                <image src="../../assets/icons/set5.png" class="icon"></image>
-            </view>
-        </view>
-        <view class="scroll_time">
-            <view class="this_week">
-                <view>{{this_week}}</view>
-                <text>周</text>
-            </view>
-            <view class="choose_time">
-                <view class="days {{choosedday.day == days.day? 'choose_couple':''}}" wx:for="{{days}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
-                    <view class="day">{{days.day}}</view>
-                    <view class="week">{{days.week}}</view>
+    <swiper class="time" bindchange="bindchange" duration="750" easing-function="east-out" circular="true">
+        <swiper-item>
+            <view class="time">
+                <view class="date">
+                    {{date[6].year}}年{{date[6].month}}月
+                    <view class="set">
+                        <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
+                        <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image>
+                    </view>
                 </view>
+                <view class="scroll_time">
+                    <view class="this_week">
+                        <view>{{this_week}}</view>
+                        <text>周</text>
+                    </view>
+                    <view class="choose_time">
+                        <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                            <view class="day">{{days.day}}</view>
+                            <view class="week">{{days.weeks}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </swiper-item>
+        <swiper-item>
+            <view class="time">
+                <view class="date">
+                    {{date[6].year}}年{{date[6].month}}月
+                    <view class="set">
+                        <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
+                        <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image>
+                    </view>
+                </view>
+                <view class="scroll_time">
+                    <view class="this_week">
+                        <view>{{this_week}}</view>
+                        <text>周</text>
+                    </view>
+                    <view class="choose_time">
+                        <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                            <view class="day">{{days.day}}</view>
+                            <view class="week">{{days.weeks}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </swiper-item>
+        <swiper-item>
+            <view class="time">
+                <view class="date">
+                    {{date[6].year}}年{{date[6].month}}月
+                    <view class="set">
+                        <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
+                        <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image>
+                    </view>
+                </view>
+                <view class="scroll_time">
+                    <view class="this_week">
+                        <view>{{this_week}}</view>
+                        <text>周</text>
+                    </view>
+                    <view class="choose_time">
+                        <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                            <view class="day">{{days.day}}</view>
+                            <view class="week">{{days.weeks}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </swiper-item>
+    </swiper>
+    <block wx:if="{{chooseActivity == 1}}">
+    <swiper class="main" bindchange="bindchangeday" duration="750" easing-function="east-out" circular="true" >
+        <swiper-item>
+            <view class="main1">
+                <view wx:if="{{chooseActivity == 1}}">
+                    <daily list="{{course_data}}"></daily>
+                </view>
+                <view wx:elif="{{chooseActivity == 2}}"></view>
+            </view>
+        </swiper-item>
+        <swiper-item>
+            <view class="main1">
+                <view wx:if="{{chooseActivity == 1}}">
+                    <daily list="{{course_data}}"></daily>
+                </view>
+                <view wx:elif="{{chooseActivity == 2}}"></view>
+            </view>
+        </swiper-item>
+        <swiper-item>
+            <view class="main1">
+                <view wx:if="{{chooseActivity == 1}}">
+                    <daily list="{{course_data}}"></daily>
+                </view>
+                <view wx:elif="{{chooseActivity == 2}}"></view>
+            </view>
+        </swiper-item>
+    </swiper>
+    </block>    
+    <view class="tapSet" wx:if="{{tapSet == true}}">
+        <view class="slider_text">周数</view>
+        <slider bindchange="sliderchange" min="1" max="19" value="{{this_week}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
+        <view class="set_bottom">
+            <view class="sart_time">
+                <picker class="picker" mode="date" value="{{toschool}}" start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">
+                    <image src="../../assets/icons/sarttime.png" class="icon3" />
+                    <view>开学时间</view>
+                </picker>
+            </view>
+            <view class="picker">
+                <image src="../../assets/icons/couple.png" class="icon4" bindtap="code" />
+                <view>情侣课表</view>
+            </view>
+            <view class="picker">
+                <image src="../../assets/icons/details.png" class="icon4" bindtap="scanCode" />
+                <view>扫一扫</view>
             </view>
         </view>
     </view>
-    <view class="main">
-        <view wx:if="{{chooseActivity == 1}}">
-            <daily list="{{list}}"></daily>
-        </view>
-        <view wx:elif="{{chooseActivity == 2}}"> 
-            
+        <view wx:if="{{chooseActivity == 2}}" class="main"> 
                 <view class="top">
                     <!-- <view wx:for="{{['一','二','三','四','五','六','日']}}" class="top-text">周{{item}}</view> -->
                 </view>
@@ -52,7 +145,5 @@
                     </view>
                     </view>
                 </scroll-view>
-            
         </view>
-    </view>
 </view>

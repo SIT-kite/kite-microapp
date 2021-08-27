@@ -68,10 +68,6 @@ page {
     margin-left: 10px;
     margin-top: 5px;
 }
-.time{
-    display: flex;
-    /* background-color: #ECF0F1; */
-}
 .choose_time{
     display: flex;
     flex-direction: row;
@@ -108,9 +104,10 @@ page {
     margin-left: 1.5vw;
     background-color: #ffffff;
     width: 97vw;
-    height: 80vh;
-    border-radius: 25px 25px 25px 25px;
+    height: 74vh;
+    border-radius: 25px 25px 0px 0px;
 }
+
 .couple{
     display: flex;
     flex-direction: row;
@@ -127,7 +124,6 @@ page {
     /* color: #FCD244; */
     font-weight: bold;
     border-bottom: 3px solid #FCD244;
-
 }
 
 
@@ -175,6 +171,7 @@ page {
     z-index: 101;
     position: fixed;
     background-color: white;
+    border-radius: 25px 25px 0px 0px;
   }
   
   .left {
@@ -185,4 +182,58 @@ page {
     display: flex;
     align-items: center;
   }
-  
+  .tapSet{ 
+    position: absolute; 
+    background:#f0f1f1dc; 
+    /* background-color: #05070a; */ 
+    display: flex; 
+    flex-direction: column; 
+    border-radius: 20px; 
+    height: 20vh; 
+    width: 92vw; 
+    z-index: 99; 
+    bottom: 2vh; 
+    left: 4vw; 
+    border: 1px solid #F5F5F5; 
+    box-shadow:1px 1.5px 3px #c8d0e7,  
+    -2px -2px 5px #FFFFFF; 
+} 
+.slider{ 
+    margin-top: 1vh; 
+    width: 84vw; 
+} 
+.slider_text{ 
+    margin-top: 1vh; 
+    margin-left: 1vw; 
+    color:  #568BE5; 
+    font-weight: bold; 
+} 
+.icon3{ 
+    margin-left: 9px; 
+    width: 35px; 
+    height: 35px; 
+} 
+.icon4{ 
+    width: 35px; 
+    height: 35px; 
+} 
+.picker{ 
+    margin-left: 3vw; 
+    border-radius: 10px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    color: #568BE5; 
+    font-weight:bolder ; 
+    width: 65px; 
+    height: 65px; 
+    font-size: 14px; 
+    background:#c4c4c4ad; 
+} 
+.set_bottom{ 
+/* background:#58a2e7; */ 
+    display: flex; 
+    flex-direction: row; 
+    height: 70px; 
+} 

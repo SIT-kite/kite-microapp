@@ -2,12 +2,13 @@
 
 .daily{
     color: #000;
-    /* background:#EEEE; */
-    display: flex;
+    flex-direction: column;
+    /* background:#E4EBF5; */
+    display: block;
     justify-content:center;
     align-items: center;
     width: 97vw;
-    height: 70vh;
+    height: 74vh;
     border-radius: 25px 25px 25px 25px;
 }
 .icon_1{
@@ -30,12 +31,15 @@
 .course{
     display: flex;
     margin-left: 2vw;
-    margin-top: 15vh;
-    height: 70vh;
+    /* margin-top: 15vh; */
+    height: 66vh;
+    /* border-radius: 15px; */
     width: 97vw;
 }
-.list {
-    color: #000;
+.todo {
+    display: flex;
+    width: 93vw;
+    height: 7vh;
 }
 .table {
     display: flex;
@@ -49,7 +53,8 @@
     background:hsl(0, 0%, 100%);
     /* border: 1px solid #d4d4d4; */
     border: 1px solid #F5F5F5;
-    /* box-shadow:0px 1px 1px 1px #aaa; */
+    box-shadow:1px 1.5px 3px #c8d0e7, 
+    -2px -2px 5px #FFFFFF;
     border-left:3px solid #568BE5;
 }
 .td {
@@ -63,15 +68,17 @@
     font-size:20px;
     font-weight: bolder;
     color: #14446A;
+    overflow:auto;
 }
 .course_time{
     margin-top: 0.1vh;
     font-weight: bolder;
-    font-size: 15px;
-    color:#fcd144d2;
+    font-size: 14px;
+    /* color:#fcd144d2; */
+    color: #5d8cae69;
 }
 .course_teacher{
-    font-size: 15px;
+    font-size: 16px;
     font-weight:bolder;
     color: #568BE5;
 }

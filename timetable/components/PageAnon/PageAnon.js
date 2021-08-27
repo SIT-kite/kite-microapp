@@ -1,12 +1,10 @@
-// timetable/components/daily/daily.js
+// timetable/components/PageAnon/PageAnon.js
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    list:{
-      type: Array,
-    },
+
   },
 
   /**
@@ -20,9 +18,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    
-  },
-  ready(){
-},
 
+  }
 })

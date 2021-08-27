@@ -1,11 +1,13 @@
 <!-- timetable/components/daily/daily.wxml -->
 <view class="daily">
+    <view class="todo"></view>
     <scroll-view scroll-y="{{true}}" scroll-with-animation="true" class="course" show-scrollbar="{{false}}" wx:if="{{list}}" enhanced="{{ true }}">
         <view class="list" wx:for="{{list}}" wx:for-index="list_course" wx:for-item="list_content" wx:key="index">
             <view class="table">
                 <view class="td">
                     <view class="icon_course">
-                        <image src="../../assets/icons/icon_Educate/shuxue.png" class="icon_1" />
+                        <!-- icon地址 https://www.iconfont.cn/collections/detail?cid=8530 -->
+                        <image src="../../assets/icons/icon_educate/{{list_content.discipline}}.png" class="icon_1" />
                     </view>
                     <view class="text">
                         <view class="course_name">{{list_content.course_name}}</view>
