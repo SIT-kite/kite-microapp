@@ -87,34 +87,37 @@ const getIntervalToCurrentWeek = (givenTime,giveTime) => {
 // 返回格式 [{year:yyyy,month:MM,day:dd,week:number}]
 const getTimeOfWeek = giventime => {
   if(null == giventime) return null;
+  let weekday
   let week = giventime.getDay();
   let nowDate = Date.parse(giventime);
   let newDate=0,day=0,year=0,month=0
   let intervalWeek =[]
-  for(let i =0;i <week;i++){
-    newDate = nowDate - 86400000*(week-i);
+  for(let i =0;i <week-1;i++){
+    newDate = nowDate - 86400000*(week-1-i);
     newDate = new Date(newDate);
     day = newDate.getDate();
     year = newDate.getFullYear();
     month = newDate.getMonth() +1;
+    weekday = newDate.getDay();
     intervalWeek.push({
       year : year,
       month : month,
       day : day,
-      week : i
+      week : weekday
     })
   }
-  for (let i = week; i <7;i++) {
+  for (let i = week; i <8;i++) {
     newDate = nowDate + 86400000*(i-week);
     newDate = new Date(newDate);
     day = newDate.getDate();
     year = newDate.getFullYear();
     month = newDate.getMonth() +1;
+    weekday = newDate.getDay();
     intervalWeek.push({
       year : year,
       month : month,
       day : day,
-      week : i
+      week : weekday
     })
   }
   return intervalWeek;

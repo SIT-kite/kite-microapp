@@ -7,11 +7,11 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image>
+                        <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
                 <view class="scroll_time">
-                    <view class="this_week">
+                    <view class="this_week" bindtap="tapSet">
                         <view>{{this_week}}</view>
                         <text>周</text>
                     </view>
@@ -30,11 +30,11 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image>
+                        <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
                 <view class="scroll_time">
-                    <view class="this_week">
+                    <view class="this_week" bindtap="tapSet">
                         <view>{{this_week}}</view>
                         <text>周</text>
                     </view>
@@ -53,11 +53,11 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image>
+                        <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
                 <view class="scroll_time">
-                    <view class="this_week">
+                    <view class="this_week" bindtap="tapSet">
                         <view>{{this_week}}</view>
                         <text>周</text>
                     </view>
@@ -101,8 +101,8 @@
     </block>    
     <view class="tapSet" wx:if="{{tapSet == true}}">
         <view class="slider_text">周数</view>
-        <slider bindchange="sliderchange" min="1" max="19" value="{{this_week}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
-        <view class="set_bottom">
+        <slider bindchange="sliderchange" min="1" max="25" value="{{this_week}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
+        <!-- <view class="set_bottom">
             <view class="sart_time">
                 <picker class="picker" mode="date" value="{{toschool}}" start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">
                     <image src="../../assets/icons/sarttime.png" class="icon3" />
@@ -117,7 +117,7 @@
                 <image src="../../assets/icons/details.png" class="icon4" bindtap="scanCode" />
                 <view>扫一扫</view>
             </view>
-        </view>
+        </view> -->
     </view>
         <view wx:if="{{chooseActivity == 2}}" class="main"> 
                 <view class="top">
@@ -146,8 +146,8 @@
                     </view>
                 </scroll-view>
         </view>
-        <view class = "QR_couple" wx:if="{{choosedCouple}}">
+        <!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
             <image class="QRcode" src="{{QRCode}}" ></image>
             <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
-        </view>
+        </view> -->
 </view>

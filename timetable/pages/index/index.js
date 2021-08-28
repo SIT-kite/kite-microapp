@@ -1,11 +1,9 @@
-//TODO 完成：主体框架设计、完成时间、周数 未完成：日课表块、数据请求、数据处理、数据缓存、课程icon
+//TODO 设置页弹出动画、情侣课表页面、TODO、五天|七天、支持使用教务系统的密码、支持直接导入班级课表、用户未实名，跳转到实名认证页。
 import {
   handlerGohomeClick,
   handlerGobackClick
 } from '../../../utils/navBarUtils';
 import getHeader from "../../../utils/getHeader";
-// import QR from "f:/wechat/kite-microapp/node_modules/qrcode-base64/index";
-// import QRCode from 'qrcode-base64'
 
 const app = getApp();
 const availableSuffix = `/contact`;
@@ -13,7 +11,7 @@ const requestUtils = require("../../../utils/requestUtils");
 const timeUtils = require("../../../utils/timeUtils");
 const transformationsUtils = require("../../../utils/transformationsUtils");
 const discipline = require('./discipline')
-const QR = require("../../../utils/weapp-qrcode")
+// const QR = require("../../../utils/weapp-qrcode")
 
 let date = []
 let days = []
@@ -31,6 +29,7 @@ let code = false
 let qrcodeWidth= 150
 const quality = 1
 let codeText = 'dwdwefewfw'
+let table = ['8:20~9:50','10:10~12:00','13:00~15:20','15:40~16:30','18:30~20:30']
 let list = [
   {
     course_name: "机械原理",
@@ -153,11 +152,30 @@ let wlist = [
 
 Page({
   data: {
-    date, days, chooseActivity, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple
+    date, days, chooseActivity, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple,table
   },
   //导航栏函数
   handlerGohomeClick: handlerGohomeClick,
   handlerGobackClick: handlerGobackClick,
+
+  setdata:function(e){
+    let _this = this
+    _this.setDate();
+    let url = `${app.globalData.commonUrl}${rgg4g}`;
+    let header = getHeader("urlencoded", app.globalData.token);
+    let data = {};
+    let tapDate = requestUtils.doGET(url, data, header);
+    tapDate.then((res) => {
+      data = res.data.data
+      _this.setData({
+        list: data
+      })
+      wx.setStorage({
+        key: 'list',
+        data: data
+      })
+    })
+  },
 
   time: function (schoolholidaydirectory, giventime) {
     let _this = this
@@ -197,10 +215,25 @@ Page({
 
   onLoad: function (options) {
     let _this = this
+    if(wx.getStorageSync('chooseActivity')==0){
+    wx.setStorageSync('chooseActivity',1)}
+    if(_this.data.list.length == 0 ){
+      _this.setdata()
+    }
+    else{
+    // _this.data.list = wx.getStorageSync('list');
+    // _this.data.table = wx.getStorageSync('table');
+    // _this.data.toschool = wx.getStorageSync('toschool');
+      _this.data.chooseActivity = wx.getStorageSync('chooseActivity');
+    }
     _this.time(_this.data.toschool, new Date());
-    console.log(new Date('2021.8.29').getDay())
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
-    _this.setData({ list: _this.data.list, course_data: course_data });
+    _this.setData({ 
+      list: _this.data.list, 
+      course_data: course_data,
+      table: _this.data.table,
+      toschool: _this.data.toschool,
+      chooseActivity: _this.data.chooseActivity});
   },
   binary: function (list, this_week, day) {
     console.log(this_week, day.week)
@@ -225,23 +258,31 @@ Page({
           textlist[i].discipline = discipline[j].discipline
         }
       }
-      console.log(textlist)
     }
+    let table=this.data.table
+    textlist.map(el => {
+      if(el.time_index ==0 ){ el.time = table[0];return el;}
+      else if(el.time_index == 1){ el.time = table[1];return el;}
+      else if (el.time_index ==2){ el.time = table[2];return el;}
+      else if (el.time_index ==3){ el.time = table[3];return el;}
+      else if (el.time_index ==4){ el.time = table[4];return el;}
+      else if (el.time_index ==5){ el.time = table[5];return el;}
+    })
     return textlist
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-    var imgData = QR.drawImg(this.data.codeText, {
-      typeNumber: 4,
-      errorCorrectLevel: 'M',
-      size: 500
-    })
-    this.setData({
-      QRCode: imgData
-    })
-  },
+  // onReady: function () {
+  //   var imgData = QR.drawImg(this.data.codeText, {
+  //     typeNumber: 4,
+  //     errorCorrectLevel: 'M',
+  //     size: 500
+  //   })
+  //   this.setData({
+  //     QRCode: imgData
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -307,6 +348,10 @@ Page({
         chooseActivity: chooseActivity
       })
     }
+    wx.setStorage({
+      key: 'chooseActivity',
+      data: chooseActivity,
+    })
   },
   tapSet: function (e) {
     let _this = this;
