@@ -164,17 +164,27 @@ Page({
     const _this = this
     let val = e.detail.value
     let list = _this.data.dataChange
-    let count = 0
+    let count = []
     for (let i = 0; i < list.length; i++) {
+      let x=0
       for (let j = 0; j < list[i].origin.length; j++) {
         if (
           list[i].origin[j].department.search(val) !== -1 ||
-          list[i].origin[j].phone.search(val) !== -1
+          list[i].origin[j].phone.search(val) !== -1 ||
+          list[i].origin[j].description.search(val) !== -1
         ) {
           list[i].origin[j].isShow = true
         } else {
-          list[i].origin[j].isShow = false
+          list[i].origin[j].isShow = false;
+          x=1+x;
+          count[i]=x;
         }
+      }
+      if(count[i]==list[i].origin.length)
+      {
+        list[i].isHidden = true
+      }else{
+        list[i].isHidden = false
       }
     }
     this.setData({ dataChange: list })
