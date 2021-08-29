@@ -46,7 +46,7 @@
   
   .left {
     width: 45rpx;
-    height: 90rpx;
+    height: 100rpx;
     font-size: 10pt;
     justify-content: center;
     display: flex;

@@ -127,34 +127,11 @@
         </view> -->
     </view>
         <view wx:if="{{chooseActivity == 2}}" class="main"> 
-                <view class="top">
-                    <!-- <view wx:for="{{['一','二','三','四','五','六','日']}}" class="top-text">周{{item}}</view> -->
-                </view>
-                <scroll-view scroll-y="true" class="scroll">
-                    <view style="height:1200rpx; width:730rpx; display:flex;">
-                        <view style="background-color:#fff; color:black;">
-                        <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}" class="left">
-                            {{item}}
-                        </view>
-                        </view>
-
-                    <!--虚线分割-->
-                    <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}">
-                        <view style="width:750rpx; margin-top:{{(index+1)*100}}rpx;  position: absolute; border-bottom: 1rpx solid {{index==3?'red':'lightgrey'}};">
-                        </view>
-                    </view>
-
-                    <!--Schedule_Main-->
-                    <view wx:for="{{wlist}}">
-                        <view class="flex-item schedule-item" bindtap="showCardView" data-statu="open" data-index="{{index}}" style="margin-left:{{(item.week_what-1)*100}}rpx;margin-top:{{(item.section_what-1)*100+5}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[index%9]}}">
-                            <view class="smalltext" >{{item.content}}</view>
-                        </view>
-                    </view>
-                    </view>
-                </scroll-view>
-        </view>
+            <weekly wlist="{{wlist}}"></weekly>  
         <!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
             <image class="QRcode" src="{{QRCode}}" ></image>
             <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
         </view> -->
+
+    </view>
 </view>
