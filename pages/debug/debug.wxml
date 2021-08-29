@@ -18,7 +18,7 @@
 		<button class="button" type="primary" bindtap="updateUserInfo"
 			data-clear="some">更新用户信息</button>
 		<view class="error">{{error}}</view>
-		<view class="note">向小程序服务器重新授权更新您的微信昵称与头像。</view>
+		<view class="note">重新向小程序授权，更新您在小程序服务器上的微信昵称与头像。</view>
 	</view>
 
 	<view class="group">

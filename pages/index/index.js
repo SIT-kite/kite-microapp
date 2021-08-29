@@ -2,7 +2,6 @@
 // pages/index/index.js
 
 import onShareAppMessage from "../../utils/onShareAppMessage";
-import { isNonEmptyString } from "../../utils/type";
 import getHeader from "../../utils/getHeader";
 
 const app = getApp();
@@ -25,7 +24,7 @@ Page({
       text: "商城",
       url: "/shop/pages/index/index",
       iconPath: "/assets/icons/index/shop.png"
-    }, */    
+    }, */
     {
       text: "活动",
       url: "/activity/pages/index/index",
@@ -34,7 +33,7 @@ Page({
       text: "空教室",
       url: "/class-room/pages/available-room",
       iconPath: "/assets/icons/index/availroom.png"
-    }, 
+    },
 
     {
       text: "课表",
@@ -70,6 +69,31 @@ Page({
           : "/welcome/welcome"
       )
     });
+  },
+
+  setNotice(notice) {
+
+    const noNotice = () => {
+      this.setData({ notice: [{ id: -1, title: "暂无通知" }] });
+      console.log("暂无通知");
+    };
+
+    if (Array.isArray(notice)) {
+
+      if (notice.length > 0) {
+        this.setData({ notice });
+        console.groupCollapsed("%c通知数据", "font-weight: normal");
+        notice.forEach( (item, index) => console.log(`通知 ${index}:`, item) );
+        console.groupEnd();
+      } else {
+        noNotice();
+      }
+
+    } else {
+      console.error("notice is not an Array", notice);
+      noNotice();
+    }
+
   },
 
   showNotice(e) {
@@ -129,18 +153,16 @@ Page({
   },
 
   onLoad() {
+
     // 获取并设置通知 notice；目前不检查错误代码，所以直接用 wx.request()
     wx.request({
       method: "GET",
       url: `${gData.apiUrl}/notice`,
       header: getHeader("urlencoded", gData.token),
-      success: res => {
-        const notice = res.data.data;
-        this.setData({ notice });
-        console.log("通知数据：", notice);
-      },
+      success: res => this.setNotice(res.data.data),
       fail: console.error
     });
+
   },
 
   onShow() {

@@ -130,8 +130,10 @@ Page({
 
     const is = {
       api: (key, value) => (
-        has([ "apiUrl", "commonUrl" ], key) ||
-        value.includes("kite.sunnysab.cn")
+        has([ "apiUrl", "commonUrl" ], key) || (
+          typeof value === "string" &&
+          value.includes("kite.sunnysab.cn")
+        )
       ),
       token: (key, value) => (
         key === "token" &&
@@ -151,12 +153,13 @@ Page({
       gData.isDev
       ? null
       : (key, value) => (
-        is.api(key, value) ||
-        is.token(key, value) ||
-        is.userInfo(key, value) ||
-        is.userDetail(key, value)
-        ? "[已隐藏]"
-        : value
+        is.api(key, value)
+        ? undefined
+        : is.token(key, value) ||
+          is.userInfo(key, value) ||
+          is.userDetail(key, value)
+          ? "[已隐藏]"
+          : value
       );
 
     const stringify = (data, replacer = null) => JSON.stringify(data, replacer, 2);
