@@ -92,6 +92,7 @@ const getTimeOfWeek = giventime => {
   let nowDate = Date.parse(giventime);
   let newDate=0,day=0,year=0,month=0
   let intervalWeek =[]
+  if(week == 0){week = 7}
   for(let i =0;i <week-1;i++){
     newDate = nowDate - 86400000*(week-1-i);
     newDate = new Date(newDate);
