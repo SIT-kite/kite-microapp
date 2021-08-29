@@ -128,7 +128,7 @@ page {
 
 
 /* Vix */
-.flex-item {
+/* .flex-item {
     width: 95rpx;
     height: 100px;
     
@@ -166,7 +166,7 @@ page {
     align-items: center;
   } */
   
-  .scroll {
+  /* .scroll {
     height: 1170rpx;
     position: fixed;
     background-color: white;
@@ -180,7 +180,7 @@ page {
     justify-content: center;
     display: flex;
     align-items: center;
-  }
+  }  */
   .tapSet{ 
     position: absolute; 
     background:#f0f1f1ec; 

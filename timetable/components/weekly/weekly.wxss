@@ -1,32 +1,54 @@
-.courseName{
-  color:black;
-  font-size:25px;
-  padding:15rpx;
-}
-.table{
-  position:relative; 
-  width: 100%; 
-  background: #d3d3d3; 
-  min-height: 100px
-}
-.detail{
-  color:grey;
-  padding-left:36rpx;
+
+.flex-item {
+  width: 95rpx;
+  height: 100px;
+  
 }
 
-.time{
-  font-size: 20px;
-
+.schedule-item {
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  
 }
-.tutor{
-  font-size: 20px;
 
+.smalltext {
+  font-size: 9pt;
+  color:white;
+  padding-left: 2px;
 }
-.location{
-  font-size: 20px;
-
-}
-.week{
-  font-size: 20px;
-
-}
+  
+  /* .top {
+    display: flex;
+    flex-direction: row;
+    margin-left: 35rpx;
+    background-color: #bfa(170, 200, 255);
+    color: yellowgreen;
+  }
+  
+  .top-text {
+    width: 100rpx;
+    height: 60rpx;
+    font-size: 12pt;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  } */
+  
+  .scroll {
+    height: 1170rpx;
+    position: fixed;
+    background-color: white;
+    border-radius: 25px 25px 0px 0px;
+  }
+  
+  .left {
+    width: 45rpx;
+    height: 90rpx;
+    font-size: 10pt;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
