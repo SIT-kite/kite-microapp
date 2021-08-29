@@ -2,6 +2,7 @@
   "usingComponents": {
     "navBar" : "/components/navBar/navBar",
     "chart": "plugin://echarts/chart",
-    "card": "../../components/card"
-  }
+    "card-mine": "../../components/card-mine/card-mine"
+  },
+  "disableScroll": true
 }

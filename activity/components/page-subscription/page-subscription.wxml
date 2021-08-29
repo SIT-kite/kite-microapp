@@ -1,0 +1,98 @@
+<!--activity/components/card-subscription/card-subscription.wxml-->
+<view class="main">
+
+  <view class="card">
+  
+    <view class="container_left">
+      <text class="text_time">时间：<text class="text_content">星期五</text></text>
+      <text class="text_title">标题包含：<text class="text_content">讲座</text></text>
+      <text class="text_category">分类：<text class="text_content">讲座</text></text>
+    </view>
+
+    <view class="container_right">
+      <image class="btn_more" src="../../assets/icons/more.svg" catchtap="_showPulldownList"></image>
+      <text class="text_campus">奉贤校区</text>
+
+      <view class="container_list_pulldown" wx:if="{{isShow}}">
+        <view class="btn_edit">编辑</view>
+        <view class="placeholder"></view>
+        <view class="btn_delete">删除</view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <view class="card">
+  
+  <view class="container_left">
+    <text class="text_time">时间：<text class="text_content">星期五</text></text>
+    <text class="text_title">标题包含：<text class="text_content">讲座</text></text>
+    <text class="text_category">分类：<text class="text_content">讲座</text></text>
+  </view>
+
+  <view class="container_right">
+    <image class="btn_more" src="../../assets/icons/more.svg" catchtap="_showPulldownList"></image>
+    <text class="text_campus">奉贤校区</text>
+
+    <view class="container_list_pulldown" wx:if="{{isShow}}">
+      <view class="btn_edit">编辑</view>
+      <view class="placeholder"></view>
+      <view class="btn_delete">删除</view>
+    </view>
+
+  </view>
+
+</view>
+<view class="card">
+  
+  <view class="container_left">
+    <text class="text_time">时间：<text class="text_content">星期五</text></text>
+    <text class="text_title">标题包含：<text class="text_content">讲座</text></text>
+    <text class="text_category">分类：<text class="text_content">讲座</text></text>
+  </view>
+
+  <view class="container_right">
+    <image class="btn_more" src="../../assets/icons/more.svg" catchtap="_showPulldownList"></image>
+    <text class="text_campus">奉贤校区</text>
+
+    <view class="container_list_pulldown" wx:if="{{isShow}}">
+      <view class="btn_edit">编辑</view>
+      <view class="placeholder"></view>
+      <view class="btn_delete">删除</view>
+    </view>
+
+  </view>
+
+</view>
+  <view class="card">
+  
+  <view class="container_left">
+    <text class="text_time">时间：<text class="text_content">星期五</text></text>
+    <text class="text_title">标题包含：<text class="text_content">讲座</text></text>
+    <text class="text_category">分类：<text class="text_content">讲座</text></text>
+  </view>
+
+    <view class="container_right">
+      <image class="btn_more" src="../../assets/icons/more.svg" catchtap="_showPulldownList"></image>
+      <text class="text_campus">奉贤校区</text>
+
+      <view class="container_list_pulldown" wx:if="{{isShow}}">
+        <view class="btn_edit" bindtap="edit">编辑</view>
+        <view class="placeholder"></view>
+        <view class="btn_delete" bindtap="delete">删除</view>
+      </view>
+
+    </view>
+
+  </view>
+  <view class="btn_add" bindtap="add">添加订阅</view>
+  <view class="container_model">
+    <picker class="select" range="{{week}}">活动时间：<text>星期一</text></picker>
+    <view class="container_model_title">
+      <text>标题包含：</text>
+      <input type="text"/>
+    </view>
+    <picker class="select">分类：<text>讲座</text></picker>
+  </view>
+</view>

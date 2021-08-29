@@ -6,7 +6,8 @@
     <view class="navigators">
       <view class="navigator_school {{selected == '0'? 'navigator_selected': ''}}" bindtap="switch" data-selected="0">第二课堂</view>
       <!-- <view class="navigator__individual {{selected == 'individual'? 'navigator_selected': ''}}">广场</view> -->
-      <view class="navigator_mine {{selected == '1'? 'navigator_selected': ''}}" bindtap="switch" data-selected="1">我的</view>
+      <view class="navigator_subscribe {{selected == '1'? 'navigator_selected': ''}}" bindtap="switch" data-selected="1">订阅</view>
+      <view class="navigator_mine {{selected == '2'? 'navigator_selected': ''}}" bindtap="switch" data-selected="2">我的</view>
     </view>
   </view>
   
@@ -17,7 +18,7 @@
       <scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}"   scroll-anchoring="{{true}}" bindscrolltolower="getNextPage" lower-threshold="200">
         <view class="activity_item" wx:for="{{itemList}}" data-index="{{index}}" bindtap="toItemDetails">
           <view class="activity_item_header">
-            <image class="activity_item_img" src="/activity/assets/pic/activityItem.jpeg" lazy-load="{{true}}"></image>
+            <image class="activity_item_img" src="/activity/assets/pic/pyq5.png" lazy-load="{{true}}"></image>
             <view class="activity_item_title">{{item.title}}</view>
             <view class="black_shadow"></view>
           </view> 
@@ -35,21 +36,43 @@
 
     <swiper-item>
     
-      <scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}">
-    
+      <view class="container_attention" wx:if="{{!logined}}">
+      
+        <image class="img_attention" src="../../assets/pic/attention.png"></image>
+        <text class="text_attention">请先登录哦!</text>
+        <!-- <view class="btn_verify" bindtap="login">点击使用微信登录</view> -->
+
+      </view>
+
+    </swiper-item>
+
+    <swiper-item>
+      <text class="reminder">OA密码可能发生更改,请前往认证界面更新,否则将不能获取准确数据</text>
+      <scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}" wx:if="{{logined&&verified}}"
+      refresher-enabled="{{true}}"
+      refresher-triggered="{{refresherTriggered}}"
+      bindrefresherrefresh="refresh"
+      >
         <chart chart-class="chart" option="{{ option }}" height="800rpx" width="750rpx"/>
 
         <view>
-          <card></card>
-          <card></card>
-          <card></card>
-          <card></card>
-          <card></card>
-          <card></card>
+          <card-mine></card-mine>
+          <card-mine></card-mine>
+          <card-mine></card-mine>
+          <card-mine></card-mine>
+          <card-mine></card-mine>
+          <card-mine></card-mine>
         </view>
   
          <view class="blank_space"></view>
       </scroll-view>
+      <view class="container_attention" wx:elif="{{!logined}}">
+      
+        <image class="img_attention" src="../../assets/pic/attention.png"></image>
+        <text class="text_attention">请先登录哦!</text>
+        <!-- <view class="btn_verify" bindtap="login">点击使用微信登录</view> -->
+
+      </view>
     
     </swiper-item>
   

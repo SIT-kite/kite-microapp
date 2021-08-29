@@ -25,21 +25,22 @@
     display: flex;
     flex-direction:column;
     /* background:rgb(168, 158, 158); */
-    height: 10vh;
+    height: 80px;
     width: 60vw;
 }
 .course{
     display: flex;
     margin-left: 2vw;
     /* margin-top: 15vh; */
-    height: 66vh;
+    height: 73vh;
     /* border-radius: 15px; */
     width: 97vw;
 }
 .todo {
     display: flex;
     width: 93vw;
-    height: 7vh;
+    /* height: 7vh; */
+    height: 2vh;
 }
 .table {
     display: flex;
@@ -49,7 +50,7 @@
     border-radius: 15px;
     margin-bottom: 1vh;
     width: 92vw;
-    height: 13vh;
+    height: 90px;
     background:hsl(0, 0%, 100%);
     /* border: 1px solid #d4d4d4; */
     border: 1px solid #F5F5F5;
@@ -61,15 +62,15 @@
     display: flex;
     width: 70vw;
     margin-left: 4vw;
-    height: 13vh;
+    height: 90px;
     /* background:#EEEE; */
 }
 .course_name{
     font-size:20px;
     font-weight: bolder;
+    height: 30px;
     color: #14446A;
     overflow:hidden;
-    text-overflow:ellipsis;
 }
 .course_time{
     margin-top: 0.1vh;

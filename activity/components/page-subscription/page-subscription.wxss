@@ -1,0 +1,95 @@
+/* activity/components/card-subscription/card-subscription.wxss */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  height: 200rpx;
+  background-color: rgba(255,141,26,1);
+  padding-bottom: 10rpx;
+  box-shadow: 0rpx 0rpx 100px 0rpx rgba(165, 165, 165, 1);
+}
+
+.container_left {
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+  margin-left: 20rpx;
+  font-size: larger;
+  font-weight: bold;
+  color: #d9d9d9;
+}
+
+.text_content {
+  color: #FFF !important;
+}
+
+.container_right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-right: 20rpx;
+}
+
+.btn_more {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.text_campus {
+  font-size: larger;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+}
+
+.container_list_pulldown {
+  position: absolute;
+  background-color: #fff;
+  font-weight: bold;
+  top: 60rpx;
+  color: rgba(0, 0, 0, 1);
+  opacity: 0.9;
+  padding: 10rpx;
+  border-radius: 0rpx 0rpx 7rpx 7rpx;
+}
+
+.placeholder {
+  background-color: black;
+  height: 1px;
+  width: 100%;
+}
+
+.btn_add {
+  background-color: rgba(159, 197, 232);
+  box-shadow:0 0 80px 0 rgba(165, 165, 165, 1);
+  width: 160rpx;
+  height: 60rpx;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 5vh;
+  left: 295rpx;
+}
+
+.container_model {
+  display: flex;
+  flex-direction: column;
+}
+
+.container_model_title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+input {
+}

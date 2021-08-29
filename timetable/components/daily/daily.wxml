@@ -13,7 +13,7 @@
                         <view class="course_name">{{list_content.course_name}}</view>
                         <view class="course_teacher">{{list_content.teacher}}</view>
                         <view class="course_time">
-                            {{list_content.time_index}} · 一教 {{list_content.place}}
+                            {{list_content.time}} · 一教 {{list_content.place}}
                         </view>
                     </view>
                 </view>

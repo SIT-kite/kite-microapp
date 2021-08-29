@@ -26,25 +26,25 @@
 		scroll-y="{{true}}" scroll-with-animation="true" scroll-into-view="{{toView}}" show-scrollbar="{{false}}">
 
 		<view wx:for="{{dataChange}}" wx:for-index="project" wx:for-item="list_phone" wx:key="department"
-			class="department">
-			<view class="department-name" id="{{'index' + project}}" wx:if="{{isHidden}}">
+			class="{{!list_phone.isHidden?'department':''}}">
+			<view class="department-name" id="{{'index' + project}}" wx:if="{{!list_phone.isHidden}}">
 				{{list_phone.department}}
 			</view>
 			<view class="phone" id="origin{{origin}}" wx:if="{{list_origin.isShow}}"
-			wx:for="{{list_phone.origin}}" wx:for-index="origin" wx:for-item="list_origin" wx:key="phone">
-
+			wx:for="{{list_phone.origin}}" wx:for-index="origin" wx:for-item="list_origin" wx:key="index">
+				<image src="../../assets/icon/user.png" class="icon5"></image>
 				<view class="info-list">
-					<view class="info">
+					<!-- <view class="info">
 						<image class="icon2" src="../../assets/icon/department.png" />
 						{{list_origin.department}}
-					</view>
+					</view> -->
 					<view class="info">
-						<image class="icon2" src="../../assets/icon/project.png" />
+						<!-- <image class="icon2" src="../../assets/icon/project.png" /> -->
 						{{list_origin.description}}
 					</view>
 					<view class="info">
-						<image class="icon2" src="../../assets/icon/telephone.png" />
-						{{list_origin.phone}} {{list_origin.name ? '(' + list_origin.name + ')' : ''}}
+						<!-- <image class="icon2" src="../../assets/icon/telephone.png" /> -->
+						{{list_origin.name ?  list_origin.name + ' - ' : ''}}{{list_origin.phone}} 
 					</view>
 				</view>
 

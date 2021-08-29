@@ -7,7 +7,7 @@
   <view class="container_header">
 
     <view class="container_header_img">
-      <image class="img_header" src="../../assets/pic/activityItem.jpeg"></image>
+      <image class="img_header" src="../../assets/pic/pyq5.png"></image>
     </view>
 
     <view class="container_header_content">

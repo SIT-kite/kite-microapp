@@ -188,7 +188,8 @@ page {
     display: flex; 
     flex-direction: column; 
     border-radius: 20px; 
-    height: 20vh; 
+    /* height: 20vh;  */
+    height: 12vh;
     width: 92vw; 
     z-index: 99; 
     bottom: 2vh; 
@@ -203,7 +204,7 @@ page {
 } 
 .slider_text{ 
     margin-top: 1vh; 
-    margin-left: 1vw; 
+    margin-left: 5vw; 
     color:  #568BE5; 
     font-weight: bold; 
 } 

@@ -12,7 +12,7 @@ const promisify = require("../../../utils/promisifyUtils");
 
 let dataChange = []
 let department = []
-let mydata = []
+let contact_data = []
 let date = 0
 let newdate = 0
 let chooseddata = "研究生院"
@@ -23,7 +23,7 @@ let click = 1;
 Page({
 
   data: {
-    department, mydata, date, newdate, chooseddata, departmentChange, isHidden, dataChange, click
+    department, contact_data, date, newdate, chooseddata, departmentChange, isHidden, dataChange, click
   },
 
   handlerGohomeClick,
@@ -37,14 +37,14 @@ Page({
     let data = {};
     let tapDate = requestUtils.doGET(url, data, header);
     tapDate.then((res) => {
-      data = res.data.data
+      data = res.data.data.contacts
       _this.classification(data);
       _this.setData({
         data: data,
-        mydata: data
+        contact_data: data
       })
       wx.setStorage({
-        key: 'mydata',
+        key: 'contact_data',
         data: data
       })
     })
@@ -54,7 +54,7 @@ Page({
     let date = _this.data.date
     date = Date.parse(new Date());
     date = date + 2592000000;
-    wx.setStorageSync('mydate', date);
+    wx.setStorageSync('contact_date', date);
     _this.setData({ date })
   },
 
@@ -101,21 +101,21 @@ Page({
 
   onLoad() {
     let _this = this;
-    let mydata = _this.data.mydata
+    let contact_data = _this.data.contact_data
     let date = _this.data.date
     let newdate = _this.data.newdate
     newdate = Date.parse(new Date());
-    date = wx.getStorageSync('mydate');
+    date = wx.getStorageSync('contact_date');
     _this.setData({ newdate, date });
-    mydata = wx.getStorageSync('mydata')
+    contact_data = wx.getStorageSync('contact_data')
     _this.setData({
-      data: mydata,
-      mydata
+      data: contact_data,
+      contact_data
     })
-    if (mydata.length === 0 || date < newdate) {
+    if (contact_data.length === 0 || date < newdate) {
       _this.setdata();
       _this.setData({ newdate, date });
-    } else { _this.classification(mydata); }
+    } else { _this.classification(contact_data); }
   },
 
   // onReady() {},
@@ -164,17 +164,27 @@ Page({
     const _this = this
     let val = e.detail.value
     let list = _this.data.dataChange
-    let count = 0
+    let count = []
     for (let i = 0; i < list.length; i++) {
+      let x=0
       for (let j = 0; j < list[i].origin.length; j++) {
         if (
           list[i].origin[j].department.search(val) !== -1 ||
-          list[i].origin[j].phone.search(val) !== -1
+          list[i].origin[j].phone.search(val) !== -1 ||
+          list[i].origin[j].description.search(val) !== -1
         ) {
           list[i].origin[j].isShow = true
         } else {
-          list[i].origin[j].isShow = false
+          list[i].origin[j].isShow = false;
+          x=1+x;
+          count[i]=x;
         }
+      }
+      if(count[i]==list[i].origin.length)
+      {
+        list[i].isHidden = true
+      }else{
+        list[i].isHidden = false
       }
     }
     this.setData({ dataChange: list })
