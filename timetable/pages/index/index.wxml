@@ -127,15 +127,6 @@
         </view> -->
     </view>
         <view wx:if="{{chooseActivity == 2}}" class="main"> 
-<<<<<<< HEAD
-            <weekly wlist="{{wlist}}"></weekly>
-                
-        <view class = "QR_couple" wx:if="{{choosedCouple}}">
-            <image class="QRcode" src="{{QRCode}}" ></image>
-            <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
-        </view>
-        </view>        
-=======
                 <view class="top">
                     <!-- <view wx:for="{{['一','二','三','四','五','六','日']}}" class="top-text">周{{item}}</view> -->
                 </view>
@@ -166,5 +157,4 @@
             <image class="QRcode" src="{{QRCode}}" ></image>
             <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
         </view> -->
->>>>>>> 29e65f0327d0fe3c4c8986858b83f5a7c29654f2
 </view>
