@@ -1,11 +1,9 @@
 // freshman/pages/newClass/newClass.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
-import getHeader from "../../../utils/getHeader";
-import request from "../../../utils/request";
 import onShareAppMessage from "../../js/onShareAppMessage";
-
-const utlls = "../../../utils/";
-const requestUtils = require(utlls + "requestUtils");
+import { isNonEmptyString } from "../../../utils/type";
+import request   from "../../../utils/request";
+import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
 
@@ -25,25 +23,26 @@ Page({
   async setClassmates() {
 
     const gData = app.globalData;
+    const { account, secret } = gData.userInfo;
     await request({
-
-      method: "GET",
-      url: `${gData.apiUrl}/freshman/${gData.userInfo.account}/classmate`,
+      url: `${gData.apiUrl}/freshman/${account}/classmate`,
       header: getHeader("urlencoded", gData.token),
-      data: { "secret": gData.userInfo.secret }
+      data: { secret }
     }).then(
-      res => this.setData({
-        classmates: res.data.data.classmates
-      })
+      res => this.setData({ classmates: res.data.data.classmates })
     ).catch(
-      res => {
-        console.error("班级同学获取错误", res)
+      err => {
+        console.error("班级同学获取失败", err);
         wx.showModal({
           title: "哎呀，出错误了 >.<",
           content: (
-            res.error === requestUtils.REQUEST_ERROR ? res.data
-            : res.error === requestUtils.NETWORK_ERROR ? "网络不在状态"
-            : "未知错误"
+            err.symbol === request.symbols.codeNotZero &&
+            isNonEmptyString(typeof err.res.data.msg === "string")
+            ? `错误信息：${err.res.data.msg}`
+            : typeof err.res.data.msg === "string" &&
+              err.res.errMsg.startsWith("request:fail")
+              ? "网络不在状态"
+              : "发生未知错误"
           ),
           showCancel: false
         });

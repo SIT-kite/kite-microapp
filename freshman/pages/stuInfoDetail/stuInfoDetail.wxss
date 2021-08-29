@@ -1,4 +1,4 @@
-.userinfo {
+.header {
 	padding-top: 30rpx;
 	display: flex;
 	flex-direction: column;

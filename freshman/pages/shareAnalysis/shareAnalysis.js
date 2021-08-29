@@ -34,15 +34,28 @@ Page({
     },
   },
 
+  // onReady() {},
+  // onShow() {},
+  handlerGohomeClick,
+  handlerGobackClick,
+  onShareAppMessage: () => ({
+    title: "用上应小风筝，查看你的新生画像",
+    path: "pages/index/index"
+  }),
+
   onLoad() {
 
     wx.showLoading({ title: "正在加载…", mask: true });
 
     const gData = app.globalData;
 
-    if (gData.userDetail !== null) {
-      this.setData({ userDetail: gData.userDetail });
+    if (gData.userDetail === null) {
+      wx.redirectTo({ url: "/freshman/pages/welcome/welcome" });
+      wx.hideLoading();
+      return;
     }
+
+    this.setData({ userDetail: gData.userDetail });
 
     // 获取格言
     var getMotto = request({
@@ -58,11 +71,11 @@ Page({
     }).catch( res => console.log("格言获取失败", res) );
 
     // 获取分析数据
-    const {account, secret} = gData.userInfo;
+    const { account, secret } = gData.userInfo;
     var getAnalysis = request({
-      method: "GET",
-      url: `${gData.apiUrl}/freshman/${account}/analysis?secret=${secret}`,
-      header: getHeader("json", app.globalData.token)
+      url: `${gData.apiUrl}/freshman/${account}/analysis`,
+      header: getHeader("json", app.globalData.token),
+      data: { secret }
     }).then(
       res => this.setData({ freshman: res.data.data.freshman })
     ).catch(
@@ -77,15 +90,6 @@ Page({
     this.setData({ pageReady: true });
     wx.hideLoading();
 
-  },
-
-  // onReady() {},
-  // onShow() {},
-  handlerGohomeClick,
-  handlerGobackClick,
-  onShareAppMessage: () => ({
-    title: "用上应小风筝，查看你的新生画像",
-    path: "pages/index/index"
-  })
+  }
 
 })

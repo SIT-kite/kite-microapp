@@ -3,6 +3,7 @@ import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUti
 import catchError from "../../../utils/requestUtils.catchError";
 import getHeader  from "../../../utils/getHeader";
 import onShareAppMessage from "../../js/onShareAppMessage";
+import request from "../../../utils/request";
 
 const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
@@ -39,14 +40,16 @@ Page({
 
     wx.showLoading({ title: "正在加载…", mask: true });
 
+    const { account, secret } = gData.userInfo;
+
     const promiseList = [];
 
-    let url = `${gData.apiUrl}/freshman/${gData.userInfo.account}/roommate`;
-    let data = { "secret": `${gData.userInfo.secret}` };
-    let header = getHeader("urlencoded", gData.token);
-
     // 获取室友信息
-    var getRoommates = requestUtils.doGET(url, data, header).then(res => {
+    var getRoommates = request({
+      url: `${gData.apiUrl}/freshman/${account}/roommate`,
+      header: getHeader("urlencoded", gData.token),
+      data: { "secret": `${secret}` }
+    }).then(res => {
       var roommatesList = res.data.data.roommates;
       roommatesList.forEach(roommate => {
         roommate.lastSeen = timeUtils.getIntervalToCurrentTime(roommate.lastSeen);
@@ -74,12 +77,11 @@ Page({
 
     // 可能认识的人
     if (gData.userDetail.visible) {
-
-      url = `${gData.apiUrl}/freshman/${gData.userInfo.account}/familiar`;
-      data = { "secret": `${gData.userInfo.secret}` };
-      header = getHeader("urlencoded", gData.token);
-
-      var getFamilies = requestUtils.doGET(url, data, header).then(res => {
+      const getFamilies = request({
+        url: `${gData.apiUrl}/freshman/${account}/familiar`,
+        header: getHeader("urlencoded", gData.token),
+        data: { "secret": `${secret}` }
+      }).then(res => {
         var familiarList = res.data.data.people_familiar;
         familiarList.forEach(familiar => {
           familiar.genderImage =

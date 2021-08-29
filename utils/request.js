@@ -61,39 +61,41 @@ const getError = (errorType, res) => Object.assign(
 
 			case "data": return errors.dataError;
 			case "res": return errors.resError;
-			default: throw "errorType is not one of code, data or res!";
+			default: throw "errorType is not code, data or res!";
 
 		}
 
 	})()
 );
 
+const request = option => new Promise(
+  (resolve, reject) => wx.request(
+    Object.assign(
+      {}, option, {
+
+        success: res =>
+
+          typeof res === "object"
+
+            ? typeof res.data === "object"
+              ? res.data.code === 0
+                ? resolve(res)
+                : reject(getError("code", res))
+
+            : typeof res.data === "string"
+              ? resolve(res)
+              : reject(getError("data", res))
+
+            : reject(getError("res", res)),
+
+        fail: reject
+
+      }
+    )
+  )
+);
+
 // request(obj): Promise
 export default Object.assign(
-	option => new Promise(
-		(resolve, reject) => wx.request(
-			Object.assign(
-				{}, option, {
-
-					success: res =>
-
-						typeof res === "object"
-
-							? typeof res.data === "object"
-								? res.data.code === 0
-									? resolve(res)
-									: reject(getError("code", res))
-
-							: typeof res.data === "string"
-								? resolve(res)
-								: reject(getError("data", res))
-
-							: reject(getError("res", res)),
-
-					fail: reject
-
-				}
-			)
-		)
-	), { symbols }
+  request, { symbols }
 );

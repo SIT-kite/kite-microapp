@@ -28,6 +28,7 @@ Page({
   onLoad() {
 
     const gData = app.globalData;
+    const { account, secret } = gData.userInfo;
 
     // 获取新生信息
     loading({
@@ -35,9 +36,9 @@ Page({
       mask: true,
 
       callback: request({
-        url: `${gData.apiUrl}/freshman/${gData.userInfo.account}`,
+        url: `${gData.apiUrl}/freshman/${account}`,
         header: getHeader("urlencoded", gData.token),
-        data: { "secret": gData.userInfo.secret }
+        data: { secret }
       }).then(res => {
 
         this.setData({ userDetail: gData.userDetail });

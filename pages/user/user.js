@@ -46,7 +46,7 @@ Page({
 
   // 向全局变量 globalData 和本地缓存 Storage 设置 uid、token、nickName 和 avatarUrl
   setUserData(data, token) { // token 不一定在 data 对象内，故单独设置参数获取
-    const { uid, nickName } = data, avatarUrl = data.avatar;
+    const { uid, nickName, avatar: avatarUrl } = data;
     this.setDataTo({ uid, token, nickName, avatarUrl }, [0, 1, 1]);
   },
 
@@ -57,7 +57,6 @@ Page({
 
     // GET user identity
     request({
-      method: "GET",
       url: `${gData.apiUrl}/user/${gData.uid}/identity`,
       header: getHeader("urlencoded", gData.token)
     }).then(

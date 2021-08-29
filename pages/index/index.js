@@ -156,7 +156,6 @@ Page({
 
     // 获取并设置通知 notice；目前不检查错误代码，所以直接用 wx.request()
     wx.request({
-      method: "GET",
       url: `${gData.apiUrl}/notice`,
       header: getHeader("urlencoded", gData.token),
       success: res => this.setNotice(res.data.data),

@@ -2,8 +2,8 @@
 bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view wx:if="{{show}}">
 
-	<!--微信用户信息昵称  问候语 头像-->
-	<view bindtap="bindViewTap" class="userinfo">
+	<!-- 头像 问候语 -->
+	<view bindtap="bindViewTap" class="header">
 		<!-- default-avatar:
 			https://www.zhihu.com/question/30059362/answer/301792813
 			https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.png -->

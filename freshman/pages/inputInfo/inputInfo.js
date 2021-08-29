@@ -1,16 +1,15 @@
 // freshman/pages/inputInfo/inputInfo.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
-const requestUtils = require("../../../utils/requestUtils");
 import getHeader  from "../../../utils/getHeader";
 import catchError from "../../../utils/requestUtils.catchError";
 import onShareAppMessage from "../../js/onShareAppMessage";
+import request from "../../../utils/request";
 
 const app = getApp();
 const gData = app.globalData;
 
 Page({
   data: {
-    promptText: "",
     buttonText: "",
     isHidden: "flex",
     userInfo: {
@@ -55,68 +54,58 @@ Page({
   onShareAppMessage,
 
   gotoStuInfoDetail() {
-    const data = this.data;
+    const { isHidden, userInfo: freshman, contact, visible } = this.data;
+    const { account, secret } = freshman;
     // 没有隐藏输入框（第一次输入个人信息）
-    if (data.isHidden === "flex") {
+    if (isHidden === "flex") {
+
       const errorModal = content => wx.showModal({
         title: "哎呀，出错误了 >.<",
         content,
         showCancel: false
       });
-      if (data.userInfo.account === "") {
+
+      if (account === "") {
         // 账号未填写
         errorModal("请输入姓名/考生号/准考证号其中的一个");
-      } else if (!/^[0-9]{5}[0-9X]$/.test(data.userInfo.secret)) {
+      } else if (!/^[0-9]{5}[0-9X]$/.test(secret)) {
         // secret 不符合格式
         errorModal("需要输入身份证后六位哦");
       } else {
         // 满足输入框要求 发送PUT请求
-        const PUT = {
-          url: `${gData.apiUrl}/freshman/${data.userInfo.account}`,
-          data: {
-            "secret": `${data.userInfo.secret}`,
-            "contact": JSON.stringify(data.contact),
-            "visible": data.visible
-          },
-          header: getHeader("urlencoded", gData.token)
-        };
-        // putFreshman
-        requestUtils.doPUT(PUT.url, PUT.data, PUT.header).then(() => {
-          // 本地Storage存储userInfo
-          wx.setStorageSync("userInfo", data.userInfo);
-          // 同时更新全局
-          gData.visible  = data.visible;
-          gData.userInfo = data.userInfo;
-          gData.contact  = data.contact;
-          wx.redirectTo({
-            url: "/freshman/pages/stuInfoDetail/stuInfoDetail"
-          });
-          console.log("putFreshman 数据加载完成")
+
+        request({
+          method: "PUT",
+          url: `${gData.apiUrl}/freshman/${account}`,
+          header: getHeader("urlencoded", gData.token),
+          data: { secret, visible, contact: JSON.stringify(contact) }
+        }).then(() => {
+
+          // 向本地存储 Storage 设置 userInfo
+          wx.setStorageSync("userInfo", freshman);
+          // 向全局对象 globalData 设置 userInfo 和其他信息
+          Object.assign(gData, { userInfo: freshman, contact, visible });
+
+          wx.redirectTo({ url: "/freshman/pages/stuInfoDetail/stuInfoDetail" });
+
         }).catch(catchError);
+
       }
+
     } else {
+      // 非第一次进入 修改信息
+      // PUT freshman
+      request({
+        method: "PUT",
+        url: `${gData.apiUrl}/freshman/${account}`,
+        header: getHeader("urlencoded", gData.token),
+        data: { secret, visible, contact: JSON.stringify(contact) }
+      }).then(() => {
 
-      //  非第一次进入 修改信息
-      const PUT = {
-        url: `${gData.apiUrl}/freshman/${data.userInfo.account}`,
-        data: {
-          "secret": `${gData.userInfo.secret}`,
-          "contact": JSON.stringify(data.contact),
-          "visible": data.visible
-        },
-        header: getHeader("urlencoded", gData.token)
-      };
+        Object.assign(gData, { contact, visible });
 
-      // patchFreshman
-      requestUtils.doPUT(PUT.url, PUT.data, PUT.header).then(() => {
-        // Storage 和 globalData 同时更新
-        wx.setStorageSync("userInfo", this.data.userInfo);
-        gData.visible = this.data.visible;
-        gData.contact = this.data.contact;
-        wx.redirectTo({
-          url: "/freshman/pages/stuInfoDetail/stuInfoDetail"
-        });
-        console.log("patchFreshman 数据加载完成")
+        wx.redirectTo({ url: "/freshman/pages/stuInfoDetail/stuInfoDetail" });
+
       }).catch(catchError);
 
     }
