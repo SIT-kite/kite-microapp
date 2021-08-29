@@ -103,7 +103,6 @@ page {
 
 .phone {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	padding: .5em;
 	border-bottom: 1px solid #78787828;
@@ -125,32 +124,36 @@ page {
 	/* text-overflow: ellipsis; */
 	/* height: 20px; */
 }
-
+/*
 .info > .icon2 {
 	margin-inline-end: .25em;
 }
-
-.buttons {
-	display: flex;
-	align-items: center;
-}
-
-.icon {
-	width: 25px;
-	height: 25px;
-	margin-left: 15px;
-	padding-bottom: 5px;
-}
-
 .icon2 {
 	width: 20px;
 	height: 20px;
 }
+ */
+.icon-user {
+	flex-shrink: 0;
+	width: 38px;
+	height: 38px;
+	margin-right: 1ch;
+}
 
-.icon3 {
-	width: 35px;
-	height: 35px;
-	margin-left: 10px;
+.buttons {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+}
+
+.icon-copy {
+	width: 32px;
+	height: 32px;
+	margin: 0 1ch;
+}
+.icon-phone {
+	width: 24px;
+	height: 24px;
 }
 
 @keyframes living {
@@ -163,9 +166,4 @@ page {
 
 .living {
 	animation: living .5s ease;
-}
-.icon5{
-	width: 38px;
-	height: 38px;
-	padding-right: 10px;
 }

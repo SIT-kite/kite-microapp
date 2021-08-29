@@ -15,15 +15,15 @@
 
 <view class="content {{ click === 2 ? 'expanded' : '' }}">
 
-	<scroll-view scroll-y="{{true}}" class="menu" show-scrollbar="{{false}}" enhanced="{{true}}">
+	<scroll-view scroll-y="{{true}}" class="menu" enhanced="{{true}}">
 		<view class="menu-item {{chooseddata === item ? 'choosed' : ''}}"
 			wx:for="{{departmentChange}}" wx:key="index" data-department="{{item}}" bindtap="tapdata">
 			{{item}}
 		</view>
 	</scroll-view>
 
-	<scroll-view wx:if="{{dataChange}}" class="phone-list"
-		scroll-y="{{true}}" scroll-with-animation="true" scroll-into-view="{{toView}}" show-scrollbar="{{false}}">
+	<scroll-view wx:if="{{dataChange}}" class="phone-list" bindtap="collapse"
+		scroll-y="{{true}}" scroll-with-animation="true" scroll-into-view="{{toView}}">
 
 		<view wx:for="{{dataChange}}" wx:for-index="project" wx:for-item="list_phone" wx:key="department"
 			class="{{!list_phone.isHidden?'department':''}}">
@@ -32,7 +32,7 @@
 			</view>
 			<view class="phone" id="origin{{origin}}" wx:if="{{list_origin.isShow}}"
 			wx:for="{{list_phone.origin}}" wx:for-index="origin" wx:for-item="list_origin" wx:key="index">
-				<image src="../../assets/icon/user.png" class="icon5"></image>
+				<image src="../../assets/icon/user.png" class="icon-user"></image>
 				<view class="info-list">
 					<!-- <view class="info">
 						<image class="icon2" src="../../assets/icon/department.png" />
@@ -44,14 +44,14 @@
 					</view>
 					<view class="info">
 						<!-- <image class="icon2" src="../../assets/icon/telephone.png" /> -->
-						{{list_origin.name ?  list_origin.name + ' - ' : ''}}{{list_origin.phone}} 
+						{{list_origin.name ?  list_origin.name + ' - ' : ''}}{{list_origin.phone}}
 					</view>
 				</view>
 
 				<view class="buttons">
-					<image class="icon3" src="../../assets/icon/copy.png" mode="scaleToFill"
+					<image class="icon-copy" src="../../assets/icon/copy.png" mode="scaleToFill"
 						data-phone="{{list_origin.phone}}" bindtap="copy" />
-					<image class="icon" src="../../assets/icon/phone.png" mode="scaleToFill"
+					<image class="icon-phone" src="../../assets/icon/phone.png" mode="scaleToFill"
 						data-phone="{{list_origin.phone}}" bindtap="call" />
 				</view>
 			</view>

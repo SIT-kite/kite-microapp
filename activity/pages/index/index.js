@@ -63,8 +63,8 @@ Page({
     }
   },
 
-  //发请求获取初始活动列表
-  getList: function() {
+  // 发请求获取初始活动列表
+  getList() {
     let data = {};
     let url = activityApiUrl + `?index=${this.data.pageIndex}`
     let getData = requestUtils.doGET(url, data, header);
@@ -82,8 +82,8 @@ Page({
     })
   },
 
-  //对列表数组每一项的属性进行处理
-  handleProperty: function(res) {
+  // 对列表数组每一项的属性进行处理
+  handleProperty(res) {
     let list = res.data.data;
     let regexp1 = /\u3010.+\u3011/g;
     let regexp2 = /[0-9]*.+日/g;
@@ -114,7 +114,7 @@ Page({
     return list;
   },
 
-  //滑倒底部获取接下来一页列表
+  // 滑倒底部获取接下来一页列表
   getNextPage() {
     if(!this.data.showNotice) {
       this.setData({pageIndex: this.data.pageIndex + 1});
@@ -122,7 +122,7 @@ Page({
     }
   },
 
-  //点击活动跳转到详情
+  // 点击活动跳转到详情
   toItemDetails(e) {
     let eventId = this.data.itemList[e.currentTarget.dataset.index].id;
     console.log(eventId)
@@ -134,43 +134,40 @@ Page({
   switch(e) {
     // console.log(e.detail.current)
 
-    //滑动时，e.currentTarget.dataset.selected没有定义
-    if(e.currentTarget.dataset.selected === undefined) {
-      if(this.data.logined) {
-        //效验认证状态
-        if(!this.data.verified) {
+    // 滑动时，e.currentTarget.dataset.selected没有定义
+    if (e.currentTarget.dataset.selected === undefined) {
+      if (this.data.logined) {
+        // 校验认证状态
+        if (!this.data.verified) {
           this.setData({selected: 0})
           this.jumpToVerify();
-        }else {
+        } else {
           this.setData({selected: e.detail.current})
         }
-      }else {
+      } else {
         this.setData({selected: e.detail.current})
       }
-    }else {
-      if(this.data.logined) {
-        //效验认证状态
-        if(!this.data.verified) {
-            this.jumpToVerify();
-        }else {
-          this.setData({selected: e.currentTarget.dataset.selected})
-        }
-      }else {
+    } else if (this.data.logined) {
+      // 校验认证状态
+      if (!this.data.verified) {
+          this.jumpToVerify();
+      } else {
         this.setData({selected: e.currentTarget.dataset.selected})
       }
-      
+    } else {
+      this.setData({selected: e.currentTarget.dataset.selected})
     }
-    
+
   },
 
-  //跳转到认证界面
+  // 跳转到认证界面
   jumpToVerify() {
     wx.navigateTo({
       url: '/pages/verify/verify',
     })
   },
 
-  //下拉刷新
+  // 下拉刷新
   refresh() {
     console.log("!")
     setTimeout(() => this.setData({refresherTriggered: false}), 2000)
@@ -192,57 +189,53 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad () {
     this.getList();
-    this.setData({logined: app.globalData.isLogin})
-    this.setData({verified: app.globalData.verified});
+    this.setData({
+      logined: app.globalData.isLogin,
+      verified: app.globalData.verified
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady () {
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  onReachBottom () {
 
   }
+
 })

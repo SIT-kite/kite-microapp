@@ -1,8 +1,8 @@
 {
-  "usingComponents": {
-    "navBar" : "/components/navBar/navBar",
-    "chart": "plugin://echarts/chart",
-    "card-mine": "../../components/card-mine/card-mine"
-  },
-  "disableScroll": true
+	"usingComponents": {
+		"navBar" : "/components/navBar/navBar",
+		"chart": "plugin://echarts/chart",
+		"card-mine": "../../components/card-mine/card-mine"
+	},
+	"disableScroll": true
 }

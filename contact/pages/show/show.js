@@ -4,11 +4,10 @@
 //   未完成 UI优化、搜索时标题隐藏、wx:key报警、动画优化
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import getHeader from "../../../utils/getHeader";
+import request from "../../../utils/request";
 
 const app = getApp();
 const availableSuffix = "/contact";
-const requestUtils = require("../../../utils/requestUtils");
-const promisify = require("../../../utils/promisifyUtils");
 
 let dataChange = []
 let department = []
@@ -32,12 +31,11 @@ Page({
   setdata() {
     let _this = this
     _this.setDate();
-    let url = `${app.globalData.commonUrl}${availableSuffix}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let data = {};
-    let tapDate = requestUtils.doGET(url, data, header);
-    tapDate.then((res) => {
-      data = res.data.data.contacts
+    request({
+      url: `${app.globalData.commonUrl}${availableSuffix}`,
+      header: getHeader("urlencoded", app.globalData.token)
+    }).then((res) => {
+      const data = res.data.data.contacts;
       _this.classification(data);
       _this.setData({
         data: data,
@@ -100,22 +98,19 @@ Page({
   },
 
   onLoad() {
-    let _this = this;
-    let contact_data = _this.data.contact_data
-    let date = _this.data.date
-    let newdate = _this.data.newdate
+    let {contact_data, date, newdate} = this.data;
     newdate = Date.parse(new Date());
     date = wx.getStorageSync('contact_date');
-    _this.setData({ newdate, date });
+    this.setData({ newdate, date });
     contact_data = wx.getStorageSync('contact_data')
-    _this.setData({
+    this.setData({
       data: contact_data,
       contact_data
     })
     if (contact_data.length === 0 || date < newdate) {
-      _this.setdata();
-      _this.setData({ newdate, date });
-    } else { _this.classification(contact_data); }
+      this.setdata();
+      this.setData({ newdate, date });
+    } else { this.classification(contact_data); }
   },
 
   // onReady() {},
@@ -133,55 +128,53 @@ Page({
   // 页面上拉触底事件的处理函数
   // onReachBottom() {},
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
+  onShareAppMessage: () => ({
+    title: "用上应小风筝，查看校内常用电话",
+    path: "contact/pages/show/show"
+  }),
 
-  },
   call(e) {
-    let phone = e.currentTarget.dataset.phone
+    const phone = e.currentTarget.dataset.phone;
     if (phone == '') {
-      app.msg("电话号码为空，无法拨打")
-      return
+      app.msg("电话号码为空，无法拨打");
+    } else {
+      wx.makePhoneCall({ phoneNumber: phone });
     }
-    wx.makePhoneCall({
-      phoneNumber: phone
-    })
   },
 
   copy(e) {
     let phone = e.currentTarget.dataset.phone
     wx.setClipboardData({ data: phone })
   },
+
   tapdata(e) {
     let _this = this
     const department = e.currentTarget.dataset.department
     const index = _this.data.departmentChange.indexOf(department)
     _this.setData({ chooseddata: department, toView: 'index' + index })
   },
+
   search(e) {
     const _this = this
     let val = e.detail.value
     let list = _this.data.dataChange
     let count = []
     for (let i = 0; i < list.length; i++) {
-      let x=0
+      let x = 0;
       for (let j = 0; j < list[i].origin.length; j++) {
         if (
-          list[i].origin[j].department.search(val) !== -1 ||
-          list[i].origin[j].phone.search(val) !== -1 ||
+          list[i].origin[j].department .search(val) !== -1 ||
+          list[i].origin[j].phone      .search(val) !== -1 ||
           list[i].origin[j].description.search(val) !== -1
         ) {
           list[i].origin[j].isShow = true
         } else {
           list[i].origin[j].isShow = false;
-          x=1+x;
-          count[i]=x;
+          x += 1;
+          count[i] = x;
         }
       }
-      if(count[i]==list[i].origin.length)
-      {
+      if(count[i] === list[i].origin.length) {
         list[i].isHidden = true
       }else{
         list[i].isHidden = false
@@ -190,16 +183,22 @@ Page({
     this.setData({ dataChange: list })
   },
 
-  router(e) {
-    click = this.data.click
+  router() {
+    click = this.data.click;
     if (click === 1) {
       click = 2;
       this.setData({ clicked: 1, click });
-    }
-    else if (click === 2) {
+    } else if (click === 2) {
       click = 1;
       this.setData({ clicked: 2, click });
     }
     setTimeout(() => this.setData({ clicked: -1 }), 1000);
+  },
+
+  collapse() {
+    if (this.data.click === 2) {
+      this.setData({ click: 1 });
+    }
   }
+
 })
