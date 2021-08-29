@@ -16,6 +16,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    logined: null,
+    verified: null,
+    refresherTriggered: false,
     selected: '0',
     itemList: [],
     pageIndex: 800,
@@ -130,13 +133,56 @@ Page({
 
   switch(e) {
     // console.log(e.detail.current)
+
+    //滑动时，e.currentTarget.dataset.selected没有定义
     if(e.currentTarget.dataset.selected === undefined) {
-      this.setData({selected: e.detail.current})
+      if(this.data.logined) {
+        //效验认证状态
+        if(!this.data.verified) {
+          this.setData({selected: 0})
+          this.jumpToVerify();
+        }else {
+          this.setData({selected: e.detail.current})
+        }
+      }else {
+        this.setData({selected: e.detail.current})
+      }
     }else {
-      this.setData({selected: e.currentTarget.dataset.selected})
+      if(this.data.logined) {
+        //效验认证状态
+        if(!this.data.verified) {
+            this.jumpToVerify();
+        }else {
+          this.setData({selected: e.currentTarget.dataset.selected})
+        }
+      }else {
+        this.setData({selected: e.currentTarget.dataset.selected})
+      }
+      
     }
     
-    
+  },
+
+  //跳转到认证界面
+  jumpToVerify() {
+    wx.navigateTo({
+      url: '/pages/verify/verify',
+    })
+  },
+
+  //下拉刷新
+  refresh() {
+    console.log("!")
+    setTimeout(() => this.setData({refresherTriggered: false}), 2000)
+    let date = new Date().getDate()
+    console.log(date)
+    wx.showModal({
+      showCancel: false,
+      content: 'OA密码可能发生更改',
+      complete: () => {
+        this.jumpToVerify()
+      }
+    })
   },
 
   handlerGohomeClick,
@@ -148,6 +194,8 @@ Page({
    */
   onLoad: function (options) {
     this.getList();
+    this.setData({logined: app.globalData.isLogin})
+    this.setData({verified: app.globalData.verified});
   },
 
   /**
