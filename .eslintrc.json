@@ -18,6 +18,12 @@
 		"no-use-before-define": "warn",
 		"no-useless-rename": "warn",
 		"object-shorthand": "warn",
+		"space-infix-ops": "warn",
+		"keyword-spacing": "warn",
+		"semi-spacing": "warn",
+		"arrow-spacing": "warn",
+		"space-before-blocks": "warn",
+		"switch-colon-spacing": "warn",
 		"spaced-comment": "warn"
 	},
 	"globals": {
