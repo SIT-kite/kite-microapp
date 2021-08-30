@@ -78,10 +78,10 @@ Page({
     })
     let tapDate = requestUtils.doGET(url, data, header);
     tapDate.then((res) => {
-      data_initial = res.data.data
+      data_initial = res.data.data.rooms
       for (var i = 0; i < data_initial.length; i++) {
         let datas = data_initial[i];
-        datas.busy_time = transformationsUtils.transformations(datas.busy_time); 
+        datas.busyTime = transformationsUtils.transformations(datas.busyTime,11); 
       }
       data_content = data_initial
       _this.setData({

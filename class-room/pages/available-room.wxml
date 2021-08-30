@@ -46,11 +46,11 @@
 				</view>
 				<view class="td status-list">
 					<view wx:for="{{[1, 2, 3, 4]}}" wx:for-item="n" wx:key="n"
-						class="status {{statusList.busy_time[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
+						class="status {{statusList.busyTime[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
 					<view class="delimiter" />
 					<view class="delimiter" />
 					<view wx:for="{{[5, 6, 7, 8]}}" wx:for-item="n" wx:key="n"
-						class="status {{statusList.busy_time[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
+						class="status {{statusList.busyTime[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
 					<view class="delimiter" />
 					<view class="delimiter" />
 					<view wx:for="{{[9, 10, 11]}}" wx:for-item="n" wx:key="n"
