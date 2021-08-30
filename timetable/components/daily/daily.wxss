@@ -88,3 +88,25 @@
     overflow:hidden;
     height: 22px;
 }
+.loading-free{
+    background-color:white;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border: 0.5px solid #58A2E7;
+    width: 93vw;
+}
+.images{
+    width: 70px;
+    height: 70px;
+}
+.text{
+    width: 200px;
+    display: flex;
+    color: #377ec0;
+    font-weight: bold;
+    justify-content: center;
+  }
