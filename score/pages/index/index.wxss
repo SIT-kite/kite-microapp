@@ -29,10 +29,10 @@ picker.year {
   margin-left: 20rpx;
   margin-right: 50rpx;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
-  font-size: 35rpx;
+  font-size: 40rpx;
 }
 picker.term {
-  font-size: 35rpx;
+  font-size: 40rpx;
   margin-right: 200rpx;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
 }
@@ -40,7 +40,7 @@ picker.term {
 
 .btn_refer {
   right: 40rpx;
-  height: 60rpx;
+  height: 70rpx;
   width: 180rpx;
   display: flex;
   position: absolute;

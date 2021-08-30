@@ -6,7 +6,7 @@
     <text class="creditText">学分：{{credit}}</text>
   </view>
   <view class="rightContainer">
-    <text class="gradesText">{{grades}}</text>
+    <text class="gradesText {{grades < 60? fail : ''}}">{{grades}}</text>
   </view>
 
 </card>

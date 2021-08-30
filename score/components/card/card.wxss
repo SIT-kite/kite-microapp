@@ -42,3 +42,7 @@
   color: #ff9900;
   font-size: 50rpx;
 }
+
+.fail {
+  color: #ff0000 !important;
+}
