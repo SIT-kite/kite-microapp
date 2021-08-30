@@ -6,7 +6,7 @@ import {
 import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
-const availableSuffix = `/contact`;
+const timeTableSuffix = "/edu/timetable";
 const requestUtils = require("../../../utils/requestUtils");
 const timeUtils = require("../../../utils/timeUtils");
 const transformationsUtils = require("../../../utils/transformationsUtils");
@@ -17,124 +17,79 @@ let date = []
 let days = []
 let page = 0
 let page_day = 0
-let chooseActivity = 1
+let timetableMode = 1
 let course_data = []
 let tapSet = false
 let choosedCouple= false
 let this_week = 0
 let startWeek = 0
 let choosedday = []
-let toschool = '2021-6-5'
+let toschool = '2021-8-30'
 let code = false
 let qrcodeWidth= 150
 const quality = 1
 let codeText = 'dwdwefewfw'
-let table = ['8:20~9:50','10:10~12:00','13:00~15:20','15:40~16:30','18:30~20:30']
-let list = [
+let table = [
   {
-    course_name: "机械原理",
-    day : 1,
-    time_index : 3,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建国",
-    campus : "一教",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "多元统计分析",
-    day : 2,
-    time_index : 3,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建国",
-    campus : "二教",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "体育4篮球（女）",
-    day : 1,
-    time_index : 5,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建国",
-    campus : "一教",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "波谱分析",
-    day : 1,
-    time_index : 6,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建",
-    campus : "三教",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "食品试验设计与计算机统计分析",
-    day : 1,
-    time_index : 2,
-    weeks : 2097151,
-    place : "A102",
-    teacher : ["张建国","晓同"],
-    campus : "一科",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "展示工程",
-    day : 1,
-    time_index : 2,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建国",
-    campus : "工训馆",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "生物燃料",
-    day : 1,
-    time_index : 2,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建国",
-    campus : "一教",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },
-  {
-    course_name: "园林工程预决算",
-    day : 1,
-    time_index : 2,
-    weeks : 2097151,
-    place : "A102",
-    teacher : "张建国",
-    campus : "奉贤校区",
-    credit : 3,
-    hours : 64,
-    dyn_class_id : 2000235,
-    course_id : 2222
-  },]
+    campu:"奉贤校区",
+    time_index:[
+    ["8:20","9:05"],
+    ["9:10","9:55"],
+    ["10:15","11:00"],
+    ["11:05","11:50"],
+    ["13:00","13:45"],
+    ["13:50","14:35"],
+    ["14:55","15:40"],
+    ["15:45","16:30"],
+    ["18:00","18:45"],
+    ["18:50","19:35"],
+    ["19:40","20:25"]
+  ],
+  first:[
+    ["8:20","9:05"],
+    ["9:10","9:55"],
+    ["10:25","11:00"],
+    ["11:05","12:00"],
+    ["13:00","13:45"],
+    ["13:50","14:35"],
+    ["14:55","15:40"],
+    ["15:45","16:30"],
+    ["18:00","18:45"],
+    ["18:50","19:35"],
+    ["19:40","20:25"]
+  ],
+  second:[
+    ["8:20","9:05"],
+    ["9:10","9:55"],
+    ["10:15","11:00"],
+    ["11:05","11:45"],
+    ["13:00","13:45"],
+    ["13:50","14:35"],
+    ["14:55","15:40"],
+    ["15:45","16:30"],
+    ["18:00","18:45"],
+    ["18:50","19:35"],
+    ["19:40","20:25"]
+  ]
+},
+{
+  campu:"徐汇校区",
+  time_index:[
+  ["8:00","8:45"],
+  ["8:50","9:35"],
+  ["9:55","10:40"],
+  ["10:45","11:30"],
+  ["13:00","13:45"],
+  ["13:50","14:35"],
+  ["14:55","15:40"],
+  ["15:45","16:30"],
+  ["18:00","18:45"],
+  ["18:50","19:35"],
+  ["19:40","20:25"]
+  ]
+},
+]
+let list = []
 let colorArrays = ["rgba(251,83,82,0.7)", "rgba(115,123,250,0.6)", "rgba(116, 185, 255,0.7)", "rgba(118,126,253,0.7)", "rgba(245,175,77,0.7)", "rgba(187,137,106,0.7", "rgba(232, 67, 147,0.7)", "rgba(188,140,240,0.7)", "rgba(116, 185, 255,0.7)"]
 let wlist = [
   { "week_what": 1, "section_what": 1, "time": 3, "content": "高等数学一教A-302" },
@@ -152,7 +107,7 @@ let wlist = [
 
 Page({
   data: {
-    date, days, chooseActivity, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple,table
+    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple,table
   },
   //导航栏函数
   handlerGohomeClick: handlerGohomeClick,
@@ -160,21 +115,22 @@ Page({
 
   setdata:function(e){
     let _this = this
-    _this.setDate();
-    let url = `${app.globalData.commonUrl}${rgg4g}`;
+    let Data;
+    let year = 2021
+    let semester = 1
+    let url = `${app.globalData.commonUrl}${timeTableSuffix}?year=${year}&semester=${semester}`;
     let header = getHeader("urlencoded", app.globalData.token);
     let data = {};
     let tapDate = requestUtils.doGET(url, data, header);
     tapDate.then((res) => {
-      data = res.data.data
+      data = res.data.data.timeTable
       _this.setData({
         list: data
       })
-      wx.setStorage({
-        key: 'list',
-        data: data
-      })
+      Data = _this.binary(data, _this.data.this_week, _this.data.choosedday);
+      wx.setStorageSync('timetable_list', data)
     })
+    return Data;
   },
 
   time: function (schoolholidaydirectory, giventime) {
@@ -184,7 +140,7 @@ Page({
     if (_this.data.startWeek == 0) { _this.data.startWeek = this_week }
     date = timeUtils.getTimeOfWeek(giventime);
     date.map(el => {
-      if (el.week == 0) { el.weeks = '日'; return el; }
+      if (el.week == 0) { el.weeks = '日';el.week=7; return el; }
       else if (el.week == 1) { el.weeks = '一'; return el; }
       else if (el.week == 2) { el.weeks = '二'; return el; }
       else if (el.week == 3) { el.weeks = '三'; return el; }
@@ -194,6 +150,7 @@ Page({
     })
     let nowdate = new Date();
     nowdate = nowdate.getDay();
+    if(nowdate == 0){nowdate = 7}
     _this.data.choosedday.week = nowdate
     _this.setData({
       date: date,
@@ -202,6 +159,65 @@ Page({
       this_week: this_week,
       startWeek: _this.data.startWeek
     })
+  },
+
+  table: function (e){
+    let _this = this;
+    let table = _this.data.table
+    let y=0
+    for(let i = 0; i < e.length; i++) { 
+        if(e[i].campus== table[0].campu){
+          if(e[i].place.search("一教")!==-1)
+          {
+            for(let x=0;x< e[i].table.length;x++){
+              if(e[i].table[x]==1&&y==0){
+                e[i].tables=[]
+                e[i].tables[0]=table[0].first[x][0]
+                y=1
+              }else if(e[i].table[x]==0&&y==1){
+                e[i].tables[1]=table[0].first[x-1][1]
+                y=0
+              }
+            }
+          }else if(e[i].place.search("二教")!==-1){ 
+            for(let x=0;x< e[i].table.length;x++){
+              if(e[i].table[x]==1&&y==0){
+                e[i].tables=[]
+                e[i].tables[0]=table[0].second[x][0]
+                y=1
+              }else if(e[i].table[x]==0&&y==1){
+                e[i].tables[1]=table[0].second[x-1][1]
+                y=0
+              }
+            }
+          }else{
+            for(let x=0;x< e[i].table.length;x++){
+              if(e[i].table[x]==1&&y==0){
+                e[i].tables=[]
+                e[i].tables[0]=table[0].second[x][0]
+                y=1
+              }else if(e[i].table[x]==0&&y==1){
+                e[i].tables[1]=table[0].second[x-1][1]
+                y=0
+              }
+            }
+          }
+        }else{
+          for(let x=0;x< e[i].table.length;x++){
+            if(e[i].table[x]==1&&y==0){
+              e[i].tables=[]
+              e[i].tables[0]=table[1].time_index[x][0]
+              y=1
+            }else if(e[i].table[x]==0&&y==1){
+              e[i].tables[1]=table[1].time_index[x-1][1]
+              y=0
+            }
+          }
+      }
+    }
+    let textlist = e
+    console.log(textlist)
+    return textlist;
   },
 
   changeTime: function (starttime, giventime) {
@@ -215,60 +231,51 @@ Page({
 
   onLoad: function (options) {
     let _this = this
-    if(wx.getStorageSync('chooseActivity')==0){
-    wx.setStorageSync('chooseActivity',1)}
-    if(_this.data.list.length == 0 ){
-      _this.setdata()
-    }
-    else{
-    // _this.data.list = wx.getStorageSync('list');
+    let course_data 
+    _this.data.list = wx.getStorageSync('timetable_list');
     // _this.data.table = wx.getStorageSync('table');
     // _this.data.toschool = wx.getStorageSync('toschool');
-      _this.data.chooseActivity = wx.getStorageSync('chooseActivity');
-    }
+    if(wx.getStorageSync('timetableMode')==0){
+    wx.setStorageSync('timetableMode',1)}
+    _this.data.timetableMode = wx.getStorageSync('timetableMode');
     _this.time(_this.data.toschool, new Date());
-    let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
+    if(_this.data.list.length == 0){
+      course_data = _this.setdata()
+    }else{
+      course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);}
     _this.setData({ 
       list: _this.data.list, 
       course_data: course_data,
       table: _this.data.table,
       toschool: _this.data.toschool,
-      chooseActivity: _this.data.chooseActivity});
+      timetableMode: _this.data.timetableMode});
   },
   binary: function (list, this_week, day) {
     console.log(this_week, day.week)
     let discipline = this.data.discipline.discipline
     let newlist = []
     let textlist = []
-    if (typeof list[1].weeks == 'number') {
-      // console.log(typeof list[1].weeks)
       list.map(el => {
-        el.weeks = transformationsUtils.transformations(el.weeks, 32)
+        el.weeks = transformationsUtils.transformations(el.week, 32)
+        el.table = transformationsUtils.transformations(el.timeIndex,32)
       })
-    }
-    // console.log(typeof list[1].weeks)
-    newlist = list.filter(el => el.weeks[this_week] == "1")
+    newlist = list.filter(el => el.weeks[this_week-1] == "1")
     textlist = newlist.filter(el => el.day == day.week)
     textlist.sort((a, b) => a.time_index - b.time_index)
     for (let i = 0; i < textlist.length; i++) {
       for (let j = 0; j < discipline.length; j++) {
         // console.log(textlist[i].course_name == discipline[j].discipline)
-        if (textlist[i].course_name === discipline[j].subject) {
+        if (textlist[i].courseName === discipline[j].subject) {
           console.log(discipline[j].discipline)
-          textlist[i].discipline = discipline[j].discipline
-        }
+          textlist[i].discipline = discipline[j].discipline}
+      }
+      if(!textlist[i].discipline){
+        textlist[i].discipline = "generality"
       }
     }
-    let table=this.data.table
-    textlist.map(el => {
-      if(el.time_index ==0 ){ el.time = table[0];return el;}
-      else if(el.time_index == 1){ el.time = table[1];return el;}
-      else if (el.time_index ==2){ el.time = table[2];return el;}
-      else if (el.time_index ==3){ el.time = table[3];return el;}
-      else if (el.time_index ==4){ el.time = table[4];return el;}
-      else if (el.time_index ==5){ el.time = table[5];return el;}
-    })
-    return textlist
+    let result = this.table(textlist)
+    console.log(textlist)
+    return result
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -287,6 +294,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let _this=this
 
   },
 
@@ -336,21 +344,21 @@ Page({
 
   tapActivity: function (e) {
     let _this = this;
-    let chooseActivity = _this.data.chooseActivity;
-    if (chooseActivity == 1) {
-      chooseActivity = 2;
+    let timetableMode = _this.data.timetableMode;
+    if (timetableMode == 1) {
+      timetableMode = 2;
       _this.setData({
-        chooseActivity: chooseActivity
+        timetableMode: timetableMode
       })
-    } else if (chooseActivity == 2) {
-      chooseActivity = 1;
+    } else if (timetableMode == 2) {
+      timetableMode = 1;
       _this.setData({
-        chooseActivity: chooseActivity
+        timetableMode: timetableMode
       })
     }
     wx.setStorage({
-      key: 'chooseActivity',
-      data: chooseActivity,
+      key: 'timetableMode',
+      data: timetableMode,
     })
   },
   tapSet: function (e) {
@@ -409,11 +417,13 @@ Page({
         _this.setData({ this_week: this_week })
       }
     }
-    _this.changeTime(_this.data.toschool, this_week)
+    if(this_week==0) {this_week=1}
     this.setData({
       navState: index,
-      page: page
+      page: page,
+      this_week: this_week
     })
+    _this.changeTime(_this.data.toschool, this_week)
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     _this.setData({ list: _this.data.list, course_data: course_data });
   },
@@ -470,15 +480,15 @@ Page({
         _this.setData({ choosedday: _this.data.choosedday })
       }
     }
-    if (_this.data.choosedday.week == 7) {
-      _this.data.choosedday.week = 0;
+    if (_this.data.choosedday.week == 8) {
+      _this.data.choosedday.week = 1;
       _this.data.this_week++;
       _this.changeTime(_this.data.toschool, _this.data.this_week)
     }
 
-    if (_this.data.choosedday.week == -1) {
-      _this.data.choosedday.week = 0;
+    if (_this.data.choosedday.week == 0) {
       _this.data.this_week--;
+      if(_this.data.this_week==0) {_this.data.this_week=1}
       _this.changeTime(_this.data.toschool, _this.data.this_week)
     }
 
@@ -504,4 +514,9 @@ Page({
       this.setData({choosedCouple:false})
     }
   },
+  collapse() {
+    if (this.data.tapSet === true) {
+      this.setData({ tapSet: false });
+    }
+  }
 })

@@ -10,10 +10,10 @@
                         <image src="../../assets/icons/icon_educate/{{list_content.discipline}}.png" class="icon_1" />
                     </view>
                     <view class="text">
-                        <view class="course_name">{{list_content.course_name}}</view>
+                        <view class="course_name">{{list_content.courseName}}</view>
                         <view class="course_teacher">{{list_content.teacher}}</view>
                         <view class="course_time">
-                            {{list_content.time}} · 一教 {{list_content.place}}
+                        {{list_content.tables[0]}}~{{list_content.tables[1]}} · {{list_content.place}}
                         </view>
                     </view>
                 </view>

@@ -75,12 +75,16 @@
 .course_time{
     margin-top: 0.1vh;
     font-weight: bolder;
+    height: 20px;
     font-size: 14px;
     /* color:#fcd144d2; */
     color: #5d8cae69;
+    overflow:hidden;
 }
 .course_teacher{
     font-size: 16px;
     font-weight:bolder;
     color: #568BE5;
+    overflow:hidden;
+    height: 22px;
 }
