@@ -45,6 +45,11 @@ Page({
       url: "/contact/pages/show/show",
       iconPath: "/assets/icons/index/telephone.png"
     },
+    {
+      text: "成绩",
+      url: "/score/pages/index/index",
+      iconPath: "/assets/icons/index/score.png"
+    }
     /* {
       text: "拼车",
       url: "/carpool/pages/car-pool/car-pool",

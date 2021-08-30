@@ -2,11 +2,11 @@
 <card class="card">
 
   <view class="leftContainer">
-    <text class="nameText">中国近代史</text>
-    <text class="creditText">学分：4.0</text>
+    <text class="nameText">{{name}}</text>
+    <text class="creditText">学分：{{credit}}</text>
   </view>
   <view class="rightContainer">
-    <text class="gradesText">100</text>
+    <text class="gradesText">{{grades}}</text>
   </view>
 
 </card>

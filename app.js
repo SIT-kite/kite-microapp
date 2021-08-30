@@ -16,6 +16,7 @@ App({
 
     uid: -1,   // 用户 ID
     token: "", // 登录需要的授权码
+    studentId: '', //用户的学号
 
     isLogin:  false, // 是否已登录
     verified: false, // 是否已实名
