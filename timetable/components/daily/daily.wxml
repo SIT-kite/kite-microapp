@@ -7,7 +7,7 @@
                 <view class="td">
                     <view class="icon_course">
                         <!-- icon地址 https://www.iconfont.cn/collections/detail?cid=8530 -->
-                        <image src="../../assets/icons/icon_educate/{{list_content.discipline}}.png" class="icon_1" />
+                        <image src="../../assets/icons/course/{{list_content.discipline}}.png" class="icon_1" />
                     </view>
                     <view class="text">
                         <view class="course_name">{{list_content.courseName}}</view>
