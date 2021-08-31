@@ -104,6 +104,8 @@ Page({
       item.title = item.title.replace(regexp5, "");
       item.title = item.title.replace(regexp6, "");
       item.title = item.title.replace(regexp7, "");
+      item.startTime = item.startTime.replace(/-/g, "/")
+      item.endTime = item.endTime.replace(/-/g, "/")
       item.timeInterval = timeUtils.getIntervalToCurrentTime(item.startTime)
       if(timeUtils.getTimeStamp(item.startTime) / 1000 - parseInt(new Date().getTime() / 1000) > 0) {
         item.timeInterval += "后"
@@ -173,6 +175,10 @@ Page({
     setTimeout(() => this.setData({refresherTriggered: false}), 2000)
     let date = new Date().getDate()
     console.log(date)
+    // app.globalData.verified = false
+    // app.globalData.identity = {}
+    // wx.setStorageSync('identity', data)
+    // wx.setStorageSync('verified', data)
     wx.showModal({
       showCancel: false,
       content: 'OA密码可能发生更改',

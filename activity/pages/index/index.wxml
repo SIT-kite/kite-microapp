@@ -29,13 +29,16 @@
           </view>
         </view>
         <view class="notice" wx:if="{{showNotice}}">{{notice}}</view>
-        <view class="blank_space"></view>
       </scroll-view>
 
     </swiper-item>
 
     <swiper-item>
-    
+      <scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}" wx:if="{{logined&&verified}}">
+        <page-subscription></page-subscription>
+        <view class="blank_space"></view>
+      </scroll-view>
+      
       <view class="container_attention" wx:if="{{!logined}}">
       
         <image class="img_attention" src="../../assets/pic/attention.png"></image>
@@ -64,7 +67,7 @@
           <card-mine></card-mine>
         </view>
   
-         <view class="blank_space"></view>
+        <view class="notice">已经到底部了哦!</view>
       </scroll-view>
       <view class="container_attention" wx:elif="{{!logined}}">
       
