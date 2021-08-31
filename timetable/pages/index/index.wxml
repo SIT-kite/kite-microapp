@@ -126,7 +126,7 @@
             </view>
         </view> -->
     </view>
-    <swiper class="main" bindchange="bindchange" duration="500" easing-function="east-out" circular="true">
+    <swiper class="main" bindchange="bindchange" duration="400" easing-function="east-out" circular="true">
         <swiper-item>
         <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
             <weekly wlist="{{course_week}}"></weekly>  

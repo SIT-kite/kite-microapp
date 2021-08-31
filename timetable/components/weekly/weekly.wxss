@@ -29,7 +29,7 @@
     width:97vw;
     display: flex;
     flex-direction:row;
-    /* background-color: #325979; */
+    /* background-color: rgba(255, 255, 255, 0); */
   }
   .scroll{
     display: flex;
@@ -57,7 +57,7 @@
   .course{
     width: 91vw;
     height: 74vh;
-    background:rgb(255, 255, 255);
+    background:rgba(255, 255, 255, 0);
   }
   .background{
     display: flex;

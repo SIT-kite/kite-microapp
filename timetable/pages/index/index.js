@@ -25,7 +25,7 @@ let choosedCouple= false
 let this_week = 0
 let startWeek = 0
 let choosedday = []
-let toschool = '2021-8-30'
+let toschool = '2021/8/30'
 let code = false
 let qrcodeWidth= 150
 const quality = 1
@@ -91,23 +91,9 @@ let table = [
 },
 ]
 let list = []
-let colorArrays = ["rgba(251,83,82,0.7)", "rgba(115,123,250,0.6)", "rgba(116, 185, 255,0.7)", "rgba(118,126,253,0.7)", "rgba(245,175,77,0.7)", "rgba(192,214,203,0.7)", "rgba(232, 67, 147,0.7)", "rgba(188,140,240,0.7)", "rgba(116, 185, 255,0.7)","rgba(223,255,245,0.7)"]
-let wlist = [
-  { "week_what": 1, "section_what": 1, "time": 2, "content": "高等数学", "teacher":"望江","place":"一教A-302"},
-  { "week_what": 1, "section_what": 5, "time": 2, "content": "大学物理一教A-301", "teacher":"望江给" ,"place":"一教A-302"},
-  { "week_what": 2, "section_what": 1, "time": 2, "content": "初级通用学术英语一教A-301", "teacher":"望江给","place":"一教A-302"},
-  { "week_what": 2, "section_what": 8, "time": 2, "content": "计算机网络一教A-301" , "teacher":"望江给","place":"一教A-302"},
-  { "week_what": 3, "section_what": 8, "time": 2, "content": "高等数学一教A-301", "teacher":"望江给","place":"一教A-302" },
-  { "week_what": 3, "section_what": 5, "time": 2, "content": "线性代数一教A-301", "teacher":"望江给","place":"一教A-302" },
-  { "week_what": 4, "section_what": 2, "time": 2, "content": "巫术一教A-301", "teacher":"望江给","place":"一教A-302" },
-  { "week_what": 5, "section_what": 1, "time": 2, "content": "羽毛球一教A-301", "teacher":"望江给","place":"一教A-302"},
-  { "week_what": 6, "section_what": 3, "time": 2, "content": "三国杀一教A-301", "teacher":"望江给" ,"place":"一教A-302"},
-  { "week_what": 7, "section_what": 5, "time": 2, "content": "高等数学一教A-301", "teacher":"望江给" ,"place":"一教A-302"},
-]
-
 Page({
   data: {
-    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple,table,course_week
+    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code,qrcodeWidth,quality,codeText,choosedCouple,table,course_week
   },
   //导航栏函数
   handlerGohomeClick: handlerGohomeClick,
@@ -138,6 +124,11 @@ Page({
   time: function (schoolholidaydirectory, giventime) {
     let _this = this
     let date = _this.data.date
+    schoolholidaydirectory = schoolholidaydirectory.replace(/-/g, '/')
+    // console.log(giventime)
+    // giventime = giventime.replace(/-/g, '/')
+    schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory));
+    giventime = Date.parse(new Date(giventime));
     let this_week = timeUtils.getIntervalToCurrentWeek(schoolholidaydirectory, giventime);
     if (_this.data.startWeek == 0) { _this.data.startWeek = this_week }
     date = timeUtils.getTimeOfWeek(giventime);
@@ -153,7 +144,14 @@ Page({
     let nowdate = new Date();
     nowdate = nowdate.getDay();
     if(nowdate == 0){nowdate = 7}
-    _this.data.choosedday.week = nowdate
+    // console.log(_this.data.choosedday)
+    if(_this.data.choosedday.length ==[]){
+    _this.data.choosedday.week = nowdate}else{
+      
+      if(_this.data.choosedday.week == 1){nowdate = 1}
+      else if(_this.data.choosedday.week == 0){nowdate = 7}
+      // console.log(nowdate)
+    }
     _this.setData({
       date: date,
       days: _this.data.days,
@@ -218,7 +216,7 @@ Page({
       }
     }
     let textlist = e
-    console.log(textlist)
+    // console.log(textlist)
     return textlist;
   },
 
@@ -274,13 +272,12 @@ Page({
         time++
       };
       let color = i%9
-      if(color == 5 ){ color=7}
       newlist[i].colorArrays = color
       newlist[i].section = section;
       newlist[i].time = time;
     }
   }
-  console.log(newlist)
+  // console.log(newlist)
   let result = newlist
   return result
   },
@@ -501,14 +498,14 @@ Page({
         // console.log(page_day)
         page_day = index
         this_day = this_day + 1
-        console.log(this_day)
+        // console.log(this_day)
         _this.data.choosedday.week = this_day;
         _this.setData({ choosedday: _this.data.choosedday })
       } else if (page_day == 1) {
         // console.log(page_day)
         page_day = index
         this_day = this_day - 1
-        console.log(this_day)
+        // console.log(this_day)
         _this.data.choosedday.week = this_day;
         _this.setData({ choosedday: _this.data.choosedday })
       }

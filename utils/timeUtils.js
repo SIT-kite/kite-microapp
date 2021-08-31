@@ -73,11 +73,10 @@ const formatTime = date => {
 
 // getIntervalToCurrentWeek(Giventime: String): intervalWeek : number
 // 获得给定时间的周数间隔（有余进一）
-// 传入格式为 'yyyy-MM-dd'
+// 传入格式为 时间戳
 const getIntervalToCurrentWeek = (givenTime, giveTime) => {
-  if (null == givenTime) return null;
-  let startTime = Date.parse(new Date(givenTime));
-  var CurrentTime = Date.parse(giveTime);
+  let startTime = givenTime;
+  var CurrentTime = giveTime;
   let intervalWeek = Math.ceil((CurrentTime - startTime) / 604800000);
   return intervalWeek;
 }
@@ -88,8 +87,8 @@ const getIntervalToCurrentWeek = (givenTime, giveTime) => {
 const getTimeOfWeek = givenTime => {
   if (null == givenTime) return null;
   let weekday
-  let week = givenTime.getDay();
-  let nowDate = Date.parse(givenTime);
+  let week = new Date(givenTime).getDay();
+  let nowDate = givenTime;
   let newDate = 0,day = 0,year = 0,month = 0
   let intervalWeek = []
   if (week === 0) {week = 7}
