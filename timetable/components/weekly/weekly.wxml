@@ -1,27 +1,24 @@
-
-<view class="top">
-  <!-- <view wx:for="{{['一','二','三','四','五','六','日']}}" class="top-text">周{{item}}</view> -->
-</view>
+<view class="main">
 <scroll-view scroll-y="true" class="scroll">
-  <view style="height:1200rpx; width:730rpx; display:flex;">
-    <view style="background-color:#fff; color:black;">
-      <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}" class="left">{{item}}
+  <view class="background">
+  <view class = "time">
+    <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" class="left" wx:key="index">{{item}}
       </view>
     </view>
 
-<!--虚线分割-->
-  <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12]}}">
-    <view style="width:750rpx; margin-top:{{(index+0.5)*100}}rpx;  position: absolute; border-bottom: 1rpx solid {{index==3?'red':'lightgrey'}};"> -->
-    </view>
-  </view>
-
   <!--Schedule_Main -->
-  <view wx:for="{{wlist}}">
-    <navigator url="/timetable/pages/details/details?courseId={{wlist}}">
-    <view class="flex-item schedule-item" bindtap="tapCourse" data-statu="open" data-index="{{index}}" style="margin-left:{{(item.week_what-1)*100}}rpx;margin-top:{{(item.section_what-1)*100+5}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[index%9]}}">
-      <view class="smalltext" >{{item.content}}</view>
+  <view class="course">
+  <view wx:for="{{wlist}}" wx:key="index">
+    <view class="flex-item schedule-item" bindtap="tapCourse" data-statu="open" data-index="{{index}}" 
+    style="width:11vw; margin-left:{{(item.day-1)*13+0.5}}vw; margin-top:{{(item.section-1)*105}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[item.colorArrays]}};border:2.5px solid #daebfa">
+      <view class="smalltext" >{{item.courseName}}</view>
+      <view class="smalltext" >{{item.place}}</view>
+      <view class="smalltext1" >
+        <view class="small" ></view>
+        {{item.teacher}}</view>
     </view>
-    </navigator>                   
   </view>
   </view>
+</view>
 </scroll-view>
+</view>

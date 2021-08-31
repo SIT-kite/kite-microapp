@@ -126,12 +126,25 @@
             </view>
         </view> -->
     </view>
-        <view wx:if="{{timetableMode == 2}}" class="main"> 
-            <weekly wlist="{{wlist}}"></weekly>  
-        <!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
+    <swiper class="main" bindchange="bindchange" duration="500" easing-function="east-out" circular="true">
+        <swiper-item>
+        <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
+            <weekly wlist="{{course_week}}"></weekly>  
+        </view>
+        </swiper-item>
+        <swiper-item>
+            <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
+                <weekly wlist="{{course_week}}"></weekly>  
+        </view>
+        </swiper-item>
+        <swiper-item>
+            <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
+                <weekly wlist="{{course_week}}"></weekly>  
+            </view>
+            </swiper-item>
+    </swiper>
+            <!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
             <image class="QRcode" src="{{QRCode}}" ></image>
             <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
         </view> -->
-
-    </view>
 </view>
