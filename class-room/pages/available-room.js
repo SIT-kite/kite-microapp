@@ -103,7 +103,7 @@ Page({
       let campus = _this.Choosed()[0];
       let building = _this.Choosed()[1];
       let index = _this.data.index;
-      let available = `?campus=${campus}&date=${this.data.choosedDate}&${building}=${_this.data.choosedBuilding}&index=${index}`;
+      let available = `?campus=${campus}&date=${_this.data.choosedDate}&${building}=${_this.data.choosedBuilding}&index=${index}`;
       let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
       let header = getHeader("urlencoded", app.globalData.token);
       let data = {};
@@ -111,10 +111,11 @@ Page({
       let data_content = _this.data.data_content;
       let tapDate = requestUtils.doGET(url, data, header);
       tapDate.then((res) => {
-        data_initial = res.data.data
+        data_initial = res.data.data.rooms
         for (var i = 0; i < data_initial.length; i++) {
-          let datas = data_initial[i];
-          datas.busy_time = transformationsUtils.transformations(datas.busy_time,11); 
+          let datas= data_initial[i];
+          datas.busyTime = transformationsUtils.transformations(datas.busyTime,11); 
+          data_initial[i] = datas
         }
         if(Array.isArray(data_content)){
         data_content=data_content.concat(data_initial);}
