@@ -20,6 +20,7 @@ App({
 
     isLogin:  false, // 是否已登录
     verified: false, // 是否已实名
+    identity: {},    // 实名认证信息, 该字段替换原有的 uploadInfo
 
     nickName:  null, // 昵称
     avatarUrl: null, // 头像
@@ -52,7 +53,7 @@ App({
     const systemInfo = wx.getSystemInfoSync();
 
     // 从本地存储 Storage 中获取重要属性，设置全局数据 globalData
-    [ "uid", "token", "verified",
+    [ "uid", "token", "verified", "identity",
       "nickName", "avatarUrl", "userInfo", "userDetail",
       "signPrivacyConfirm", "freshmanPrivacyConfirm" ]
     .filter(  key => key in storage )

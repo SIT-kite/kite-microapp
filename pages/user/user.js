@@ -51,21 +51,24 @@ Page({
   },
 
   // 从服务器端 GET user identity，并向所有位置设置变量 verified
-  setVerified() {
+  loadIdentity() {
 
-    const set = verified => this.setDataTo({ verified }, [1, 1, 1]);
+    const set = (verified, identity) => this.setDataTo({ verified, identity }, [1, 1, 1]);
 
     // GET user identity
     request({
       url: `${gData.apiUrl}/user/${gData.uid}/identity`,
       header: getHeader("urlencoded", gData.token)
     }).then(
-      () => set(true)
+      (res) => {
+        let response = res.data;
+        let identity = response.data;
+        set(true, identity);
+      }
     ).catch(err => {
       set(false);
       console.error("GET user identity 失败", err);
     });
-
   },
 
   // 向页面变量 this.data 和全局变量 globalData 设置 isLogin
@@ -74,7 +77,7 @@ Page({
   },
 
   login() {
-  // https://github.com/SIT-Yiban/kite-server/blob/master/docs/APIv1/用户模块.md
+    // https://github.com/SIT-Yiban/kite-server/blob/master/docs/APIv1/用户模块.md
 
     promisify(wx.login)().then(res => {
 
@@ -96,12 +99,12 @@ Page({
           // res: { data: { code, data: { token, data: { uid, ... } } } }
           const data = res.data.data;
 
-          // setVerified() 会用到 setOthers() 向全局变量 globalData 设置的
-          // uid 和 token，所以必须先执行 setOthers()，再执行 setVerified()；
-          // setVerified() 会设置用户元素中的“已/未实名”，setIsLogin() 会显示
-          // 整个用户元素，所以最好先执行 setVerified()，再执行 setIsLogin()。
+          // loadIdentity() 会用到 setOthers() 向全局变量 globalData 设置的
+          // uid 和 token，所以必须先执行 setOthers()，再执行 loadIdentity()；
+          // loadIdentity() 会设置用户元素中的“已/未实名”，setIsLogin() 会显示
+          // 整个用户元素，所以最好先执行 loadIdentity()，再执行 setIsLogin()。
           this.setUserData(data.data, data.token);
-          this.setVerified();
+          this.loadIdentity();
           this.setIsLogin();
 
         }).catch(err => {
@@ -163,7 +166,7 @@ Page({
         console.log("POST user 用户创建成功", res);
         const data = res.data.data;
 
-        // 新注册用户肯定没实名，所以跳过 setVerified()
+        // 新注册用户肯定没实名，所以跳过 loadIdentity()
         this.setUserData(data, data.token);
         this.setIsLogin();
 

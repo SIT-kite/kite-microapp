@@ -53,7 +53,7 @@ Page({
     }
 
     this.setData({ uploadInfo });
-    wx.setStorageSync("uploadInfo", uploadInfo);
+    wx.setStorageSync("identity", uploadInfo);
 
     // 认证 POST identity
     request({
@@ -69,6 +69,7 @@ Page({
       wx.showModal({
         title: "认证成功",
         content: "认证成功！",
+        showCancel: false,
         confirmText: "回到主页",
         success: res => res.confirm && wx.navigateBack({delta: 1})
       });
