@@ -9,15 +9,23 @@ Component({
   },
 
   data: {
-    isShow: false,
+    isShowPulldownList: false,
+    isShowModel: false,
   },
 
   methods: {
     _showPulldownList() {
-      this.setData({isShow: !this.data.isShow})
+      this.setData({isShowPulldownList: !this.data.isShow})
     },
     closePulldownList() {
-      this.setData({isShow: false})
+      this.setData({isShowPulldownList: false})
+    },
+    showModel() {
+      this.setData({isShowModel: true})
+      this.setData({isShowPulldownList: false})
+    },
+    closeModel() {
+      this.setData({isShowModel: false})
     }
   }
 

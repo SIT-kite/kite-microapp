@@ -1,5 +1,11 @@
 /* activity/components/card-subscription/card-subscription.wxss */
-.card {
+.page-subscription {
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.card-subscription {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -7,18 +13,19 @@
   margin: 40rpx;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
-  height: 200rpx;
   background-color: rgba(255,141,26,1);
-  padding-bottom: 10rpx;
-  box-shadow: 0rpx 0rpx 100px 0rpx rgba(165, 165, 165, 1);
+  padding-bottom: 25rpx;
+  box-shadow: 0rpx 0rpx 20px 0rpx rgba(165, 165, 165, 1);
+  border-radius: 5px;
 }
 
 .container_left {
   display: flex;
   flex-direction: column;
-  padding: 20rpx;
+  padding-left: 20rpx;
   margin-left: 20rpx;
-  font-size: larger;
+  margin-top: 20rpx;
+  font-size: 40rpx;
   font-weight: bold;
   color: #d9d9d9;
 }
@@ -33,6 +40,7 @@
   align-items: flex-end;
   justify-content: space-between;
   margin-right: 20rpx;
+  width: 200rpx;
 }
 
 .btn_more {
@@ -41,14 +49,14 @@
 }
 
 .text_campus {
-  font-size: larger;
-  margin-bottom: 10rpx;
+  font-size: 40rpx;
+  margin-bottom: 0rpx;
   font-weight: bold;
 }
 
 .container_list_pulldown {
   position: absolute;
-  background-color: #fff;
+  background-color: #c9daf8;
   font-weight: bold;
   top: 60rpx;
   color: rgba(0, 0, 0, 1);
@@ -57,15 +65,16 @@
   border-radius: 0rpx 0rpx 7rpx 7rpx;
 }
 
-.placeholder {
+.placeholder_card {
   background-color: black;
   height: 1px;
   width: 100%;
 }
 
 .btn_add {
+  z-index: 50;
   background-color: rgba(159, 197, 232);
-  box-shadow:0 0 80px 0 rgba(165, 165, 165, 1);
+  box-shadow:0 1px 50px 0 rgba(165, 165, 165, 1);
   width: 160rpx;
   height: 60rpx;
   padding: 10rpx;
@@ -76,13 +85,39 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  bottom: 5vh;
+  bottom: 100rpx;
   left: 295rpx;
+  font-size: 37rpx;
+}
+
+.container_left_item {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon_left_item {
+  width: 50rpx;
+  height: 60rpx;
+  margin-right: 7px;
 }
 
 .container_model {
+  z-index: 1000;
+  position: fixed;
+  left: 25rpx;
+  top: 350rpx;
   display: flex;
   flex-direction: column;
+  width: 700rpx;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #cccccc;
+  border-radius: 15rpx;
+}
+
+.text_container_title {
+  font-size: 10rpx;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 
 .container_model_title {
@@ -91,4 +126,56 @@
   align-items: center;
 }
 
-/* input {} */
+.container_options_item {
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+  align-items: center;
+}
+
+.text_options_item {
+  box-shadow: 0px 2px 0px 0px #ff9900;
+}
+
+input {
+  width: 320rpx;
+  box-shadow: 0px 2px 0px 0px #ff9900;
+}
+
+.icon_options_item {
+  width: 50rpx;
+  height: 60rpx;
+  margin-right: 15px;
+}
+
+.container_btn {
+  display: flex;
+  flex-direction: row;
+}
+
+.placeholder_model {
+  align-self: center;
+  width: 95%;
+  height: 1px;
+  background-color: #666666;
+}
+
+.container_btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn_model {
+  width: 50%;
+  height: 80rpx;
+}
+
+.layer_cover {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+

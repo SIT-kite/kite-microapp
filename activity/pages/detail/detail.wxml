@@ -25,7 +25,7 @@
         </view>
 
         <view class="container_time">
-          <image class="icon_time" src="../../assets/icons/time.svg"></image>
+          <image class="icon_time" src="../../assets/icons/time1.svg"></image>
           <view class="text_time">时间: 2021/8/14 0:00 - 23:59</view>
         </view>
 

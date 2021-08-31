@@ -25,6 +25,12 @@
     <text class="text_info">暂时还没有成绩哦!</text>
   </view>
 
-  <card wx:for="{{scorePageInfo.currentScoreList}}" name="{{item.course}}" credit="{{item.credit}}" grades="{{item.score}}"></card>
+  <scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}"   scroll-anchoring="{{true}}" wx:if="{{scorePageInfo.currentScoreList[0] != null}}">
+  
+    <card wx:for="{{scorePageInfo.currentScoreList}}" name="{{item.course}}" credit="{{item.credit}}" grades="{{item.score}}"></card>
+    <view class="notice">已经到底部了哦!</view>
+    
+  </scroll-view>
+  
 
 </view>

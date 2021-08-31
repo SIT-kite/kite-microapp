@@ -36,31 +36,32 @@ Page({
   },
 
   //获取用户学号
-  getStudentId() {
-    let data = {}
-    let url = `${app.globalData.apiUrl}/user/${app.globalData.uid}/identity`
-    let getData = requestUtils.doGET(url, data, header);
-    getData.then((res) => {
-      if(res.data.code === 0) {
-        console.log("获取学号")
-        console.log(res.data.data.studentId)
-        wx.setStorageSync('studentId', res.data.data.studentId)
-        app.globalData.studentId = res.data.data.studentId
-      }else {
-        console.log(res.data.data)
-      }
-    }).catch(() => {
-      console.log("获取学号失败")
-    })
-  },
+  // getStudentId() {
+  //   let data = {}
+  //   let url = `${app.globalData.apiUrl}/user/${app.globalData.uid}/identity`
+  //   let getData = requestUtils.doGET(url, data, header);
+  //   getData.then((res) => {
+  //     if(res.data.code === 0) {
+  //       console.log("获取学号")
+  //       console.log(res.data.data.studentId)
+  //       wx.setStorageSync('studentId', res.data.data.studentId)
+  //       app.globalData.studentId = res.data.data.studentId
+  //       console.log(app.globalData.studentId)
+  //     }else {
+  //       console.log(res.data.data)
+  //     }
+  //   }).catch(() => {
+  //     console.log("获取学号失败")
+  //   })
+  // },
 
-  //计算学年和学期数组
+  //计算并设置初始学年和学期数组
   caculateYearArr() {
     let date = new Date()
-    let startYear = parseInt(app.globalData.studentId.slice(0, 2))
+    let startYear = parseInt(wx.getStorageSync('identity').studentId.slice(0, 2))
     let nowYear = parseInt(date.getFullYear().toString().slice(2, 4))
     let nowMonth = date.getMonth()
-    let termInterval = parseInt(((nowYear - startYear) > 1? (nowYear - startYear) - 1: 0) + (nowMonth + 4) / 6 + 1)
+    let termInterval = parseInt(((nowYear - startYear) > 1? (nowYear - startYear) - 1: 0) * 2 + (nowMonth + 4) / 6 + 1)
     let yearInterval = parseInt(termInterval / 2)
     if(termInterval % 2) this.setData({isFullTerm: false})
 
@@ -70,9 +71,14 @@ Page({
       yearList.push(`${baseSring}${year}-${baseSring}${year + 1}`)
     }
     this.setData({yearList: yearList})
-    this.setData({termList: ['第一学期','第二学期']})
-    
-    console.log(termInterval)
+    this.setData({'scorePageInfo.yearIndex': yearList.length - 1})
+    if(this.data.isFullTerm) {
+      this.setData({termList: ['第一学期','第二学期']})
+    }else {
+      this.setData({termList: ['第一学期']})
+    }
+
+    console.log(wx.getStorageSync('identity').studentId)
   },
 
   //计算绩点
@@ -114,6 +120,8 @@ Page({
     getVerified.then().catch(() => {
         app.globalData.verified = false;
         wx.setStorageSync('verified', false)
+        app.globalData.identity = {}
+        wx.setStorageSync('identity', {})
         wx.redirectTo({
           url: '/pages/verify/verify',
         })
@@ -148,6 +156,19 @@ Page({
           this.setData({"scorePageInfo.termGpa": this.getGPA(currentScoreList).toFixed(2)})
         }
         wx.setStorageSync('scorePageInfo', this.data.scorePageInfo)
+      }else {
+        let scorePageInfo = {
+          currentScoreList: [],
+          totalScoreList:[],
+          termGpa: null,
+          yearGpa: null,
+          termIndex: 0,
+          yearIndex: this.data.yearList.length - 1,
+        }
+        wx.setStorageSync('scorePageInfo', scorePageInfo)
+        scorePageInfo.termIndex = this.data.scorePageInfo.termIndex
+        scorePageInfo.yearIndex = this.data.scorePageInfo.yearIndex
+        this.setData({scorePageInfo: scorePageInfo})
       }
     }).catch((res) => {
       console.log(res)
@@ -174,14 +195,14 @@ Page({
         url: '/pages/verify/verify',
       })
     }
-    let studentId = wx.getStorageSync('studentId')
-    if(studentId){
-      app.globalData.studentId =  studentId
-    }else {
-      this.getStudentId()
+    if(!wx.getStorageSync('identity').studentId){
+      wx.redirectTo({
+        url: '/pages/verify/verify',
+      })
     }
+    
     this.caculateYearArr()
-    if(wx.getStorageSync('scorePageInfo')) {
+    if(wx.getStorageSync('scorePageInfo').currentScoreList[0]) {
       this.setData({isReferred: true})
       this.setData({scorePageInfo: wx.getStorageSync('scorePageInfo')})
     }
