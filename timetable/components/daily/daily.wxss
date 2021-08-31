@@ -40,7 +40,7 @@
     display: flex;
     width: 93vw;
     /* height: 7vh; */
-    height: 2vh;
+    height: 50rpx;
 }
 .table {
     display: flex;
@@ -94,8 +94,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 400rpx;
+    padding-bottom: 400rpx;
     border: 0.5px solid #58A2E7;
     width: 93vw;
 }

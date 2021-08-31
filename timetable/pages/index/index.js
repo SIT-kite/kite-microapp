@@ -19,6 +19,7 @@ let page = 0
 let page_day = 0
 let timetableMode = 1
 let course_data = []
+let course_week= []
 let tapSet = false
 let choosedCouple= false
 let this_week = 0
@@ -90,24 +91,23 @@ let table = [
 },
 ]
 let list = []
-let colorArrays = ["rgba(251,83,82,0.7)", "rgba(115,123,250,0.6)", "rgba(116, 185, 255,0.7)", "rgba(118,126,253,0.7)", "rgba(245,175,77,0.7)", "rgba(187,137,106,0.7", "rgba(232, 67, 147,0.7)", "rgba(188,140,240,0.7)", "rgba(116, 185, 255,0.7)"]
+let colorArrays = ["rgba(251,83,82,0.7)", "rgba(115,123,250,0.6)", "rgba(116, 185, 255,0.7)", "rgba(118,126,253,0.7)", "rgba(245,175,77,0.7)", "rgba(192,214,203,0.7)", "rgba(232, 67, 147,0.7)", "rgba(188,140,240,0.7)", "rgba(116, 185, 255,0.7)","rgba(223,255,245,0.7)"]
 let wlist = [
-  { "week_what": 1, "section_what": 1, "time": 3, "content": "高等数学一教A-302" },
-  { "week_what": 1, "section_what": 5, "time": 3, "content": "大学物理一教A-301" },
-  { "week_what": 2, "section_what": 1, "time": 2, "content": "初级通用学术英语一教A-301" },
-  { "week_what": 2, "section_what": 8, "time": 2, "content": "计算机网络一教A-301" },
-  { "week_what": 3, "section_what": 4, "time": 1, "content": "计算机组成原理一教A-301" },
-  { "week_what": 3, "section_what": 8, "time": 1, "content": "高等数学一教A-301" },
-  { "week_what": 3, "section_what": 5, "time": 2, "content": "线性代数一教A-301" },
-  { "week_what": 4, "section_what": 2, "time": 3, "content": "巫术一教A-301" },
-  { "week_what": 5, "section_what": 1, "time": 2, "content": "羽毛球一教A-301" },
-  { "week_what": 6, "section_what": 3, "time": 2, "content": "三国杀一教A-301" },
-  { "week_what": 7, "section_what": 5, "time": 3, "content": "高等数学一教A-301" },
+  { "week_what": 1, "section_what": 1, "time": 2, "content": "高等数学", "teacher":"望江","place":"一教A-302"},
+  { "week_what": 1, "section_what": 5, "time": 2, "content": "大学物理一教A-301", "teacher":"望江给" ,"place":"一教A-302"},
+  { "week_what": 2, "section_what": 1, "time": 2, "content": "初级通用学术英语一教A-301", "teacher":"望江给","place":"一教A-302"},
+  { "week_what": 2, "section_what": 8, "time": 2, "content": "计算机网络一教A-301" , "teacher":"望江给","place":"一教A-302"},
+  { "week_what": 3, "section_what": 8, "time": 2, "content": "高等数学一教A-301", "teacher":"望江给","place":"一教A-302" },
+  { "week_what": 3, "section_what": 5, "time": 2, "content": "线性代数一教A-301", "teacher":"望江给","place":"一教A-302" },
+  { "week_what": 4, "section_what": 2, "time": 2, "content": "巫术一教A-301", "teacher":"望江给","place":"一教A-302" },
+  { "week_what": 5, "section_what": 1, "time": 2, "content": "羽毛球一教A-301", "teacher":"望江给","place":"一教A-302"},
+  { "week_what": 6, "section_what": 3, "time": 2, "content": "三国杀一教A-301", "teacher":"望江给" ,"place":"一教A-302"},
+  { "week_what": 7, "section_what": 5, "time": 2, "content": "高等数学一教A-301", "teacher":"望江给" ,"place":"一教A-302"},
 ]
 
 Page({
   data: {
-    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple,table
+    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code, wlist, colorArrays,qrcodeWidth,quality,codeText,choosedCouple,table,course_week
   },
   //导航栏函数
   handlerGohomeClick: handlerGohomeClick,
@@ -116,6 +116,7 @@ Page({
   setdata:function(e){
     let _this = this
     let Data;
+    let Week;
     let year = 2021
     let semester = 1
     let url = `${app.globalData.commonUrl}${timeTableSuffix}?year=${year}&semester=${semester}`;
@@ -128,9 +129,10 @@ Page({
         list: data
       })
       Data = _this.binary(data, _this.data.this_week, _this.data.choosedday);
+      Week = _this.binaryWeek(data, _this.data.this_week);
       wx.setStorageSync('timetable_list', data)
     })
-    return Data;
+    return [Data,Week];
   },
 
   time: function (schoolholidaydirectory, giventime) {
@@ -231,7 +233,8 @@ Page({
 
   onLoad: function (options) {
     let _this = this
-    let course_data 
+    let course_data
+    let course_week 
     _this.data.list = wx.getStorageSync('timetable_list');
     // _this.data.table = wx.getStorageSync('table');
     // _this.data.toschool = wx.getStorageSync('toschool');
@@ -240,18 +243,49 @@ Page({
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
     _this.time(_this.data.toschool, new Date());
     if(_this.data.list.length == 0){
-      course_data = _this.setdata()
+      course_data = _this.setdata()[0];
+      course_week = _this.setdata()[1];
     }else{
-      course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);}
+      course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
+      course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
+    }
     _this.setData({ 
       list: _this.data.list, 
       course_data: course_data,
       table: _this.data.table,
       toschool: _this.data.toschool,
+      course_week:course_week,
       timetableMode: _this.data.timetableMode});
   },
+
+  binaryWeek: function(list,this_week){
+  let _this = this;
+  let newlist =[];
+  let textlist =[];
+  newlist =list.filter(el => el.weeks[this_week-1] == '1')
+  for(let i = 0;i < newlist.length;i++){
+    let section = 0
+    let time = 0
+    for(let x=0;x< newlist[i].table.length;x++){
+      if(newlist[i].table[x] == 1&& time == 0){
+        section = x+1
+        time++
+      }else if(newlist[i].table[x] ==1){
+        time++
+      };
+      let color = i%9
+      if(color == 5 ){ color=7}
+      newlist[i].colorArrays = color
+      newlist[i].section = section;
+      newlist[i].time = time;
+    }
+  }
+  console.log(newlist)
+  let result = newlist
+  return result
+  },
+
   binary: function (list, this_week, day) {
-    console.log(this_week, day.week)
     let discipline = this.data.discipline.discipline
     let newlist = []
     let textlist = []
@@ -264,9 +298,7 @@ Page({
     textlist.sort((a, b) => a.time_index - b.time_index)
     for (let i = 0; i < textlist.length; i++) {
       for (let j = 0; j < discipline.length; j++) {
-        // console.log(textlist[i].course_name == discipline[j].discipline)
         if (textlist[i].courseName === discipline[j].subject) {
-          console.log(discipline[j].discipline)
           textlist[i].discipline = discipline[j].discipline}
       }
       if(!textlist[i].discipline){
@@ -274,7 +306,6 @@ Page({
       }
     }
     let result = this.table(textlist)
-    console.log(textlist)
     return result
   },
   /**
@@ -377,7 +408,8 @@ Page({
     let sliderChange = e.detail.value
     _this.changeTime(_this.data.toschool, sliderChange);
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
-    _this.setData({ list: _this.data.list, course_data: course_data });
+    let course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
+    _this.setData({ list: _this.data.list, course_data: course_data ,course_week:course_week});
   },
   bindchange(e) {
     let index = e.detail.current;
@@ -425,7 +457,8 @@ Page({
     })
     _this.changeTime(_this.data.toschool, this_week)
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
-    _this.setData({ list: _this.data.list, course_data: course_data });
+    let course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
+    _this.setData({ list: _this.data.list, course_data: course_data,course_week:course_week });
   },
 
   bindchangeday(e) {
