@@ -10,17 +10,6 @@
 	padding-inline-start: 1.2em;
 }
 
-.blockquote {
-	padding-inline-start: .75em;
-	border-inline-start: .25em solid #BDBDBD;
-	color: #616161;
-}
-
-.contributor {
-	font-size: .8em;
-	letter-spacing: -0.075em;
-}
-
 /* 文本对齐方式 */
 .p { text-align: justify; }
 .title, .center { text-align: center; }
@@ -30,5 +19,60 @@
 .center, .blockquote > .p { text-indent: 0; }
 
 /* 纵向外边距 */
-.title, .p, .blockquote { margin-block: .5em; }
+.title, .p, .center, .blockquote { margin-block: .5em; }
 .li, .blockquote > .p  { margin-block: .1em; }
+
+
+.oblique { font-style: oblique; }
+
+@keyframes grow {
+	0% { opacity: 1; }
+	50% { opacity: .5; }
+	100% { opacity: 1; }
+}
+
+.hint {
+	margin-block: .5em;
+	text-align: center;
+	font-size: smaller;
+	color: #616161;
+	animation: grow 5s ease infinite;
+}
+
+.blockquote {
+	padding-inline-start: .75em;
+	border-inline-start: .25em solid #BDBDBD;
+	color: #616161;
+}
+
+/* 贡献者 */
+.contributor {
+	font-size: .8em;
+	letter-spacing: -.075em;
+}
+
+.narrow {
+	letter-spacing: -.1em;
+}
+
+/* 🌈 */
+@keyframes rainbow {
+	0% { color: red; }
+	14% { color: darkorange; }
+	28% { color: gold; text-shadow: 0 0 1rpx black; }
+	42% { color: green; }
+	56% { color: teal; }
+	70% {color: blue; }
+	84% {color: purple; }
+	100% { color: red; }
+}
+
+.welcome {
+	animation: rainbow 7s ease infinite;
+}
+
+.repo-link {
+	user-select: text;
+	font-family: Consolas, monospace;
+	font-size: .9em;
+}

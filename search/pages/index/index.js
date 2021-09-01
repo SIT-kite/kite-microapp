@@ -18,7 +18,7 @@ Page({
 
   onLoad() {
     const history_content = wx.getStorageSync("searchHistoryList");
-    if(history_content) {
+    if (history_content) {
       this.setData({ history_content });
     }
   },
