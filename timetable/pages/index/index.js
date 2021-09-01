@@ -1,8 +1,6 @@
-//TODO 设置页弹出动画、情侣课表页面、TODO、五天|七天、支持使用教务系统的密码、支持直接导入班级课表、用户未实名，跳转到实名认证页。
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../utils/navBarUtils';
+// TODO 设置页弹出动画、情侣课表页面、TODO、五天|七天、支持使用教务系统的密码、支持直接导入班级课表、用户未实名，跳转到实名认证页。
+
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
@@ -19,15 +17,15 @@ let page = 0
 let page_day = 0
 let timetableMode = 1
 let course_data = []
-let course_week= []
+let course_week = []
 let tapSet = false
-let choosedCouple= false
+let choosedCouple = false
 let this_week = 0
 let startWeek = 0
 let choosedday = []
 let toschool = '2021/8/30'
 let code = false
-let qrcodeWidth= 150
+let qrcodeWidth = 150
 const quality = 1
 let codeText = 'dwdwefewfw'
 let table = [
@@ -95,11 +93,11 @@ Page({
   data: {
     date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code,qrcodeWidth,quality,codeText,choosedCouple,table,course_week
   },
-  //导航栏函数
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+  // 导航栏函数
+  handlerGohomeClick,
+  handlerGobackClick,
 
-  setdata:function(e){
+  setdata(e) {
     let _this = this
     let Data;
     let Week;
@@ -121,7 +119,7 @@ Page({
     return [Data,Week];
   },
 
-  time: function (schoolholidaydirectory, giventime) {
+  time (schoolholidaydirectory, giventime) {
     let _this = this
     let date = _this.data.date
     schoolholidaydirectory = schoolholidaydirectory.replace(/-/g, '/')
@@ -133,7 +131,7 @@ Page({
     if (_this.data.startWeek == 0) { _this.data.startWeek = this_week }
     date = timeUtils.getTimeOfWeek(giventime);
     date.map(el => {
-      if (el.week == 0) { el.weeks = '日';el.week=7; return el; }
+      if (el.week == 0) { el.weeks = '日'; el.week = 7; return el; }
       else if (el.week == 1) { el.weeks = '一'; return el; }
       else if (el.week == 2) { el.weeks = '二'; return el; }
       else if (el.week == 3) { el.weeks = '三'; return el; }
@@ -143,15 +141,13 @@ Page({
     })
     let nowdate = new Date();
     nowdate = nowdate.getDay();
-    if(nowdate == 0){nowdate = 7}
+    if (nowdate == 0) {nowdate = 7}
     // console.log(_this.data.choosedday)
-    if(_this.data.choosedday.length ==[]){
-    _this.data.choosedday.week = nowdate}else{
-      
-      if(_this.data.choosedday.week == 1){nowdate = 1}
-      else if(_this.data.choosedday.week == 0){nowdate = 7}
+    if (_this.data.choosedday.length == []) {
+      _this.data.choosedday.week = nowdate
+    } else if (_this.data.choosedday.week == 1) {nowdate = 1}
+      else if (_this.data.choosedday.week == 0) {nowdate = 7}
       // console.log(nowdate)
-    }
     _this.setData({
       date: date,
       days: _this.data.days,
@@ -161,56 +157,56 @@ Page({
     })
   },
 
-  table: function (e){
+  table (e) {
     let _this = this;
     let table = _this.data.table
-    let y=0
-    for(let i = 0; i < e.length; i++) { 
-        if(e[i].campus== table[0].campu){
-          if(e[i].place.search("一教")!==-1)
+    let y = 0
+    for (let i = 0; i < e.length; i++) {
+        if (e[i].campus == table[0].campu) {
+          if (e[i].place.search("一教") !== -1)
           {
-            for(let x=0;x< e[i].table.length;x++){
-              if(e[i].table[x]==1&&y==0){
-                e[i].tables=[]
-                e[i].tables[0]=table[0].first[x][0]
-                y=1
-              }else if(e[i].table[x]==0&&y==1){
-                e[i].tables[1]=table[0].first[x-1][1]
-                y=0
+            for (let x = 0; x < e[i].table.length; x++) {
+              if (e[i].table[x] == 1 && y == 0) {
+                e[i].tables = []
+                e[i].tables[0] = table[0].first[x][0]
+                y = 1
+              } else if (e[i].table[x] == 0 && y == 1) {
+                e[i].tables[1] = table[0].first[x - 1][1]
+                y = 0
               }
             }
-          }else if(e[i].place.search("二教")!==-1){ 
-            for(let x=0;x< e[i].table.length;x++){
-              if(e[i].table[x]==1&&y==0){
-                e[i].tables=[]
-                e[i].tables[0]=table[0].second[x][0]
-                y=1
-              }else if(e[i].table[x]==0&&y==1){
-                e[i].tables[1]=table[0].second[x-1][1]
-                y=0
+          } else if (e[i].place.search("二教") !== -1) {
+            for (let x = 0; x < e[i].table.length; x++) {
+              if (e[i].table[x] == 1 && y == 0) {
+                e[i].tables = []
+                e[i].tables[0] = table[0].second[x][0]
+                y = 1
+              } else if (e[i].table[x] == 0 && y == 1) {
+                e[i].tables[1] = table[0].second[x - 1][1]
+                y = 0
               }
             }
-          }else{
-            for(let x=0;x< e[i].table.length;x++){
-              if(e[i].table[x]==1&&y==0){
-                e[i].tables=[]
-                e[i].tables[0]=table[0].second[x][0]
-                y=1
-              }else if(e[i].table[x]==0&&y==1){
-                e[i].tables[1]=table[0].second[x-1][1]
-                y=0
+          } else {
+            for (let x = 0; x < e[i].table.length; x++) {
+              if (e[i].table[x] == 1 && y == 0) {
+                e[i].tables = []
+                e[i].tables[0] = table[0].second[x][0]
+                y = 1
+              } else if (e[i].table[x] == 0 && y == 1) {
+                e[i].tables[1] = table[0].second[x - 1][1]
+                y = 0
               }
             }
           }
-        }else{
-          for(let x=0;x< e[i].table.length;x++){
-            if(e[i].table[x]==1&&y==0){
-              e[i].tables=[]
-              e[i].tables[0]=table[1].time_index[x][0]
-              y=1
-            }else if(e[i].table[x]==0&&y==1){
-              e[i].tables[1]=table[1].time_index[x-1][1]
-              y=0
+        } else {
+          for (let x = 0; x < e[i].table.length; x++) {
+            if (e[i].table[x] == 1 && y == 0) {
+              e[i].tables = []
+              e[i].tables[0] = table[1].time_index[x][0]
+              y = 1
+            } else if (e[i].table[x] == 0 && y == 1) {
+              e[i].tables[1] = table[1].time_index[x - 1][1]
+              y = 0
             }
           }
       }
@@ -220,7 +216,7 @@ Page({
     return textlist;
   },
 
-  changeTime: function (starttime, giventime) {
+  changeTime (starttime, giventime) {
     let _this = this
     let startWeek = _this.data.startWeek
     _this.data.this_week = giventime;
@@ -229,26 +225,26 @@ Page({
     _this.time(starttime, time);
   },
 
-  onLoad: function (options) {
+  onLoad (options) {
     let _this = this
     let course_data
-    let course_week 
+    let course_week
     _this.data.list = wx.getStorageSync('timetable_list');
     // _this.data.table = wx.getStorageSync('table');
     // _this.data.toschool = wx.getStorageSync('toschool');
-    if(wx.getStorageSync('timetableMode')==0){
+    if (wx.getStorageSync('timetableMode') == 0) {
     wx.setStorageSync('timetableMode',1)}
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
     _this.time(_this.data.toschool, new Date());
-    if(_this.data.list.length == 0){
+    if (_this.data.list.length == 0) {
       course_data = _this.setdata()[0];
       course_week = _this.setdata()[1];
-    }else{
+    } else {
       course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
       course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
     }
-    _this.setData({ 
-      list: _this.data.list, 
+    _this.setData({
+      list: _this.data.list,
       course_data: course_data,
       table: _this.data.table,
       toschool: _this.data.toschool,
@@ -256,22 +252,22 @@ Page({
       timetableMode: _this.data.timetableMode});
   },
 
-  binaryWeek: function(list,this_week){
+  binaryWeek(list,this_week) {
   let _this = this;
-  let newlist =[];
-  let textlist =[];
-  newlist =list.filter(el => el.weeks[this_week-1] == '1')
-  for(let i = 0;i < newlist.length;i++){
+  let newlist = [];
+  let textlist = [];
+  newlist = list.filter(el => el.weeks[this_week - 1] == '1')
+  for (let i = 0; i < newlist.length; i++) {
     let section = 0
     let time = 0
-    for(let x=0;x< newlist[i].table.length;x++){
-      if(newlist[i].table[x] == 1&& time == 0){
-        section = x+1
+    for (let x = 0; x < newlist[i].table.length; x++) {
+      if (newlist[i].table[x] == 1 && time == 0) {
+        section = x + 1
         time++
-      }else if(newlist[i].table[x] ==1){
+      } else if (newlist[i].table[x] == 1) {
         time++
       };
-      let color = i%9
+      let color = i % 9
       newlist[i].colorArrays = color
       newlist[i].section = section;
       newlist[i].time = time;
@@ -282,7 +278,7 @@ Page({
   return result
   },
 
-  binary: function (list, this_week, day) {
+  binary (list, this_week, day) {
     let discipline = this.data.discipline.discipline
     let newlist = []
     let textlist = []
@@ -290,7 +286,7 @@ Page({
         el.weeks = transformationsUtils.transformations(el.week, 32)
         el.table = transformationsUtils.transformations(el.timeIndex,32)
       })
-    newlist = list.filter(el => el.weeks[this_week-1] == "1")
+    newlist = list.filter(el => el.weeks[this_week - 1] == "1")
     textlist = newlist.filter(el => el.day == day.week)
     textlist.sort((a, b) => a.time_index - b.time_index)
     for (let i = 0; i < textlist.length; i++) {
@@ -298,7 +294,7 @@ Page({
         if (textlist[i].courseName === discipline[j].subject) {
           textlist[i].discipline = discipline[j].discipline}
       }
-      if(!textlist[i].discipline){
+      if (!textlist[i].discipline) {
         textlist[i].discipline = "generality"
       }
     }
@@ -321,47 +317,47 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    let _this=this
+  onShow () {
+    let _this = this
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage () {
 
   },
 
-  tapDays: function (e) {
+  tapDays (e) {
     let _this = this;
     let date = e.currentTarget.dataset.days.week;
     this.data.choosedday.week = date
@@ -370,7 +366,7 @@ Page({
     _this.setData({ list: _this.data.list, course_data: course_data });
   },
 
-  tapActivity: function (e) {
+  tapActivity (e) {
     let _this = this;
     let timetableMode = _this.data.timetableMode;
     if (timetableMode == 1) {
@@ -389,7 +385,7 @@ Page({
       data: timetableMode,
     })
   },
-  tapSet: function (e) {
+  tapSet (e) {
     let _this = this;
     let tapSet = _this.data.tapSet
     if (tapSet == false) {
@@ -400,7 +396,7 @@ Page({
       _this.setData({ tapSet: tapSet });
     }
   },
-  sliderchange: function (e) {
+  sliderchange (e) {
     let _this = this;
     let sliderChange = e.detail.value
     _this.changeTime(_this.data.toschool, sliderChange);
@@ -417,45 +413,45 @@ Page({
       if (page == 0) {
         page = index
         this_week = this_week + 1
-        _this.setData({ this_week: this_week })
+        _this.setData({ this_week })
       } else if (page == 2) {
         page = index
         this_week = this_week - 1
-        _this.setData({ this_week: this_week })
+        _this.setData({ this_week })
       }
     }
     if (index == 2) {
       if (page == 1) {
         page = index
         this_week = this_week + 1
-        _this.setData({ this_week: this_week })
+        _this.setData({ this_week })
       } else if (page == 0) {
         page = index
         this_week = this_week - 1
-        _this.setData({ this_week: this_week })
+        _this.setData({ this_week })
       }
     }
     if (index == 0) {
       if (page == 2) {
         page = index
         this_week = this_week + 1
-        _this.setData({ this_week: this_week })
+        _this.setData({ this_week })
       } else if (page == 1) {
         page = index
         this_week = this_week - 1
-        _this.setData({ this_week: this_week })
+        _this.setData({ this_week })
       }
     }
-    if(this_week==0) {this_week=1}
+    if (this_week == 0) {this_week = 1}
     this.setData({
       navState: index,
-      page: page,
-      this_week: this_week
+      page,
+      this_week
     })
     _this.changeTime(_this.data.toschool, this_week)
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     let course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
-    _this.setData({ list: _this.data.list, course_data: course_data,course_week:course_week });
+    _this.setData({ list: _this.data.list, course_data,course_week });
   },
 
   bindchangeday(e) {
@@ -518,29 +514,29 @@ Page({
 
     if (_this.data.choosedday.week == 0) {
       _this.data.this_week--;
-      if(_this.data.this_week==0) {_this.data.this_week=1}
+      if (_this.data.this_week == 0) {_this.data.this_week = 1}
       _this.changeTime(_this.data.toschool, _this.data.this_week)
     }
 
     this.setData({
       navState_day: index,
-      page_day: page_day
+      page_day
     })
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
-    _this.setData({ list: _this.data.list, course_data: course_data });
+    _this.setData({ list: _this.data.list, course_data });
   },
 
-  scanCode: function (e) {
+  scanCode (e) {
     wx.scanCode({
       success(res) {
         console.log(res.result)
       }
     })
   },
-  code: function (e) {
-    if(this.data.choosedCouple == false){
+  code (e) {
+    if (this.data.choosedCouple == false) {
     this.setData({choosedCouple:true})}
-    else{
+    else {
       this.setData({choosedCouple:false})
     }
   },

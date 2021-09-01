@@ -1,112 +1,124 @@
 /* timetable/components/daily/daily.wxss */
 
-.daily{
-    color: #000;
-    flex-direction: column;
-    /* background:#E4EBF5; */
-    display: block;
-    justify-content:center;
-    align-items: center;
-    width: 97vw;
-    height: 74vh;
-    border-radius: 25px 25px 25px 25px;
+.daily {
+	color: #000;
+	flex-direction: column;
+	/* background:#E4EBF5; */
+	display: block;
+	justify-content: center;
+	align-items: center;
+	width: 97vw;
+	height: 74vh;
+	border-radius: 25px 25px 25px 25px;
 }
-.icon_1{
-    margin-top: 3vh;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: #EEEE;
-    /* border:1px solid rgb(160, 158, 158); */
+
+.icon_1 {
+	margin-top: 3vh;
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	background: #EEEE;
+	/* border:1px solid rgb(160, 158, 158); */
 }
-.text{
-    margin-top: 1.5vh;
-    margin-left: 4vw;
-    display: flex;
-    flex-direction:column;
-    /* background:rgb(168, 158, 158); */
-    height: 80px;
-    width: 60vw;
+
+.text {
+	margin-top: 1.5vh;
+	margin-left: 4vw;
+	display: flex;
+	flex-direction: column;
+	/* background:rgb(168, 158, 158); */
+	height: 80px;
+	width: 60vw;
 }
-.course{
-    display: flex;
-    margin-left: 2vw;
-    /* margin-top: 15vh; */
-    height: 73vh;
-    /* border-radius: 15px; */
-    width: 97vw;
+
+.course {
+	display: flex;
+	margin-left: 2vw;
+	/* margin-top: 15vh; */
+	height: 73vh;
+	/* border-radius: 15px; */
+	width: 97vw;
 }
+
 .todo {
-    display: flex;
-    width: 93vw;
-    /* height: 7vh; */
-    height: 50rpx;
+	display: flex;
+	width: 93vw;
+	/* height: 7vh; */
+	height: 50rpx;
 }
+
 .table {
-    display: flex;
-    flex-direction: row;
-    /* justify-content:center; */
-    align-items: center;
-    border-radius: 15px;
-    margin-bottom: 1vh;
-    width: 92vw;
-    height: 90px;
-    background:hsl(0, 0%, 100%);
-    /* border: 1px solid #d4d4d4; */
-    border: 1px solid #F5F5F5;
-    box-shadow:1px 1.5px 3px #c8d0e7, 
-    -2px -2px 5px #FFFFFF;
-    border-left:3px solid #568BE5;
+	display: flex;
+	flex-direction: row;
+	/* justify-content:center; */
+	align-items: center;
+	border-radius: 15px;
+	margin-bottom: 1vh;
+	width: 92vw;
+	height: 90px;
+	background: hsl(0, 0%, 100%);
+	/* border: 1px solid #d4d4d4; */
+	border: 1px solid #F5F5F5;
+	box-shadow: 1px 1.5px 3px #c8d0e7,
+		-2px -2px 5px #FFFFFF;
+	border-left: 3px solid #568BE5;
 }
+
 .td {
-    display: flex;
-    width: 70vw;
-    margin-left: 4vw;
-    height: 90px;
-    /* background:#EEEE; */
+	display: flex;
+	width: 70vw;
+	margin-left: 4vw;
+	height: 90px;
+	/* background:#EEEE; */
 }
-.course_name{
-    font-size:20px;
-    font-weight: bolder;
-    height: 30px;
-    color: #14446A;
-    overflow:hidden;
+
+.course_name {
+	font-size: 20px;
+	font-weight: bolder;
+	height: 30px;
+	color: #14446A;
+	overflow: hidden;
 }
-.course_time{
-    margin-top: 0.1vh;
-    font-weight: bolder;
-    height: 20px;
-    font-size: 14px;
-    /* color:#fcd144d2; */
-    color: #5d8cae69;
-    overflow:hidden;
+
+.course_time {
+	margin-top: 0.1vh;
+	font-weight: bolder;
+	height: 20px;
+	font-size: 14px;
+	/* color:#fcd144d2; */
+	color: #5d8cae69;
+	overflow: hidden;
 }
-.course_teacher{
-    font-size: 16px;
-    font-weight:bolder;
-    color: #568BE5;
-    overflow:hidden;
-    height: 22px;
+
+.course_teacher {
+	font-size: 16px;
+	font-weight: bolder;
+	color: #568BE5;
+	overflow: hidden;
+	height: 22px;
 }
-.loading-free{
-    background-color:white;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 400rpx;
-    padding-bottom: 400rpx;
-    border: 0.5px solid #58A2E7;
-    width: 93vw;
+
+.loading-free {
+	background-color: white;
+	border-radius: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 400rpx;
+	padding-bottom: 400rpx;
+	border: 0.5px solid #58A2E7;
+	width: 93vw;
 }
-.images{
-    width: 70px;
-    height: 70px;
+
+.images {
+	width: 70px;
+	height: 70px;
 }
-.text{
-    width: 200px;
-    display: flex;
-    color: #377ec0;
-    font-weight: bold;
-    justify-content: center;
-  }
+
+.text {
+	width: 200px;
+	display: flex;
+	color: #377ec0;
+	font-weight: bold;
+	justify-content: center;
+}
