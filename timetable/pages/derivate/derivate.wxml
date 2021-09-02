@@ -1,0 +1,13 @@
+<!--timetable/pages/derivate/derivate.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="background">
+    <view class="data">
+        <view class="title">课表导出</view>
+        <view class="url" data-url="item" bindtap="copy"><text class="url_text">{{data}}</text><image class="icon" src="../../assets/icons/copy.png"></image></view>
+
+    </view>
+    <view class="content">
+    <view class="title td">使用说明</view>
+    <view class="instructions td">{{instructions}}</view>
+    </view>
+</view>
