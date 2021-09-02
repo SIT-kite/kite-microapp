@@ -57,9 +57,6 @@
 						class="status {{statusList.time[n-1] == 1 ? 'inuse' : 'free'}} {{nowInterval == n && choosedDate == dates[0] ? 'now' : ''}}" />
 				</view>
 			</view>
-		<view class="tr" hidden="{{hideBottom}}">
-		<view class="room-name">加载更多...</view>
-		</view>
 		</view>
 		<view wx:elif= "{{data == 0}}" class="loading-free">
 				<image src="../assets/free.png" class="images"></image>
