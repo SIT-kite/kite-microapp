@@ -1,10 +1,13 @@
 // TODO 设置页弹出动画、情侣课表页面、TODO、五天|七天、支持使用教务系统的密码、支持直接导入班级课表、用户未实名，跳转到实名认证页。
+// TODO 由于不知道同步发送请求，使用嵌套的形式，设置了settimetable函数
 
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
 const timeTableSuffix = "/edu/timetable";
+const calendarSuffix = "/edu/calendar";
+const scheduleSuffix = "/edu/schedule";
 const requestUtils = require("../../../utils/requestUtils");
 const timeUtils = require("../../../utils/timeUtils");
 const transformationsUtils = require("../../../utils/transformationsUtils");
@@ -21,9 +24,10 @@ let course_week = []
 let tapSet = false
 let choosedCouple = false
 let this_week = 0
-let startWeek = 0
+let startWeek 
 let choosedday = []
-let toschool = '2021/8/30'
+let toschool 
+let calendar = []
 let code = false
 let qrcodeWidth = 150
 const quality = 1
@@ -91,7 +95,7 @@ let table = [
 let list = []
 Page({
   data: {
-    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code,qrcodeWidth,quality,codeText,choosedCouple,table,course_week
+    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code,qrcodeWidth,quality,codeText,choosedCouple,table,course_week,calendar
   },
   // 导航栏函数
   handlerGohomeClick,
@@ -99,55 +103,81 @@ Page({
 
   setdata(e) {
     let _this = this
+    let url_calendar = `${app.globalData.commonUrl}${calendarSuffix}`;
+    let url_schedule = `${app.globalData.commonUrl}${scheduleSuffix}`;
+    let header = getHeader("urlencoded", app.globalData.token);
+    let data_calendar = {};
+    let data_schedule = {};
+    let schedule = requestUtils.doGET(url_schedule, data_schedule, header);
+    schedule.then((res) => {
+      data_schedule = res.data.data
+      _this.setData({
+        table : data_schedule
+      })
+      wx.setStorageSync('timetable_schedule', data_schedule)
+    })
+    let calendar = requestUtils.doGET(url_calendar, data_calendar, header);
+    calendar.then((res) => {
+      data_calendar = res.data.data
+      _this.setData({
+        calendar: data_calendar,
+        toschool : data_calendar.start
+      })
+      let year = data_calendar.year;
+      let semester = data_calendar.semester;
+      _this.setTimetable(year,semester,header)
+      wx.setStorageSync('timetable_calendar', data_calendar)
+    })
+  },
+
+  setTimetable(year,semester,header) {
+    let _this = this;
     let Data;
     let Week;
-    let year = 2021
-    let semester = 1
-    let url = `${app.globalData.commonUrl}${timeTableSuffix}?year=${year}&semester=${semester}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let data = {};
-    let tapDate = requestUtils.doGET(url, data, header);
-    tapDate.then((res) => {
-      data = res.data.data.timeTable
+    let data_timetable = {};
+    let url_timetable = `${app.globalData.commonUrl}${timeTableSuffix}?year=${'2021'}&semester=${semester}`;
+    let timeTable = requestUtils.doGET(url_timetable, data_timetable, header);
+    timeTable.then((res) => {
+      data_timetable = res.data.data.timeTable
       _this.setData({
-        list: data
+        list: data_timetable
       })
-      Data = _this.binary(data, _this.data.this_week, _this.data.choosedday);
-      Week = _this.binaryWeek(data, _this.data.this_week);
-      wx.setStorageSync('timetable_list', data)
+      Data = _this.binary(data_timetable, _this.data.this_week, _this.data.choosedday);
+      Week = _this.binaryWeek(data_timetable, _this.data.this_week);
+      _this.setData({      
+        course_data:Data,
+        course_week:Week})
+      wx.setStorageSync('timetable_list', data_timetable)
     })
-    return [Data,Week];
   },
 
   time (schoolholidaydirectory, giventime) {
     let _this = this
     let date = _this.data.date
-    schoolholidaydirectory = schoolholidaydirectory.replace(/-/g, '/')
-    // console.log(giventime)
-    // giventime = giventime.replace(/-/g, '/')
+    schoolholidaydirectory = schoolholidaydirectory.replace(/-/g, '/');
     schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory));
     giventime = Date.parse(new Date(giventime));
     let this_week = timeUtils.getIntervalToCurrentWeek(schoolholidaydirectory, giventime);
-    if (_this.data.startWeek == 0) { _this.data.startWeek = this_week }
+    if (_this.data.startWeek == undefined) { _this.data.startWeek = this_week }
     date = timeUtils.getTimeOfWeek(giventime);
     date.map(el => {
-      if (el.week == 0) { el.weeks = '日'; el.week = 7; return el; }
-      else if (el.week == 1) { el.weeks = '一'; return el; }
-      else if (el.week == 2) { el.weeks = '二'; return el; }
-      else if (el.week == 3) { el.weeks = '三'; return el; }
-      else if (el.week == 4) { el.weeks = '四'; return el; }
-      else if (el.week == 5) { el.weeks = '五'; return el; }
-      else if (el.week == 6) { el.weeks = '六'; return el; }
+      switch(el.week){
+        case 0 : el.weeks = '日';el.week=7;break;
+        case 1 : el.weeks = '一';break;
+        case 2 : el.weeks = '二';break;
+        case 3 : el.weeks = '三';break;
+        case 4 : el.weeks = '四';break;
+        case 5 : el.weeks = '五';break;
+        case 6 : el.weeks = '六';break;
+      }
+      return el;
     })
     let nowdate = new Date();
-    nowdate = nowdate.getDay();
-    if (nowdate == 0) {nowdate = 7}
-    // console.log(_this.data.choosedday)
+    nowdate = nowdate.getDay() !=0|| 7;
     if (_this.data.choosedday.length == []) {
       _this.data.choosedday.week = nowdate
     } else if (_this.data.choosedday.week == 1) {nowdate = 1}
       else if (_this.data.choosedday.week == 0) {nowdate = 7}
-      // console.log(nowdate)
     _this.setData({
       date: date,
       days: _this.data.days,
@@ -161,58 +191,19 @@ Page({
     let _this = this;
     let table = _this.data.table
     let y = 0
-    for (let i = 0; i < e.length; i++) {
-        if (e[i].campus == table[0].campu) {
-          if (e[i].place.search("一教") !== -1)
-          {
-            for (let x = 0; x < e[i].table.length; x++) {
-              if (e[i].table[x] == 1 && y == 0) {
-                e[i].tables = []
-                e[i].tables[0] = table[0].first[x][0]
-                y = 1
-              } else if (e[i].table[x] == 0 && y == 1) {
-                e[i].tables[1] = table[0].first[x - 1][1]
-                y = 0
-              }
-            }
-          } else if (e[i].place.search("二教") !== -1) {
-            for (let x = 0; x < e[i].table.length; x++) {
-              if (e[i].table[x] == 1 && y == 0) {
-                e[i].tables = []
-                e[i].tables[0] = table[0].second[x][0]
-                y = 1
-              } else if (e[i].table[x] == 0 && y == 1) {
-                e[i].tables[1] = table[0].second[x - 1][1]
-                y = 0
-              }
-            }
-          } else {
-            for (let x = 0; x < e[i].table.length; x++) {
-              if (e[i].table[x] == 1 && y == 0) {
-                e[i].tables = []
-                e[i].tables[0] = table[0].second[x][0]
-                y = 1
-              } else if (e[i].table[x] == 0 && y == 1) {
-                e[i].tables[1] = table[0].second[x - 1][1]
-                y = 0
-              }
-            }
-          }
-        } else {
-          for (let x = 0; x < e[i].table.length; x++) {
-            if (e[i].table[x] == 1 && y == 0) {
-              e[i].tables = []
-              e[i].tables[0] = table[1].time_index[x][0]
-              y = 1
-            } else if (e[i].table[x] == 0 && y == 1) {
-              e[i].tables[1] = table[1].time_index[x - 1][1]
-              y = 0
-            }
-          }
+    for(var j =0;j<e.length;j++) {
+      for(var i = 0; i < e[j].table.length; i++) {
+        if(e[j].table[i]===1&&y==0){
+          e[j].tables=[]
+          table[e[j].campus][e[j].place.substring(0,2)] != undefined ? e[j].tables[0]=table[e[j].campus][e[j].place.substring(0,2)][i][0] : e[j].tables[0]=table[e[j].campus]["default"][i][0];
+          y=1;
+        }else if(e[j].table[i]===0&&y==1){
+          table[e[j].campus][e[j].place.substring(0,2)] != undefined ? e[j].tables[1]=table[e[j].campus][e[j].place.substring(0,2)][i-1][1] : e[j].tables[1]=table[e[j].campus]["default"][i-1][1];
+          y=0;
+        }
       }
     }
     let textlist = e
-    // console.log(textlist)
     return textlist;
   },
 
@@ -225,20 +216,25 @@ Page({
     _this.time(starttime, time);
   },
 
-  onLoad (options) {
-    let _this = this
-    let course_data
-    let course_week
+  readData(){
+    let _this = this;
     _this.data.list = wx.getStorageSync('timetable_list');
-    // _this.data.table = wx.getStorageSync('table');
-    // _this.data.toschool = wx.getStorageSync('toschool');
+    _this.data.table = wx.getStorageSync('timetable_schedule');
+    _this.data.calendar = wx.getStorageSync('timetable_calendar');
+    _this.data.toschool =     _this.data.calendar.start
     if (wx.getStorageSync('timetableMode') == 0) {
     wx.setStorageSync('timetableMode',1)}
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
     _this.time(_this.data.toschool, new Date());
+  },
+
+  onLoad (options) {
+    let _this = this
+    let course_data
+    let course_week
+    _this.readData();
     if (_this.data.list.length == 0) {
-      course_data = _this.setdata()[0];
-      course_week = _this.setdata()[1];
+      _this.setdata();
     } else {
       course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
       course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
@@ -253,9 +249,7 @@ Page({
   },
 
   binaryWeek(list,this_week) {
-  let _this = this;
   let newlist = [];
-  let textlist = [];
   newlist = list.filter(el => el.weeks[this_week - 1] == '1')
   for (let i = 0; i < newlist.length; i++) {
     let section = 0
@@ -273,7 +267,6 @@ Page({
       newlist[i].time = time;
     }
   }
-  // console.log(newlist)
   let result = newlist
   return result
   },
@@ -293,10 +286,10 @@ Page({
       for (let j = 0; j < discipline.length; j++) {
         if (textlist[i].courseName === discipline[j].subject) {
           textlist[i].discipline = discipline[j].discipline}
-      }
-      if (!textlist[i].discipline) {
-        textlist[i].discipline = "generality"
-      }
+        }
+        if (!textlist[i].discipline) {
+          textlist[i].discipline = "generality"
+        }
     }
     let result = this.table(textlist)
     return result
@@ -318,7 +311,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow () {
-    let _this = this
 
   },
 
@@ -369,17 +361,8 @@ Page({
   tapActivity (e) {
     let _this = this;
     let timetableMode = _this.data.timetableMode;
-    if (timetableMode == 1) {
-      timetableMode = 2;
-      _this.setData({
-        timetableMode: timetableMode
-      })
-    } else if (timetableMode == 2) {
-      timetableMode = 1;
-      _this.setData({
-        timetableMode: timetableMode
-      })
-    }
+    timetableMode ==1? timetableMode=2:timetableMode=1 
+    _this.setData({timetableMode: timetableMode})
     wx.setStorage({
       key: 'timetableMode',
       data: timetableMode,
@@ -388,13 +371,8 @@ Page({
   tapSet (e) {
     let _this = this;
     let tapSet = _this.data.tapSet
-    if (tapSet == false) {
-      tapSet = true;
-      _this.setData({ tapSet: tapSet });
-    } else if (tapSet == true) {
-      tapSet = false;
-      _this.setData({ tapSet: tapSet });
-    }
+    tapSet =!tapSet;  
+    _this.setData({ tapSet: tapSet });
   },
   sliderchange (e) {
     let _this = this;
@@ -409,44 +387,17 @@ Page({
     let _this = this;
     let page = _this.data.page
     let this_week = _this.data.this_week
-    if (index == 1) {
-      if (page == 0) {
-        page = index
-        this_week = this_week + 1
-        _this.setData({ this_week })
-      } else if (page == 2) {
-        page = index
-        this_week = this_week - 1
-        _this.setData({ this_week })
-      }
+    switch(index){
+      case 1 : page == 0 ? this_week++:this_week--;break;
+      case 2 : page == 1 ? this_week++:this_week--;break;
+      case 0 : page == 2 ? this_week++:this_week--;break;
     }
-    if (index == 2) {
-      if (page == 1) {
-        page = index
-        this_week = this_week + 1
-        _this.setData({ this_week })
-      } else if (page == 0) {
-        page = index
-        this_week = this_week - 1
-        _this.setData({ this_week })
-      }
-    }
-    if (index == 0) {
-      if (page == 2) {
-        page = index
-        this_week = this_week + 1
-        _this.setData({ this_week })
-      } else if (page == 1) {
-        page = index
-        this_week = this_week - 1
-        _this.setData({ this_week })
-      }
-    }
-    if (this_week == 0) {this_week = 1}
+    page = index;
+    if (this_week <= 0) {this_week = 1}
     this.setData({
       navState: index,
       page,
-      this_week
+      this_week:this_week
     })
     _this.changeTime(_this.data.toschool, this_week)
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
@@ -459,71 +410,32 @@ Page({
     let _this = this;
     let page_day = _this.data.page_day;
     let this_day = _this.data.choosedday.week
-    if (index == 1) {
-      if (page_day == 0) {
-        page_day = index
-        this_day = this_day + 1
-        _this.data.choosedday.week = this_day;
-        _this.setData({ choosedday: _this.data.choosedday })
-      } else if (page_day == 2) {
-        // console.log(page_day)
-        page_day = index
-        this_day = this_day - 1
-        // console.log(this_day)
-        _this.data.choosedday.week = this_day;
-        _this.setData({ choosedday: _this.data.choosedday })
-      }
+    switch(index){
+      case 1 : page_day == 0 ? this_day++:this_day--;break;
+      case 2 : page_day == 1 ? this_day++:this_day--;break;
+      case 0 : page_day == 2 ? this_day++:this_day--;break;
     }
-    if (index == 2) {
-      if (page_day == 1) {
-        // console.log(page_day)
-        page_day = index
-        this_day = this_day + 1
-        _this.data.choosedday.week = this_day;
-        _this.setData({ choosedday: _this.data.choosedday })
-      } else if (page_day == 0) {
-        // console.log(page_day)
-        page_day = index
-        this_day = this_day - 1
-        _this.data.choosedday.week = this_day;
-        _this.setData({ choosedday: _this.data.choosedday })
-      }
-    }
-    if (index == 0) {
-      if (page_day == 2) {
-        // console.log(page_day)
-        page_day = index
-        this_day = this_day + 1
-        // console.log(this_day)
-        _this.data.choosedday.week = this_day;
-        _this.setData({ choosedday: _this.data.choosedday })
-      } else if (page_day == 1) {
-        // console.log(page_day)
-        page_day = index
-        this_day = this_day - 1
-        // console.log(this_day)
-        _this.data.choosedday.week = this_day;
-        _this.setData({ choosedday: _this.data.choosedday })
-      }
-    }
+    page_day = index
+    _this.data.choosedday.week = this_day;
+    _this.setData({ choosedday: _this.data.choosedday })
     if (_this.data.choosedday.week == 8) {
       _this.data.choosedday.week = 1;
       _this.data.this_week++;
       _this.changeTime(_this.data.toschool, _this.data.this_week)
     }
-
     if (_this.data.choosedday.week == 0) {
       _this.data.this_week--;
       if (_this.data.this_week == 0) {_this.data.this_week = 1}
       _this.changeTime(_this.data.toschool, _this.data.this_week)
     }
-
+    let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     this.setData({
       navState_day: index,
-      page_day
+      page_day,
+      choosedday: _this.data.choosedday,
+      ist: _this.data.list,
+      course_data
     })
-    let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
-    _this.setData({ list: _this.data.list, course_data });
   },
 
   scanCode (e) {
@@ -534,11 +446,8 @@ Page({
     })
   },
   code (e) {
-    if (this.data.choosedCouple == false) {
-    this.setData({choosedCouple:true})}
-    else {
-      this.setData({choosedCouple:false})
-    }
+    this.data.choosedCouple = !this.data.choosedCouple
+    this.setData(choosedCouple)
   },
   collapse() {
     if (this.data.tapSet === true) {
