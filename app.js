@@ -46,8 +46,6 @@ App({
 
   onLaunch() {
 
-    updateManager();
-
     const gData      = this.globalData;
     const storage    = getAllStorageAsObject();
     const systemInfo = wx.getSystemInfoSync();
@@ -74,7 +72,6 @@ App({
     );
 
     // 如果用户已登录但昵称或头像缺失，则获取昵称和头像
-
     if (
       gData.isLogin && !(
         isNonEmptyString(gData.nickName) &&
@@ -100,7 +97,7 @@ App({
       });
     }
 
-    // 设置 isDev，按照 isDev 打印调试信息
+    // 设置 isDev，按照 isDev 打印调试信息或检查更新
     gData.isDev = systemInfo.platform === "devtools";
 
     if (gData.isDev) {
@@ -113,6 +110,8 @@ App({
         (value, name) => console.log(`${name}:`, value)
       );
       console.groupEnd();
+    } else {
+      updateManager();
     }
 
   }
