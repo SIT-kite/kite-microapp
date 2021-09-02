@@ -56,7 +56,7 @@ Page({
     let nowYear = parseInt(date.getFullYear().toString().slice(2, 4))
     let nowMonth = date.getMonth()
     let termInterval = parseInt(((nowYear - startYear) > 1 ? (nowYear - startYear) - 1 : 0) * 2 + (nowMonth + 4) / 6 + 1)
-    let yearInterval = parseInt(termInterval / 2)
+    let yearInterval = parseInt(termInterval / 2 + termInterval % 2)
     if (termInterval % 2) this.setData({isFullTerm: false})
 
     let baseSring = '20'
@@ -92,7 +92,7 @@ Page({
       this.setData({'scorePageInfo.yearIndex': e.detail.value})
 
       if (e.detail.value == this.data.yearList.length - 1 && !this.data.isFullTerm) {
-        this.setData({termList: ['第一学期'], termIndex: 0})
+        this.setData({termList: ['第一学期'], 'scorePageInfo.termIndex': 0})
       } else {
         this.setData({termList: ['第一学期', '第二学期']})
       }
@@ -107,8 +107,8 @@ Page({
     this.setData({isYearGpa: e.detail.value})
   },
 
-  // 获取成绩列表
-  getScoreList() {
+  //身份验证
+  getVerified() {
     let identityUrl = `${app.globalData.apiUrl}/user/${app.globalData.uid}/identity`
     let getVerified = requestUtils.doGET(identityUrl, {}, header)
     getVerified.then().catch(() => {
@@ -118,6 +118,11 @@ Page({
         wx.setStorageSync('identity', {})
         wx.redirectTo({ url: '/pages/verify/verify' })
     })
+  },
+
+  // 获取成绩列表
+  getScoreList() {
+    this.getVerified()
 
     // console.log(url)
     let yearList = this.data.yearList
@@ -129,33 +134,19 @@ Page({
 
       this.setData({isReferred: true})
 
-      if (res.data.data.Score[0] != null) {
+      if (res.data.data.score[0] != null) {
 
-        this.setData({"scorePageInfo.yearGpa": this.getGPA(res.data.data.Score).toFixed(2)})
-        this.setData({"scorePageInfo.totalScoreList": res.data.data.Score})
+        this.setData({"scorePageInfo.yearGpa": this.getGPA(res.data.data.score).toFixed(2)})
+        this.setData({"scorePageInfo.totalScoreList": res.data.data.score})
 
         let currentScoreList = []
-        res.data.data.Score.forEach((item) => {
+        res.data.data.score.forEach((item) => {
           if (parseInt(item.semester) == parseInt(this.data.scorePageInfo.termIndex) + 1) {
             currentScoreList.push(item)
           }
         })
 
-        if (JSON.stringify(this.data.scorePageInfo.currentScoreList) == JSON.stringify(currentScoreList)) {
-          this.setData({tipText: '已经是最新了哦!'})
-          this.setData({isShowText: true})
-          setTimeout(() => this.setData({isShowText: false}), 2000)
-        } else {
-          this.setData({
-            tipText:
-              this.data.scorePageInfo.currentScoreList[0] == null ||
-              this.data.scorePageInfo.currentScoreList[0].semester != currentScoreList[0].semester ? '查询成功' : '刷新成功'
-          })
-          this.setData({isShowText: true})
-          setTimeout(() => this.setData({isShowText: false}), 2000)
-          this.setData({"scorePageInfo.currentScoreList": currentScoreList})
-          this.setData({"scorePageInfo.termGpa": this.getGPA(currentScoreList).toFixed(2)})
-        }
+        this.setTipContent(currentScoreList)
 
         wx.setStorageSync('scorePageInfo', this.data.scorePageInfo)
 
@@ -188,6 +179,25 @@ Page({
     })
   },
 
+  //设定弹出提示语内容
+  setTipContent(currentScoreList) {
+    if (JSON.stringify(this.data.scorePageInfo.currentScoreList) == JSON.stringify(currentScoreList)) {
+      this.setData({tipText: '已经是最新了哦!'})
+      this.setData({isShowText: true})
+      setTimeout(() => this.setData({isShowText: false}), 2000)
+    } else {
+      this.setData({
+        tipText:
+          this.data.scorePageInfo.currentScoreList[0] == null ||
+          this.data.scorePageInfo.currentScoreList[0].semester != currentScoreList[0].semester ? '查询成功' : '刷新成功'
+      })
+      this.setData({isShowText: true})
+      setTimeout(() => this.setData({isShowText: false}), 2000)
+      this.setData({"scorePageInfo.currentScoreList": currentScoreList})
+      this.setData({"scorePageInfo.termGpa": this.getGPA(currentScoreList).toFixed(2)})
+    }
+  },
+
 
   handlerGohomeClick,
   handlerGobackClick,
@@ -205,6 +215,10 @@ Page({
       this.setData({isReferred: true})
       this.setData({scorePageInfo: wx.getStorageSync('scorePageInfo')})
     }
+
+    this.data.scorePageInfo.yearIndex !== this.data.yearList.length - 1 ? this.setData({termList: ['第一学期', '第二学期']}) : () => {};
+      
+
   },
 
   // onReady () {},
