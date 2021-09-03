@@ -16,7 +16,7 @@ App({
 
     uid: -1,   // 用户 ID
     token: "", // 登录需要的授权码
-    studentId: '', //用户的学号
+    studentId: '', // 用户的学号
 
     isLogin:  false, // 是否已登录
     verified: false, // 是否已实名
@@ -57,14 +57,6 @@ App({
     .filter(  key => key in storage )
     .forEach( key => gData[key] = storage[key] );
 
-    // 将 isStudent 属性更新为 verified
-    // 这段代码到 2022 年的时候大概就可以移除了
-    if ("isStudent" in storage) {
-      gData.verified = storage.isStudent;
-      wx.setStorageSync("verified", gData.verified);
-      wx.removeStorageSync("isStudent");
-    }
-
     // 按照 uid 和 token 来判断并设置 isLogin
     gData.isLogin = (
       gData.uid > 0 &&
@@ -78,17 +70,13 @@ App({
         isNonEmptyString(gData.avatarUrl)
       )
     ) {
-      console.warn("用户已登录，但昵称或头像缺失", {
-        nickName: gData.nickName,
-        avatarUrl: gData.avatarUrl
-      });
+      const { nickName, avatarUrl } = gData;
+      console.warn("用户已登录，但昵称或头像缺失", { nickName, avatarUrl });
       wx.request({
         url: `${gData.apiUrl}/user/${gData.uid}`,
         header: getHeader("urlencoded", gData.token),
         success: res => {
-          const data = res.data.data;
-          const nickName = data.nickName;
-          const avatarUrl = data.avatar;
+          const { nickName, avatar: avatarUrl } = res.data.data;
           Object.assign(gData, { nickName, avatarUrl });
           wx.setStorageSync("nickname", nickName);
           wx.setStorageSync("avatarUrl", avatarUrl);
@@ -96,6 +84,21 @@ App({
         fail: console.error
       });
     }
+
+    // 将 uploadInfo 属性更新为 identity，将 isStudent 属性更新为 verified
+    // 这段代码到 2022 年的时候大概就可以移除了
+    new Map([
+      [ "identity", "uploadInfo" ],
+      [ "verified", "isStudent" ]
+    ]).forEach(
+      (oldKey, newKey) => {
+        if (oldKey in storage) {
+          gData[newKey] = storage[oldKey];
+          wx.setStorageSync(newKey, gData[newKey]);
+          wx.removeStorageSync("isStudent");
+        }
+      }
+    );
 
     // 设置 isDev，按照 isDev 打印调试信息或检查更新
     gData.isDev = systemInfo.platform === "devtools";
