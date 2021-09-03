@@ -93,7 +93,8 @@
 			"root": "timetable",
 			"pages": [
 				"pages/index/index",
-				"pages/details/details"
+				"pages/details/details",
+				"pages/derivate/derivate" 
 			]
 		},
 		{

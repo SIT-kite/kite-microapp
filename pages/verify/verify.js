@@ -54,7 +54,8 @@ Page({
 
     this.setData({ uploadInfo });
     wx.setStorageSync("identity", uploadInfo);
-
+    gData.identity = uploadInfo; 
+    
     // 认证 POST identity
     request({
       method: "POST",

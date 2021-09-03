@@ -44,6 +44,7 @@ Page({
 
   setdata(e) {
     let _this = this
+    let time
     let url_calendar = `${app.globalData.commonUrl}${calendarSuffix}`;
     let url_schedule = `${app.globalData.commonUrl}${scheduleSuffix}`;
     let header = getHeader("urlencoded", app.globalData.token);
@@ -67,7 +68,8 @@ Page({
       })
       let year = data_calendar.year;
       let semester = data_calendar.semester;
-      _this.time(data_calendar.start, new Date());
+      if(Date.parse(new Date())<Date.parse(_this.data.toschool)){time=_this.data.toschool}else{time=new Date()} 
+      _this.time(data_calendar.start,time); 
       _this.setTimetable(year,semester,header)
       wx.setStorageSync('timetable_calendar', data_calendar)
     })
@@ -97,7 +99,7 @@ Page({
   time (schoolholidaydirectory, giventime) {
     let _this = this
     let date = _this.data.date
-    schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory));
+    schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory))-86400000; 
     giventime = Date.parse(new Date(giventime));
     let this_week = timeUtils.getIntervalToCurrentWeek(schoolholidaydirectory, giventime);
     if (_this.data.startWeek == undefined) { _this.data.startWeek = this_week }
@@ -119,6 +121,9 @@ Page({
     if (_this.data.choosedday.length == []) {_this.data.choosedday.week = nowdate}
     else if (_this.data.choosedday.week == 1) {nowdate = 1}
     else if (_this.data.choosedday.week == 0) {nowdate = 7}
+    if(_this.data.choosedday != undefined){
+      nowdate = _this.data.choosedday.week; 
+      if (_this.data.choosedday.week == 0) {nowdate = 7}} 
     _this.setData({
       date: date,
       days: _this.data.days,
@@ -150,9 +155,11 @@ Page({
 
   changeTime (starttime, giventime) {
     let _this = this
+    let nowtime
     let startWeek = _this.data.startWeek
     _this.data.this_week = giventime;
-    let time = Date.parse(new Date()) + (giventime - startWeek) * 604800000
+    if(Date.parse(new Date())<Date.parse(_this.data.toschool)){nowtime=_this.data.toschool}else{nowtime=new Date()} 
+    let time = Date.parse(nowtime) + (giventime - startWeek) * 604800000 
     time = new Date(time)
     _this.time(starttime, time);
   },
@@ -168,15 +175,30 @@ Page({
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
   },
 
+  certification(){ 
+    app.globalData.identity 
+    ? '' 
+    :wx.showModal({ 
+      showCancel: false, 
+      content: '需要实名认证哦', 
+      complete: () => { 
+        wx.navigateTo({ url: '/pages/verify/verify' })} 
+    }); 
+  }, 
+ 
   onLoad (options) {
     let _this = this
     let course_data
+    let time 
     let course_week
     _this.readData();
+    _this.certification(); 
+    if(app.globalData.identity!=undefined){ 
     if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) {
       _this.setdata();
     } else {
-      _this.time(_this.data.toschool, new Date());
+      if(Date.parse(new Date())<Date.parse(_this.data.toschool)){time=_this.data.toschool}else{time=new Date()} 
+      _this.time(_this.data.toschool,time); 
       course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
       course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
     }
@@ -187,6 +209,7 @@ Page({
       toschool: _this.data.toschool,
       course_week:course_week,
       timetableMode: _this.data.timetableMode});
+    }
   },
 
   binaryWeek(list,this_week) {
@@ -252,7 +275,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow () {
-
+    let _this = this 
+    if(app.globalData.identity!=undefined){ 
+    if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) { 
+      _this.setdata(); 
+    } 
+    }
   },
 
   /**

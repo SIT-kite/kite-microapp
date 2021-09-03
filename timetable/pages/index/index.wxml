@@ -7,9 +7,9 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <navigator url="../derivate/derivate" hover-class="none">
+                        <!-- <navigator url="../derivate/derivate" hover-class="none">
                         <image src="../../assets/icons/export.png" class="icon1" ></image>
-                        </navigator>    
+                        </navigator>     -->
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
@@ -33,7 +33,7 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon1" ></image></navigator>  
+                        <!-- <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon1" ></image></navigator>   -->
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
@@ -57,7 +57,7 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon1" ></image></navigator>  
+                        <!-- <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon1" ></image></navigator>   -->
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
