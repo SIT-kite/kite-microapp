@@ -23,7 +23,7 @@
 		<text class="text_info">快点击查询试试吧!</text>
 	</view>
 
-	<view class="container_info" wx:if="{{scorePageInfo.currentScoreList[0]==null && isReferred}}">
+	<view class="container_info" wx:if="{{scorePageInfo.currentScoreList.length == 0 && isReferred}}">
 		<image class="img_info" src="/score/assets/pic/info2.png"></image>
 		<text class="text_info">暂时还没有成绩哦!</text>
 	</view>

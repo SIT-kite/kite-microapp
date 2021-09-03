@@ -207,11 +207,11 @@ Page({
 
     if (!app.globalData.verified || !wx.getStorageSync('identity').studentId) {
       wx.redirectTo({ url: '/pages/verify/verify' })
+    }else {
+      this.caculateYearArr()
     }
 
-    this.caculateYearArr()
-
-    if (wx.getStorageSync('scorePageInfo').currentScoreList[0]) {
+    if (wx.getStorageSync('scorePageInfo').currentScoreList.length !== 0) {
       this.setData({isReferred: true})
       this.setData({scorePageInfo: wx.getStorageSync('scorePageInfo')})
     }
