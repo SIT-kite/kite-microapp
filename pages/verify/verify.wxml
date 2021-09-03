@@ -12,7 +12,7 @@
 	<input value="{{ uploadInfo.oaSecret  }}" bindinput="bindSecret" placeholder="OA 密码" type="password" />
 
 	<button class="upload {{ canVerify ? '' : 'disable' }}" size="mini"
-		bindtap="verify" disabled="{{canVerify}}">
+		bindtap="verify" disabled="{{!canVerify}}">
 		<image src="/assets/icons/upload.png" />
 	</button>
 
