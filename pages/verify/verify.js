@@ -117,10 +117,10 @@ Page({
   },
 
   onShow() {
-    const uploadInfo = wx.getStorageSync("uploadInfo");
+    const identity = wx.getStorageSync("identity");
     this.setData({
-      uploadInfo,
-      canUpload: getCanUpload(uploadInfo)
+      uploadInfo: identity,
+      canUpload: getCanUpload(identity)
     });
   }
 
