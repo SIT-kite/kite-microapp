@@ -1,106 +1,82 @@
 // freshman/pages/stuInfoDetail/stuInfoDetail.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import onShareAppMessage from "../../js/onShareAppMessage";
+import request   from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
+import loading   from "../../../utils/loading";
 
 var app = getApp();
 const requestUtils = require('../../../utils/requestUtils');
 
-
 Page({
   data: {
     show: false,
-    motto: 'Hey!',
-    userDetail: null,
-    avatarUrl: "",
-    nickName: "",
+    userDetail: null
   },
 
   handlerGohomeClick,
   handlerGobackClick,
+  onShareAppMessage,
 
-  /**
-   * 页面数据重新加载
-   */
-  pageDataInit() {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
-
-    const gData = app.globalData;
-    // 获取新生信息
-    const url = `${gData.commonUrl}/freshman/${gData.userInfo.account}`;
-    const data = { "secret": gData.userInfo.secret };
-    const header = getHeader("urlencoded", gData.token);
-    requestUtils.doGET(url, data, header).then(res => {
-
-      // 更新全局变量
-      app.globalData.userDetail = res.data.data;
-      wx.setStorageSync("userDetail", res.data.data);
-      this.setData({
-        userDetail: gData.userDetail,
-        avatarUrl: gData.avatarUrl,
-        nickName: gData.nickName
-      });
-
-    }).catch(error => {
-
-      console.error("新生信息获取失败", error);
-      wx.setStorage({ key: "userDetail", data: null });
-      wx.redirectTo({ url: "/freshman/pages/welcome/welcome" });
-
-    }).then(() => {
-
-      wx.hideLoading();
-      console.log("数据处理完成");
-      this.setData({ show: true });
-
-    }).catch(res => {
-
-      wx.hideLoading();
-      wx.showModal({
-        title: "哎呀，出错误了 >.<",
-        content: (
-          res.error === requestUtils.REQUEST_ERROR ? "业务逻辑错误"
-          : res.error === requestUtils.NETWORK_ERROR ? "网络不在状态"
-          : "未知错误"
-        ),
-        showCancel: false
-      });
-
-    });
-
-  },
-
-  unavaliableNotice: () => wx.showModal({
+  /* unavaliableNotice: () => wx.showModal({
     title: "暂不可用",
     content: "报道指南更新中，暂不可用，敬请谅解~",
     confirmText: "知道了",
     showCancel: false
-  }),
+  }), */
 
   onLoad() {
-    this.setData({ show: false });
-    console.log('页面 stuInfoDetail onLoad...');
+
+    const gData = app.globalData;
+    const { account, secret } = gData.userInfo;
+
+    // 获取新生信息
+    loading({
+      title: "正在加载…",
+      mask: true,
+
+      callback: request({
+        url: `${gData.apiUrl}/freshman/${account}`,
+        header: getHeader("urlencoded", gData.token),
+        data: { secret }
+      }).then(res => {
+
+        this.setData({ userDetail: gData.userDetail });
+        app.globalData.userDetail = res.data.data;
+        wx.setStorageSync("userDetail", res.data.data);
+
+      }).catch(error => {
+
+        console.error("新生信息获取失败", error);
+        app.globalData.userDetail = null;
+        wx.setStorageSync("userDetail", null);
+        wx.redirectTo({ url: "/freshman/pages/welcome/welcome" });
+
+      }).then(
+        () => this.setData({ show: true })
+      ).catch(
+        res => wx.showModal({
+          title: "哎呀，出错误了 >.<",
+          content: (
+            res.error === requestUtils.REQUEST_ERROR ? "业务逻辑错误"
+            : res.error === requestUtils.NETWORK_ERROR ? "网络不在状态"
+            : "未知错误"
+          ),
+          showCancel: false
+        })
+      )
+
+    });
+
   },
 
   onShow() {
-    const {
-      navBarHeight,
-      navBarExtendHeight,
-    } = getApp().globalSystemInfo;
+    const { navBarHeight, navBarExtendHeight } = getApp().globalSystemInfo;
     this.setData({
       navBarCurrentHeight: navBarExtendHeight + navBarHeight
     })
-    console.log("页面 stuInfoDetail onShow...");
-    this.pageDataInit();
   },
 
-  onReady() {},
-
-  onShareAppMessage: () => ({
-    title: "上应小风筝",
-    path: "pages/index/index"
-  })
+  // onReady() {},
 
 })

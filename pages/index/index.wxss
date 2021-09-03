@@ -47,14 +47,16 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(2, 1fr);
+	margin-bottom: 0;
 }
 
 .menu-cell {
 	display: grid;
 	justify-items: center;
-	padding: 1.5em;
-	gap: .75em;
+	padding: 1.5em .5em;
+	gap: .5em;
 	font-size: .9em;
+	font-weight: 500;
 	color: #616161;
 	transition: background-color var(--transition);
 }
@@ -63,8 +65,9 @@
 	background-color: #EEE;
 }
 
+/* 主页图标高度为 128px，宽度不定！ */
 .menu-cell image {
-	width: 2em;
+	width: 3em;
 	height: 2em;
 }
 

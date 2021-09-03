@@ -1,39 +1,43 @@
 /* pages/all/all.wxss */
-.all-block{
-  margin: 15rpx;
-  border-radius: 10rpx 10rpx 10rpx 10rpx;
-  box-shadow: 0rpx 0rpx 0rpx 5rpx #8A8C7E;
+.all-block {
+	margin: 15rpx;
+	border-radius: 10rpx 10rpx 10rpx 10rpx;
+	box-shadow: 0rpx 0rpx 0rpx 5rpx #8A8C7E;
 }
-.category{
-  font-size: larger;
-  font-weight: 900;
+
+.category {
+	font-size: larger;
+	font-weight: 900;
 }
-.more-icon{
-  height: 50rpx;
-  width: 60rpx;
+
+.more-icon {
+	height: 50rpx;
+	width: 60rpx;
 }
-.item{
-  display: flex;
-  flex-direction: column;
-  padding: 20rpx;
+
+.item {
+	display: flex;
+	flex-direction: column;
+	padding: 20rpx;
 }
-.title{
-  font-size: large;
-  font-weight: 600;
+
+.title {
+	font-size: large;
+	font-weight: 600;
 }
-.dep-time{
-  display: flex;
-  justify-content: space-between;
-  font-size: small;
+
+.dep-time {
+	display: flex;
+	justify-content: space-between;
+	font-size: small;
 }
 
 .searchHighTitle {
-  font-size: large;
-  font-weight: 600;
-  color: #f00;
+	font-size: large;
+	font-weight: 600;
+	color: #f00;
 }
 
 .searchHighDigest {
-  color: #f00;
+	color: #f00;
 }
-

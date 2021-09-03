@@ -1,11 +1,12 @@
-<!-- index.wxml -->
-<image class="background" src="/assets/pic/background.png" mode="aspectFill"></image>
+<!-- pages/index/index.wxml -->
+
+<background type="index" />
 
 <view class="main">
 
 	<!-- banner -->
 	<swiper class="card banner" indicator-dots="true" autoplay="true"
-	interval="5000" easing-function="east-out" duration="500" circular="true">
+	interval="7500" duration="500" easing-function="east-out" circular="true">
 		<swiper-item>
 			<image class="banner-image" src="/assets/pic/temp_activity.png" bindtap="goTemp" />
 		</swiper-item>
@@ -18,8 +19,9 @@
 	<view class="card notice">
 		<image src="/assets/icons/index/notice.png" />
 		<swiper autoplay="true"
-		interval="5000" duration="1000" circular="true" vertical="true">
-			<swiper-item wx:for="{{notice}}" wx:key="id">{{item.title}}</swiper-item>
+			interval="7500" duration="500" circular="true" vertical="true">
+			<swiper-item wx:for="{{notice}}" wx:key="id" data-id="{{item.id}}"
+			bindtap="showNotice">{{item.title}}</swiper-item>
 		</swiper>
 	</view>
 
@@ -27,8 +29,9 @@
 	<view class="card menu">
 		<view class="menu-cell" wx:for="{{items}}" wx:key="url"
 			data-index="{{index}}" data-url="{{item.url}}" bindtap="router">
-			<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" />
-			<view class="menu-cell-text">{{item.text}}</view>
+			<image class="{{ index === clicked ? 'living' : '' }}"
+				src="{{item.iconPath}}" mode="aspectFit" />
+			{{item.text}}
 		</view>
 	</view>
 

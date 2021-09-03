@@ -1,0 +1,16 @@
+<!--timetable/pages/details/details.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="details">
+<view class="courseName">
+  <text>课程名称：{{showCourse}}</text>
+</view>
+<view class="time">
+  <text>课程时间：{{showTime}}</text>
+</view>
+<view class="tutor">
+  <text>上课教师：{{showTutor}}</text>
+</view>
+<view class="location">
+  <text>上课地点：{{showLocation}}</text>
+</view>
+</view>

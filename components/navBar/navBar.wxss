@@ -5,6 +5,7 @@
 	/* 10+87 */
 	--navBarExtendHeight: 4px;
 	box-sizing: border-box;
+	z-index: 100;
 }
 
 .lxy-nav-bar .ios {

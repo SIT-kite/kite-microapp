@@ -1,8 +1,7 @@
 // pages/details/details.js
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../utils/navBarUtils';
+
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+
 Page({
 
   /**
@@ -10,7 +9,7 @@ Page({
    */
   data: {
     currentItemDetails:{
-      author: "", 
+      author: "",
       content: "",
       publish_time: "",
       title: "",
@@ -18,62 +17,27 @@ Page({
     }
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    this.setData({currentItemDetails: wx.getStorageSync('searchResultList')[wx.getStorageSync('searchResultItemIndex')]})
+  onLoad() {
+    this.setData({
+      currentItemDetails: wx.getStorageSync("searchResultList")[
+        wx.getStorageSync("searchResultItemIndex")
+      ]
+    })
     // console.log(this.data.currentItemDetails)
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  // onReady() {},
+  // onShow() {},
 
-  },
+  // onPullDownRefresh() {},
+  // onReachBottom() {},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  handlerGohomeClick,
+  handlerGobackClick,
 
-  },
+  onShareAppMessage: () => ({
+    title: "用上应小风筝，便捷搜索全校通知公告",
+    path: "pages/index/index"
+  })
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick
 })

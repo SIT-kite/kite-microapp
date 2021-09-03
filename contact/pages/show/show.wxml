@@ -1,44 +1,62 @@
 <!-- phone/pages/phone.wxml -->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
 <view class="search">
-    <view class="menu_list">
-        <image src="../../assets/icon/menu.png" class="icon1" bindtap=""></image>
-    </view>
-    <view class="search_data">
-        <icon class="icon1" type="search" size="25"></icon>
-        <input class="search_" confirm-type="search" placeholder="搜索电话或关键字"></input>
-    </view>
+	<button class="menu-button" bindtap="router">
+		<image class="menu-icon {{clicked !== -1 ? 'living' : ''}}"
+			src="../../assets/icon/menu.png"></image>
+	</button>
+	<view class="search-input-container">
+		<icon class="search-icon" type="search" size="24"></icon>
+		<input class="search-input" confirm-type="search" placeholder="搜索电话或关键字" bindinput="search"></input>
+	</view>
 </view>
-<view class="table">
-    <scroll-view scroll-y="{{true}}" class="menu">
-        <view class="men1" wx:for="{{department}}" wx:key="index" data-department="{{item}}">
-            <view class="me1">{{item}}</view>
-        </view>
-    </scroll-view>
-    <view class="list">
-        <scroll-view scroll-y="{{true}}" class="list_phone">
-            <view class="phone_list" wx:if="{{data}}">
-                <view wx:for="{{data}}" wx:for-index="project" wx:for-item="list_phone" wx:key="project" class="table-cell">
-                    <view class="td">
-                        <view class="department">
-                            <image src="../../assets/icon/department.png" class="icon2"></image>
-                            {{list_phone.department}}
-                        </view>
-                        <view class="project">
-                            <image src="../../assets/icon/project.png" class="icon2"></image>
-                            {{list_phone.description}}
-                        </view>
-                        <view class="phone">
-                            <image src="../../assets/icon/telephone.png" class="icon2"></image>
-                            {{list_phone.phone}} ({{list_phone.name}})
-                        </view>
-                    </view>
-                    <view class="copy">
-                        <image src="../../assets/icon/copy.png" class="icon" mode="scaleToFill"></image>
-                        <image src="../../assets/icon/phone.png" class="icon" mode="scaleToFill"></image>
-                    </view>
-                </view>
-            </view>
-        </scroll-view>
-    </view>
+
+<view class="content {{ click === 2 ? 'expanded' : '' }}">
+
+	<scroll-view scroll-y="{{true}}" class="menu" enhanced="{{true}}">
+		<view class="menu-item {{chooseddata === item ? 'choosed' : ''}}"
+			wx:for="{{departmentChange}}" wx:key="index" data-department="{{item}}" bindtap="tapdata">
+			{{item}}
+		</view>
+	</scroll-view>
+
+	<scroll-view wx:if="{{dataChange}}" class="phone-list" bindtap="collapse"
+		scroll-y="{{true}}" scroll-with-animation="true" scroll-into-view="{{toView}}">
+
+		<view wx:for="{{dataChange}}" wx:for-index="project" wx:for-item="list_phone" wx:key="department"
+			class="{{!list_phone.isHidden?'department':''}}">
+			<view class="department-name" id="{{'index' + project}}" wx:if="{{!list_phone.isHidden}}">
+				{{list_phone.department}}
+			</view>
+			<view class="phone" id="origin{{origin}}" wx:if="{{list_origin.isShow}}"
+			wx:for="{{list_phone.origin}}" wx:for-index="origin" wx:for-item="list_origin" wx:key="index">
+				<image src="../../assets/icon/user.png" class="icon-user"></image>
+				<view class="info-list">
+					<!-- <view class="info">
+						<image class="icon2" src="../../assets/icon/department.png" />
+						{{list_origin.department}}
+					</view> -->
+					<view class="info">
+						<!-- <image class="icon2" src="../../assets/icon/project.png" /> -->
+						{{list_origin.description}}
+					</view>
+					<view class="info">
+						<!-- <image class="icon2" src="../../assets/icon/telephone.png" /> -->
+						{{list_origin.name ?  list_origin.name + ' - ' : ''}}{{list_origin.phone}}
+					</view>
+				</view>
+
+				<view class="buttons">
+					<image class="icon-copy" src="../../assets/icon/copy.png" mode="scaleToFill"
+						data-phone="{{list_origin.phone}}" bindtap="copy" />
+					<image class="icon-phone" src="../../assets/icon/phone.png" mode="scaleToFill"
+						data-phone="{{list_origin.phone}}" bindtap="call" />
+				</view>
+			</view>
+		</view>
+
+	</scroll-view>
+
 </view>

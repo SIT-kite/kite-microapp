@@ -1,0 +1,69 @@
+<!--activity/components/card-subscription/card-subscription.wxml-->
+<view class="page-subscription" catchtap="closePulldownList">
+
+  <view class="card-subscription" wx:for="{{[1, 2, 3, 4, 5]}}">
+  
+    <view class="container_left">
+      <view class="container_left_item">
+      <image class="icon_left_item" src="../../assets/icons/time2.svg"></image>
+      <text class="text_time">时间：<text class="text_content">星期五</text></text>
+      </view>
+      
+      <view class="container_left_item">
+      <image class="icon_left_item" src="../../assets/icons/text.svg"></image>
+        <text class="text_title">标题包含：<text class="text_content">fsdfsdfsdfds</text></text>
+      </view>
+      <view class="container_left_item">
+        <image class="icon_left_item" src="../../assets/icons/square.svg"></image>
+        <text class="text_category">分类：<text class="text_content">讲座</text></text>
+      </view>
+      
+    </view>
+
+    <view class="container_right">
+      <image class="btn_more" src="../../assets/icons/more.svg" catchtap="_showPulldownList"></image>
+      <text class="text_campus">奉贤校区</text>
+
+      <view class="container_list_pulldown" wx:if="{{isShowPulldownList}}">
+        <view class="btn_edit" catchtap="showModel">编辑</view>
+        <view class="placeholder_card"></view>
+        <view class="btn_delete">删除</view>
+      </view>
+
+    </view>
+</view>
+
+<view class="container_model" wx:if="{{isShowModel}}">
+    <text class="text_container_title">添加订阅</text>
+
+    <view class="container_options">
+
+    <view class="container_options_item">
+      <image class="icon_options_item" src="../../assets/icons/time2.svg"></image>
+      <picker class="select" range="{{week}}">活动时间：<text class="text_options_item">星期一</text></picker>
+    </view>
+    
+    <view class="container_options_item">
+      <image class="icon_options_item" src="../../assets/icons/text.svg"></image>
+      <view class="container_model_title">
+        <text>标题包含：</text>
+        <input type="text" placeholder="建议为较短的关键词" maxlength="8"/>
+      </view>
+    </view>
+
+    <view class="container_options_item">
+      <image class="icon_options_item" src="../../assets/icons/square.svg"></image>
+      <picker class="select">分类：<text class="text_options_item">讲座</text></picker>
+    </view>
+    </view>
+    <view class="placeholder_model"></view>
+    <view class="container_btn">
+      <image class="btn_model cancel" src="../../assets/icons/cancel.svg" catchtap="closeModel"></image>
+      <image class="btn_model save" src="../../assets/icons/save.svg"></image>
+    </view>
+</view>
+
+  <view class="btn_add" catchtap="showModel">添加订阅</view>
+  
+</view>
+<view class="layer_cover" wx:if="{{isShowModel}}" catchtap="closeModel"></view>

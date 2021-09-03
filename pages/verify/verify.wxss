@@ -1,0 +1,62 @@
+/* pages/verify/verify.wxss */
+
+page {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-top: -2em;
+	background-color: white;
+}
+
+.background {
+	width: 90vw;
+	margin: 5vw;
+}
+
+.container {
+	display: grid;
+	align-content: start;
+	justify-items: center;
+	gap: 1rem;
+}
+
+.title {
+	margin-bottom: .5rem;
+	text-align: center;
+	font-weight: bold;
+}
+
+input {
+	width: 80vw;
+	height: 2em;
+	padding-inline-start: 1ch;
+	font-size: 1.1em;
+	border-radius: 4px;
+	background-color: #F5F5F5;
+	caret-color: lime;
+}
+
+.upload {
+	width: 3em !important;
+	height: 3em;
+	margin: .5rem 0;
+	padding: 0 !important;
+	border-radius: 50%;
+	background-color: lightgreen;
+	box-shadow: 0 1px 4px 1px lightgreen;
+	transition:
+		background-color var(--transition),
+		var(--transition-shadow);
+}
+
+.upload.disable {
+	background-color: #e3e3e3;
+	box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+.upload image {
+	height: 60%;
+	width: 60%;
+	margin: 20%;
+}

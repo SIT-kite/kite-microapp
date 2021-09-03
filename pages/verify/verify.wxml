@@ -1,0 +1,19 @@
+<!-- pages/verify/verify.wxml -->
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
+<image class="background" src="/assets/pic/background_verify.jpg" mode="widthFix" />
+
+<view class="container">
+
+	<view class="title">实名认证</view>
+
+	<input value="{{ uploadInfo.studentId }}" bindinput="bindId"     placeholder="学号" />
+	<input value="{{ uploadInfo.oaSecret  }}" bindinput="bindSecret" placeholder="OA 密码" type="password" />
+
+	<button class="upload {{ canVerify ? '' : 'disable' }}" size="mini"
+		bindtap="verify" disabled="{{canVerify}}">
+		<image src="/assets/icons/upload.png" />
+	</button>
+
+</view>

@@ -2,12 +2,26 @@
 Page {
   background-color: #F7F7F7;
 }
+.text_tip {
+  text-align: center;
+  width: 300rpx;
+  font-weight: bold;
+  background-color: rgba(61, 133, 198, 0.2);
+  opacity: 0.7;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  position: fixed;
+  top: 250rpx;
+  left: 225rpx;
+}
+
 .pageHeader {
   display: flex;
   padding: 20rpx;
   align-items: center;
+  position: relative;
 }
-.select {
+.selectText {
   font-weight: bold;
 }
 
@@ -15,17 +29,21 @@ picker.year {
   margin-left: 20rpx;
   margin-right: 50rpx;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
+  font-size: 40rpx;
 }
 picker.term {
+  font-size: 40rpx;
   margin-right: 200rpx;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
 }
 
 
-.refer {
-  height: 60rpx;
-  width: 100rpx;
+.btn_refer {
+  right: 40rpx;
+  height: 70rpx;
+  width: 180rpx;
   display: flex;
+  position: absolute;
   align-items: center;
   justify-content: center;
   color: #fff;
@@ -37,28 +55,66 @@ picker.term {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-bottom: 10px;
+  box-shadow: 0px 1.5px 0px 0px #d9d9d9;
 }
 .gpaWords {
   padding: 5%;
   width:55%;
-  color: #1c4587;
+  color: rgba(28, 69, 135, 0.8);
   background-color: #ffe599;
-  box-shadow: 0rpx 0rpx 10rpx 1rpx #D1D1D1;
-  border-radius: 0rpx 20rpx 20rpx 0rpx;
-  
+  box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9;
+  border-radius: 0rpx 10rpx 10rpx 0rpx;
+  font-size: 40rpx;
 }
 .showYearGpa {
+  width: 27.5%;
   font-weight: bold;
+  font-size: 34rpx;
   color: #337ab7;
   background-color: #c9daf8;
-  border-radius: 20rpx 0rpx 0rpx 20rpx;
-  box-shadow: 0rpx 0rpx 10rpx 1rpx #D1D1D1;
+  border-radius: 10rpx 0rpx 0rpx 10rpx;
+  box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9;
   padding: 10rpx;
   display: flex;
   align-items: flex-end;
   flex-direction: column;
 }
 switch {
-  transform: scale(.8)
+  transform: scale(.9);
+}
 
+.container_info {
+  margin-top: 5vh;
+  margin-bottom: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img_info {
+  z-index: 1000;
+  width: 500rpx;
+  height: 500rpx;
+}
+
+.text_info {
+  font-size: 50rpx;
+  font-weight: bold;
+  color: #6fa8dc;
+  box-shadow: 0px 0px 20px 0px;
+  border-radius: 10rpx;
+  padding: 10rpx;
+}
+
+.scroll_space {
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+}
+
+.notice {
+  height: 100rpx;
+  text-align: center;
+  color: #6fa8dc;
 }

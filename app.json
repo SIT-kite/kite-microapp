@@ -1,126 +1,140 @@
 {
-  "style": "v2",
-  "darkmode": false,
-  "resizable": false,
-  "singlePage": {},
-  "networkTimeout": {
-    "request": 15000,
-    "connectSocket": 15000,
-    "uploadFile": 30000,
-    "downloadFile": 30000
-  },
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于报到指南服务."
-    }
-  },
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
-  },
-  "sitemapLocation": "sitemap.json",
-  "entryPagePath": "pages/index/index",
-  "pages": [
-    "pages/index/index",
-    "pages/user/user",
-    "pages/about/about",
-    "pages/verification/verification"
-  ],
-  "subpackages": [
-    {
-      "root": "freshman",
-      "pages": [
-        "pages/inputInfo/inputInfo",
-        "pages/welcome/welcome",
-        "pages/stuInfoDetail/stuInfoDetail",
-        "pages/newClass/newClass",
-        "pages/shareAnalysis/shareAnalysis",
-        "pages/newFriend/newFriend",
-        "pages/guide/guide"
-      ]
-    },
-    {
-      "root": "class-room",
-      "pages": [
-        "pages/available-room"
-      ]
-    },
-    {
-      "root": "carpool",
-      "pages": [
-        "pages/car-pool/car-pool",
-        "pages/car-pooldetail/car-pooldetail",
-        "pages/create/create"
-      ]
-    },
-    {
-      "root": "electricity",
-      "pages": [
-        "pages/share/share",
-        "pages/show/show"
-      ]
-    },
-    {
-      "root": "contact",
-      "pages": [
-        "pages/show/show"
-      ]
-    },
-    {
-      "root": "shop",
-      "pages": [
-        "pages/details/details",
-        "pages/index/index",
-        "pages/launch/launch",
-        "pages/search/search"
-      ]
-    },
-    {
-      "root": "search",
-      "pages": [
-        "pages/all/all",
-        "pages/details/details",
-        "pages/index/index",
-        "pages/mini-result/mini-result"
-      ]
-    },
-    {
-      "root":"timetable",
-      "pages":[
-        "pages/index/index"
-      ]
-    },
-    {
-      "root": "score",
-      "pages": [
-        "pages/index/index"
-      ]
-    }
-  ],
-  "tabBar": {
-    "color": "#9E9E9E",
-    "selectedColor": "#000",
-    "custom": false,
-    "list": [{
-      "pagePath": "pages/index/index",
-      "text": "主页",
-      "iconPath": "/assets/icons/nav_bar/home.png",
-      "selectedIconPath": "/assets/icons/nav_bar/home_active.png"
-    }, {
-      "pagePath": "pages/user/user",
-      "text": "我",
-      "iconPath": "/assets/icons/nav_bar/user.png",
-      "selectedIconPath": "/assets/icons/nav_bar/user_active.png"
-    }]
-  },
-  "plugins": {
-    "echarts": {
-      "version": "2.1.1",
-      "provider": "wx1db9e5ab1149ea03"
-    }
-  },
-  "usingComponents": {}
+	"style": "v2",
+	"darkmode": false,
+	"resizable": false,
+	"singlePage": {},
+	"networkTimeout": {
+		"request": 15000,
+		"connectSocket": 15000,
+		"uploadFile": 30000,
+		"downloadFile": 30000
+	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于报到指南服务。"
+		}
+	},
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "上应小风筝",
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "custom"
+	},
+	"sitemapLocation": "sitemap.json",
+	"entryPagePath": "pages/index/index",
+	"pages": [
+		"pages/index/index",
+		"pages/user/user",
+		"pages/verify/verify",
+		"pages/about/about",
+		"pages/debug/debug"
+	],
+	"subpackages": [
+		{
+			"root": "freshman",
+			"pages": [
+				"pages/inputInfo/inputInfo",
+				"pages/welcome/welcome",
+				"pages/stuInfoDetail/stuInfoDetail",
+				"pages/newClass/newClass",
+				"pages/shareAnalysis/shareAnalysis",
+				"pages/newFriend/newFriend",
+				"pages/guide/guide"
+			]
+		},
+		{
+			"root": "class-room",
+			"pages": [
+				"pages/available-room"
+			]
+		},
+		{
+			"root": "carpool",
+			"pages": [
+				"pages/car-pool/car-pool",
+				"pages/car-pooldetail/car-pooldetail",
+				"pages/create/create"
+			]
+		},
+		{
+			"root": "electricity",
+			"pages": [
+				"pages/share/share",
+				"pages/show/show",
+				"pages/index/index"
+			]
+		},
+		{
+			"root": "contact",
+			"pages": [
+				"pages/show/show"
+			]
+		},
+		{
+			"root": "shop",
+			"pages": [
+				"pages/details/details",
+				"pages/index/index",
+				"pages/launch/launch",
+				"pages/search/search"
+			]
+		},
+		{
+			"root": "search",
+			"pages": [
+				"pages/all/all",
+				"pages/details/details",
+				"pages/index/index",
+				"pages/mini-result/mini-result"
+			]
+		},
+		{
+			"root": "timetable",
+			"pages": [
+				"pages/index/index",
+				"pages/details/details",
+				"pages/derivate/derivate" 
+			]
+		},
+		{
+			"root": "score",
+			"pages": [
+				"pages/index/index"
+			]
+		},
+		{
+			"root": "activity",
+			"pages": [
+				"pages/index/index",
+				"pages/detail/detail"
+			]
+		}
+	],
+	"tabBar": {
+		"color": "#9E9E9E",
+		"selectedColor": "#000",
+		"custom": false,
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "主页",
+				"iconPath": "/assets/icons/nav_bar/home.png",
+				"selectedIconPath": "/assets/icons/nav_bar/home_active.png"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"text": "我",
+				"iconPath": "/assets/icons/nav_bar/user.png",
+				"selectedIconPath": "/assets/icons/nav_bar/user_active.png"
+			}
+		]
+	},
+	"plugins": {
+		"echarts": {
+			"version": "2.1.1",
+			"provider": "wx1db9e5ab1149ea03"
+		}
+	},
+	"usingComponents": {}
 }

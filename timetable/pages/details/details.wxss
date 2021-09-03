@@ -1,0 +1,35 @@
+/* timetable/pages/details/details.wxss */
+.details {
+	background-color: #bbffaa;
+	margin: 80px 20px;
+}
+
+.courseName {
+	border: 2px solid;
+	color: black;
+	font-size: 25px;
+	padding: 15rpx;
+	margin: 10rpx;
+}
+
+.time {
+	font-size: 20px;
+	padding: 10rpx;
+	border: 2px solid;
+	margin: 10rpx;
+}
+
+.tutor {
+	font-size: 20px;
+	padding: 10rpx;
+	border: 2px solid;
+	margin: 10rpx;
+}
+
+.location {
+	font-size: 20px;
+	padding: 10rpx;
+	border: 2px solid red;
+	margin: 10rpx;
+	border-radius: 10%;
+}

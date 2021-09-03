@@ -1,0 +1,24 @@
+<view class="main">
+<scroll-view scroll-y="true" class="scroll">
+  <view class="background">
+  <view class = "time">
+    <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" class="left" wx:key="index">{{item}}
+      </view>
+    </view>
+
+  <!--Schedule_Main -->
+  <view class="course">
+  <view wx:for="{{wlist}}" wx:key="index">
+    <view class="flex-item schedule-item" bindtap="tapCourse" data-statu="open" data-index="{{index}}" 
+    style="width:11vw; margin-left:{{(item.day-1)*13+0.5}}vw; margin-top:{{(item.section-1)*105}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[item.colorArrays]}};border:2.5px solid #daebfa">
+      <view class="smalltext" >{{item.courseName}}</view>
+      <view class="smalltext" >{{item.place}}</view>
+      <view class="smalltext1" >
+        <view class="small" ></view>
+        {{item.teacher}}</view>
+    </view>
+  </view>
+  </view>
+</view>
+</scroll-view>
+</view>

@@ -1,0 +1,65 @@
+/* pages/debug/debug.wxss */
+
+.group {
+	margin: 1rem;
+}
+
+.group > .name,
+.group > .button {
+	margin-bottom: .5em;
+}
+
+.button {
+	padding: .5em;
+	font-size: inherit;
+	font-weight: 500;
+	box-shadow: var(--shadow);
+}
+
+.title {
+	font-size: 1.25em;
+}
+
+.error {
+	margin: 1rem;
+	font-size: .75em;
+	white-space: pre-wrap;
+	word-break: break-all;
+	font-family: Consolas, monospace;
+}
+
+.note {
+	font-size: .975em;
+	line-height: 1.638;
+	margin-bottom: .5em;
+	text-align: justify;
+	text-shadow: 0 0 1px white;
+}
+
+.strong {
+	font-weight: bold;
+}
+
+.name {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.copy {
+	width: auto !important;
+	margin: 0 !important;
+	padding: .25em;
+	color: #4CAF50;
+	border-radius: 1px;
+}
+
+.value {
+	width: auto;
+	height: 25vh;
+	padding: .5em;
+	border: 1px solid currentColor;
+	border-radius: 1px;
+	font-size: .75em;
+	font-family: Consolas, monospace;
+}

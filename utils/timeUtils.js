@@ -18,10 +18,17 @@ const getIntervalToCurrentTime = givenTime => {
   var currTimeStamp = parseInt(new Date().getTime() / 1000);
   var interval = currTimeStamp - givenTimeStamp;
 
+  // 负值判断，增加通用性
+  if (interval < 0) {
+    interval = Math.abs(interval);
+  }
+
   // 解决时区问题
   interval -= 8 * 3600;
   var intervalTime;
   var tmp;
+
+
   if (interval < 60) {
     intervalTime = "1分钟";
   }
@@ -37,17 +44,22 @@ const getIntervalToCurrentTime = givenTime => {
     tmp = parseInt(interval / (3600 * 24));
     intervalTime = tmp + "天";
   }
-  else if (interval < 3600 * 24 * 30 * 365) {
+  else if (interval < 3600 * 24 * 30 * 12) {
     tmp = parseInt(interval / (3600 * 24 * 30));
     intervalTime = tmp + "月";
   }
   else {
-    tmp = parseInt(interval / (3600 * 24 * 30 * 365));
+    tmp = parseInt(interval / (3600 * 24 * 30 * 12));
     intervalTime = tmp + "年";
   }
-
   return intervalTime;
 
+};
+
+// formatNumber(n: Number): nn: String
+const formatNumber = n => {
+  n = n.toString();
+  return n[1] ? n : `0${n}`;
 };
 
 // formatTime(date: Date): YYYY-MM-dd
@@ -59,16 +71,56 @@ const formatTime = date => {
   return [year, month, day].map(formatNumber).join('-');
 };
 
-// formatNumber(n: Number): nn: String
-const formatNumber = n => {
-  n = n.toString();
-  return n[1] ? n : `0${n}`;
-};
+// getIntervalToCurrentWeek(Giventime: String): intervalWeek : number
+// 获得给定时间的周数间隔（有余进一）
+// 传入格式为 时间戳
+const getIntervalToCurrentWeek = (givenTime, giveTime) => {
+  let startTime = givenTime;
+  var CurrentTime = giveTime;
+  let intervalWeek = Math.ceil((CurrentTime - startTime) / 604800000);
+  return intervalWeek;
+}
 
-// 在XXX.js通过 var util = require("../../utils/utils.js") 和
-// util.XXX() 来引用
+// getTimeOfWeek(Giventime: String): intervalWeek :array
+// 获得给定时间对应一周的日期和星期
+// 返回格式 [{ year: yyyy, month: MM, day: dd, week: number }]
+const getTimeOfWeek = givenTime => {
+  if (null == givenTime) return null;
+  let weekday
+  let week = new Date(givenTime).getDay();
+  let nowDate = givenTime;
+  let newDate = 0,day = 0,year = 0,month = 0
+  let intervalWeek = []
+  if (week === 0) {week = 7}
+  for (let i = 0; i < week - 1; i++) {
+    newDate = nowDate - 86400000 * (week - 1 - i);
+    newDate = new Date(newDate);
+    day = newDate.getDate();
+    year = newDate.getFullYear();
+    month = newDate.getMonth() + 1;
+    weekday = newDate.getDay();
+    intervalWeek.push({
+      year, month, day, week : weekday
+    })
+  }
+  for (let i = week; i < 8; i++) {
+    newDate = nowDate + 86400000 * (i - week);
+    newDate = new Date(newDate);
+    day = newDate.getDate();
+    year = newDate.getFullYear();
+    month = newDate.getMonth() + 1;
+    weekday = newDate.getDay();
+    intervalWeek.push({
+      year, month, day, week : weekday
+    })
+  }
+  return intervalWeek;
+}
+
 module.exports = {
   getTimeStamp,
   getIntervalToCurrentTime,
-  formatTime
+  formatTime,
+  getIntervalToCurrentWeek,
+  getTimeOfWeek
 };

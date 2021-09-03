@@ -1,6 +1,29 @@
-<!--pages/about/about.wxml-->
-<navBar background='white' back="{{true}}" home="{{true}}"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<!-- pages/about/about.wxml -->
+
+<navBar background="white" back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
+<background />
+
 <view class="container">
-	<rich-text nodes="{{html}}"></rich-text>
+
+	<view class="title">关于上应小风筝</view>
+
+	<view class="center oblique">上应小风筝，这里的校园很棒！</view>
+
+	<view class="contact">
+		<view class="title">联系我们</view>
+		<view class="hint">点击群号即可复制</view>
+		<view>1. 小程序反馈群：<text bindtap="copy" data-text="943110696">943110696</text></view>
+		<view>2. 2021级易班新生群：<text bindtap="copy" data-text="147239936">147239936</text></view>
+		<view>3. 奉贤校区大学生活动中心309室</view>
+	</view>
+
+	<rich-text class="content" nodes="{{html}}" />
+
+	<view class="source">
+		<view class="title">开源代码</view>
+		<view class="repo-link">https://github.com/SIT-Yiban/kite-microapp</view>
+	</view>
+
 </view>

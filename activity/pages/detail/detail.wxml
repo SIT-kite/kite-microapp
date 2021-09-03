@@ -1,0 +1,101 @@
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+  bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<view class="main">
+
+  <!-- <view class="text_fixed" wx:if="{{showText}}">全国信息技术应用水平大赛</view> -->
+
+  <view class="container_header">
+
+    <view class="container_header_img">
+      <image class="img_header" src="../../assets/pic/pyq5.png"></image>
+    </view>
+
+    <view class="container_header_content">
+
+      <view class="container_header_content_top">
+        <!-- <view class="lump_title" ></view> -->
+        <view class="text_title" id="title">全国信息技术应用水平大赛全国信息技术应用水平大赛</view>
+      </view>
+
+      <view class="container_header_content_bottom">
+
+        <view class="container_position">
+          <image class="icon_position" src="../../assets/icons/position.svg"></image>
+          <view class="text_position">地点: 线上</view>
+        </view>
+
+        <view class="container_time">
+          <image class="icon_time" src="../../assets/icons/time1.svg"></image>
+          <view class="text_time">时间: 2021/8/14 0:00 - 23:59</view>
+        </view>
+
+        <view class="container_population">
+          <image class="icon_population" src="../../assets/icons/population.svg"></image>
+          <view class="text_max_people">最大人数: 200</view>
+        </view>
+
+        <view class="container_activity_id">
+          <image class="icon_activity_id" src="../../assets/icons/number.svg"></image>
+          <view class="text_activity_id">活动编号: 200234235</view>
+        </view>
+
+        <view class="container_publisher">
+          <image class="img_publisher" src="../../assets/pic/activityItem.jpeg"></image>
+          <view class="text_publisher">张林鑫</view>
+        </view>
+
+      </view>
+
+      <view class="container_share">
+          <button class="btn_share" open-type="share"><image class="icon_share" src="../../assets/icons/share.svg" open-type="onShareAppMessage"></image></button>
+      </view>
+
+      <!-- <view class="container_like">
+
+          <view class="container_like_population">
+            <view class='container_like_heades'>
+                <image class='img_like_head head_1' src='../../assets/pic/activityItem.jpeg'></image>
+                <image class='img_like_head head_2' src='../../assets/pic/activityItem.jpeg'></image>
+                <image class='img_like_head head_3' src='../../assets/pic/activityItem.jpeg'></image>
+            </view>
+            <view class="text_like_population">等17人觉得很赞</view>
+          </view>
+
+          <view class="btn_like">赞</view>
+      </view> -->
+
+    </view>
+    
+  </view>
+
+  
+
+  <view class="container_content">
+
+    <view class="container_content_hint">
+      <!-- <view class="lump_hint"></view> -->
+      <view class="text_hint">活动详情</view>
+    </view>
+
+    <view class="container_content_text">
+      <view class="text_content">1. 这是活动详情</view>
+    </view>
+
+  </view>
+
+  <view class="container_info_page">
+    <view class="container_like">
+      <image class="icon_like" src="../../assets/icons/like.svg"></image>
+      <view class="text_like">12</view>
+    </view>
+    <view class="container_read">
+      <image class="icon_read" src="../../assets/icons/read.svg"></image>
+      <view class="text_read">100</view>
+    </view>
+  </view>
+
+  <view class="container_fixed_bar">
+    <view class="btn_join">报 名</view>
+  </view>
+
+</view>

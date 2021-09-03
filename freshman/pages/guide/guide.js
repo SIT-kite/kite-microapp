@@ -1,8 +1,6 @@
 // freshman/pages/guide/guide.js
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from "../../../utils/navBarUtils";
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import onShareAppMessage from "../../js/onShareAppMessage";
 
 const defaultFengxianCenter = {
   id: 0,
@@ -16,49 +14,210 @@ const defaultXuhuiCenter = {
   name: "徐汇校区",
   latitude: 31.166975,
   longitude: 121.422453,
+};
+
+const defaultChangqiaoCenter = {
+  id: 0,
+  name: "长桥校区",
+  latitude: 31.130782,
+  longitude: 121.447082,
+}
+
+const defaultMeilongCenter = {
+  id: 0,
+  name: "梅陇校区",
+  latitude: 31.138282,
+  longitude: 121.426555,
 }
 
 const constPositions = [{
     id: 100,
     name: '体育馆',
     latitude: 30.83989,
-    longitude: 121.505344
+    longitude: 121.505344,
+    iconPath: "../../assets/icons/indoorStadium.png"
   },
   {
     id: 101,
     name: '一食堂',
     latitude: 30.845151,
-    longitude: 121.511311
+    longitude: 121.511311,
+    iconPath: "../../assets/icons/canteen.png"
   },
   {
     id: 102,
     name: '二食堂',
     latitude: 30.843024,
-    longitude: 121.506793
+    longitude: 121.506793,
+    iconPath: "../../assets/icons/canteen.png"
   },
   {
     id: 103,
-    name: '图书馆',
-    latitude: 30.842989,
-    longitude: 121.511316
+    name: '三食堂',
+    latitude: 30.842112,
+    longitude: 121.512721,
+    iconPath: "../../assets/icons/canteen.png"
   },
   {
     id: 104,
-    name: '行政楼',
-    latitude: 30.841071,
-    longitude: 121.51101
+    name: '美食每刻',
+    latitude: 30.840715,
+    longitude: 121.505756,
+    iconPath: "../../assets/icons/snack.png"
   },
   {
     id: 105,
-    name: '西南门',
-    latitude: 30.83822,
-    longitude: 121.50764
+    name: '图书馆',
+    latitude: 30.842989,
+    longitude: 121.511316,
+    iconPath: "../../assets/icons/library.png"
   },
   {
     id: 106,
+    name: '行政楼',
+    latitude: 30.841071,
+    longitude: 121.51101,
+    iconPath: "../../assets/icons/administration.png"
+  },
+  {
+    id: 107,
+    name: '西南门',
+    latitude: 30.83822,
+    longitude: 121.50764,
+    iconPath: "../../assets/icons/door.png"
+  },
+  {
+    id: 108,
     name: '南门',
     latitude: 30.840491,
-    longitude: 121.512111
+    longitude: 121.512111,
+    iconPath: "../../assets/icons/door.png"
+  },
+  {
+    id: 109,
+    name: '火车头广场',
+    latitude: 30.843661,
+    longitude: 121.515241,
+    iconPath: "../../assets/icons/locomotive.png"
+  },
+  {
+    id: 1010,
+    name: '大学生活动中心',
+    latitude: 30.842282,
+    longitude: 121.506992,
+    iconPath: "../../assets/icons/studentActivity.png"
+  },
+  {
+    id: 1011,
+    name: '易班工作站',
+    latitude: 30.842286,
+    longitude: 121.506368,
+    iconPath: "../../assets/icons/yibanStation.png"
+  },
+  {
+    id: 1012,
+    name: '第一教学楼',
+    latitude: 30.841481,
+    longitude: 121.50909,
+    iconPath: "../../assets/icons/classroom.png"
+  },
+  {
+    id: 1013,
+    name: '医务楼',
+    latitude: 30.842821,
+    longitude: 121.505781,
+    iconPath: "../../assets/icons/clinic.png"
+  },
+  {
+    id: 1014,
+    name: '第一学科楼',
+    latitude: 30.843241,
+    longitude: 121.51642,
+    iconPath: "../../assets/icons/subjectBuilding.png"
+  },
+  {
+    id: 1015,
+    name: '第二学科楼',
+    latitude: 30.844366,
+    longitude: 121.515704,
+    iconPath: "../../assets/icons/subjectBuilding.png"
+  },
+  {
+    id: 1016,
+    name: '第三学科楼',
+    latitude: 30.845742,
+    longitude: 121.515191,
+    iconPath: "../../assets/icons/subjectBuilding.png"
+  },
+  {
+    id: 1017,
+    name: '第四学科楼',
+    latitude: 30.843661,
+    longitude: 121.513741,
+    iconPath: "../../assets/icons/subjectBuilding.png"
+  },
+  {
+    id: 1018,
+    name: '第五学科楼',
+    latitude: 30.843371,
+    longitude: 121.51319,
+    iconPath: "../../assets/icons/subjectBuilding.png"
+  },
+  {
+    id: 1019,
+    name: '第六学科楼',
+    latitude: 30.841276,
+    longitude: 121.50746,
+    iconPath: "../../assets/icons/subjectBuilding.png"
+  },
+  {
+    id: 1020,
+    name: '东门',
+    latitude: 30.845676,
+    longitude: 121.516333,
+    iconPath: "../../assets/icons/door.png"
+  },
+  {
+    id: 1021,
+    name: '第二教学楼',
+    latitude: 30.842329,
+    longitude: 121.509175,
+    iconPath: "../../assets/icons/classroom.png"
+  },
+  {
+    id: 1022,
+    name: '第三教学楼',
+    latitude: 30.843454,
+    longitude: 121.508982,
+    iconPath: "../../assets/icons/classroom.png"
+  },
+  {
+    id: 1023,
+    name: '菜鸟驿站',
+    latitude: 30.841541,
+    longitude: 121.505495,
+    iconPath: "../../assets/icons/post.png"
+  },
+  {
+    id: 1024,
+    name: '菜鸟驿站（校外）',
+    latitude: 30.846822,
+    longitude: 121.516599,
+    iconPath: "../../assets/icons/post.png"
+  },
+  {
+    id: 1025,
+    name: '韵达快递超市',
+    latitude: 30.845509,
+    longitude: 121.517679,
+    iconPath: "../../assets/icons/post.png"
+  },
+  {
+    id: 1026,
+    name: '植物园',
+    latitude: 30.844338,
+    longitude: 121.517064,
+    iconPath: "../../assets/icons/plant.png"
   },
 ]
 
@@ -222,23 +381,112 @@ const dormitoryBuildingMapping = {
   },
 }
 
+const carPoints = [{longitude:121.507645,latitude:30.838272},
+  {longitude:121.507522,latitude:30.838608},
+  {longitude:121.507457,latitude:30.838792},
+  {longitude:121.507377,latitude:30.839308},
+  {longitude:121.507377,latitude:30.839543},
+  {longitude:121.50742,latitude:30.839764},
+  {longitude:121.50765,latitude:30.84033},
+  {longitude:121.507763,latitude:30.840722},
+  {longitude:121.507811,latitude:30.840925},
+  {longitude:121.507811,latitude:30.841132},
+  {longitude:121.5078,latitude:30.841265},
+  {longitude:121.50764,latitude:30.841694},
+  {longitude:121.507564,latitude:30.841855},
+  {longitude:121.507441,latitude:30.84209},
+  {longitude:121.507414,latitude:30.842177},
+  {longitude:121.507404,latitude:30.842366},
+  {longitude:121.507393,latitude:30.842435},
+  {longitude:121.507404,latitude:30.842578},
+  {longitude:121.507446,latitude:30.842725},
+  {longitude:121.507548,latitude:30.842937},
+  {longitude:121.507602,latitude:30.843066},
+  {longitude:121.507865,latitude:30.84331},
+  {longitude:121.508412,latitude:30.843605},
+  {longitude:121.508653,latitude:30.843766},
+  {longitude:121.50875,latitude:30.843831},
+  {longitude:121.508986,latitude:30.844218},
+  {longitude:121.509115,latitude:30.844388},
+  {longitude:121.509244,latitude:30.844476},
+  {longitude:121.509469,latitude:30.844623},
+  {longitude:121.509603,latitude:30.844678},
+  {longitude:121.509732,latitude:30.84472},
+  {longitude:121.509914,latitude:30.844757},
+  {longitude:121.510209,latitude:30.844793},
+  {longitude:121.510611,latitude:30.844743},
+  {longitude:121.510869,latitude:30.844687},
+  {longitude:121.511089,latitude:30.844669},
+  {longitude:121.511368,latitude:30.844683},
+  {longitude:121.512816,latitude:30.844918},
+  {longitude:121.512805,latitude:30.844982},
+  {longitude:121.512773,latitude:30.845572},
+  {longitude:121.514603,latitude:30.845475},
+  {longitude:121.514608,latitude:30.845429},
+  {longitude:121.514683,latitude:30.845365},
+  {longitude:121.514796,latitude:30.845346},
+  {longitude:121.514855,latitude:30.845365},
+  {longitude:121.515194,latitude:30.844859},
+  {longitude:121.515832,latitude:30.843754},
+  {longitude:121.514636,latitude:30.843233},
+  {longitude:121.511917,latitude:30.842035},
+  {longitude:121.511655,latitude:30.841924},
+  {longitude:121.511542,latitude:30.841846},
+  {longitude:121.511435,latitude:30.841929},
+  {longitude:121.511333,latitude:30.841962},
+  {longitude:121.511231,latitude:30.841971},
+  {longitude:121.511113,latitude:30.841952},
+  {longitude:121.511043,latitude:30.841883},
+  {longitude:121.510973,latitude:30.841805},
+  {longitude:121.510963,latitude:30.841694},
+  {longitude:121.509981,latitude:30.841736},
+  {longitude:121.509809,latitude:30.841819},
+  {longitude:121.507567,latitude:30.841833},
+  {longitude:121.506156,latitude:30.841846},
+  {longitude:121.506,latitude:30.841777},
+  {longitude:121.505995,latitude:30.840563},
+  {longitude:121.506,latitude:30.840475},
+  {longitude:121.506081,latitude:30.840296},
+  {longitude:121.506077,latitude:30.839292},
+  {longitude:121.507375,latitude:30.839311},
+  {longitude:121.507447,latitude:30.838864},
+  {longitude:121.507458,latitude:30.838776},
+  {longitude:121.507656,latitude:30.83826},
+  {longitude:121.507656,latitude:30.83826}]
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-    locationChange: false,
+    campus: "",
+    showCarRoute: "显示短驳车",
+    // locationChange: false,
     setting: {
-      latitude: defaultFengxianCenter.latitude,
-      longitude: defaultFengxianCenter.longitude,
+      latitude: '',
+      longitude: '',
       scale: 17,
       rotate: 10,
       showLocation: true,
       enablePoi: false,
     },
-    markers: []
+    markers: [],
+    polyline: [],
   },
+
+  handlerGohomeClick,
+  handlerGobackClick,
+  onShareAppMessage,
+
+  showCarRoute() {
+    if(this.data.showCarRoute === "显示短驳车") {
+      this.setData({polyline: [{points: carPoints, color: "#ff9900", width: 4}]})
+      this.setData({showCarRoute: "隐藏短驳车"})
+    }else {
+      this.setData({polyline: []})
+      this.setData({showCarRoute: "显示短驳车"})
+    }
+  },
+
+  jumpToApp() {},
 
   toNowLocation() {
 
@@ -254,37 +502,34 @@ Page({
     });
   },
 
-
-  handlerGohomeClick,
-  handlerGobackClick,
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad(options) {
     let markers = [];
 
     // 加载默认 Markers
     if(options.campus === "奉贤校区") {
 
+      console.groupCollapsed("地点数据");
       constPositions.forEach(point => {
         console.log("Const point = ", point);
 
         markers.push({
           id: point.id,
           joinCluster: true,
-          iconPath: "/freshman/assets/icons/yellow_arrow.png",
+          iconPath: point.iconPath,
           latitude: point.latitude,
           longitude: point.longitude,
           alpha: 0.75,
-          width: 30,
+          width: 28,
           height: 30,
           label: {
-            content: point.name
+            content: point.name,
           }
         });
       });
+      console.groupEnd();
     }
 
+    this.setData({campus: options.campus});
     let target = null;
     // 加载当前宿舍楼位置. 若为奉贤校区, 设置标记点, 并将地图中心设置为该宿舍楼位置
     if(options.campus === "奉贤校区") {
@@ -294,8 +539,16 @@ Page({
       target = building_pos;
     } else if(options.campus === "徐汇校区") {
       target = defaultXuhuiCenter;
-      this.setData({"setting.enablePoi": true})
-    } else {
+      this.setData({"setting.enablePoi": true});
+    }else if(options.campus === "长桥校区") {
+      target = defaultChangqiaoCenter;
+      this.setData({"setting.scale": 19});
+      this.setData({"setting.enablePoi": true});
+    }else if(options.campus === "梅陇校区") {
+      target = defaultMeilongCenter;
+      this.setData({"setting.scale": 19});
+      this.setData({"setting.enablePoi": true});
+    }else {
       console.error("无法获取校区信息, 使用默认奉贤校区目标点");
       target = defaultFengxianCenter;
     }
@@ -313,7 +566,7 @@ Page({
         longitude: target.longitude,
         latitude: target.latitude,
       })
-    }else {
+    }else if(target === defaultFengxianCenter || options.campus === "奉贤校区"){
       markers.push({
         id: 0,
         iconPath: "/freshman/assets/icons/red_arrow.png",
@@ -324,17 +577,52 @@ Page({
         latitude: target.latitude,
         label: {
           content: target.name,
+
+        }
+      })
+    }else if(target === defaultMeilongCenter) {
+      markers.push({
+        id: 0,
+        iconPath: "/freshman/assets/icons/red_arrow.png",
+        joinCluster: true,
+        width: 50,
+        height: 50,
+        longitude: target.longitude,
+        latitude: target.latitude,
+      })
+    }else if(target === defaultChangqiaoCenter) {
+      markers.push({
+        id: 0,
+        iconPath: "/freshman/assets/icons/red_arrow.png",
+        joinCluster: true,
+        width: 50,
+        height: 50,
+        longitude: target.longitude,
+        latitude: target.latitude,
+        label: {
+          content: target.name,
+
         }
       })
     }
 
 
+    this.jumpToApp = function() {
+      wx.openLocation({
+        latitude: target.latitude,
+        longitude: target.longitude,
+        name: target.name,
+        scale: 17,
+        address: target.name
+      })
+    }
+
     let context = wx.createMapContext('campusMap', this);
 
     // 设置地图中心点为宿舍楼
     context.moveToLocation({
-      longitude: target.longitude,
       latitude: target.latitude,
+      longitude: target.longitude,
     });
 
     // 设置标记点. 注意, 通过 context 设置标记点可能无法在开发者工具上显示
@@ -368,7 +656,7 @@ Page({
                 confirmText: '好的',
                 success(res) {
                   if(res.confirm) {
-                    this.openSetting();
+                    wx.openSetting();
                   } else {
                     console.log('get location fail');
                   }
@@ -388,52 +676,7 @@ Page({
     });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
+  // onReady() {},
+  // onShow() {}
 
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
 })

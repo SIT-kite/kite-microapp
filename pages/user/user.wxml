@@ -1,5 +1,6 @@
+<!-- pages/user/user.wxml -->
 
-	<image class='background' src="/assets/pic/background.png" mode="aspectFill"></image>
+<background type="index" />
 
 <view class="main">
 
@@ -15,22 +16,30 @@
 		<open-data class="nickname ellipsis" type="userNickName"
 			default-text="微信用户" />
 
-		<view class="verified {{ isStudent }}">
-			<image src="/assets/icons/{{ isStudent ? 'right' : 'wrong' }}.png" />
-			{{ isStudent ? "已" : "未" }}实名
+		<view class="verified {{ verified }}">
+			<image src="/assets/icons/{{ verified ? 'right' : 'wrong' }}.png" />
+			{{ verified ? "已" : "未" }}实名
 		</view>
 
-		<navigator class="verify" url="/pages/verification/verification">
+		<navigator class="verify" url="/pages/verify/verify">
 			认证<text class="arrow">></text>
 		</navigator>
 
 	</view>
 
 	<!-- 未登录 -->
-	<button wx:else class="card user login" bindtap="login">
-		<image class="login-icon" src="/assets/icons/person/wechat.png" />
-		点此使用微信登录
-	</button>
+	<block wx:else>
+
+		<!-- <button class="card user login" bindtap="login">
+			<image class="login-icon" src="/assets/icons/person/wechat.png" />
+			点此使用微信登录
+		</button> -->
+		<button class="card user login"
+			bindtap="{{ needRegister ? 'register' : 'login' }}">
+			<image class="login-icon" src="/assets/icons/person/wechat.png" />
+			{{ needRegister ? '点此授权' : '点此使用微信登录' }}
+		</button>
+	</block>
 
 	<navigator class="card menu-option" url="/pages/about/about">
 		关于我们<text class="arrow">></text>
@@ -39,5 +48,9 @@
 	<button class="card menu-option" open-type="feedback">
 		意见反馈<text class="arrow">></text>
 	</button>
+
+	<navigator class="card menu-option" url="/pages/debug/debug">
+		调试工具<text class="arrow">></text>
+	</navigator>
 
 </view>

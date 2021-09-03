@@ -1,8 +1,9 @@
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick"></navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view wx:if="{{show}}">
 
-	<!--微信用户信息昵称  问候语 头像-->
-	<view bindtap="bindViewTap" class="userinfo">
+	<!-- 头像 问候语 -->
+	<view bindtap="bindViewTap" class="header">
 		<!-- default-avatar:
 			https://www.zhihu.com/question/30059362/answer/301792813
 			https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.png -->
@@ -13,11 +14,13 @@
 
 	<!-- 学生详细信息 -->
 	<view class="stu_info">
-		<!-- 图片部分 -->
+
+		<!-- 配图 -->
 		<view class="image_wrap">
 			<image mode="aspectFill" src="/freshman/assets/pic/detail_bg.png" />
 		</view>
-		<!-- 文字部分 -->
+
+		<!-- 文本 -->
 		<view class="info_wrap">
 			<navigator url="/freshman/pages/inputInfo/inputInfo?isHidden=none">
 				<image mode="aspectFill" src="/freshman/assets/modify.png"/>
@@ -42,12 +45,14 @@
 		<navigator class="navigator red"
 		url="/freshman/pages/shareAnalysis/shareAnalysis">迎新画像</navigator>
 
-		<navigator class="navigator red" url="/freshman/pages/guide/guide?campus={{userDetail.campus}}&building={{userDetail.building}}">报到指南</navigator>
+		<navigator class="navigator red"
+			url="/freshman/pages/guide/guide?campus={{userDetail.campus}}&building={{userDetail.building}}"
+			>报到指南</navigator>
 
 	</view>
 
 	<!--半圆背景-->
 	<view class="background"
-	style="top:calc( 30rpx +  60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
+	style="top: calc( 30rpx + 60rpx + 180rpx + 40rpx + {{navBarCurrentHeight}}px )"></view>
 
 </view>

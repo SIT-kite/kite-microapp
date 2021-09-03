@@ -1,85 +1,118 @@
-// index.js
-// 获取应用实例
-import {
-  handlerGohomeClick,
-  handlerGobackClick
-} from '../../../utils/navBarUtils';
+// pages/index/index.js
+
+import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import request   from "../../../utils/request";
+import getHeader from "../../../utils/getHeader";
+import loading   from "../../../utils/loading";
 
 const app = getApp();
 const searchSuffix = `/search/notice/?query=`;
-const requestUtils = require("../../../utils/requestUtils");
-const promisify = require('../../../utils/promisifyUtils');
-const wxShowModal = promisify(wx.showModal);
-import getHeader from "../../../utils/getHeader";
 
 
 Page({
+
   data: {
     content: "",
     history_content: []
   },
-  onLoad: function() {
-    if(wx.getStorageSync('searchHistoryList')){
-      this.setData({history_content: wx.getStorageSync('searchHistoryList')})
+
+  onLoad() {
+    const history_content = wx.getStorageSync("searchHistoryList");
+    if (history_content) {
+      this.setData({ history_content });
     }
   },
-  inputContent: function(e) {
+
+  inputContent(e) {
     this.setData({ content: e.detail.value });
   },
-  clearContent: function() {
+
+  clearContent() {
     this.setData({ content: ""});
   },
-  contentConfirm: function() {
-    if(this.data.content != "" ){
-      wx.setStorageSync('searchKeyWord', this.data.content);
-      // console.log(wx.getStorageSync('searchKeyWord'))
-      var history_content = this.data.history_content;
-      if(!history_content.includes(this.data.content)){
-        history_content.unshift(this.data.content);
-      }else {
-        history_content.splice(history_content.indexOf(this.data.content),1);
-        history_content.unshift(this.data.content);
-      }
-      this.setData({history_content: history_content});
-      wx.setStorageSync('searchHistoryList', this.data.history_content);
 
-      const content = this.data.content;
-      let url = `${app.globalData.commonUrl}${searchSuffix}${content}`;
-      let header = getHeader("urlencoded", app.globalData.token);
-      let data = {};
-      let contentConfirm = requestUtils.doGET(url, data, header);
-      contentConfirm.then((res) => {
+  search() {
 
-        let data = res.data.data
-        const text = this.data.content
-        const getInf = (str, key) => str.replace(new RegExp(`<b>${key}</b>`, 'g'), `%%${key}%%`).split('%%');
-        for (let i = 0; i < data.length; i++) {
-          let words = data[i];
-          let title = words["title"];
-          words["title"] = getInf(title, text);
-        }
-        for (let i = 0; i < data.length; i++) {
-          let words = data[i];
-          let content = words["content"];
-          words["content"] = getInf(content, text);
-        }
+    const content = this.data.content;
 
-        wx.setStorageSync('searchResultList', data);
-        wx.navigateTo({
-          url: '../mini-result/mini-result',
-        })
-      }).catch(res => {
-        wxShowModal({
-          content: "无相关内容",
-        });
+    if (content !== "") {
+
+      wx.setStorageSync("searchKeyWord", content);
+      // console.log(wx.getStorageSync("searchKeyWord"))
+
+      const history = this.data.history_content;
+      const index = history.indexOf(content);
+      index !== -1 && history.splice(index, 1);
+      history.unshift(content);
+
+      this.setData({ history_content: history });
+      wx.setStorageSync("searchHistoryList", history);
+
+      loading({
+        title: "正在搜索…",
+
+        callback: async () => await request({
+          url: `${app.globalData.commonUrl}${searchSuffix}${content}`,
+          header: getHeader("urlencoded", app.globalData.token)
+        }).then((res) => {
+
+          let results = res.data.data;
+          const text = this.data.content;
+
+          const getInf = (str, key) => str.replace(
+            new RegExp(`<b>${key}</b>`, 'g'), `%%${key}%%`
+          ).split('%%');
+
+          for (let i = 0; i < results.length; i++) {
+            let result = results[i];
+            result.title = getInf(result.title, text);
+            result.content = result.content.replace(/\n|发布$/g, "");
+            result.content = getInf(result.content, text);
+          }
+
+          wx.setStorageSync("searchResultList", results);
+
+          wx.navigateTo({ url: "../mini-result/mini-result" });
+
+        }).catch(
+          () => wx.showModal({
+            content: "找不到相关内容",
+            showCancel: false
+          })
+        )
+
       })
-
     }
   },
-  clearHistoryContent: function() {
-    wx.removeStorageSync('searchHistoryList');
-    this.setData({history_content:[]});
+
+  inputHistoryContent(e) {
+    this.setData({ content: e.target.dataset.word });
   },
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick
+
+  searchHistoryContent(e) {
+    this.inputHistoryContent(e);
+    this.search();
+  },
+
+  clearHistoryContent() {
+    wx.showModal({
+      title: "是否清空搜索历史",
+      content: "确定要清空搜索历史吗？",
+      success(res) {
+        if (res.confirm) {
+          wx.removeStorageSync("searchHistoryList");
+          this.setData({ history_content: [] });
+        }
+      }
+    })
+  },
+
+  handlerGohomeClick,
+  handlerGobackClick,
+
+  onShareAppMessage: () => ({
+    title: "用上应小风筝，便捷搜索全校通知公告",
+    path: "pages/index/index"
+  })
+
 })

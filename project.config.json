@@ -1,8 +1,6 @@
 {
   "description": "项目配置文件",
-  "packOptions": {
-    "ignore": []
-  },
+  "compileType": "miniprogram",
   "setting": {
     "urlCheck": true,
     "es6": true,
@@ -39,12 +37,26 @@
     "packNpmRelationList": [],
     "minifyWXSS": false
   },
-  "compileType": "miniprogram",
   "libVersion": "2.17.0",
   "appid": "wxfbc5fc9c0a0be9f9",
   "projectname": "kite-microapp",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "archive"
+      },
+      {
+        "type": "file",
+        "value": ".eslintrc.json"
+      }
+    ]
+  },
   "debugOptions": {
     "hidedInDevtools": []
+  },
+  "watchOptions": {
+    "ignore": []
   },
   "isGameTourist": false,
   "simulatorType": "wechat",

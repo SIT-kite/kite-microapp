@@ -1,0 +1,38 @@
+/* electricity/pages/index/index.wxss */
+
+page > view {
+	margin: .5em 1em;
+}
+
+.input-container {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	/* font-family: Consolas, monospace; */
+}
+
+.input {
+	box-sizing: border-box;
+	height: 2em;
+	margin-inline-start: 1ch;
+	border-bottom: 2px solid;
+	text-align: center;
+}
+
+.input.building {
+	width: 2em;
+}
+.input.room {
+	width: 3em;
+}
+
+.button-container {
+	display: flex;
+	justify-content: center;
+}
+
+.button {
+	width: auto !important;
+	margin: .5em !important;
+	border: 2px solid;
+}

@@ -1,27 +1,39 @@
-<!--index.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
-</navBar>
+<!--pages/index/index.wxml-->
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view id="search-page">
-    <view id="search-bar">
-        <view id="form_input">
-            <view id="container">
-                <input id="input" type="text" auto-focus="true" placeholder="搜索" confirm-type="search" value="{{content}}" bindinput="inputContent" bindconfirm="contentConfirm"></input>
-            </view>
-            <view id="clear-button" hidden="{{!content}}" bindtap="clearContent">
-                <icon type="clear"></icon>
-            </view>
-        </view>
-        <icon id="search-button" type="search" size="80rpx" bindtap="contentConfirm"></icon>
-    </view>
-    <view id="history-area">
-        <view id="his-title">
-            <text id="name">搜索历史</text>
-            <image src="/search/images/delete.png" id="his-delete" bindtap="clearHistoryContent" hidden="{{!history_content.length}}"></image>
-        </view>
-        <block wx:if="{{history_content.length}}">
-            <view id="words-block"> 
-                <text class="words-container" wx:for="{{history_content}}" bindtap="contentConfirm">{{item}}</text>
-            </view>
-        </block>
-    </view>
+
+	<view id="search-bar">
+		<view id="form_input">
+			<view id="container">
+				<input id="input" type="text" auto-focus="true" placeholder="搜索"
+					confirm-type="search" value="{{content}}"
+					bindinput="inputContent" bindconfirm="contentConfirm" />
+			</view>
+			<view id="clear-button" hidden="{{!content}}" bindtap="clearContent">
+				<icon type="clear" />
+			</view>
+		</view>
+		<icon id="search-button" type="search" size="80rpx" bindtap="search" />
+	</view>
+
+	<view id="history-area">
+		<view id="his-title">
+			<text id="name">搜索历史</text>
+			<image src="/search/images/delete.png" id="his-delete"
+				bindtap="clearHistoryContent" hidden="{{!history_content.length}}" />
+		</view>
+		<block wx:if="{{ history_content.length > 0 }}">
+			<view id="words-block">
+				<text class="words-container" wx:for="{{history_content}}"
+					wx:key="item" data-word="{{item}}"
+					bindtap="searchHistoryContent" bindlongpress="inputHistoryContent">{{item}}</text>
+			</view>
+			<view class="words-tip">点击搜索，长按输入</view>
+		</block>
+		<block wx:else>
+			<view class="words-tip">暂无搜索历史</view>
+		</block>
+	</view>
+
 </view>

@@ -192,7 +192,14 @@ page {
   flex-direction: column;
   align-items: center;
   padding: 100px;
-  border: 0.1px solid #58A2E7;
+  border: 0.5px solid #58A2E7;
+}
+.text{
+  width: 200px;
+  display: flex;
+  color: #377ec0;
+  font-weight: bold;
+  justify-content: center;
 }
 /*2021-8-12 保持小程序一致性删除深色模式*/
 /*

@@ -1,4 +1,5 @@
-<!--pages/welcome/welcome.wxml-->
+<!-- pages/welcome/welcome.wxml -->
+
 <view class="main">
 
     <!-- image -->
@@ -6,7 +7,7 @@
         <image src="/freshman/assets/pic/welcome_bg.png" />
     </view>
     <view class="text-wrap">
-        <text class="title">上应大欢迎你</text>
+        <text class="title">上应大欢迎你！</text>
         <text class="text">请点击下方按钮</text>
         <text class="text">完善信息、查阅寝室</text>
         <text class="text">开启大学生活的第一站</text>

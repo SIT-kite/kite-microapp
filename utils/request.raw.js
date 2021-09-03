@@ -1,3 +1,5 @@
+// request.raw.js
+
 // request(obj): Promise
-import promisifyNoArg from "./promisify.noArg";
-export default promisifyNoArg(wx.request);
+import promisify from "./promisify";
+export default promisify(wx.request);

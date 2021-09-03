@@ -1,13 +1,13 @@
 <!--pages/all/all.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
-</navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="all-block">
-    <view class="item" id="{{index}}" wx:for="{{resultList}}" bindtap="goDetails">
-      <text><text class="{{item == searchKeyWord ? 'searchHighTitle' : 'title' }}" wx:for="{{item.title}}">{{item}}</text></text>
-      <text><text class="{{item == searchKeyWord ? 'searchHighDigest' : 'digest' }}" wx:for="{{item.content}}">{{item}}</text></text>
-      <view class="dep-time">
-        <text class="department">{{item.department}}</text>
-        <text class="time">{{item.publish_time}}</text>
-      </view>
-    </view>
+	<view class="item" id="{{index}}" wx:for="{{resultList}}" bindtap="goDetails">
+		<text><text class="{{item == searchKeyWord ? 'searchHighTitle' : 'title' }}" wx:for="{{item.title}}">{{item}}</text></text>
+		<text><text class="{{item == searchKeyWord ? 'searchHighDigest' : 'digest' }}" wx:for="{{item.content}}">{{item}}</text></text>
+		<view class="dep-time">
+			<text class="department">{{item.department}}</text>
+			<text class="time">{{item.publish_time}}</text>
+		</view>
+	</view>
 </view>

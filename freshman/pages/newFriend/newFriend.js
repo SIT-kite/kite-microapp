@@ -1,14 +1,16 @@
 // freshman/pages/newFriend/newFriend.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
-import copyText   from "../../../utils/copyText.js";
 import catchError from "../../../utils/requestUtils.catchError";
 import getHeader  from "../../../utils/getHeader";
+import onShareAppMessage from "../../js/onShareAppMessage";
+import request from "../../../utils/request";
 
 const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
 const requestUtils = require(utlls + "requestUtils");
 
 const app = getApp();
+const gData = app.globalData;
 
 Page({
 
@@ -22,24 +24,32 @@ Page({
   // navBar handler
   handlerGohomeClick,
   handlerGobackClick,
+  onShareAppMessage,
 
-  copyText,
+  copy(e) {
+    const dataset = e.target.dataset;
+    wx.setClipboardData({
+      data: dataset.text,
+      success: () => wx.showToast({
+        title: `复制${dataset.type}成功`
+      })
+    });
+  },
 
   getPageData() {
 
-    wx.showLoading({
-      title: "加载中",
-      mask: true
-    });
+    wx.showLoading({ title: "正在加载…", mask: true });
 
-    let promiseList = [];
+    const { account, secret } = gData.userInfo;
 
-    let url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/roommate`;
-    let data = { "secret": `${app.globalData.userInfo.secret}` };
-    let header = getHeader("urlencoded", app.globalData.token);
+    const promiseList = [];
 
     // 获取室友信息
-    var getRoommates = requestUtils.doGET(url, data, header).then(res => {
+    var getRoommates = request({
+      url: `${gData.apiUrl}/freshman/${account}/roommate`,
+      header: getHeader("urlencoded", gData.token),
+      data: { "secret": `${secret}` }
+    }).then(res => {
       var roommatesList = res.data.data.roommates;
       roommatesList.forEach(roommate => {
         roommate.lastSeen = timeUtils.getIntervalToCurrentTime(roommate.lastSeen);
@@ -59,20 +69,19 @@ Page({
         roommates: roommatesList,
         isHidden: true
       });
-      app.globalData.roommates = roommatesList;
+      gData.roommates = roommatesList;
       return res;
     });
 
     promiseList.push(getRoommates);
 
     // 可能认识的人
-    if (app.globalData.userDetail.visible) {
-
-      url = `${app.globalData.commonUrl}/freshman/${app.globalData.userInfo.account}/familiar`;
-      data = { "secret": `${app.globalData.userInfo.secret}` };
-      header = getHeader("urlencoded", app.globalData.token);
-
-      var getFamilies = requestUtils.doGET(url, data, header).then(res => {
+    if (gData.userDetail.visible) {
+      const getFamilies = request({
+        url: `${gData.apiUrl}/freshman/${account}/familiar`,
+        header: getHeader("urlencoded", gData.token),
+        data: { "secret": `${secret}` }
+      }).then(res => {
         var familiarList = res.data.data.people_familiar;
         familiarList.forEach(familiar => {
           familiar.genderImage =
@@ -99,7 +108,7 @@ Page({
           familiar: familiarList,
           isHidden: false
         });
-        app.globalData.familiar = familiarList;
+        gData.familiar = familiarList;
       });
 
       promiseList.push(getFamilies);
@@ -116,20 +125,20 @@ Page({
   // 初始化页面数据
   pageDataInit() {
 
-    if (app.globalData.roommates === null) {
+    if (gData.roommates === null) {
       // 本地没有缓存的信息
       this.getPageData();
     } else {
       // 本地有可能认识人和室友的信息
-      if (app.globalData.userDetail.visible) {
+      if (gData.userDetail.visible) {
         this.setData({
-          roommates: app.globalData.roommates,
-          familiar: app.globalData.familiar,
+          roommates: gData.roommates,
+          familiar: gData.familiar,
           isHidden: false
         });
       } else {
         this.setData({
-          roommates: app.globalData.roommates,
+          roommates: gData.roommates,
           isHidden: true
         });
       }
@@ -157,11 +166,6 @@ Page({
 
   onPullDownRefresh() {
     this.pageDataFresh();
-  },
-
-  onShareAppMessage: () => ({
-    title: "上应小风筝",
-    path: "pages/index/index"
-  })
+  }
 
 })
