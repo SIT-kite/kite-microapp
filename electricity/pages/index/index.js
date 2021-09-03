@@ -33,10 +33,9 @@ const numberStringFilter = str => str
   .join("")
   .replace(/^0+(.+)/, "$1");
 
-const dateTimeFormat = Intl.DateTimeFormat("zh-Hans", {
-  dateStyle: "long",
-  timeStyle: "short"
-});
+const dateTimeFormat = {
+  format: date => date.toString()
+};
 
 Page({
 
