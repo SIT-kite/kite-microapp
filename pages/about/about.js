@@ -41,6 +41,7 @@ const html =
 <li class="li">2019级&ensp;<span class="narrow">　　　　　　机械工程学院</span>&ensp;zdy180108</li>
 <li class="li">2020级&ensp;<span class="narrow">计算机科学与信息工程学院</span>&ensp;Pony-Zhang</li>
 <li class="li">2020级&ensp;<span class="narrow">计算机科学与信息工程学院</span>&ensp;Devin</li>
+<li class="li">2020级&ensp;<span class="narrow">           机械工程学院</span>&ensp;记者团廾匸</li>
 </ul>`;
 
 Page({
