@@ -134,7 +134,8 @@ Page({
   }),
 
   call(e) {
-    const phone = e.currentTarget.dataset.phone;
+    let phone = e.currentTarget.dataset.phone;
+    phone.substring(0,1) ==0?'':phone= '021'+phone
     if (phone == '') {
       app.msg("电话号码为空，无法拨打");
     } else {
@@ -144,6 +145,7 @@ Page({
 
   copy(e) {
     let phone = e.currentTarget.dataset.phone
+    phone.substring(0,1) ==0?'':phone= '021'+phone
     wx.setClipboardData({ data: phone })
   },
 
