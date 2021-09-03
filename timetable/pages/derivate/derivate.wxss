@@ -1,0 +1,59 @@
+/* timetable/pages/derivate/derivate.wxss */
+.background{
+    background-color: #E4EBF5;
+    width: 100%;
+    height: 90%;
+}
+.data{
+    display: flex;
+    margin-top: 0rpx;
+    width: 100vw;
+    height: 200rpx;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+.title{
+    margin-top: 30rpx;
+    color:#14446A;
+    font-size: 40rpx;
+    font-weight: bold;
+}
+.url{
+    display: flex;
+    margin-left: 0rpx;
+    margin-top: 5rpx;
+    border-radius: 10rpx;
+    width: 80vw;
+    padding: 12rpx;
+    overflow: hidden;
+    height: 50rpx;
+    box-shadow: 6rpx 6rpx 12rpx #c8d0e7, 
+    -4rpx -4rpx 10rpx white;
+    flex-direction:row;
+    justify-content: space-between;
+}
+.url_text{
+    font-size: 34rpx;
+    width: 65vw;
+    color: #7595e7;
+    overflow: hidden;
+}
+
+.icon{
+    width: 55rpx;
+    height: 55rpx;
+}
+.content{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+.td{
+    margin-left: 8vw;
+    width: 85vw;
+}
+.instructions{
+    color: #9baacf;
+    font-size: 32rpx;
+}

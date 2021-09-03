@@ -82,9 +82,9 @@ const request = option => new Promise(
                 ? resolve(res)
                 : reject(getError("code", res))
 
-            : typeof res.data === "string"
-              ? resolve(res)
-              : reject(getError("data", res))
+              : typeof res.data === "string"
+                ? resolve(res)
+                : reject(getError("data", res))
 
             : reject(getError("res", res)),
 

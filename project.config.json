@@ -1,77 +1,76 @@
 {
-	"description": "项目配置文件",
-	"compileType": "miniprogram",
-	"setting": {
-		"es6": true,
-		"postcss": false,
-		"minified": true,
-		"urlCheck": true,
-		"uglifyFileName": false,
-		"checkSiteMap": false,
-		"coverView": true,
-		"enhance": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"disableUseStrict": false,
-		"uploadWithSourceMap": true,
-		"preloadBackgroundData": false,
-		"newFeature": true,
-		"nodeModules": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"checkInvalidKey": true,
-		"compileHotReLoad": true,
-		"useMultiFrameRuntime": true,
-		"useApiHook": true,
-		"useApiHostProcess": false,
-		"enableEngineNative": false,
-		"useIsolateContext": true,
-		"userConfirmedBundleSwitch": false,
-		"packNpmManually": false,
-		"packNpmRelationList": [],
-		"minifyWXSS": false,
-		"showES6CompileOption": false
-	},
-	"libVersion": "2.17.0",
-	"appid": "wxfbc5fc9c0a0be9f9",
-	"projectname": "kite-microapp",
-	"packOptions": {
-		"ignore": [
-			{
-				"type": "folder",
-				"value": "archive"
-			},
-			{
-				"type": "file",
-				"value": ".eslintrc.json"
-			}
-		]
-	},
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"watchOptions": {
-		"ignore": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"list": []
-		},
-		"conversation": {
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"miniprogram": {
-			"list": []
-		}
-	}
+  "description": "项目配置文件",
+  "compileType": "miniprogram",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": false,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": false,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": true,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": false,
+    "showES6CompileOption": false
+  },
+  "libVersion": "2.17.0",
+  "appid": "wxfbc5fc9c0a0be9f9",
+  "projectname": "kite-microapp",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "archive"
+      },
+      {
+        "type": "file",
+        "value": ".eslintrc.json"
+      }
+    ]
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "watchOptions": {
+    "ignore": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": []
+    }
+  }
 }

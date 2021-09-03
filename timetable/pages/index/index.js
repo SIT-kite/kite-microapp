@@ -32,66 +32,7 @@ let code = false
 let qrcodeWidth = 150
 const quality = 1
 let codeText = 'dwdwefewfw'
-let table = [
-  {
-    campu:"奉贤校区",
-    time_index:[
-    ["8:20","9:05"],
-    ["9:10","9:55"],
-    ["10:15","11:00"],
-    ["11:05","11:50"],
-    ["13:00","13:45"],
-    ["13:50","14:35"],
-    ["14:55","15:40"],
-    ["15:45","16:30"],
-    ["18:00","18:45"],
-    ["18:50","19:35"],
-    ["19:40","20:25"]
-  ],
-  first:[
-    ["8:20","9:05"],
-    ["9:10","9:55"],
-    ["10:25","11:00"],
-    ["11:05","12:00"],
-    ["13:00","13:45"],
-    ["13:50","14:35"],
-    ["14:55","15:40"],
-    ["15:45","16:30"],
-    ["18:00","18:45"],
-    ["18:50","19:35"],
-    ["19:40","20:25"]
-  ],
-  second:[
-    ["8:20","9:05"],
-    ["9:10","9:55"],
-    ["10:15","11:00"],
-    ["11:05","11:45"],
-    ["13:00","13:45"],
-    ["13:50","14:35"],
-    ["14:55","15:40"],
-    ["15:45","16:30"],
-    ["18:00","18:45"],
-    ["18:50","19:35"],
-    ["19:40","20:25"]
-  ]
-},
-{
-  campu:"徐汇校区",
-  time_index:[
-  ["8:00","8:45"],
-  ["8:50","9:35"],
-  ["9:55","10:40"],
-  ["10:45","11:30"],
-  ["13:00","13:45"],
-  ["13:50","14:35"],
-  ["14:55","15:40"],
-  ["15:45","16:30"],
-  ["18:00","18:45"],
-  ["18:50","19:35"],
-  ["19:40","20:25"]
-  ]
-},
-]
+let table = []
 let list = []
 Page({
   data: {
@@ -119,12 +60,14 @@ Page({
     let calendar = requestUtils.doGET(url_calendar, data_calendar, header);
     calendar.then((res) => {
       data_calendar = res.data.data
+      data_calendar.start = data_calendar.start.replace(/-/g, '/')
       _this.setData({
         calendar: data_calendar,
         toschool : data_calendar.start
       })
       let year = data_calendar.year;
       let semester = data_calendar.semester;
+      _this.time(data_calendar.start, new Date());
       _this.setTimetable(year,semester,header)
       wx.setStorageSync('timetable_calendar', data_calendar)
     })
@@ -135,7 +78,7 @@ Page({
     let Data;
     let Week;
     let data_timetable = {};
-    let url_timetable = `${app.globalData.commonUrl}${timeTableSuffix}?year=${'2021'}&semester=${semester}`;
+    let url_timetable = `${app.globalData.commonUrl}${timeTableSuffix}?year=${year}&semester=${semester}`;
     let timeTable = requestUtils.doGET(url_timetable, data_timetable, header);
     timeTable.then((res) => {
       data_timetable = res.data.data.timeTable
@@ -154,7 +97,6 @@ Page({
   time (schoolholidaydirectory, giventime) {
     let _this = this
     let date = _this.data.date
-    schoolholidaydirectory = schoolholidaydirectory.replace(/-/g, '/');
     schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory));
     giventime = Date.parse(new Date(giventime));
     let this_week = timeUtils.getIntervalToCurrentWeek(schoolholidaydirectory, giventime);
@@ -174,10 +116,9 @@ Page({
     })
     let nowdate = new Date();
     nowdate = nowdate.getDay() !=0|| 7;
-    if (_this.data.choosedday.length == []) {
-      _this.data.choosedday.week = nowdate
-    } else if (_this.data.choosedday.week == 1) {nowdate = 1}
-      else if (_this.data.choosedday.week == 0) {nowdate = 7}
+    if (_this.data.choosedday.length == []) {_this.data.choosedday.week = nowdate}
+    else if (_this.data.choosedday.week == 1) {nowdate = 1}
+    else if (_this.data.choosedday.week == 0) {nowdate = 7}
     _this.setData({
       date: date,
       days: _this.data.days,
@@ -225,7 +166,6 @@ Page({
     if (wx.getStorageSync('timetableMode') == 0) {
     wx.setStorageSync('timetableMode',1)}
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
-    _this.time(_this.data.toschool, new Date());
   },
 
   onLoad (options) {
@@ -233,9 +173,10 @@ Page({
     let course_data
     let course_week
     _this.readData();
-    if (_this.data.list.length == 0) {
+    if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) {
       _this.setdata();
     } else {
+      _this.time(_this.data.toschool, new Date());
       course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
       course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
     }
