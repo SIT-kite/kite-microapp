@@ -175,15 +175,18 @@ Page({
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
   },
 
-  certification(){ 
-    app.globalData.identity 
-    ? '' 
-    :wx.showModal({ 
+  identityJudgment(){
+    return app.globalData.identity != undefined&&app.globalData.identity.studentId != undefined&&app.globalData.identity.oaSecret != undefined
+  },
+
+  identity(){ 
+    if(!this.identityJudgment()){
+     wx.showModal({ 
       showCancel: false, 
       content: '需要实名认证哦', 
       complete: () => { 
         wx.navigateTo({ url: '/pages/verify/verify' })} 
-    }); 
+    })}
   }, 
  
   onLoad (options) {
@@ -192,8 +195,8 @@ Page({
     let time 
     let course_week
     _this.readData();
-    _this.certification(); 
-    if(app.globalData.identity!=undefined){ 
+    _this.identity(); 
+    if(_this.identityJudgment()){ 
     if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) {
       _this.setdata();
     } else {
@@ -276,7 +279,7 @@ Page({
    */
   onShow () {
     let _this = this 
-    if(app.globalData.identity!=undefined){ 
+    if(_this.identityJudgment()){ 
     if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) { 
       _this.setdata(); 
     } 
@@ -321,10 +324,11 @@ Page({
   tapDays (e) {
     let _this = this;
     let date = e.currentTarget.dataset.days.week;
+    console.log(date)
     this.data.choosedday.week = date
     this.setData({ choosedday: { week: date } })
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
-    _this.setData({ list: _this.data.list, course_data: course_data });
+    _this.setData({ course_data: course_data });
   },
 
   tapActivity (e) {
@@ -349,7 +353,7 @@ Page({
     _this.changeTime(_this.data.toschool, sliderChange);
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     let course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
-    _this.setData({ list: _this.data.list, course_data: course_data ,course_week:course_week});
+    _this.setData({course_data: course_data ,course_week:course_week});
   },
   bindchange(e) {
     let index = e.detail.current;
@@ -371,7 +375,7 @@ Page({
     _this.changeTime(_this.data.toschool, this_week)
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     let course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
-    _this.setData({ list: _this.data.list, course_data,course_week });
+    _this.setData({ course_data,course_week });
   },
 
   bindchangeday(e) {
@@ -402,7 +406,6 @@ Page({
       navState_day: index,
       page_day,
       choosedday: _this.data.choosedday,
-      ist: _this.data.list,
       course_data
     })
   },
