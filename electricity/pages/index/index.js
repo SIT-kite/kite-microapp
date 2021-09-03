@@ -69,18 +69,18 @@ Page({
 
   getRoomId() {
 
-    const h = content => wx.showModal({ content, showCancel: false });
+    const m = content => wx.showModal({ content, showCancel: false });
 
     const { building, room } = this.data;
 
     if (building === "") {
-      h("请输入楼号");
+      m("请输入楼号");
     } else if (building === "0" || Number.parseInt(building) > 26) {
-      h("楼号应为 1 到 26 之间的某一个数。");
+      m("楼号应为 1 到 26 之间的某一个数。");
     } else if (room === "") {
-      h("请输入寝室号");
+      m("请输入寝室号");
     } else if (room.length < 3) {
-      h("寝室号至少为 3 位；格式为层号 + 房间号，例如1楼1室的寝室号为 101。");
+      m("寝室号至少为 3 位；格式为层号 + 房间号，例如1楼1室的寝室号为 101。");
     } else {
       wx.setStorageSync("electricity", { building, room });
       return `10${building}${room}`;
@@ -102,7 +102,7 @@ Page({
             room, balance, power,
             datetime: dateTimeFormat.format(new Date(ts))
           },
-          show: ""
+          show: "electricity"
         });
       }
     });

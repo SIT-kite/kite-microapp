@@ -146,6 +146,10 @@ Page({
       userDetail: (key, value) => (
         has([ "userDetail", "classmates", "roommates", "familiar" ], key) &&
         value !== null
+      ),
+      timetable: (key, value) => (
+        key === "timetable" &&
+        value !== null
       )
     };
 

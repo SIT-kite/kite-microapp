@@ -9,17 +9,17 @@ import request from "../../utils/request";
 const app = getApp();
 const gData = app.globalData;
 
-const getCanUpload = uploadInfo => Boolean(
-  uploadInfo.studentId && uploadInfo.oaSecret
+const getCanVerify = identity => Boolean(
+  identity.studentId && identity.oaSecret
 );
 
 Page({
 
   data: {
-    canUpload: false,
-    uploadInfo: {
-      studentId: null,
-      oaSecret: null,
+    canVerify: false,
+    identity: {
+      studentId: "",
+      oaSecret: "",
     }
   },
 
@@ -29,100 +29,107 @@ Page({
 
   bindId(e) {
     this.setData({
-      canUpload: getCanUpload(this.data.uploadInfo),
-      "uploadInfo.studentId": e.detail.value
+      "identity.studentId": e.detail.value,
+      canVerify: getCanVerify(this.data.identity)
     })
   },
 
   bindSecret(e) {
     this.setData({
-      canUpload: getCanUpload(this.data.uploadInfo),
-      "uploadInfo.oaSecret": e.detail.value
+      "identity.oaSecret": e.detail.value,
+      canVerify: getCanVerify(this.data.identity)
     })
   },
 
   verify() {
 
-    const uploadInfo = this.data.uploadInfo;
+    const identity = this.data.identity;
 
-    // 删除 uploadInfo 中值为空字符串的属性
-    for (let i in uploadInfo) {
-      if (uploadInfo[i] === "") {
-        delete uploadInfo[i];
-      }
+    if (identity.studentId === "") {
+      wx.showModal({ content: "请输入学号", showCancel: false })
+    } else if (identity.oaSecret === "") {
+      wx.showModal({ content: "请输入OA密码", showCancel: false })
+    } else {
+
+      this.setData({ identity });
+      wx.setStorageSync("identity", identity);
+
+      // 认证 POST identity
+      request({
+        method: "POST",
+        url: `${gData.apiUrl}/user/${gData.uid}/identity`,
+        header: getHeader("urlencoded", gData.token),
+        data: identity,
+      }).then(
+        res => {
+
+          console.log("POST identity", res);
+
+          Object.assign(gData, { identity, verified: true });
+          wx.setStorageSync("identity", identity);
+          wx.setStorageSync("verified", true);
+
+          wx.showModal({
+            title: "认证成功",
+            content: "认证成功！",
+            showCancel: false,
+            confirmText: "回到主页",
+            success: res => res.confirm && wx.navigateBack({delta: 1})
+          });
+
+        }
+      ).catch(
+        err => wx.showModal({
+          title: "哎呀，出错误了 >.<",
+          content:
+            err.symbol === request.symbols.codeNotZero &&
+            typeof err.res.data.msg === "string"
+            ? err.res.data.msg
+            : "业务逻辑出错",
+          showCancel: false
+        })
+      );
+
     }
-
-    this.setData({ uploadInfo });
-    wx.setStorageSync("identity", uploadInfo);
-    gData.identity = uploadInfo; 
-    
-    // 认证 POST identity
-    request({
-      method: "POST",
-      url: `${gData.apiUrl}/user/${gData.uid}/identity`,
-      header: getHeader("urlencoded", gData.token),
-      data: uploadInfo,
-    }).then(() => {
-
-      gData.verified = true;
-      wx.setStorageSync("verified", true);
-
-      wx.showModal({
-        title: "认证成功",
-        content: "认证成功！",
-        showCancel: false,
-        confirmText: "回到主页",
-        success: res => res.confirm && wx.navigateBack({delta: 1})
-      });
-
-    }).catch(
-      err => wx.showModal({
-        title: "哎呀，出错误了 >.<",
-        content:
-          err.symbol === request.symbols.codeNotZero &&
-          typeof err.res.data.msg === "string"
-          ? err.res.data.msg
-          : "业务逻辑出错",
-        showCancel: false
-      })
-    );
-
 
   },
 
-  // onLoad() {},
+  onLoad() {
+
+    const identity = gData.identity;
+
+    typeof identity === "object" &&
+    "studentId" in identity &&
+    "oaSecret" in identity &&
+    this.setData({
+      identity, canVerify: getCanVerify(identity)
+    });
+
+  },
 
   onReady() {
 
-    if (!gData.signPrivacyConfirm) {
-      wx.showModal({
-        title: "隐私信息提示",
-        content:
-          "小程序部分功能（如闲置交易、课程表）需要验证并" +
-          "使用您的身份信息，以提供功能或保证交易安全。",
-        showCancel: true,
-        cancelText: "我拒绝",
-        confirmText: "我已知晓",
-        confirmColor: "#4B6DE9",
-        success: result => {
-          if (!result.confirm) {
-            this.handlerGobackClick();
-          } else {
-            gData.signPrivacyConfirm = true;
-            wx.setStorageSync("signPrivacyConfirm", true);
-          }
+    !gData.signPrivacyConfirm &&
+    wx.showModal({
+      title: "隐私信息提示",
+      content:
+        "小程序部分功能（如闲置交易、课程表）需要验证并" +
+        "使用您的身份信息，以提供功能或保证交易安全。",
+      confirmText: "我已知晓",
+      confirmColor: "#4B6DE9",
+      cancelText: "我拒绝",
+      success: result => {
+        if (!result.confirm) {
+          this.handlerGobackClick();
+        } else {
+          gData.signPrivacyConfirm = true;
+          wx.setStorageSync("signPrivacyConfirm", true);
         }
-      });
-    }
+      }
+    });
 
   },
 
-  onShow() {
-    const identity = wx.getStorageSync("identity");
-    this.setData({
-      uploadInfo: identity,
-      canUpload: getCanUpload(identity)
-    });
-  }
+  // onShow() {}
 
 })

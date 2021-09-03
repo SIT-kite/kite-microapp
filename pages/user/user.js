@@ -36,10 +36,12 @@ Page({
 
   onShareAppMessage,
 
-  setDataTo(data, to) {
-    to[0] && this.setData(data);
-    to[1] && Object.assign(gData, data);
-    to[2] && Object.entries(data).forEach(
+  // setDataTo(target: [boolean, boolean, boolean], data)
+  // 按需向页面变量 this.data、全局变量 globalData 和本地缓存 Storage 设置变量
+  setDataTo(target, data) {
+    target[0] && this.setData(data);
+    target[1] && Object.assign(gData, data);
+    target[2] && Object.entries(data).forEach(
       ([key, value]) => wx.setStorageSync(key, value)
     );
   },
@@ -47,33 +49,28 @@ Page({
   // 向全局变量 globalData 和本地缓存 Storage 设置 uid、token、nickName 和 avatarUrl
   setUserData(data, token) { // token 不一定在 data 对象内，故单独设置参数获取
     const { uid, nickName, avatar: avatarUrl } = data;
-    this.setDataTo({ uid, token, nickName, avatarUrl }, [0, 1, 1]);
+    this.setDataTo([0, 1, 1], { uid, token, nickName, avatarUrl });
   },
 
-  // 从服务器端 GET user identity，并向所有位置设置变量 verified
-  loadIdentity() {
-
-    const set = (verified, identity) => this.setDataTo({ verified, identity }, [1, 1, 1]);
-
+  // 从服务器端 GET user identity，并设置变量 verified 和 identity
+  setIdentity() {
     // GET user identity
     request({
       url: `${gData.apiUrl}/user/${gData.uid}/identity`,
       header: getHeader("urlencoded", gData.token)
     }).then(
-      (res) => {
-        let response = res.data;
-        let identity = response.data;
-        set(true, identity);
+      res => {
+        this.setDataTo([0, 1, 1], { identity: res.data.data });
+        this.setDataTo([1, 1, 1], { verified: true });
       }
-    ).catch(err => {
-      set(false);
-      console.error("GET user identity 失败", err);
-    });
+    ).catch(
+      err => console.error("GET user identity 失败", err)
+    );
   },
 
   // 向页面变量 this.data 和全局变量 globalData 设置 isLogin
   setIsLogin() {
-    this.setDataTo({ isLogin: true }, [1, 1, 0]);
+    this.setDataTo([1, 1, 0], { isLogin: true });
   },
 
   login() {
@@ -99,12 +96,12 @@ Page({
           // res: { data: { code, data: { token, data: { uid, ... } } } }
           const data = res.data.data;
 
-          // loadIdentity() 会用到 setOthers() 向全局变量 globalData 设置的
-          // uid 和 token，所以必须先执行 setOthers()，再执行 loadIdentity()；
-          // loadIdentity() 会设置用户元素中的“已/未实名”，setIsLogin() 会显示
-          // 整个用户元素，所以最好先执行 loadIdentity()，再执行 setIsLogin()。
+          // setIdentity() 会用到 setUserData() 向全局变量 globalData 设置的
+          // uid 和 token，所以必须先执行 setUserData()，再执行 setIdentity()；
+          // setIsLogin() 会显示用户元素，setIdentity() 会设置被显示的用户元素
+          // 中的“已/未实名”，所以最好先执行 setIdentity()，再执行 setIsLogin()。
           this.setUserData(data.data, data.token);
-          this.loadIdentity();
+          this.setIdentity();
           this.setIsLogin();
 
         }).catch(err => {
@@ -166,7 +163,7 @@ Page({
         console.log("POST user 用户创建成功", res);
         const data = res.data.data;
 
-        // 新注册用户肯定没实名，所以跳过 loadIdentity()
+        // 新注册用户肯定没实名，所以跳过 setIdentity()
         this.setUserData(data, data.token);
         this.setIsLogin();
 

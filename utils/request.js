@@ -1,4 +1,7 @@
 // request.js
+
+// TODO: 支持 HTTP 状态码！！！
+
 // https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html
 /* wx.request({
 	url: String,
