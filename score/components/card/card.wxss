@@ -12,9 +12,10 @@
 .leftContainer {
   display: flex;
   flex-direction: column;
-  
+  width: 450rpx;
 }
 .nameText {
+  word-wrap: break-word;
   margin-bottom: 10rpx;
   font-weight: bold;
   font-size: 40rpx;
@@ -26,7 +27,7 @@
   color: rgba(0, 0, 0, 0.5);
 }
 .rightContainer {
-  margin-left: 40rpx;
+  margin-left: 0rpx;
   display: flex;
   align-items: center;
   width: 130rpx;
