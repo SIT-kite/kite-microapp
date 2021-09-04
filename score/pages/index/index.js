@@ -5,6 +5,8 @@ import getHeader from "../../../utils/getHeader";
 
 const app = getApp();
 const requestUtils = require("../../../utils/requestUtils");
+import catchError from "../../../utils/requestUtils.catchError";
+import request from "../../../utils/request";
 const scoreApiUrl = `${app.globalData.apiUrl}/edu/score?`;
 const header = getHeader("urlencoded", app.globalData.token);
 
@@ -59,10 +61,10 @@ Page({
     let yearInterval = parseInt(termInterval / 2 + termInterval % 2)
     if (termInterval % 2) this.setData({isFullTerm: false})
 
-    let baseSring = '20'
+    let baseString = '20'
     let yearList = []
     for (let i = 0, year = startYear; i < yearInterval; i++, year++) {
-      yearList.push(`${baseSring}${year}-${baseSring}${year + 1}`)
+      yearList.push(`${baseString}${year}-${baseString}${year + 1}`)
     }
     this.setData({yearList})
     this.setData({'scorePageInfo.yearIndex': yearList.length - 1})
@@ -108,21 +110,21 @@ Page({
   },
 
   //身份验证
-  getVerified() {
-    let identityUrl = `${app.globalData.apiUrl}/user/${app.globalData.uid}/identity`
-    let getVerified = requestUtils.doGET(identityUrl, {}, header)
-    getVerified.then().catch(() => {
-        app.globalData.verified = false;
-        wx.setStorageSync('verified', false)
-        app.globalData.identity = {}
-        wx.setStorageSync('identity', {})
-        wx.redirectTo({ url: '/pages/verify/verify' })
-    })
-  },
+  // getVerified() {
+  //   let identityUrl = `${app.globalData.apiUrl}/user/${app.globalData.uid}/identity`
+  //   let getVerified = requestUtils.doGET(identityUrl, {}, header)
+  //   getVerified.then().catch(() => {
+  //       app.globalData.verified = false;
+  //       wx.setStorageSync('verified', false)
+  //       app.globalData.identity = {}
+  //       wx.setStorageSync('identity', {})
+  //       wx.redirectTo({ url: '/pages/verify/verify' })
+  //   })
+  // },
 
   // 获取成绩列表
   getScoreList() {
-    this.getVerified()
+    // this.getVerified()
 
     // console.log(url)
     let yearList = this.data.yearList
@@ -167,16 +169,46 @@ Page({
 
       }
 
-    }).catch((res) => {
-      console.log(res)
-      if (app.globalData.verified) {
-        wx.showModal({
-          cancelColor: 'cancelColor',
-          content: "获取成绩失败，请联系开发人员",
-          showCancel: false
-        })
-      }
+    }).catch(err => {
+      wx.showModal({
+        title: "哎呀，出错误了 >.<",
+        content:
+          err.data.code != 1
+            ? err.data.msg
+            : "业务逻辑出错",
+        showCancel: false,
+        complete: err.data.code == 6
+            ? () => {
+                app.globalData.identity = {}
+                app.globalData.verified = false
+                wx.setStorageSync('verified', false)
+                wx.setStorageSync('identity', {})
+                wx.redirectTo({url: '/pages/verify/verify'})
+              }
+            : () => {
+                console.log("yes")
+              }
+      })
     })
+    // catch((res) => {
+    //   console.log(res)
+    //   res.data.code === 6?
+    //     () => {
+    //       app.globalData.identity = {}
+    //       app.globalData.verified = false
+    //       wx.setStorageSync('verified', false)
+    //       wx.setStorageSync('identity', {})
+    //       wx.redirectTo({ url: '/pages/verify/verify' })
+    //     }
+    //     :
+    //     () => {
+    //       wx.showModal({
+    //         cancelColor: 'cancelColor',
+    //         content: "获取成绩失败，请联系开发人员",
+    //         showCancel: false
+    //       })
+    //     }
+    // })
   },
 
   //设定弹出提示语内容
