@@ -211,13 +211,15 @@ Page({
       this.caculateYearArr()
     }
 
-    if (wx.getStorageSync('scorePageInfo').currentScoreList.length !== 0) {
-      this.setData({isReferred: true})
-      this.setData({scorePageInfo: wx.getStorageSync('scorePageInfo')})
+    if (wx.getStorageSync('scorePageInfo')) {
+      wx.getStorageSync('scorePageInfo').currentScoreList.length !== 0? () => {
+        this.setData({isReferred: true})
+        this.setData({scorePageInfo: wx.getStorageSync('scorePageInfo')})
+        } : () => {}
     }
 
     this.data.scorePageInfo.yearIndex !== this.data.yearList.length - 1 ? this.setData({termList: ['第一学期', '第二学期']}) : () => {};
-      
+
 
   },
 
