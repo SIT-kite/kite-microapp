@@ -49,6 +49,13 @@ page {
 	height: 35px;
 	/* border-radius: 15px 15px 15px 15px; */
 }
+.icon2{
+	display: flex;
+	margin-top: 8px;
+	margin-left: 10px;
+	width: 28px;
+	height: 28px;
+}
 
 .time {
 	width: 100%;
@@ -286,4 +293,23 @@ page {
 	font-size: 20px;
 	font-weight: bolder;
 	margin-left: 9vw;
+}
+.detail{
+	display: flex;
+	position: absolute;
+	margin-left:5vw;
+	top: 100vh;
+	border-radius: 25px 25px 0px 0px;
+	z-index: 101;
+	width: 90vw;
+	height: 70vh;
+	background-color:#E4EBF5;
+}
+.masks{
+	z-index: 100;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.322);
+	position: absolute;
+	top: 0px;
 }

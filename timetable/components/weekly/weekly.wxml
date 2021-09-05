@@ -8,8 +8,8 @@
 
   <!--Schedule_Main -->
   <view class="course">
-  <view wx:for="{{wlist}}" wx:key="index">
-    <view class="flex-item schedule-item" bindtap="tapCourse" data-statu="open" data-index="{{index}}" 
+  <view wx:for="{{wlist}}" wx:key="index" data-data="{{item.courseName}}" bindtap="getdata">
+    <view class="flex-item schedule-item" data-index="{{index}}" 
     style="width:11vw; margin-left:{{(item.day-1)*13+0.5}}vw; margin-top:{{(item.section-1)*105}}rpx;height:{{item.time*100-5}}rpx;background-color:{{colorArrays[item.colorArrays]}};border:2.5px solid #daebfa">
       <view class="smalltext" >{{item.courseName}}</view>
       <view class="smalltext" >{{item.place}}</view>

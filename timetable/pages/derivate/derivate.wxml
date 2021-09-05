@@ -2,9 +2,14 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="background">
     <view class="data">
-        <view class="title">课表导出</view>
-        <view class="url" data-url="item" bindtap="copy"><text class="url_text">{{data}}</text><image class="icon" src="../../assets/icons/copy.png"></image></view>
-
+        <view class="title_export">课表导出</view>
+        <view class="title te">课前提醒（分钟）</view>
+        <view class="choose_time">
+        <view wx:for="{{time}}" wx:key="index" >
+        <view class="time {{choosed_time== item?'choosed':''}}" bindtap="settime" data-time="{{item}}">{{item}}</view>
+        </view>
+        </view>
+        <view class="url" data-url="{{data}}" bindtap="copy"><view  class="url_text">{{data}}</view><image class="icon" src="../../assets/icons/copy.png"></image></view>
     </view>
     <view class="content">
     <view class="title td">使用说明</view>

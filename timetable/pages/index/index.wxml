@@ -1,19 +1,20 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="background" >
-    <swiper class="time" bindchange="bindchange" duration="500" easing-function="east-out" circular="true">
+    <swiper class="time" bindchange="bindchange" duration="500" easing-function="east-out" circular="true"  >
         <swiper-item>
-            <view class="time">
+            <view class="time" >
                 <view class="date">
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <!-- <navigator url="../derivate/derivate" hover-class="none">
-                        <image src="../../assets/icons/export.png" class="icon1" ></image>
-                        </navigator>     -->
+                        <navigator url="../derivate/derivate" hover-class="none">
+                        <image src="../../assets/icons/export.png" class="icon2" ></image>
+                        </navigator>    
+                        <image src="../../assets/icons/refresh.png" class="icon2" bindtap="refresh"></image>
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
-                <view class="scroll_time">
+                <view class="scroll_time" >
                     <view class="this_week" bindtap="tapSet">
                         <view>{{this_week}}</view>
                         <text>周</text>
@@ -28,12 +29,13 @@
             </view>
         </swiper-item>
         <swiper-item>
-            <view class="time">
+            <view class="time" >
                 <view class="date">
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <!-- <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon1" ></image></navigator>   -->
+                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon2" ></image></navigator>  
+                        <image src="../../assets/icons/refresh.png" class="icon2" bindtap="refresh"></image>
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
@@ -42,7 +44,7 @@
                         <view>{{this_week}}</view>
                         <text>周</text>
                     </view>
-                    <view class="choose_time">
+                    <view class="choose_time" >
                         <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
                             <view class="day">{{days.day}}</view>
                             <view class="week">{{days.weeks}}</view>
@@ -52,12 +54,13 @@
             </view>
         </swiper-item>
         <swiper-item>
-            <view class="time">
+            <view class="time" >
                 <view class="date">
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <!-- <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon1" ></image></navigator>   -->
+                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon2" ></image></navigator>  
+                        <image src="../../assets/icons/refresh.png" class="icon2" bindtap="refresh"></image>
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
                 </view>
@@ -79,9 +82,9 @@
     <block wx:if="{{timetableMode == 1}}">
     <swiper class="main" bindchange="bindchangeday" duration="300" easing-function="ease-in-out" circular="true" bindtap = "collapse" >
         <swiper-item>
-            <view class="main1">
+            <view class="main1" >
                 <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}"></daily>
+                    <daily list="{{course_data}}" id="the-id" bindcustomevent="getName"></daily>
                 </view>
                 <view wx:elif="{{timetableMode == 2}}">
                     <weekly></weekly>
@@ -89,9 +92,9 @@
             </view>
         </swiper-item>
         <swiper-item>
-            <view class="main1">
+            <view class="main1" >
                 <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}"></daily>
+                    <daily list="{{course_data}}" bindcustomevent="getName"></daily>
                 </view>
                 <view wx:elif="{{timetableMode == 2}}">
                     <weekly></weekly>
@@ -100,9 +103,9 @@
             </view>
         </swiper-item>
         <swiper-item>
-            <view class="main1">
+            <view class="main1" >
                 <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}"></daily>
+                    <daily list="{{course_data}}" bindcustomevent="getName"></daily>
                 </view>
                 <view wx:elif="{{timetableMode == 2}}"></view>
                     <weekly></weekly>
@@ -131,20 +134,20 @@
             </view>
         </view> -->
     </view>
-    <swiper class="main" bindchange="bindchange" duration="400" easing-function="east-out" circular="true">
+    <swiper class="main" bindchange="bindchange" duration="400" easing-function="east-out" circular="true"  >
         <swiper-item>
         <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
-            <weekly wlist="{{course_week}}"></weekly>  
+            <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>  
         </view>
         </swiper-item>
         <swiper-item>
             <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
-                <weekly wlist="{{course_week}}"></weekly>  
+                <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>  
         </view>
         </swiper-item>
         <swiper-item>
             <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
-                <weekly wlist="{{course_week}}"></weekly>  
+                <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>  
             </view>
             </swiper-item>
     </swiper>
@@ -152,4 +155,8 @@
             <image class="QRcode" src="{{QRCode}}" ></image>
             <text  class="QRcode_text">打开扫一扫，近在咫尺</text>
         </view> -->
+    <view class="masks" wx:if="{{isShow_detail}}" bindtap = "collapse_detail"></view>
+    <view class = "detail" animation="{{animation}}">
+        <detail detail="{{detail}}"></detail>
+    </view>
 </view>

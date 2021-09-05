@@ -34,9 +34,13 @@ const quality = 1
 let codeText = 'dwdwefewfw'
 let table = []
 let list = []
+let refresh = true
+let request=false
+let isShow_detail=false
+let detail = [{courseName:'defe',place:'efef'}]
 Page({
   data: {
-    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code,qrcodeWidth,quality,codeText,choosedCouple,table,course_week,calendar
+    date, days, timetableMode, list, tapSet, page, this_week, startWeek, course_data, choosedday, discipline, page_day, toschool, code,qrcodeWidth,quality,codeText,choosedCouple,table,course_week,calendar,request,isShow_detail,detail,refresh
   },
   // 导航栏函数
   handlerGohomeClick,
@@ -93,6 +97,26 @@ Page({
         course_data:Data,
         course_week:Week})
       wx.setStorageSync('timetable_list', data_timetable)
+    }).catch(err => {
+      wx.showModal({
+        title: "哎呀，出错误了 >.<",
+        content:
+          err.data.code != 1
+            ? err.data.msg
+            : "业务逻辑出错",
+        showCancel: false,
+        complete: err.data.code == 6
+            ? () => {
+                app.globalData.identity = {}
+                app.globalData.verified = false
+                wx.setStorageSync('verified', false)
+                wx.setStorageSync('identity', {})
+                wx.redirectTo({url: '/pages/verify/verify'})
+              }
+            : () => {
+                console.log("yes")
+              }
+      })
     })
   },
 
@@ -152,6 +176,38 @@ Page({
     let textlist = e
     return textlist;
   },
+  table_time (e) {
+    let _this = this;
+    let y = 0
+    for(var j =0;j<e.length;j++) {
+      for(var i = 0; i < e[j].table.length; i++) {
+        if(e[j].table[i]===1&&y==0){
+          e[j].table_time = []
+          e[j].table_time[0] = i+1
+          y=1;
+        }else if(e[j].table[i]===0&&y==1){
+          e[j].table_time[1] = i
+          y=0;
+        }
+      }
+    }
+    let textlist = e
+    return textlist;
+  },
+  
+refresh(){
+  this.data.refresh
+  ?wx.showModal({ 
+    showCancel: false, 
+    content: '一般情况下，小风筝课表会在一定天数后自动刷新。您也可以手动点击这个按钮，以将数据同步到最新。', 
+    complete: () => { 
+      this.setdata()
+      this.data.refresh = false
+      wx.setStorageSync('timetable_refrsh', this.data.refresh)
+    }
+  })
+  :this.setdata()
+},
 
   changeTime (starttime, giventime) {
     let _this = this
@@ -169,7 +225,9 @@ Page({
     _this.data.list = wx.getStorageSync('timetable_list');
     _this.data.table = wx.getStorageSync('timetable_schedule');
     _this.data.calendar = wx.getStorageSync('timetable_calendar');
-    _this.data.toschool =     _this.data.calendar.start
+    _this.data.toschool = _this.data.calendar.start
+    _this.data.refresh = wx.getStorageSync('timetable_refrsh')
+    _this.data.refresh.length==0?_this.data.refresh = true:_this.data.refresh = wx.getStorageSync('timetable_refrsh')
     if (wx.getStorageSync('timetableMode') == 0) {
     wx.setStorageSync('timetableMode',1)}
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
@@ -180,10 +238,13 @@ Page({
   },
 
   identity(){ 
+    let _this = this
     if(!this.identityJudgment()){
-     wx.showModal({ 
+      _this.data.request = !_this.data.request
+      _this.setData({request:_this.data.request})
+      wx.showModal({ 
       showCancel: false, 
-      content: '需要实名认证哦', 
+      content: '请实名认证,记得刷新哦', 
       complete: () => { 
         wx.navigateTo({ url: '/pages/verify/verify' })} 
     })}
@@ -191,6 +252,9 @@ Page({
  
   onLoad (options) {
     let _this = this
+    _this.animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease',})
     let course_data
     let time 
     let course_week
@@ -211,7 +275,9 @@ Page({
       table: _this.data.table,
       toschool: _this.data.toschool,
       course_week:course_week,
-      timetableMode: _this.data.timetableMode});
+      timetableMode: _this.data.timetableMode,
+      refresh:_this.data.refresh
+    });
     }
   },
 
@@ -279,11 +345,12 @@ Page({
    */
   onShow () {
     let _this = this 
-    if(_this.identityJudgment()){ 
-    if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) { 
+    if (_this.data.request==true) { 
       _this.setdata(); 
     } 
-    }
+    _this.data.request=true
+    _this.setData(request)
+
   },
 
   /**
@@ -324,11 +391,12 @@ Page({
   tapDays (e) {
     let _this = this;
     let date = e.currentTarget.dataset.days.week;
-    console.log(date)
+    // console.log(date)
     this.data.choosedday.week = date
     this.setData({ choosedday: { week: date } })
     let course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
     _this.setData({ course_data: course_data });
+    // console.log(_this.selectComponent('#the-id'))
   },
 
   tapActivity (e) {
@@ -425,5 +493,66 @@ Page({
     if (this.data.tapSet === true) {
       this.setData({ tapSet: false });
     }
-  }
+  },
+  collapse_detail() {
+    if (this.data.isShow_detail === true) {
+      this.setData({ isShow_detail: false })
+      this.animation.translate(0,360).step("ease")
+      this.setData({animation: this.animation.export()});
+    }
+  },
+  getName(e){
+    let _this = this
+    let name = e.detail
+    let nowlist = _this.data.list.filter(el => el.courseName == name)
+    let newlist = nowlist
+    let courseName=[],tables=[],teacher=[],place=[],weekday=[],dynClassId=[],courseId=[]
+    newlist= _this.table_time(newlist)
+    for(let i=0;i<newlist.length;i++){
+      newlist[i].table_time = newlist[i].table_time[0]+'~'+newlist[i].table_time[1]+'节'
+        switch(newlist[i].day){
+          case 0 : newlist[i].days = '日';break;
+          case 1 : newlist[i].days = '一';break;
+          case 2 : newlist[i].days = '二';break;
+          case 3 : newlist[i].days = '三';break;
+          case 4 : newlist[i].days = '四';break;
+          case 5 : newlist[i].days = '五';break;
+          case 6 : newlist[i].days= '六';break;
+        }
+      let section = 0
+      let time = 0
+      for (let x = 0; x < newlist[i].weeks.length; x++) {
+        if (newlist[i].weeks[x] == 1 && time == 0) {
+          section = x + 1
+          time++
+        } else if (newlist[i].weeks[x] == 1) {
+          time++
+        };
+      }
+      time = time +section-1
+      time==section?newlist[i].weekday = section+'周 · 周'+newlist[i].days+'('+newlist[i].table_time+')':newlist[i].weekday = section+'-'+time+'周·周'+newlist[i].days+'('+newlist[i].table_time+')';
+      newlist[i].time = time;
+    }
+    newlist.map(el =>{
+      courseName.indexOf(el.courseName) === -1?courseName.push(el.courseName):''
+      teacher.indexOf(el.teacher) === -1?teacher.push(el.teacher):''
+      weekday.indexOf(el.weekday) === -1?weekday.push(el.weekday):'' 
+      place.indexOf(el.place) === -1?place.push(el.place):''
+    })
+    courseId=newlist[0].courseId
+    dynClassId=newlist[0].dynClassId
+    let result = [{courseName,tables,teacher,weekday,place,courseId,dynClassId}]
+    if(!_this.data.isShow_detail){
+    _this.animation.translate(0,-360).step()
+    _this.setData({animation: _this.animation.export()})}
+    else{
+    _this.animation.translate(0,360).step()
+    _this.setData({animation: _this.animation.export()})}
+    _this.data.isShow_detail=!_this.data.isShow_detail
+    _this.setData({
+      isShow_detail:_this.data.isShow_detail,
+      detail : result
+    })
+  },
+  
 })

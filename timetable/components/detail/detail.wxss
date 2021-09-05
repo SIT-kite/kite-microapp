@@ -1,0 +1,72 @@
+/* timetable/components/detail/detail.wxss */
+.background{
+    color: #000;
+    background:#FCD244;
+    border-radius: 38px 38px 0px 0px;
+    width: 90vw;
+    height: 50vh;
+}
+.slider{
+    background: #E4EBF5;
+    height: 40px;
+    width: 90vw;
+    border-radius: 25px 25px 0px 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.slider_color{
+    background: #d4d4d4;
+    height: 10rpx;
+    width: 22vw;
+    border-radius: 7rpx 7rpx 7rpx 7rpx ;
+}
+.content{
+    background: #E4EBF5;
+    display:flex;
+    width: 90vw;
+    height: 70vh;
+    flex-direction: column;
+}
+.title{
+    color: #14446A;
+    font-size: 34rpx;
+    font-weight: bolder;
+    margin-left: 6vw;
+    flex-direction: row;
+}
+.information{
+    width:82vw;
+    height: 40vh;
+    background: #fff;
+    margin-top: 2vh;
+    margin-left:4vw;
+    border-radius: 25px;
+}
+.icon{
+    width: 60rpx;
+    height: 60rpx;
+}
+.table{
+    display:flex;
+    margin-left: 2vw;
+    margin-top: 40rpx;
+    flex-direction:row;
+    align-items: center;
+}
+.text{
+    margin-left: 30rpx;
+    font-weight: 500;
+    font-size: 28rpx;
+    color: #94baff;
+    width: 65vw;
+    height: 80rpx;
+    overflow: auto;
+    align-items: center;
+    justify-self: center;
+}
+.weekday{
+    align-items: center;
+    justify-self: center;
+    height: 35rpx;
+}

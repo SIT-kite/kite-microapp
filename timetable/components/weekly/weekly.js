@@ -23,7 +23,14 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    getdata(e){
+      let _this = this
+      let data= e.currentTarget.dataset.data
+      console.log(e.currentTarget.dataset.data)
+      _this.triggerEvent('customevent', data) 
+      _this.data.courseName = data
+      _this.setData({courseName : data})
+    },
   }
 
 })
