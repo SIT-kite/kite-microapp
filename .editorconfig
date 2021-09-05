@@ -13,7 +13,7 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.wxml]
-indent_size = 2
+indent_size = 1
 
 [*.js]
 indent_style = space

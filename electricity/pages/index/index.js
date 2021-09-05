@@ -1,9 +1,10 @@
 // electricity/pages/index/index.js
 // https://github.com/SIT-Yiban/kite-server/blob/develop/docs/APIv1/消费查询.md
 
-import { isNonEmptyString } from "../../../utils/type";
+import { check, isNonEmptyString } from "../../../utils/type";
 import request   from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
+import uCharts from "./u-charts";
 
 const app = getApp();
 const gData = app.globalData;
@@ -97,11 +98,11 @@ Page({
         console.log(res);
         const { room, balance, power, ts } = res.data.data;
         this.setData({
+          show: "electricity",
           electricity: {
             room, balance, power,
             datetime: dateTimeFormat.format(new Date(ts))
-          },
-          show: "electricity"
+          }
         });
       }
     });
@@ -113,18 +114,42 @@ Page({
     const roomId = this.getRoomId();
 
     if (isNonEmptyString(roomId)) {
+
       electricityAPI({
         api: "rank", roomId,
         callback: res => {
-          console.log(res);
           const { consumption, rank, room_count } = res.data.data;
           this.setData({
+            show: "history",
             rank: {
               consumption: consumption.toFixed(2),
               percent: (rank / room_count * 100).toFixed(2)
-            },
-            show: "history"
+            }
           });
+        }
+      });
+
+      electricityAPI({
+        api: "bill/days", roomId,
+        callback: res => {
+          const data = res.data.data;
+          const categories = [];
+          const charges = [];
+          const comsumptions = [];
+          const series = [{ name: "电费", type: "line", data: [] }];
+
+          data.some( ({charge}) => charge !== 0 ) &&
+          series.unshift({ name: "充值", type: "column", data: []});
+
+          data.forEach(
+            ({ date, /* charge, */ comsumption }) => {
+              categories.push(
+                date.replace(/\d\d\d\d-0?(\d{1,2})-0?(\d{1,2})/, "$1/$2")
+              );
+              charges.push(comsumption);
+              comsumptions.push(comsumption);
+            }
+          )
         }
       });
 
@@ -134,19 +159,54 @@ Page({
 	onLoad () {
 
     const electricity = wx.getStorageSync("electricity");
-    if (
-      typeof electricity === "object" &&
-      "building" in electricity &&
-      "room" in electricity
-    ) {
+    if ( check(electricity, "Object", { has: ["building", "room"] }) ) {
 
       const { building, room } = electricity;
       this.setData({ building, room });
+      gData.isDev || this.getElectricity();
 
     } else {
       this.setData({ focus: true });
     }
 
+    !gData.isDev &&
+    wx.createSelectorQuery().select("#canvas").fields({
+      id: true, size: true, node: true
+    }).exec(res => {
+
+      const { id: canvasId, width, height, node: canvas } = res[0];
+
+      const uChart = new uCharts({
+        type: "mix",
+        loadingType: 4,
+        canvasId,
+        canvas2d: true,
+        context: canvas.getContext("2d"),
+        // pixelRatio: wx.getSystemInfoSync().pixelRatio,
+        width, height,
+        xAxis: {
+          calibration: true,
+          disableGrid: true
+        },
+        yAxis: {
+          gridType: "dash",
+          showTitle: true, data: [{title: "元"}]
+        },
+        extra: { mix: { column: { width: 4 } } },
+        categories: [],
+        series: []
+
+      });
+
+      uChart.updateData({
+        categories: ["2016", "2017", "2018", "2019", "2020", "2021"],
+        series: [
+          { name: "充值", type: "column", data: [0, 8, 0, 0, 0, 0] },
+          { name: "电费", type: "line", data: [3.5, 4, 2.5, 3.7, 4.1, 2] }
+        ],
+      })
+
+    });
 	},
 
 	onReady () {

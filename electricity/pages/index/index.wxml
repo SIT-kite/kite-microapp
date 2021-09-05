@@ -1,28 +1,39 @@
 <!-- electricity/pages/index/index.wxml -->
 
-<!-- <view>电费余额查询</view> -->
+<view class="container">
 
-<view class="input-container">
-	<text>10</text>
-	<input class="input building" value="{{building}}" placeholder="楼号" maxlength="2"
-		confirm-type="next" bindinput="inputBuilding" focus="{{ focus }}" />
-	<input class="input room" value="{{room}}" placeholder="寝室号" maxlength="4"
-		confirm-type="send" bindinput="inputRoom" bindconfirm="getEData" />
-</view>
+	<view class="result">
+		<block wx:if="{{show === 'electricity'}}">
+			<view>房间号：{{electricity.room}}</view>
+			<view>剩余金额：{{electricity.balance}} 元</view>
+			<view>剩余电量：{{electricity.power}} 度</view>
+			<view>更新时间：{{electricity.datetime}}</view>
+		</block>
+		<block wx:elif="{{show === 'history'}}">
+			<view class="rank"></view>
+			<view>24小时内：</view>
+			<view>使用电费 {{rank.consumption}} 元</view>
+			<view>超越了 {{rank.percent}}% 的寝室</view>
+			<view class="bill">
+				<view>电费使用情况</view>
+				<view>以下图标仅作新版图表组件样式预览，非真实数据</view>
+				<canvas id="canvas" type="2d"></canvas>
+			</view>
 
-<view class="button-container">
-	<button class="button" bindtap="getElectricity">查询</button>
-	<button class="button" bindtap="getHistory">查看使用情况</button>
-</view>
+		</block>
+	</view>
 
-<view wx:if="{{show === 'electricity'}}">
-	<view>房间号：{{electricity.room}}</view>
-	<view>剩余金额：{{electricity.balance}} 元</view>
-	<view>剩余电量：{{electricity.power}} 度</view>
-	<view>更新时间：{{electricity.datetime}}</view>
-</view>
+	<view class="input-container">
+		<text>10</text>
+		<input class="input building" value="{{building}}" placeholder="楼号" maxlength="2"
+			confirm-type="next" bindinput="inputBuilding" focus="{{ focus }}" />
+		<input class="input room" value="{{room}}" placeholder="寝室号" maxlength="4"
+			confirm-type="send" bindinput="inputRoom" bindconfirm="getEData" />
+	</view>
 
-<view wx:elif="{{show === 'history'}}">
-	<view>24小时使用电费 {{rank.consumption}} 元</view>
-	<view>超越了 {{rank.percent}}% 的寝室</view>
+	<view class="button-container">
+		<button class="button" bindtap="getElectricity">查询</button>
+		<button class="button" bindtap="getHistory">查看使用情况</button>
+	</view>
+
 </view>

@@ -1,13 +1,14 @@
 /* electricity/pages/index/index.wxss */
 
-page > view {
-	margin: .5em 1em;
+.container {
+	padding: 1em;
 }
 
 .input-container {
 	display: flex;
 	justify-content: center;
 	align-items: baseline;
+	margin: 1em 0;
 	/* font-family: Consolas, monospace; */
 }
 
@@ -29,10 +30,16 @@ page > view {
 .button-container {
 	display: flex;
 	justify-content: center;
+	margin: 1em 0;
 }
 
 .button {
 	width: auto !important;
 	margin: .5em !important;
+	padding: .5em 1em;
 	border: 2px solid;
+}
+
+.canvas {
+	width: 100%;
 }

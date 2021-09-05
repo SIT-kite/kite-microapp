@@ -49,5 +49,9 @@
 		"requireOnce": "writable",
 		"requirePlugin": "writable",
 		"wx": "writable"
-	}
+	},
+	"ignorePatterns": [
+		"carpool/components/calendar/**",
+		"electricity/pages/index/u-charts.js"
+	]
 }
