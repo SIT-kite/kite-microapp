@@ -6,9 +6,14 @@ import getHeader from "../../../utils/getHeader";
 const app = getApp();
 const requestUtils = require("../../../utils/requestUtils");
 const timeUtils = require("../../../utils/timeUtils")
-const activityApiUrl = `${app.globalData.apiUrl}/event`;
+const activityApiPrefix = `${app.globalData.apiUrl}/event`;
 const header = getHeader("urlencoded", app.globalData.token);
 
+const SWITCH_LIST = {
+  ZERO: 0,
+  ONE: 1,
+  TWO: 2,
+}
 
 Page({
 
@@ -21,6 +26,8 @@ Page({
     refresherTriggered: false,
     selected: '0',
     itemList: [],
+    mineTotalList: [],
+    mineScoreList: [],
     pageIndex: 800,
     showNotice: false,
     notice: "已经到底部了哦",
@@ -64,9 +71,9 @@ Page({
   },
 
   // 发请求获取初始活动列表
-  getList() {
+  getItemList() {
     let data = {};
-    let url = activityApiUrl + `?index=${this.data.pageIndex}`
+    let url = activityApiPrefix + `?index=${this.data.pageIndex}`
     let getData = requestUtils.doGET(url, data, header);
     getData.then((res) => {
       console.log("开始请求");
@@ -120,7 +127,7 @@ Page({
   getNextPage() {
     if(!this.data.showNotice) {
       this.setData({pageIndex: this.data.pageIndex + 1});
-      this.getList();
+      this.getItemList();
     }
   },
 
@@ -159,7 +166,9 @@ Page({
     } else {
       this.setData({selected: e.currentTarget.dataset.selected})
     }
-
+    this.data.selected === SWITCH_LIST.TWO && this.data.mineScoreList.length === 0
+      ? this.getScoreList(wx.getStorageSync('isActivityMinePageLatest'))
+      : () => {}
   },
 
   // 跳转到认证界面
@@ -169,7 +178,62 @@ Page({
     })
   },
 
-  // 下拉刷新
+  getScoreList(isLatest) {
+
+    let isGetNew = typeof isLatest !== "boolean"
+      ? true
+      : !isLatest
+    let url = activityApiPrefix + '/sc/score_detail?force=' + isGetNew
+    let getData = requestUtils.doGET(url, {}, header)
+
+    isGetNew
+      ? wx.showLoading({
+          title: '加载中2333~',
+          mask: true
+        })
+      : {}
+
+    getData.then(res => {
+
+      wx.hideLoading()
+
+      let mineScoreList = res.data.data.scdetail
+
+      mineScoreList.forEach(item => {
+        item.amount = item.amount.toFixed(1)
+        item.time = item.time.replace(/-/g, " / ")
+        item.time = item.time.replace(/T/g, " ")
+        item.time = item.time.replace(/\+08:00/g, "")
+
+      })
+
+      this.setData({mineScoreList: mineScoreList})
+      //拼接数组操作
+      this.setData({mineTotalList: this.data.mineTotalList.concat(mineScoreList)})
+      // wx.setStorageSync('isActivityMinePageLatest', isGetNew)
+
+    }).catch(err => {
+      wx.showModal({
+        title: "哎呀，出错误了 >.<",
+        content:
+          err.data.code != 1
+            ? err.data.msg
+            : "业务逻辑出错",
+        showCancel: false,
+        complete: err.data.code == 6
+          ? () => {
+            app.globalData.identity = {}
+            app.globalData.verified = false
+            wx.setStorageSync('verified', false)
+            wx.setStorageSync('identity', {})
+            wx.redirectTo({url: '/pages/verify/verify'})
+          }
+          : () => {}
+      })
+    })
+  },
+
+  // "我的" 下拉刷新
   refresh() {
     console.log("!")
     setTimeout(() => this.setData({refresherTriggered: false}), 2000)
@@ -196,7 +260,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad () {
-    this.getList();
+    this.getItemList();
     this.setData({
       logined: app.globalData.isLogin,
       verified: app.globalData.verified

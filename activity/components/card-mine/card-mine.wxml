@@ -4,31 +4,15 @@
   <view class="container_header">
 
     <view class="container_title">
-      <text class="text_title">标题</text>
-      <view class="text_condition">已加分</view>
+      <view class="text_title"><text class="text_condition">{{condition}}</text>{{title}}</view>
     </view>
 
-    <text class="text_id">1029321</text>
-    <text class="text_date">2021 年 6 月 12 日</text>
-    
+    <text class="text_id">{{item_id}}</text>
+    <text class="text_date">{{date}}</text>
+
   </view>
 
-  <view class="container_placeholder">
-    <view class="placeholder"></view>
-  </view>
 
-  <view class="container_detail">
-
-    <view class="container_detail_item">
-      <text class="text_detail_item_date">7月3日</text>
-      <text class="text_detail_item_score">+0.1</text>
-    </view>
-
-    <view class="container_detail_item">
-      <text class="text_detail_item_date">7月3日</text>
-      <text class="text_detail_item_score">+0.1</text>
-    </view>
-    
-  </view>
+  <text class="text_detail">{{detail}}</text>
 
 </view>

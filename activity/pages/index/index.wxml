@@ -10,9 +10,9 @@
       <view class="navigator_mine {{selected == '2'? 'navigator_selected': ''}}" bindtap="switch" data-selected="2">我的</view>
     </view>
   </view>
-  
+
   <swiper current="{{selected}}" bindchange="switch">
-    
+
     <swiper-item>
 
       <scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}"   scroll-anchoring="{{true}}" bindscrolltolower="getNextPage" lower-threshold="200">
@@ -21,7 +21,7 @@
             <image class="activity_item_img" src="/activity/assets/pic/pyq5.png" lazy-load="{{true}}"></image>
             <view class="activity_item_title">{{item.title}}</view>
             <view class="black_shadow"></view>
-          </view> 
+          </view>
           <view class="activity_item_footer">
             <!-- <view class="activity_item_position">{{item.place}}</view> -->
             <view class="block_state state_over">已结束</view>
@@ -38,9 +38,9 @@
         <page-subscription></page-subscription>
         <view class="blank_space"></view>
       </scroll-view>
-      
+
       <view class="container_attention" wx:if="{{!logined}}">
-      
+
         <image class="img_attention" src="../../assets/pic/attention.png"></image>
         <text class="text_attention">请先登录哦!</text>
         <!-- <view class="btn_verify" bindtap="login">点击使用微信登录</view> -->
@@ -58,28 +58,25 @@
       >
         <chart chart-class="chart" option="{{ option }}" height="800rpx" width="750rpx"/>
 
-        <view>
-          <card-mine></card-mine>
-          <card-mine></card-mine>
-          <card-mine></card-mine>
-          <card-mine></card-mine>
-          <card-mine></card-mine>
-          <card-mine></card-mine>
-        </view>
-  
+        <block wx:if="{{mineTotalList.length}}">
+					<block wx:for="{{mineTotalList}}">
+						<card-mine title="标题" condition="通过" item_id="{{item.activityId}}" detail="{{'+' + item.amount}}" date="{{item.time}}"></card-mine>
+					</block>
+        </block>
+
         <view class="notice">已经到底部了哦!</view>
       </scroll-view>
       <view class="container_attention" wx:elif="{{!logined}}">
-      
+
         <image class="img_attention" src="../../assets/pic/attention.png"></image>
         <text class="text_attention">请先登录哦!</text>
         <!-- <view class="btn_verify" bindtap="login">点击使用微信登录</view> -->
 
       </view>
-    
+
     </swiper-item>
-  
-    
+
+
 
   </swiper>
 
