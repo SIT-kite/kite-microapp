@@ -1,5 +1,5 @@
 {
-	"usingComponents": {
-		"navBar": "/components/navBar/navBar"
-	}
+	"navigationStyle": "default",
+	"navigationBarTitleText": "实名认证",
+	"usingComponents": {}
 }

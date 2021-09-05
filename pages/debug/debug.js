@@ -148,7 +148,7 @@ Page({
         value !== null
       ),
       timetable: (key, value) => (
-        key === "timetable" &&
+        key.startsWith("timetable_") &&
         value !== null
       )
     };
@@ -163,6 +163,8 @@ Page({
           is.userInfo(key, value) ||
           is.userDetail(key, value)
           ? "[已隐藏]"
+          : is.timetable(key, value)
+          ? "[长度过长，已隐藏]"
           : value
       );
 

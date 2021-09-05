@@ -61,7 +61,7 @@
 	transition: background-color var(--transition);
 }
 
-.menu-cell:hover {
+.menu-cell:active {
 	background-color: #EEE;
 }
 
