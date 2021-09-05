@@ -233,23 +233,6 @@ refresh(){
     _this.data.timetableMode = wx.getStorageSync('timetableMode');
   },
 
-  identityJudgment(){
-    return app.globalData.identity != undefined&&app.globalData.identity.studentId != undefined&&app.globalData.identity.oaSecret != undefined
-  },
-
-  identity(){ 
-    let _this = this
-    if(!this.identityJudgment()){
-      _this.data.request = !_this.data.request
-      _this.setData({request:_this.data.request})
-      wx.showModal({ 
-      showCancel: false, 
-      content: '请实名认证,记得刷新哦', 
-      complete: () => { 
-        wx.navigateTo({ url: '/pages/verify/verify' })} 
-    })}
-  }, 
- 
   onLoad (options) {
     let _this = this
     _this.animation = wx.createAnimation({
@@ -259,15 +242,13 @@ refresh(){
     let time 
     let course_week
     _this.readData();
-    _this.identity(); 
-    if(_this.identityJudgment()){ 
-    if (_this.data.list.length == 0 || _this.data.calendar.length == 0 || _this.data.table.length == 0) {
-      _this.setdata();
-    } else {
+    if (_this.data.list.length != 0 && _this.data.calendar.length != 0 && _this.data.table.length != 0) {
       if(Date.parse(new Date())<Date.parse(_this.data.toschool)){time=_this.data.toschool}else{time=new Date()} 
       _this.time(_this.data.toschool,time); 
       course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
       course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
+    } else {
+      _this.setdata();
     }
     _this.setData({
       list: _this.data.list,
@@ -278,7 +259,6 @@ refresh(){
       timetableMode: _this.data.timetableMode,
       refresh:_this.data.refresh
     });
-    }
   },
 
   binaryWeek(list,this_week) {
@@ -344,13 +324,6 @@ refresh(){
    * 生命周期函数--监听页面显示
    */
   onShow () {
-    let _this = this 
-    if (_this.data.request==true) { 
-      _this.setdata(); 
-    } 
-    _this.data.request=true
-    _this.setData(request)
-
   },
 
   /**
