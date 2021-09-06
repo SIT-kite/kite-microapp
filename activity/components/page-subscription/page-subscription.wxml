@@ -4,15 +4,17 @@
   <view class="card-subscription" wx:for="{{[1, 2, 3, 4, 5]}}">
   
     <view class="container_left">
+
+      <view class="container_left_item">
+      <image class="icon_left_item" src="../../assets/icons/text.svg"></image>
+        <text class="text_title">标题包含：<text class="text_content">fsdfsdfsdfds</text></text>
+      </view>
+
       <view class="container_left_item">
       <image class="icon_left_item" src="../../assets/icons/time2.svg"></image>
       <text class="text_time">时间：<text class="text_content">星期五</text></text>
       </view>
       
-      <view class="container_left_item">
-      <image class="icon_left_item" src="../../assets/icons/text.svg"></image>
-        <text class="text_title">标题包含：<text class="text_content">fsdfsdfsdfds</text></text>
-      </view>
       <view class="container_left_item">
         <image class="icon_left_item" src="../../assets/icons/square.svg"></image>
         <text class="text_category">分类：<text class="text_content">讲座</text></text>
@@ -38,9 +40,9 @@
 
     <view class="container_options">
 
-    <view class="container_options_item">
+    <view class="container_options_item" catchtap="_showSelectWeek">
       <image class="icon_options_item" src="../../assets/icons/time2.svg"></image>
-      <picker class="select" range="{{week}}">活动时间：<text class="text_options_item">星期一</text></picker>
+      <view class="select">时间：<text class="text_options_item">周一</text><text class="text_options_item">周一</text><text class="text_options_item">周一</text><text class="text_options_item">周一</text><text class="text_options_item">周一</text><text class="text_options_item">周一</text></view>
     </view>
     
     <view class="container_options_item">
@@ -55,15 +57,38 @@
       <image class="icon_options_item" src="../../assets/icons/square.svg"></image>
       <picker class="select">分类：<text class="text_options_item">讲座</text></picker>
     </view>
+
+    <view class="container_options_item">
+      <image class="icon_options_item" src="../../assets/icons/school.svg"></image>
+      <picker class="select" range="{{campus}}">校区：<text class="text_options_item">奉贤校区</text></picker>
+    </view>
+
     </view>
     <view class="placeholder_model"></view>
     <view class="container_btn">
       <image class="btn_model cancel" src="../../assets/icons/cancel.svg" catchtap="closeModel"></image>
       <image class="btn_model save" src="../../assets/icons/save.svg"></image>
     </view>
+
+    <view class="container_select_week" wx:if="{{isShowSelectWeek}}" animation="{{animation}}">
+  <view class="btn_close" catchtap="_closeSelectWeek">X</view>
+  <view class="list_week">
+    <view class="row_first_week">
+      <text class="item_week" wx:for="{{['周一', '周二', '周三', '周四']}}">{{item}}</text>
+    </view>
+    <view class="row_second_week">
+      <text class="item_week" wx:for="{{['周五', '周六', '周日']}}">{{item}}</text>
+    </view>
+  </view>
+  <text class="tip_week">点击文字选取时间,可以多选哦!</text>
+  <view class="btn_confirm_week">
+    <image class="icon_confirm_week" src="../../assets/icons/correct.svg"></image>
+  </view>
 </view>
 
   <view class="btn_add" catchtap="showModel">添加订阅</view>
   
 </view>
-<view class="layer_cover" wx:if="{{isShowModel}}" catchtap="closeModel"></view>
+<view class="layer_cover external" wx:if="{{isShowModel}}" catchtap="closeModel"></view>
+<!-- <view class="layer_cover internal" wx:if="{{isShowSelectWeek}}"></view> -->
+</view>

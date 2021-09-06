@@ -95,7 +95,7 @@
   </view>
 
   <view class="container_fixed_bar">
-    <view class="btn_join">报 名</view>
+    <view class="btn_join"><image class="icon_join" src="../../assets/icons/join.svg"></image></view>
   </view>
 
 </view>

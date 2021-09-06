@@ -30,7 +30,6 @@
 }
 
 .navigator_selected {
-  background-color: #f8f8f8;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #6fa8dc;
 }
 

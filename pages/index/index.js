@@ -26,10 +26,6 @@ Page({
       iconPath: "/assets/icons/index/shop.png"
     }, */
     {
-      text: "活动",
-      url: "/activity/pages/index/index",
-      iconPath: "/assets/icons/index/activity.png"
-    }, {
       text: "空教室",
       url: "/class-room/pages/available-room",
       iconPath: "/assets/icons/index/availroom.png"
@@ -49,7 +45,12 @@ Page({
       text: "成绩",
       url: "/score/pages/index/index",
       iconPath: "/assets/icons/index/score.png"
-    }
+    },
+    {
+      text: "活动",
+      url: "/activity/pages/index/index",
+      iconPath: "/assets/icons/index/activity.png"
+    }, 
     /* {
       text: "拼车",
       url: "/carpool/pages/car-pool/car-pool",
