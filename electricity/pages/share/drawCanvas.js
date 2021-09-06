@@ -18,20 +18,23 @@ export default async (canvas, data) => {
 		callback?: Function
 	): Promise */
 	const drawImageBySrc = (src, dx, dy, dWidth, dHeight, callback) => new Promise(
-		(resolve, reject) => Object.assign(
-			canvas.createImage(), {
-				src,
-				onload: e => {
-					ctx.drawImage(e.target, dx, dy, dWidth, dHeight);
-					typeof callback === "function" && callback();
-					resolve();
-				},
-				onerror: err => {
-					console.error("drawImageBySrc():", err);
-					reject("drawImageBySrc(): image load error");
-				}
-			}
-		)
+		(resolve, reject) => {
+      const image = canvas.createImage();
+      return Object.assign(
+        image, {
+          src,
+          onload() {
+            ctx.drawImage(image, dx, dy, dWidth, dHeight);
+            typeof callback === "function" && callback();
+            resolve();
+          },
+          onerror: err => {
+            console.error("drawImageBySrc():", err);
+            reject("drawImageBySrc(): image load error");
+          }
+        }
+      );
+    }
 	);
 
 	const saveRestore = async callback => {
@@ -90,15 +93,15 @@ export default async (canvas, data) => {
 	})
 
 	// 用户昵称 y = 60
-	ctx.font = `normal bold ${Math.round(42*px)}px Microsoft YaHei`;
+	ctx.font = `normal bold ${Math.round(42 * px)}px sans-serif`;
 	ctx.fillStyle = "black";
 	const name = data.nickName;
 	const name_w = ctx.measureText(name).width;
 	ctx.fillText(name, getCenter_x(name_w), main_y + 60 * px, 500 * px);
 
 	const gap_w =  20 * px;
-	const font_normal = `normal bold ${Math.round(36*px)}px Microsoft YaHei`;
-	const font_large  = `normal bold ${Math.round(50*px)}px Microsoft YaHei`;
+	const font_normal = `normal bold ${Math.round(36 * px)}px sans-serif`;
+	const font_large  = `normal bold ${Math.round(50 * px)}px sans-serif`;
 
 	// 第一行字 y = 160
 	// 昨日消耗电费 xx.xx 元
@@ -192,7 +195,7 @@ export default async (canvas, data) => {
 	const share1 = "长按识别小程序码";
 	const share2 = "打开上应小风筝，享受便利校园";
 
-	ctx.font = `normal ${Math.round(24*px)}px Microsoft YaHei`;
+	ctx.font = `normal ${Math.round(24 * px)}px sans-serif`;
 	ctx.fillStyle = "#9E9E9E";
 	ctx.fillText(share1, getShare_x(share1), share_y - 100 * px);
 	ctx.fillText(share2, getShare_x(share2), share_y -  60 * px);

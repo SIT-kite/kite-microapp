@@ -99,9 +99,10 @@ App({
       }
     );
 
-    // 设置 isDev，按照 isDev 打印调试信息或检查更新
+    // 设置 isDev
     gData.isDev = systemInfo.platform === "devtools";
 
+    // 按照 isDev 打印调试信息或检查更新
     if (gData.isDev) {
       console.groupCollapsed("%c调试信息", "color: #0075E8");
       new Map([

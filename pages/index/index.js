@@ -50,7 +50,7 @@ Page({
       text: "活动",
       url: "/activity/pages/index/index",
       iconPath: "/assets/icons/index/activity.png"
-    }, 
+    },
     /* {
       text: "拼车",
       url: "/carpool/pages/car-pool/car-pool",
@@ -102,6 +102,7 @@ Page({
 
   },
 
+  // TODO: notice.content 为非空字符串时，显示 notice.content
   showNotice(e) {
     const notice = this.data.notice.find(
       item => item.id === e.target.dataset.id
@@ -118,7 +119,7 @@ Page({
 
   router(e) {
 
-    // { index: Number, url: String }
+    // dataset: { index: Number, url: String }
     const dataset = e.currentTarget.dataset;
 
     // 设置被点击功能索引 clicked，为图标显示点击动画；一秒后重置
@@ -160,7 +161,7 @@ Page({
 
   onLoad() {
 
-    // 获取并设置通知 notice；目前不检查错误代码，所以直接用 wx.request()
+    // 获取并设置通知 notice；目前不对其检查错误代码，所以直接用 wx.request()
     wx.request({
       url: `${gData.apiUrl}/notice`,
       header: getHeader("urlencoded", gData.token),
@@ -171,8 +172,11 @@ Page({
   },
 
   onShow() {
+
+    // 如果页面 isLogin 与全局 isLogin 不一致，则从全局同步到页面
     this.data.isLogin !== gData.isLogin &&
     this.setData({ isLogin: gData.isLogin });
+
   }
 
 })
