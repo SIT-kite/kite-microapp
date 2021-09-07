@@ -9,7 +9,7 @@
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
                         <navigator url="../derivate/derivate" hover-class="none">
                         <image src="../../assets/icons/export.png" class="icon2" ></image>
-                        </navigator>    
+                        </navigator>
                         <image src="../../assets/icons/refresh.png" class="icon2" bindtap="refresh"></image>
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
@@ -34,7 +34,7 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon2" ></image></navigator>  
+                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon2" ></image></navigator>
                         <image src="../../assets/icons/refresh.png" class="icon2" bindtap="refresh"></image>
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
@@ -59,7 +59,7 @@
                     {{date[6].year}}年{{date[6].month}}月
                     <view class="set">
                         <image src="../../assets/icons/calendar.png" class="icon1" bindtap="tapActivity"></image>
-                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon2" ></image></navigator>  
+                        <navigator url="../derivate/derivate" hover-class="none"><image src="../../assets/icons/export.png" class="icon2" ></image></navigator>
                         <image src="../../assets/icons/refresh.png" class="icon2" bindtap="refresh"></image>
                         <!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
                     </view>
@@ -99,7 +99,7 @@
                 <view wx:elif="{{timetableMode == 2}}">
                     <weekly></weekly>
                 </view>
-                    
+
             </view>
         </swiper-item>
         <swiper-item>
@@ -109,11 +109,11 @@
                 </view>
                 <view wx:elif="{{timetableMode == 2}}"></view>
                     <weekly></weekly>
-                    
+
             </view>
         </swiper-item>
     </swiper>
-    </block>    
+    </block>
     <view class="tapSet" wx:if="{{tapSet == true}}">
         <view class="slider_text">周数</view>
         <slider bindchange="sliderchange" min="1" max="20" value="{{this_weeks}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
@@ -136,18 +136,18 @@
     </view>
     <swiper class="main" bindchange="bindchange" duration="400" easing-function="east-out" circular="true"  >
         <swiper-item>
-        <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
-            <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>  
+        <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse">
+            <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>
         </view>
         </swiper-item>
         <swiper-item>
-            <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
-                <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>  
+            <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse">
+                <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>
         </view>
         </swiper-item>
         <swiper-item>
-            <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse"> 
-                <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>  
+            <view wx:if="{{timetableMode == 2}}" class="main" bindtap = "collapse">
+                <weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>
             </view>
             </swiper-item>
     </swiper>

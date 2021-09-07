@@ -6,6 +6,7 @@
 .schedule-item {
 	position: absolute;
 	flex-direction: column;
+	padding: 1px;
 	border-radius: 8px;
 	font-weight: bold;
 	font-size: 9pt;
@@ -26,12 +27,10 @@
 }
 
 .main {
-	height: 74vh;
-	border-radius: 25px;
-	width: 97vw;
 	display: flex;
 	flex-direction: row;
 	/* background-color: rgba(255, 255, 255, 0); */
+	border-radius: 25px;
 }
 
 .scroll {

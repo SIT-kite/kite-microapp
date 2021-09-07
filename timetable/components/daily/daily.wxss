@@ -4,12 +4,9 @@
 	color: #000;
 	flex-direction: column;
 	/* background:#E4EBF5; */
-	display: block;
 	justify-content: center;
 	align-items: center;
-	width: 97vw;
-	height: 74vh;
-	border-radius: 25px 25px 25px 25px;
+	border-radius: 25px;
 }
 
 .icon_1 {
@@ -22,27 +19,21 @@
 }
 
 .text {
-	margin-top: 1.5vh;
-	margin-left: 4vw;
+	margin: .5em;
 	display: flex;
 	flex-direction: column;
-	/* background:rgb(168, 158, 158); */
-	height: 80px;
-	width: 60vw;
+	/* background: rgb(168, 158, 158); */
+	color: #377ec0;
+	font-weight: bold;
 }
 
 .course {
-	display: flex;
-	margin-left: 2vw;
-	/* margin-top: 15vh; */
-	height: 73vh;
-	/* border-radius: 15px; */
-	width: 97vw;
+	box-sizing: border-box;
+	padding: 0 2vw;
 }
 
 .todo {
 	display: flex;
-	width: 93vw;
 	/* height: 7vh; */
 	height: 50rpx;
 }
@@ -50,12 +41,9 @@
 .table {
 	display: flex;
 	flex-direction: row;
-	/* justify-content:center; */
 	align-items: center;
 	border-radius: 15px;
 	margin-bottom: 1vh;
-	width: 92vw;
-	height: 90px;
 	background: hsl(0, 0%, 100%);
 	/* border: 1px solid #d4d4d4; */
 	border: 1px solid #F5F5F5;
@@ -107,18 +95,9 @@
 	padding-top: 400rpx;
 	padding-bottom: 400rpx;
 	border: 0.5px solid #58A2E7;
-	width: 93vw;
 }
 
 .images {
 	width: 70px;
 	height: 70px;
-}
-
-.text {
-	width: 200px;
-	display: flex;
-	color: #377ec0;
-	font-weight: bold;
-	justify-content: center;
 }
