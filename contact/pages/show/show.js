@@ -135,7 +135,7 @@ Page({
 
   call(e) {
     let phone = e.currentTarget.dataset.phone;
-    phone.substring(0,1) ==0?'':phone= '021'+phone
+    phone.substring(0, 1) == 0 ? '' : phone = '021' + phone
     if (phone == '') {
       app.msg("电话号码为空，无法拨打");
     } else {
@@ -145,7 +145,7 @@ Page({
 
   copy(e) {
     let phone = e.currentTarget.dataset.phone
-    phone.substring(0,1) ==0?'':phone= '021'+phone
+    phone.substring(0, 1) == 0 ? '' : phone = '021' + phone
     wx.setClipboardData({ data: phone })
   },
 
@@ -176,11 +176,7 @@ Page({
           count[i] = x;
         }
       }
-      if(count[i] === list[i].origin.length) {
-        list[i].isHidden = true
-      }else{
-        list[i].isHidden = false
-      }
+      list[i].isHidden = count[i] === list[i].origin.length;
     }
     this.setData({ dataChange: list })
   },

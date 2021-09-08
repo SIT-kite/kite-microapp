@@ -149,7 +149,7 @@ Page({
             JSON.stringify(value) !== "{}"
           ),
           userDetail: (key, value) => (
-            has([ "userDetail", "classmates", "roommates", "familiar" ], key) &&
+            key === "userDetail" &&
             value !== null
           ),
           timetable: (key, value) => (

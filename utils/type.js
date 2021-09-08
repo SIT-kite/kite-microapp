@@ -18,18 +18,16 @@ const isNonBlankString = value => (
 );
 
 const check = (
-  value, type, {
-    has // , length, startsWith, endsWith, contains
-  }
+  value, type, opt // has, length, startsWith, endsWith, contains
 ) => {
   if (getType(value) !== type) {
     return false;
   } else switch (type) {
     case "Object": {
       const hasOwn = prop => Object.prototype.hasOwnProperty.call(value, prop);
-      switch (getType(has)) {
-        case "String": return hasOwn(has);
-        case "Array": return has.every( prop => hasOwn(prop) );
+      switch (getType(opt.has)) {
+        case "String": return hasOwn(opt.has);
+        case "Array": return opt.has.every(hasOwn);
         default: return true;
       }
     }

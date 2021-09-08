@@ -5,10 +5,10 @@
 <view class="search">
 	<button class="menu-button" bindtap="router">
 		<image class="menu-icon {{clicked !== -1 ? 'living' : ''}}"
-			src="../../assets/icon/menu.png"></image>
+			src="../../assets/icon/menu.png" />
 	</button>
 	<view class="search-input-container">
-		<icon class="search-icon" type="search" size="24"></icon>
+		<icon class="search-icon" type="search" size="24" />
 		<input class="search-input" confirm-type="search" placeholder="搜索电话或关键字" bindinput="search"></input>
 	</view>
 </view>
@@ -26,13 +26,13 @@
 		scroll-y="{{true}}" scroll-with-animation="true" scroll-into-view="{{toView}}">
 
 		<view wx:for="{{dataChange}}" wx:for-index="project" wx:for-item="list_phone" wx:key="department"
-			class="{{!list_phone.isHidden?'department':''}}">
+			class="{{ !list_phone.isHidden ? 'department' : '' }}">
 			<view class="department-name" id="{{'index' + project}}" wx:if="{{!list_phone.isHidden}}">
 				{{list_phone.department}}
 			</view>
 			<view class="phone" id="origin{{origin}}" wx:if="{{list_origin.isShow}}"
 			wx:for="{{list_phone.origin}}" wx:for-index="origin" wx:for-item="list_origin" wx:key="index">
-				<image src="../../assets/icon/user.png" class="icon-user"></image>
+				<image src="../../assets/icon/user.png" class="icon-user" />
 				<view class="info-list">
 					<!-- <view class="info">
 						<image class="icon2" src="../../assets/icon/department.png" />

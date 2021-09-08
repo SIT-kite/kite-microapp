@@ -8,7 +8,7 @@
 			</view>
 		</scroll-view>
 		<scroll-view scroll-x="{{true}}" class="sub-nav" >
-			<view wx:for="{{campuses}}" wx:key="index" class="nav-item {{choosedCampus == item ? 'choosed' : ''}}" 
+			<view wx:for="{{campuses}}" wx:key="index" class="nav-item {{choosedCampus == item ? 'choosed' : ''}}"
 				data-campus="{{item}}" bindtap="tapCampus">
 				{{item}}
 			</view>
@@ -66,11 +66,11 @@
 			<view wx:for="{{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]}}" wx:key="index" class="tr">
 				<view class="td room-name">{{ index == 0 ? "数据加载中..." : "" }}</view>
 				<view class="td status-list">
-					<view wx:for="{{[1, 2, 3, 4]}}" wx:key="item" class="status loading" />
+					<view wx:for="{{[1, 2, 3, 4]}}" wx:key="*this" class="status loading" />
 					<view class="delimiter" />
-					<view wx:for="{{[5, 6, 7, 8]}}" wx:key="item" class="status loading" />
+					<view wx:for="{{[5, 6, 7, 8]}}" wx:key="*this" class="status loading" />
 					<view class="delimiter" />
-					<view wx:for="{{[9, 10, 11]}}" wx:key="item" class="status loading" />
+					<view wx:for="{{[9, 10, 11]}}" wx:key="*this" class="status loading" />
 				</view>
 			</view>
 		</view>

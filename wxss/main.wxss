@@ -22,6 +22,16 @@ page {
 }
 
 .card {
-	margin-bottom: 1rem;
 	box-sizing: border-box;
+	margin-bottom: 1rem;
+	box-shadow: var(--shadow);
+	opacity: 98%;
+	transition:
+		var(--transition-shadow),
+		var(--transition-opacity);
+}
+
+.card:active {
+	box-shadow: var(--shadow-hover);
+	opacity: 100%;
 }

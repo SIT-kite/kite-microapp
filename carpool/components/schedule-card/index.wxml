@@ -12,9 +12,9 @@
   </view>
   <view class="pool">
     <text>拼车情况:</text>
-    <block wx:for="{{schedule.purposeRaiseNum}}" wx:key="item">
+    <block wx:for="{{schedule.purposeRaiseNum}}" wx:key="*this">
       <view
-        class=" icon {{schedule.mates.length > item?schedule.mates[index].sex === '男' ? 'iconMan':'iconWoman' :'iconPerson'}}">
+        class=" icon {{schedule.mates.length > item ? schedule.mates[index].sex === '男' ? 'iconMan':'iconWoman' :'iconPerson'}}">
       </view>
     </block>
   </view>

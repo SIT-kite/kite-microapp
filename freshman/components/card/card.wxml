@@ -1,47 +1,48 @@
 <!-- freshman/components/card.wxml -->
 <view class="card">
 
-  <view class="top">
-    <text class="top-building">{{building}}</text>
-    <text class="top-lastseen" wx:if="{{ lastSeen != null }}">{{lastSeenText}}前来过</text>
-  </view>
+	<view class="top">
+		<text class="top-building">{{building}}</text>
+		<text class="top-lastseen" wx:if="{{ lastSeen != null }}">{{lastSeenText}}前来过</text>
+	</view>
 
-  <view class="info">
+	<view class="info">
 
-    <image class="avatar" src="{{avatarImage}}" lazy-load="true"></image>
-    <view class="detail">
+		<image class="avatar" src="{{avatarImage}}" lazy-load="true"></image>
 
-      <view class="detail-basic">
+		<view class="detail">
 
-        <view class="basic-name">
-          <text class="name-text">{{name}}</text>
-          <image class="name-gender-image" src="{{genderImage}}"></image>
-        </view>
+			<view class="detail-basic">
 
-        <view class="basic-position">
-          <text class="position-text">{{region}}</text>
-          <image class="position-image" src="/freshman/assets/location.png"></image>
-        </view>
+				<view class="basic-name">
+					<text class="name-text">{{name}}</text>
+					<image class="name-gender-image" src="{{genderImage}}"></image>
+				</view>
 
-      </view>
+				<view class="basic-position">
+					<text class="position-text">{{region}}</text>
+					<image class="position-image" src="/freshman/assets/location.png"></image>
+				</view>
 
-      <view class="detail-contact">
+			</view>
 
-        <view class="contact" style="padding-top: {{isHidden.padding}}rpx;"
-          wx:if="{{ qq !== undefined && qq !== '' }}"
-          bindtap="copy" data-text="{{ qq }}" data-type="QQ">
-          <image class="contact-image" src="/freshman/assets/icons/qq_logo.png"></image>
-          <text class="contact-text">{{qq}}</text>
-        </view>
+			<view class="detail-contact">
 
-        <view class="contact" bindtap="copy" data-text="{{contact.wechat}}"
-          wx:if="{{ wechat !== undefined && wechat !== '' }}" data-type="微信号">
-          <image class="contact-image" src="/freshman/assets/icons/wechat_logo.png"></image>
-          <text class="contact-text">{{wechat}}</text>
-        </view>
+				<view class="contact" style="padding-top: {{isHidden.padding}}rpx;"
+					wx:if="{{ qq !== undefined && qq !== '' }}"
+					bindtap="copy" data-text="{{ qq }}" data-type="QQ">
+					<image class="contact-image" src="/freshman/assets/icons/qq_logo.png"></image>
+					<text class="contact-text">{{qq}}</text>
+				</view>
 
-      </view>
+				<view class="contact" bindtap="copy" data-text="{{contact.wechat}}"
+					wx:if="{{ wechat !== undefined && wechat !== '' }}" data-type="微信号">
+					<image class="contact-image" src="/freshman/assets/icons/wechat_logo.png"></image>
+					<text class="contact-text">{{wechat}}</text>
+				</view>
 
-    </view>
-  </view>
+			</view>
+
+		</view>
+	</view>
 </view>

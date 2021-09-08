@@ -7,7 +7,6 @@ import request from "../../../utils/request";
 
 const utlls = "../../../utils/";
 const timeUtils = require(utlls + "timeUtils");
-const requestUtils = require(utlls + "requestUtils");
 
 const app = getApp();
 const gData = app.globalData;
@@ -69,7 +68,6 @@ Page({
         roommates: roommatesList,
         isHidden: true
       });
-      gData.roommates = roommatesList;
       return res;
     });
 
@@ -98,7 +96,7 @@ Page({
             familiar.isHidden.qq = true;
             familiar.isHidden.wechat = true;
           } else {
-            familiar.isHidden.qq = familiar.contact.qq === "" ;
+            familiar.isHidden.qq = familiar.contact.qq === "";
             familiar.isHidden.wechat = familiar.contact.wechat === "";
             familiar.isHidden.padding = familiar.isHidden.wechat === true ? 25 : 0;
           }
@@ -108,7 +106,6 @@ Page({
           familiar: familiarList,
           isHidden: false
         });
-        gData.familiar = familiarList;
       });
 
       promiseList.push(getFamilies);
@@ -116,46 +113,23 @@ Page({
     }
 
     // 等待所有进程结束
-    Promise.all(promiseList)
+    Promise[(() => {
+      if ("allSettled" in Promise) {
+        return "allSettled";
+      } else {
+        console.warn("当前运行环境不支持 Promise.allSettled()，改用 Promise.all()");
+        return "all";
+      }
+    })()](promiseList)
       .then(() => this.setData({ show: true }))
       .catch(catchError)
       .finally( () => wx.hideLoading() );
   },
 
-  // 初始化页面数据
-  pageDataInit() {
-
-    if (gData.roommates === null) {
-      // 本地没有缓存的信息
-      this.getPageData();
-    } else {
-      // 本地有可能认识人和室友的信息
-      if (gData.userDetail.visible) {
-        this.setData({
-          roommates: gData.roommates,
-          familiar: gData.familiar,
-          isHidden: false
-        });
-      } else {
-        this.setData({
-          roommates: gData.roommates,
-          isHidden: true
-        });
-      }
-      this.setData({ show: true });
-    }
-  },
-
-  pageDataFresh() {
-    this.getPageData();
-    this.onLoad();
-    this.onShow();
-  },
-
   onLoad() {
-    console.log("页面 newFriend onLoad...");
-    this.setData({ show: false });
-    this.pageDataInit();
+    wx.showLoading({ title: "正在加载…", mask: true });
+    this.getPageData();
+    wx.hideLoading();
   },
 
   // onReady() {},
@@ -165,7 +139,10 @@ Page({
   },
 
   onPullDownRefresh() {
-    this.pageDataFresh();
+    wx.showLoading({ title: "正在刷新…" });
+    this.getPageData();
+    wx.hideLoading();
+    wx.stopPullDownRefresh();
   }
 
 })

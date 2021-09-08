@@ -37,9 +37,9 @@ Page({
           title: "哎呀，出错误了 >.<",
           content: (
             err.symbol === request.symbols.codeNotZero &&
-            isNonEmptyString(typeof err.res.data.msg === "string")
+            isNonEmptyString(err.res.data.msg)
             ? `错误信息：${err.res.data.msg}`
-            : typeof err.res.data.msg === "string" &&
+            : typeof err.res.errMsg === "string" &&
               err.res.errMsg.startsWith("request:fail")
               ? "网络不在状态"
               : "发生未知错误"
@@ -51,19 +51,19 @@ Page({
 
   },
 
-  async onPullDownRefresh() {
-
-    await this.setClassmates();
-    wx.stopPullDownRefresh();
-
-  },
-
   async onLoad() {
 
     wx.showLoading({ title: "正在加载…", mask: true });
     await this.setClassmates();
     this.setData({ loaded: true });
     wx.hideLoading();
+
+  },
+
+  async onPullDownRefresh() {
+
+    await this.setClassmates();
+    wx.stopPullDownRefresh();
 
   }
 

@@ -1,45 +1,128 @@
 /* electricity/pages/index/index.wxss */
 
-.container {
-	padding: 1em;
+page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: .5em;
 }
 
+
+.card {
+	border-radius: 2px;
+	box-shadow: var(--shadow);
+}
+
+.title {
+	font-size: inherit;
+}
+
+.inquiry {
+	display: flex;
+	align-items: baseline;
+	padding: .5em;
+}
+
+/* input */
 .input-container {
+	flex-grow: 1;
 	display: flex;
 	justify-content: center;
 	align-items: baseline;
-	margin: 1em 0;
+	margin-inline-end: .5em;
+	font-size: 1.1em;
 	/* font-family: Consolas, monospace; */
 }
-
 .input {
 	box-sizing: border-box;
-	height: 2em;
+	height: 1.75em;
 	margin-inline-start: 1ch;
 	border-bottom: 2px solid;
 	text-align: center;
 }
+.input.building { width: 2em; }
+.input.room { width: 3em; }
 
-.input.building {
-	width: 2em;
-}
-.input.room {
-	width: 3em;
-}
-
-.button-container {
-	display: flex;
-	justify-content: center;
-	margin: 1em 0;
-}
-
-.button {
+/* button */
+.button.submit {
 	width: auto !important;
-	margin: .5em !important;
-	padding: .5em 1em;
-	border: 2px solid;
+	margin: 0 !important;
+	padding: .25em 1ch;
+	font-size: inherit;
+}
+.button.tip {
+	float: right;
+	width: max-content !important;
+	margin: 0 auto !important;
+	padding: 0;
+	font-size: .9em;
+	font-weight: 500;
+	color: #9E9E9E;
+	background-color: transparent;
+}
+.button.share {
+	float: right;
+	width: max-content;
+	margin: 0 auto;
+	padding: .25em 1ch;
+	color: white;
+	background-color: #07C160;
+	font-weight: bold;
 }
 
-.canvas {
+/* instruction */
+.instruction {
+	margin: 1em 0;
+	text-align: center;
+	color: #616161;
+}
+
+
+/* result */
+.result {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	margin-top: .5em;
+	padding: .5em;
+	transition:
+		height var(--transition),
+		var(--transition-opacity);
+}
+.result.false {
+	flex-grow: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+}
+
+/* tab */
+.tab-container {
+	display: flex;
+}
+.tab {
+	flex-grow: 1;
+	padding: .25em;
+	border-bottom: 2px solid #9E9E9E;
+	text-align: center;
+}
+.tab.true {
+	border-color: currentColor;
+	font-weight: bold;
+}
+
+.swiper {
+	flex-grow: 1;
+}
+
+.scroll-view {
+	box-sizing: border-box;
+	height: 100%;
+	padding-top: .5em;
+}
+
+#canvas {
 	width: 100%;
 }

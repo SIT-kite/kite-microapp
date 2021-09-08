@@ -1,10 +1,14 @@
 <!-- electricity/pages/share/share.wxml -->
-<navBar background='#fff' back="{{true}}" home="{{true}}"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
-<view class="canvas_block">
+<view class="canvas-container">
 	<canvas id="canvas" type="2d" style="width: 650rpx; height: 1000rpx;"></canvas>
 </view>
+
+<checkbox-group class="checkbox-group" bindchange>
+	<label class="label">头像<checkbox class="checkbox" value checked></checkbox></label>
+	<label class="label">昵称<checkbox class="checkbox" value checked></checkbox></label>
+	<label class="label">寝室号<checkbox class="checkbox" value checked></checkbox></label>
+</checkbox-group>
 
 <view class="button_container">
 	<view class="s_button" bindtap="share">分享</view>

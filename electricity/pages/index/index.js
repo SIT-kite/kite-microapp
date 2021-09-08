@@ -1,6 +1,7 @@
 // electricity/pages/index/index.js
 // https://github.com/SIT-Yiban/kite-server/blob/develop/docs/APIv1/消费查询.md
 
+// TODO: 应该只剩下切换一周/一天用电历史没支持了
 import { check, isNonEmptyString } from "../../../utils/type";
 import request   from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
@@ -34,21 +35,35 @@ const numberStringFilter = str => str
   .join("")
   .replace(/^0+(.+)/, "$1");
 
-const dateTimeFormat = {
-  format: date => date.toString()
-};
+const getDateTime = date => [
+  [ "FullYear" , "年"  ],
+  [ "Month"    , "月" , 1 ],
+  [ "Day"      , "日 " ],
+  [ "Hours"    , ":"   ],
+  [ "Minutes"  , ":"   ],
+  [ "Seconds"  , ""    ],
+].map(
+  ([name, suffix, offset = 0]) => `${date["get" + name]() + offset}${suffix}`
+).join("");
 
 Page({
 
 	data: {
+
+    show: false,
+    loading: false,
+    focus: false,
+    current: 0,
+
     building: "",
     room: "",
-    focus: false,
-    show: "",
-    electricity: {},
-    rank: {},
-    hour: [],
-    day: []
+
+    electricity: null,
+    rank: null,
+    days: null,
+    hours: null,
+    charges: []
+
   },
 
   inputBuilding(e) {
@@ -61,8 +76,9 @@ Page({
 
   showTip() {
     wx.showModal({
-      title: "数据错误提示",
-      content: "此数据来源于学校在线电费查询平台。如有错误，请以充值机显示金额为准。",
+      title: "提示",
+      content: "数据来自学校在线电费查询平台。如有错误，请以充值机显示金额为准。",
+      confirmText: "知道了",
       showCancel: false
     });
   },
@@ -92,84 +108,93 @@ Page({
 
     const roomId = this.getRoomId();
 
-    isNonEmptyString(roomId) &&
-    electricityAPI({
-      roomId, callback: res => {
-        console.log(res);
-        const { room, balance, power, ts } = res.data.data;
-        this.setData({
-          show: "electricity",
-          electricity: {
-            room, balance, power,
-            datetime: dateTimeFormat.format(new Date(ts))
-          }
-        });
-      }
-    });
-
-  },
-
-  getHistory() {
-
-    const roomId = this.getRoomId();
-
     if (isNonEmptyString(roomId)) {
 
-      electricityAPI({
-        api: "rank", roomId,
-        callback: res => {
-          const { consumption, rank, room_count } = res.data.data;
-          this.setData({
-            show: "history",
-            rank: {
-              consumption: consumption.toFixed(2),
-              percent: (rank / room_count * 100).toFixed(2)
-            }
-          });
+      this.setData({ loading: true });
+
+      Promise[(() => {
+        if ("allSettled" in Promise) {
+          return "allSettled";
+        } else {
+          console.warn("当前运行环境不支持 Promise.allSettled()，改用 Promise.all()");
+          return "all";
         }
-      });
+      })()]([
 
-      electricityAPI({
-        api: "bill/days", roomId,
-        callback: res => {
-          const data = res.data.data;
-          const categories = [];
-          const charges = [];
-          const comsumptions = [];
-          const series = [{ name: "电费", type: "line", data: [] }];
+        // 电费余额
+        electricityAPI({
+          roomId, callback: res => {
+            console.log("电费余额", res.data.data);
+            const { room, balance, power, ts } = res.data.data;
+            this.setData({
+              electricity: {
+                room,
+                balance: balance.toFixed(2),
+                power: power.toFixed(2),
+                datetime: getDateTime(new Date(ts))
+              }
+            });
+          }
+        }),
 
-          data.some( ({charge}) => charge !== 0 ) &&
-          series.unshift({ name: "充值", type: "column", data: []});
+        // 消费排名
+        electricityAPI({
+          api: "rank", roomId,
+          callback: res => {
+            console.log("消费排名", res.data.data);
+            const { consumption, rank, room_count } = res.data.data;
+            this.setData({
+              rank: {
+                consumption: consumption.toFixed(2),
+                percent: (rank / room_count * 100).toFixed(2)
+              }
+            });
+          }
+        }),
 
-          data.forEach(
-            ({ date, /* charge, */ comsumption }) => {
-              categories.push(
-                date.replace(/\d\d\d\d-0?(\d{1,2})-0?(\d{1,2})/, "$1/$2")
-              );
-              charges.push(comsumption);
-              comsumptions.push(comsumption);
-            }
-          )
-        }
-      });
+        // 用电历史
+        electricityAPI({
+          api: "bill/days", roomId,
+          callback: res => {
+            const data = res.data.data;
+            console.log("一周历史", data);
+            const categories = [];
+            const charges = [];
+            const consumptions = [];
+
+            data.forEach(
+              ({ date, charge, consumption }) => {
+                categories.push(
+                  // 2021-06-09 -> 6/9
+                  date.replace(/\d\d\d\d-0?(\d{1,2})-0?(\d{1,2})/, "$1/$2")
+                );
+                charge !== 0 && charges.push({ date, charge });
+                consumptions.push(consumption.toFixed(2));
+              }
+            );
+
+            this.setData({
+              days: {
+                categories,
+                series: [{ name: "电费 (元)", type: "line", data: consumptions }]
+              }
+            });
+
+            this.renderChart(this.data.days);
+
+            charges.length > 0 && this.setData({ charges });
+
+          }
+        })
+
+      ]).then(
+        () => this.setData({ show: true, loading: false }
+      ));
 
     }
   },
 
-	onLoad () {
-
-    const electricity = wx.getStorageSync("electricity");
-    if ( check(electricity, "Object", { has: ["building", "room"] }) ) {
-
-      const { building, room } = electricity;
-      this.setData({ building, room });
-      gData.isDev || this.getElectricity();
-
-    } else {
-      this.setData({ focus: true });
-    }
-
-    !gData.isDev &&
+  renderChart({categories, series}) {
     wx.createSelectorQuery().select("#canvas").fields({
       id: true, size: true, node: true
     }).exec(res => {
@@ -184,6 +209,8 @@ Page({
         context: canvas.getContext("2d"),
         // pixelRatio: wx.getSystemInfoSync().pixelRatio,
         width, height,
+        // dataPointShape: true,
+        // dataPointShapeType: "solid",
         xAxis: {
           calibration: true,
           disableGrid: true
@@ -193,35 +220,68 @@ Page({
           showTitle: true, data: [{title: "元"}]
         },
         extra: { mix: { column: { width: 4 } } },
-        categories: [],
-        series: []
+        categories,
+        series
 
       });
 
-      uChart.updateData({
-        categories: ["2016", "2017", "2018", "2019", "2020", "2021"],
-        series: [
-          { name: "充值", type: "column", data: [0, 8, 0, 0, 0, 0] },
-          { name: "电费", type: "line", data: [3.5, 4, 2.5, 3.7, 4.1, 2] }
-        ],
-      })
+      uChart
+      // uChart.updateData({ categories, series })
 
     });
+  },
+
+  switchTab(e) {
+    this.setData({ current: e.target.dataset.current });
+  },
+
+  swiperChange(e) {
+    this.setData({ current: e.detail.current });
+  },
+
+	onLoad() {
+
+    const electricity = wx.getStorageSync("electricity");
+    if ( check(electricity, "Object", { has: ["building", "room"] }) ) {
+
+      // 新
+      const { building, room } = electricity;
+      this.setData({ building, room });
+      this.getElectricity();
+
+    } else {
+
+      const [building, room] = ["floor", "room"].map(
+        name => wx.getStorageSync(`electricity_${name}`)
+      );
+      if ( check(building, "Number") && check(room, "Number") ) {
+        // 旧
+        const electricity = { building, room };
+        this.setStorageSync("electricity", electricity);
+        this.setData(electricity);
+        this.getElectricity();
+      } else {
+        // 无
+        this.setData({ focus: true });
+      }
+
+    }
+
 	},
 
-	onReady () {
+	onReady() {
 
 	},
 
-	onShow () {
+	onShow() {
 
 	},
 
-	onPullDownRefresh () {
+	onPullDownRefresh() {
 
 	},
 
-	onShareAppMessage () {
+	onShareAppMessage() {
 
 	}
 })

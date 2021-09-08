@@ -1,12 +1,20 @@
-.canvas_block {
-  display: flex;
-  justify-content: center;
-	width: 100%;
-  margin-top: 1em;
+page {
+	box-sizing: border-box;
 }
 
 #canvas {
-  z-index: -1;
+	margin: 1em auto;
+}
+
+.checkbox-group {
+	display: flex;
+	justify-content: center;
+	margin: 1em;
+}
+.label {
+	margin: 0 .25em;
+}.checkbox {
+	margin-inline-start: .5ch;
 }
 
 .button_container {
@@ -14,19 +22,18 @@
 	justify-content: space-between;
 	align-items: center;
 	margin: 1em;
-	padding: 0 5vw;
 }
 
 .s_button {
 	width: 50%;
 	height: 2em;
-  line-height: 2em;
-  margin: 0 .5em;
-  border-radius: 1em;
+	line-height: 2em;
+	margin: 0 .5em;
+	border-radius: 1em;
 	color: white;
 	/* background-color: #0396FF; */
 	background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
-  text-align: center;
+	text-align: center;
 	font-weight: 500;
 }
 

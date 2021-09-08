@@ -83,12 +83,19 @@ Page({
     );
 
     // 等待全部请求完成
-    Promise.all([getMotto, getAnalysis])
-      .then( () => wx.hideLoading() )
-      .catch( res => console.log("请求未全部成功", res) );
-
-    this.setData({ pageReady: true });
-    wx.hideLoading();
+    Promise[(() => {
+      if ("allSettled" in Promise) {
+        return "allSettled";
+      } else {
+        console.warn("当前运行环境不支持 Promise.allSettled()，改用 Promise.all()");
+        return "all";
+      }
+    })()]([getMotto, getAnalysis])
+      .catch( res => console.log("请求未全部成功", res) )
+      .finally(() => {
+        this.setData({ pageReady: true });
+        wx.hideLoading();
+      });
 
   }
 

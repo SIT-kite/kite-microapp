@@ -26,7 +26,7 @@
 		<block wx:if="{{ history_content.length > 0 }}">
 			<view id="words-block">
 				<text class="words-container" wx:for="{{history_content}}"
-					wx:key="item" data-word="{{item}}"
+					wx:key="*this" data-word="{{item}}"
 					bindtap="searchHistoryContent" bindlongpress="inputHistoryContent">{{item}}</text>
 			</view>
 			<view class="words-tip">点击搜索，长按输入</view>
