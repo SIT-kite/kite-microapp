@@ -54,6 +54,10 @@ Page({
     let header = getHeader("urlencoded", app.globalData.token);
     let data_calendar = {};
     let data_schedule = {};
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+    })    
     let schedule = requestUtils.doGET(url_schedule, data_schedule, header);
     schedule.then((res) => {
       data_schedule = res.data.data
@@ -97,24 +101,27 @@ Page({
         course_data:Data,
         course_week:Week})
       wx.setStorageSync('timetable_list', data_timetable)
+      wx.hideLoading()
     }).catch(err => {
       wx.showModal({
         title: "哎呀，出错误了 >.<",
         content:
           err.data.code != 1
-            ? err.data.msg
-            : "业务逻辑出错",
+            ?err.data.msg
+            :"业务逻辑出错",
         showCancel: false,
         complete: err.data.code == 6
             ? () => {
                 app.globalData.identity = {}
                 app.globalData.verified = false
+                wx.hideLoading()
                 wx.setStorageSync('verified', false)
                 wx.setStorageSync('identity', {})
                 wx.redirectTo({url: '/pages/verify/verify'})
               }
             : () => {
                 console.log("yes")
+                wx.hideLoading()
               }
       })
     })
@@ -141,7 +148,7 @@ Page({
       return el;
     })
     let nowdate = new Date();
-    nowdate = nowdate.getDay() !=0|| 7;
+    nowdate = nowdate.getDay()!=0?nowdate.getDay():7;
     if (_this.data.choosedday.length == []) {_this.data.choosedday.week = nowdate}
     else if (_this.data.choosedday.week == 1) {nowdate = 1}
     else if (_this.data.choosedday.week == 0) {nowdate = 7}
@@ -516,10 +523,10 @@ refresh(){
     dynClassId=newlist[0].dynClassId
     let result = [{courseName,tables,teacher,weekday,place,courseId,dynClassId}]
     if(!_this.data.isShow_detail){
-    _this.animation.translate(0,-360).step()
+    _this.animation.translate(0,-450).step()
     _this.setData({animation: _this.animation.export()})}
     else{
-    _this.animation.translate(0,360).step()
+    _this.animation.translate(0,450).step()
     _this.setData({animation: _this.animation.export()})}
     _this.data.isShow_detail=!_this.data.isShow_detail
     _this.setData({

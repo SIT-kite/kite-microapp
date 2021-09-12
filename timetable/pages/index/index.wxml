@@ -86,8 +86,12 @@
                 <view wx:if="{{timetableMode == 1}}">
                     <daily list="{{course_data}}" id="the-id" bindcustomevent="getName"></daily>
                 </view>
-                <view wx:elif="{{timetableMode == 2}}">
-                    <weekly></weekly>
+            </view>
+        </swiper-item>
+        <swiper-item>
+            <view class="main1" >
+                <view wx:if="{{timetableMode == 1}}">
+                    <daily list="{{course_data}}" bindcustomevent="getName"></daily>
                 </view>
             </view>
         </swiper-item>
@@ -96,27 +100,13 @@
                 <view wx:if="{{timetableMode == 1}}">
                     <daily list="{{course_data}}" bindcustomevent="getName"></daily>
                 </view>
-                <view wx:elif="{{timetableMode == 2}}">
-                    <weekly></weekly>
-                </view>
-
-            </view>
-        </swiper-item>
-        <swiper-item>
-            <view class="main1" >
-                <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}" bindcustomevent="getName"></daily>
-                </view>
-                <view wx:elif="{{timetableMode == 2}}"></view>
-                    <weekly></weekly>
-
             </view>
         </swiper-item>
     </swiper>
     </block>
     <view class="tapSet" wx:if="{{tapSet == true}}">
         <view class="slider_text">周数</view>
-        <slider bindchange="sliderchange" min="1" max="20" value="{{this_weeks}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
+        <slider bindchange="sliderchange" min="1" max="20" value="{{this_week}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
         <!-- <view class="set_bottom">
             <view class="sart_time">
                 <picker class="picker" mode="date" value="{{toschool}}" start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">

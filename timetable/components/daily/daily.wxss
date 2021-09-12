@@ -29,7 +29,8 @@
 
 .course {
 	box-sizing: border-box;
-	padding: 0 2vw;
+	padding: 0 1vw;
+	padding-bottom:1vh;
 }
 
 .todo {
@@ -37,13 +38,16 @@
 	/* height: 7vh; */
 	height: 50rpx;
 }
-
+.list{
+	padding: 0 1vw;
+	padding-bottom: 1vh;
+}
 .table {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	border-radius: 15px;
-	margin-bottom: 1vh;
+	/* margin-bottom: 1vh; */
 	background: hsl(0, 0%, 100%);
 	/* border: 1px solid #d4d4d4; */
 	border: 1px solid #F5F5F5;
