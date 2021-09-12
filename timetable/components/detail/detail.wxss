@@ -1,10 +1,10 @@
 /* timetable/components/detail/detail.wxss */
 .background{
     color: #000;
-    background:#FCD244;
+    /* background:#FCD244; */
     border-radius: 38px 38px 0px 0px;
     width: 90vw;
-    height: 50vh;
+    height: 500px;
 }
 .slider{
     background: #E4EBF5;
@@ -25,7 +25,7 @@
     background: #E4EBF5;
     display:flex;
     width: 90vw;
-    height: 70vh;
+    height: 500px;
     flex-direction: column;
 }
 .title{

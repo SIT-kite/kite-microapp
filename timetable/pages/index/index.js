@@ -130,7 +130,7 @@ Page({
   time (schoolholidaydirectory, giventime) {
     let _this = this
     let date = _this.data.date
-    schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory))-86400000; 
+    schoolholidaydirectory = Date.parse(new Date(schoolholidaydirectory)); 
     giventime = Date.parse(new Date(giventime));
     let this_week = timeUtils.getIntervalToCurrentWeek(schoolholidaydirectory, giventime);
     if (_this.data.startWeek == undefined) { _this.data.startWeek = this_week }
@@ -251,6 +251,7 @@ refresh(){
     _this.readData();
     if (_this.data.list.length != 0 && _this.data.calendar.length != 0 && _this.data.table.length != 0) {
       if(Date.parse(new Date())<Date.parse(_this.data.toschool)){time=_this.data.toschool}else{time=new Date()} 
+      console.log(time)
       _this.time(_this.data.toschool,time); 
       course_data = _this.binary(_this.data.list, _this.data.this_week, _this.data.choosedday);
       course_week = _this.binaryWeek(_this.data.list, _this.data.this_week);
