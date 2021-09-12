@@ -85,10 +85,10 @@
     <image class="icon_confirm_week" src="../../assets/icons/correct.svg"></image>
   </view>
 </view>
+<view class="layer_cover internal" wx:if="{{isShowSelectWeek}}"></view>
 
   <view class="btn_add" catchtap="showModel">添加订阅</view>
   
 </view>
 <view class="layer_cover external" wx:if="{{isShowModel}}" catchtap="closeModel"></view>
-<!-- <view class="layer_cover internal" wx:if="{{isShowSelectWeek}}"></view> -->
 </view>

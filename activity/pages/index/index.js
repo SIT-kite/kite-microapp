@@ -197,7 +197,7 @@ Page({
 
       wx.hideLoading()
 
-      let mineScoreList = res.data.data.scdetail
+      let mineScoreList = res.data.data.detail
 
       mineScoreList.forEach(item => {
         item.amount = item.amount.toFixed(1)
@@ -210,7 +210,7 @@ Page({
       this.setData({mineScoreList: mineScoreList})
       //拼接数组操作
       this.setData({mineTotalList: this.data.mineTotalList.concat(mineScoreList)})
-      // wx.setStorageSync('isActivityMinePageLatest', isGetNew)
+      wx.setStorageSync('isActivityMinePageLatest', isGetNew)
 
     }).catch(err => {
       wx.showModal({

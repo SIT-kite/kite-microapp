@@ -185,12 +185,12 @@ input {
 }
 
 .internal {
-  z-index: 300;
+  z-index: 300 !important;
 }
 
 .container_select_week {
   transform: scale(0);
-  z-index: 1000;
+  z-index: 500 !important;
   position: absolute;
   top: 50rpx;
   left: 50rpx;
