@@ -2,7 +2,7 @@
 <card class="card">
 
   <view class="leftContainer">
-    <text class="nameText">{{name}}</text>
+    <text class="nameText">{{name == ''? '(空)' : name}}</text>
     <text class="creditText">学分：{{credit}}</text>
   </view>
   <view class="rightContainer">
