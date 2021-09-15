@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentItemDetails:{
+    details: {
       author: "",
       content: "",
       publish_time: "",
@@ -19,11 +19,11 @@ Page({
 
   onLoad() {
     this.setData({
-      currentItemDetails: wx.getStorageSync("searchResultList")[
+      details: wx.getStorageSync("searchResultList")[
         wx.getStorageSync("searchResultItemIndex")
       ]
     })
-    // console.log(this.data.currentItemDetails)
+    // console.log(this.data.details)
   },
 
   // onReady() {},

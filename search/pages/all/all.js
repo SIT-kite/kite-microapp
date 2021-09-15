@@ -12,7 +12,7 @@ Page({
   onLoad() {
     this.setData({searchKeyWord: wx.getStorageSync("searchKeyWord")})
     const results = wx.getStorageSync("searchResultList");
-    if(results) {
+    if (results) {
       this.setData( {miniResultList: results });
     }
   },

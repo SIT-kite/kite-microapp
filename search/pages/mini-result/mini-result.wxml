@@ -5,7 +5,7 @@
 	<view class="mini-result-block">
 		<view class="header">
 			<text class="category">公告</text>
-			<image class="more-icon" src="/search/images/more.png" bindtap="goAll"></image>
+			<navigator url="../all/all"><image class="more-icon" src="/search/images/more.png" /></navigator>
 		</view>
 		<view class="body">
 			<view class="item" id="{{index}}" wx:for="{{miniResultList}}" bindtap="goDetails">

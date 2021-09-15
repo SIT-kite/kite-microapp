@@ -1,13 +1,14 @@
 <!--pages/details/details.wxml-->
 <navBar background='#fff' back="{{true}}" home="{{true}}"
 	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
 <view class="details-page">
 	<view class="header">
-		<text class="title">{{currentItemDetails.title}}}</text>
+		<text class="title">{{details.title}}</text>
 		<view class="dep-time">
-			<text class="department">{{currentItemDetails.department}}</text>
-			<text class="time">{{currentItemDetails.publish_time}}</text>
+			<text class="department">{{details.department}}</text>
+			<text class="time">{{details.publish_time}}</text>
 		</view>
 	</view>
-	<text class="content">{{currentItemDetails.content}}</text>
+	<text class="content">{{details.content}}</text>
 </view>
