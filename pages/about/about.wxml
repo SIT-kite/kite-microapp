@@ -23,13 +23,20 @@
 
 	<rich-text class="content" nodes="{{html}}" />
 
-	<view class="contributor block-center">
-		<view wx:for=""></view>
+	<view class="section">
+		<view class="title">贡献者</view>
+		<view class="contributors block-center">
+			<view class="contributor" wx:for="{{contributors}}" wx:key="*this">{{item}}</view>
+		</view>
 	</view>
 
-	<view class="source">
+	<view class="section">
 		<view class="title">开源代码</view>
-		<view class="repo-link block-center">https://github.com/SIT-Yiban/kite-microapp</view>
+		<view class="repo-links block-center">
+			<view class="repo-link">https://github.com/SIT-Yiban/kite-microapp</view>
+			<view class="repo-link">https://hub.fastgit.org/SIT-Yiban/kite-microapp</view>
+			<view class="repo-link">https://github.com.cnpmjs.org/SIT-Yiban/kite-microapp</view>
+		</view>
 	</view>
 
 </view>

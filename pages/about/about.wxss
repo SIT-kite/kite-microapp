@@ -49,17 +49,17 @@
 }
 
 /* 贡献者 */
-.contributor {
+.contributors {
 	padding-inline-start: 1em;
 	font-size: .8em;
 }
 
 @media (max-width: 340px) {
-	.contributor {
+	.contributors {
 		padding-inline-start: 0;
 		letter-spacing: -.05em;
 	}
-	.contributor > .li {
+	.contributors > .li {
 		list-style-type: none;
 	}
 }
@@ -80,7 +80,7 @@
 	animation: rainbow 7s ease infinite;
 }
 
-.repo-link {
+.repo-links {
 	user-select: text;
 	font-family: Consolas, monospace;
 	font-size: .9em;
@@ -88,9 +88,9 @@
 
 @media (min-width: 400px) {
 	.container { font-size: 1.1em; }
-	.contributor { font-size: .85em; }
+	.contributors { font-size: .85em; }
 }
 
 @media (min-width: 480px) {
-	.contributor, .repo-link { font-size: inherit; }
+	.contributors, .repo-links { font-size: inherit; }
 }

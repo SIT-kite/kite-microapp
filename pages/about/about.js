@@ -24,31 +24,30 @@ const html =
 <p class="p">在每年招新期间，你可以关注一下“上海应用技术大学易班”公众号或有关QQ群，<!--
 -->了解招新信息，加入校易班工作站。<small class="welcome">（欢迎来技术部！）</small></p>
 
-<p class="p">你也可以直接向有关项目提交 Issue 或 PR，留下你的痕迹；开源代码仓库见下。</p>
+<p class="p">你也可以直接向有关项目提交 Issue 或 PR，留下你的痕迹；开源代码仓库见下。</p>`;
 
-<h2 class="title">贡献者</h2>
-
-<ul class="contributor block-center">
-<li class="li">2017级&ensp;　　　　　　　外国语学院&ensp;张城</li>
-<li class="li">2017级&ensp;　　　生态技术与工程学院&ensp;sascx</li>
-<li class="li">2017级&ensp;　　　　　　　　　理学院&ensp;Snowstar Cyan</li>
-<li class="li">2017级&ensp;计算机科学与信息工程学院&ensp;peanut996</li>
-<li class="li">2018级&ensp;　　　材料科学与工程学院&ensp;RainSlide</li>
-<li class="li">2018级&ensp;计算机科学与信息工程学院&ensp;AlenYing</li>
-<li class="li">2018级&ensp;计算机科学与信息工程学院&ensp;sunnysab</li>
-<li class="li">2018级&ensp;计算机科学与信息工程学院&ensp;wanfengcxz</li>
-<li class="li">2019级&ensp;计算机科学与信息工程学院&ensp;B635</li>
-<li class="li">2019级&ensp;计算机科学与信息工程学院&ensp;wzh</li>
-<li class="li">2019级&ensp;计算机科学与信息工程学院&ensp;EvilorLive</li>
-<li class="li">2019级&ensp;　　　　　　机械工程学院&ensp;zdy180108</li>
-<li class="li">2020级&ensp;计算机科学与信息工程学院&ensp;Pony-Zhang</li>
-<li class="li">2020级&ensp;计算机科学与信息工程学院&ensp;Devin</li>
-<li class="li">2020级&ensp;　　　　　　机械工程学院&ensp;记者团廾匸</li>
-</ul>`;
+const contributors = [
+  [ 2017, "外国语", "张城" ],
+  [ 2017,     "理", "Snowstar Cyan" ],
+  [ 2017, "计算机科学与信息工程", "peanut996" ],
+  [ 2018,       "材料科学与工程", "RainSlide" ],
+  [ 2018, "计算机科学与信息工程", "AlenYing" ],
+  [ 2018, "计算机科学与信息工程", "sunnysab" ],
+  [ 2018, "计算机科学与信息工程", "wanfengcxz" ],
+  [ 2019, "计算机科学与信息工程", "B635" ],
+  [ 2019, "计算机科学与信息工程", "wzh" ],
+  [ 2019, "计算机科学与信息工程", "EvilorLive" ],
+  [ 2019,             "机械工程", "zdy180108" ],
+  [ 2020, "计算机科学与信息工程", "Pony-Zhang" ],
+  [ 2020, "计算机科学与信息工程", "Devin" ],
+  [ 2020,             "机械工程", "记者团廾匸" ]
+].map(
+  ([year, college, name]) => `${year}级 ${college.padStart(10, "　")}学院 ${name}`
+);
 
 Page({
   // handlerGohomeClick,
   // handlerGobackClick,
-  data: { html },
+  data: { html, contributors },
   copy: e => copyText(e.target.dataset.text)
 });
