@@ -29,7 +29,7 @@
 					wx:key="*this" data-word="{{item}}"
 					bindtap="searchHistoryContent" bindlongpress="inputHistoryContent">{{item}}</text>
 			</view>
-			<view class="words-tip">点击搜索，长按输入</view>
+			<view class="words-tip">点击搜索，长按输入到搜索框</view>
 		</block>
 		<block wx:else>
 			<view class="words-tip">暂无搜索历史</view>

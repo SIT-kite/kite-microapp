@@ -160,7 +160,7 @@ Page({
 
         // TODO：分成多个不同函数，进一步按需使用，比如无论如何都隐藏 timetable_schedule
         const removeToken =
-          !gData.isDev
+          gData.isDev
           ? null
           : (key, value) => (
             is.api(key, value)
