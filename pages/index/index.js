@@ -1,6 +1,7 @@
 // 主页
 // pages/index/index.js
 
+import { isNonEmptyString } from "../../utils/type";
 import onShareAppMessage from "../../utils/onShareAppMessage";
 import getHeader from "../../utils/getHeader";
 
@@ -11,7 +12,7 @@ Page({
   data: {
     isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
-    notice: [], // 通知
+    notices: [], // 通知
     items: [{
       text: "新生",
       url: "/freshman/pages/welcome/welcome",
@@ -79,44 +80,52 @@ Page({
     });
   },
 
-  setNotice(notice) {
+  setNotice(notices) {
 
     const noNotice = () => {
       this.setData({ notice: [{ id: -1, title: "暂无通知" }] });
       console.log("暂无通知");
     };
 
-    if (Array.isArray(notice)) {
+    if (Array.isArray(notices)) {
 
-      if (notice.length > 0) {
-        this.setData({ notice });
+      if (notices.length > 0) {
+        this.setData({ notices });
         console.groupCollapsed("%c通知数据", "font-weight: normal");
-        notice.forEach( (item, index) => console.log(`通知 ${index}:`, item) );
+        notices.forEach( notice => console.log(notice) );
         console.groupEnd();
       } else {
         noNotice();
       }
 
     } else {
-      console.error("notice is not an Array", notice);
+      console.error("notice is not an Array", notices);
       noNotice();
     }
 
   },
 
-  // TODO: notice.content 为非空字符串时，显示 notice.content
   showNotice(e) {
     const notice = this.data.notice.find(
       item => item.id === e.target.dataset.id
     );
-    notice !== undefined &&
-    notice.title.length > 20 &&
-    wx.showModal({
-      title: "通知详情",
-      content: notice.title,
-      confirmText: "关闭",
-      showCancel: false
-    });
+    if (notice !== undefined) {
+      if (notice.title.length > 20) {
+        wx.showModal({ // 长通知
+          title: "通知",
+          content: notice.title,
+          confirmText: "关闭",
+          showCancel: false
+        });
+      } else if (isNonEmptyString(notice.content)) {
+        wx.showModal({ // 含内容通知
+          title: notice.title,
+          content: notice.content,
+          confirmText: "关闭",
+          showCancel: false
+        });
+      }
+    }
   },
 
   router(e) {
@@ -145,7 +154,7 @@ Page({
         // 页面跳转失败时，显示未完成
         fail: () => wx.showModal({
           title: "尚未完成",
-          content: "别急别急，正在努力开发~",
+          content: "别急，正在努力开发~",
           confirmText: "知道了",
           showCancel: false
         })

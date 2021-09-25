@@ -12,7 +12,7 @@
 
 	<!-- banner -->
 	<swiper class="card banner" indicator-dots="true" autoplay="true"
-	interval="7500" duration="500" easing-function="east-out" circular="true">
+	interval="7500" duration="500" easing-function="ease-out" circular="true">
 		<template is="swiper-banner-image" data="{{src:'/assets/pic/temp_activity.png', bindtap: goTemp}}" />
 		<template is="swiper-banner-image" data="{{src:'/assets/pic/banner.png', bindtap: doNothing}}" />
 	</swiper>
@@ -20,9 +20,8 @@
 	<!-- 滚动通知 -->
 	<view class="card notice">
 		<image src="/assets/icons/index/notice.png" />
-		<swiper autoplay="true"
-			interval="7500" duration="500" circular="true" vertical="true">
-			<swiper-item wx:for="{{notice}}" wx:key="id" data-id="{{item.id}}"
+		<swiper autoplay="true" interval="7500" duration="500" circular="true" vertical="true">
+			<swiper-item wx:for="{{notices}}" wx:key="id" data-id="{{item.id}}"
 			bindtap="showNotice">{{item.title}}</swiper-item>
 		</swiper>
 	</view>
