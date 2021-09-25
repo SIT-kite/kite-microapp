@@ -1,74 +1,80 @@
 /* pages/about/about.wxss */
 
+/* 布局间距使用 rem，排版间距/文本间距使用 em */
+
+/* 布局 */
 .container {
-	margin: 1em 1em 2em;
+	margin: 1rem;
 	line-height: 1.618;
 	text-shadow: 0 0 1px white;
 	user-select: text;
 }
 
-.block-center {
-	max-width: max-content;
-	margin-left: auto;
-	margin-right: auto;
+/* 段落与内容 自适应居中 */
+.section, .content { max-width: max-content; }
+.section { margin: 1rem auto; }
+.content { margin: .5rem auto; }
+
+/* 标题 文本居中 */
+.title, .subtitle {
+	margin: .5rem 0;
+	text-align: center;
+}
+.subtitle {
+	font-style: oblique;
 }
 
-/* 文本对齐方式 */
-.p { text-align: justify; }
-.title, .text-center { text-align: center; }
+/* 列表 */
+.ol, .ul {
+	padding-inline-start: 1em;
+}
+.ol > .li, .ul > .li {
+	display: list-item;
+	margin: .1em 0;
+}
+.ol {
+	list-style-type: decimal;
+}
 
-/* 首行缩进 */
-.p { text-indent: 2em; }
-.center, .blockquote > .p { text-indent: 0; }
+/* 段落 */
+.p {
+	margin: .5em 0;
+	text-align: justify;
+	text-indent: 2em;
+}
 
-/* 纵向外边距 */
-.title, .p, .center, .blockquote { margin: .5em 0; }
-.li, .blockquote > .p  { margin: .1em 0; }
+/* 文本居中 */
+.center { text-align: center; }
+.p.center { text-indent: 0; }
 
+/* ---------------------------------------------------------------- */
 
-.oblique { font-style: oblique; }
-
+/* 联系我们 提示 点击群号即可复制 */
 @keyframes grow {
-	0% { opacity: 1; }
 	50% { opacity: .5; }
-	100% { opacity: 1; }
 }
 
 .hint {
-	margin: .5em 0;
-	text-align: center;
-	font-size: smaller;
 	color: #616161;
+	font-size: smaller;
+	user-select: none;
 	animation: grow 5s ease infinite;
 }
 
+/* 关于我们 */
 .blockquote {
-	padding-inline-start: .75em;
-	border-inline-start: .25em solid #BDBDBD;
+	padding-inline-start: .75rem;
+	border-inline-start: .25rem solid #BDBDBD;
 	color: #616161;
 }
+.blockquote > .ul { padding-inline-start: 0; }
+.blockquote > .ul > .li { list-style-type: none; }
 
-/* 贡献者 */
-.contributors {
-	padding-inline-start: 1em;
-	font-size: .8em;
-}
-
-@media (max-width: 340px) {
-	.contributors {
-		padding-inline-start: 0;
-		letter-spacing: -.05em;
-	}
-	.contributors > .li {
-		list-style-type: none;
-	}
-}
-
-/* 🌈 */
+/* 参与贡献 🌈 */
 @keyframes rainbow {
 	0% { color: red; }
 	14% { color: darkorange; }
-	28% { color: gold; text-shadow: 0 0 1rpx rgba(0, 0, 0, .5); }
+	28% { color: gold; text-shadow: 0 0 1rpx rgba(0, 0, 0, .1); }
 	42% { color: green; }
 	56% { color: teal; }
 	70% {color: blue; }
@@ -80,17 +86,41 @@
 	animation: rainbow 7s ease infinite;
 }
 
-.repo-links {
-	user-select: text;
-	font-family: Consolas, monospace;
-	font-size: .9em;
+/* 贡献者 */
+.contributors {
+	padding-inline-start: 1em;
 }
 
-@media (min-width: 400px) {
-	.container { font-size: 1.1em; }
-	.contributors { font-size: .85em; }
+/* 开源代码 */
+.repo-link {
+	font-family: Consolas, monospace;
 }
+
+/* 自适应 */
+@media (max-width: 359px) {
+	.blockquote { font-size: .85em; }
+	.contributors { font-size: .8em; letter-spacing: -.05em; }
+	.contributors.ul { padding-inline-start: 0; }
+	.contributors.ul > .li { list-style-type: none; }
+	.repo-link { font-size: .9em; }
+}
+
+@media (min-width: 360px) and (max-width: 399px) {
+	.blockquote { font-size: .95em; }
+	.contributors { font-size: .85em; letter-spacing: -.05em; }
+}
+
+@media (min-width: 400px) and (max-width: 439px) {
+	.contributors { font-size: .95em; }
+}
+
+/* @media (min-width: 440px) and (max-width: 479px) {
+
+} */
 
 @media (min-width: 480px) {
-	.contributors, .repo-links { font-size: inherit; }
+	.container {
+		max-width: 32rem;
+		margin: 1rem auto;
+	}
 }

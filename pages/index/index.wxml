@@ -1,5 +1,11 @@
 <!-- pages/index/index.wxml -->
 
+<template name="swiper-banner-image">
+	<swiper-item>
+		<image class="banner-image" src="{{src}}" bindtap="{{bindtap}}" />
+	</swiper-item>
+</template>
+
 <background type="index" />
 
 <view class="main">
@@ -7,12 +13,8 @@
 	<!-- banner -->
 	<swiper class="card banner" indicator-dots="true" autoplay="true"
 	interval="7500" duration="500" easing-function="east-out" circular="true">
-		<swiper-item>
-			<image class="banner-image" src="/assets/pic/temp_activity.png" bindtap="goTemp" />
-		</swiper-item>
-		<swiper-item>
-			<image class="banner-image" src="/assets/pic/banner.png" />
-		</swiper-item>
+		<template is="swiper-banner-image" data="{{src:'/assets/pic/temp_activity.png', bindtap: goTemp}}" />
+		<template is="swiper-banner-image" data="{{src:'/assets/pic/banner.png', bindtap: doNothing}}" />
 	</swiper>
 
 	<!-- 滚动通知 -->
@@ -30,7 +32,7 @@
 		<view class="menu-cell" wx:for="{{items}}" wx:key="url" bindtap="router"
 			data-index="{{index}}" data-url="{{item.url}}">
 			<image class="{{ index === clicked ? 'living' : '' }}"
-				src="{{item.iconPath}}" mode="aspectFit" />
+				src="{{item.iconPath}}" mode="heightFix" />
 			{{item.text}}
 		</view>
 	</view>

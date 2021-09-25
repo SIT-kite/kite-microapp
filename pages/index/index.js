@@ -67,6 +67,8 @@ Page({
 
   onShareAppMessage,
 
+  // banner 点击事件
+  doNothing() {},
   goTemp() {
     wx.navigateTo({
       url: "/freshman/pages" + (
