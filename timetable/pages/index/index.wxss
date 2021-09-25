@@ -1,118 +1,76 @@
-page {
+.background {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	background-color: white;
 	height: 100%;
-	width: 100%;
-}
-
-.background {
-	color: rgb(255, 255, 255);
-	height: 100vh;
 	background: #58a2e7;
-	/* background: #56ccf2;   */
-	/* background: -webkit-linear-gradient(to right, rgb(86, 204, 242), rgb(47, 128, 237));   */
-	/* background: linear-gradient(to right, rgb(86, 204, 242), rgb(47, 128, 237));  */
+	/* background: #56ccf2; */
+	/* background: linear-gradient(to right, rgb(86, 204, 242), rgb(47, 128, 237)); */
+	letter-spacing: -.025em;
 }
 
-.scroll_time {
+.header {
+	height: 6rem;
+	color: white;
+}
+
+.date {
 	display: flex;
-	width: 100%;
-	height: 65px;
-	white-space: nowrap;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+	height: 3rem;
+	padding: .5rem;
+	font-size: 1.5em;
+	font-weight: 500;
 }
 
 .set {
-	margin-right: 2vw;
 	display: flex;
-	flex-direction: row;
+	align-items: center;
 }
 
 .icon {
 	display: flex;
-	margin-top: 5px;
-	margin-left: 15px;
-	width: 28px;
-	height: 28px;
-	/* border-radius: 15px 15px 15px 15px; */
+	width: 32px;
+	height: 32px;
+	margin: 0 .25rem;
 }
 
-.icon1 {
+.scroll_time {
 	display: flex;
-	margin-top: 5px;
-	margin-left: 15px;
-	width: 28px;
-	height: 35px;
-	/* border-radius: 15px 15px 15px 15px; */
-}
-.icon2{
-	display: flex;
-	margin-top: 8px;
-	margin-left: 10px;
-	width: 28px;
-	height: 28px;
-}
-
-.time {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	height: 7em;
+	align-items: center;
+	height: 3rem;
+	padding: 0 .5rem;
+	white-space: nowrap;
 }
 
 .this_week {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 4vw;
-	height: 50px;
-	padding-right: 1vw;
-	margin-left: 1vw;
-	border-right: 0.8px solid #FCD244;
-}
-
-.date {
-	display: flex;
-	justify-content: space-between;
-	font-size: 25px;
-	font-weight: bold;
-	margin-left: 10px;
-	margin-top: 5px;
+	box-sizing: border-box;
+	width: 2rem;
+	border-right: 1px solid #FCD244;
 }
 
 .choose_time {
+	flex-grow: 1;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
 	align-items: center;
-	justify-content: center;
-	width: 92.5vw;
 }
 
 .days {
-	width: 13.7vw;
-	height: 13.1vw;
-	font-size: 18px;
+	flex-grow: 1;
+	padding-bottom: 3px;
+	border-bottom: 3px solid transparent;
 	/* border-radius: 6.85vw 6.85vw 6.55vw 6.55vw; */
+	font-size: .9em;
+	text-align: center;
 }
-
-.day {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 7.818vw;
+.days:not(:first-child) {
+	margin-left: 2px;
 }
-
-.week {
-	display: flex;
-	height: 5.21vw;
-	justify-content: center;
-	font-size: 14px;
-	color: #EEEEEE;
+.days:active {
+	background-color: rgba(255, 255, 255, .2);
 }
 
 .choosed {
@@ -121,11 +79,10 @@ page {
 }
 
 .main {
-	display: flex;
-	margin: 0 .5em;
-	background-color: #ffffff;
-	min-height: 100vh;
-	border-radius: 25px 25px 0px 0px;
+	flex-grow: 1;
+	margin: .5em .5em 0;
+	background-color: white;
+	border-radius: 1.5rem 1.5rem 0 0;
 }
 
 .couple {
@@ -144,65 +101,10 @@ page {
 
 .choose_couple {
 	/* color: #FCD244; */
-	font-weight: bold;
+	font-weight: 500;
 	border-bottom: 3px solid #FCD244;
 }
 
-
-/* Vix */
-/* .flex-item {
-    width: 95rpx;
-    height: 100px;
-
-  }
-
-  .schedule-item {
-    position: absolute;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-
-  }
-
-  .smalltext {
-    font-size: 9pt;
-    color:white;
-    padding-left: 2px;
-  }
-
-  /* .top {
-    display: flex;
-    flex-direction: row;
-    margin-left: 35rpx;
-    background-color: #bfa(170, 200, 255);
-    color: yellowgreen;
-  }
-
-  .top-text {
-    width: 100rpx;
-    height: 60rpx;
-    font-size: 12pt;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-  } */
-
-/* .scroll {
-    height: 1170rpx;
-    position: fixed;
-    background-color: white;
-    border-radius: 25px 25px 0px 0px;
-  }
-
-  .left {
-    width: 45rpx;
-    height: 100rpx;
-    font-size: 9pt;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-  }  */
 .tapSet {
 	position: absolute;
 	background: #f0f1f1ec;
@@ -292,12 +194,12 @@ page {
 	font-weight: bolder;
 	margin-left: 9vw;
 }
-.detail{
+.detail {
 	display: flex;
 	position: absolute;
 	margin-left:5vw;
 	top: 100vh;
-	border-radius: 25px 25px 0px 0px;
+	border-radius: 1.5rem 1.5rem 0 0;
 	z-index: 101;
 	width: 90vw;
 	height: 70vh;

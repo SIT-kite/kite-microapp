@@ -33,8 +33,8 @@
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": false,
-    "showES6CompileOption": false
+    "minifyWXSS": true,
+    "showES6CompileOption": true
   },
   "libVersion": "2.17.0",
   "appid": "wxfbc5fc9c0a0be9f9",

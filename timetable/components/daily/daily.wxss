@@ -6,7 +6,7 @@
 	/* background:#E4EBF5; */
 	justify-content: center;
 	align-items: center;
-	border-radius: 25px;
+	border-radius: 1.5rem;
 }
 
 .icon_1 {
@@ -30,7 +30,7 @@
 .course {
 	box-sizing: border-box;
 	padding: 0 1vw;
-	padding-bottom:1vh;
+	padding-bottom: 1vh;
 }
 
 .todo {

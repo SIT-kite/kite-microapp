@@ -67,6 +67,7 @@
 
 /* 主页图标高度为 128px，宽度不定！ */
 .menu-cell image {
+	max-width: 4em;
 	height: 2em;
 }
 
