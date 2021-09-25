@@ -27,7 +27,7 @@ Page {
 
 picker.year {
   margin-left: 20rpx;
-  margin-right: 50rpx;
+  margin-right: 80rpx;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
   font-size: 40rpx;
 }
@@ -38,36 +38,36 @@ picker.term {
 }
 
 
-.btn_refer {
-  right: 40rpx;
-  height: 70rpx;
-  width: 180rpx;
-  display: flex;
+.btn_refresh {
+  right: 60rpx;
+  height: 60rpx;
+  width: 60rpx;
+  /* display: flex; */
   position: absolute;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
-  border-radius: 5rpx;
+  /* align-items: center;
+  justify-content: center; */
+  /* color: #fff;
+  background-color: #337ab7; */
+  /* border-color: #2e6da4;
+  border-radius: 5rpx; */
 }
 .gpaContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  /* display: flex; */
+  /* flex-direction: row;
+  justify-content: space-between; */
   padding-bottom: 10px;
   box-shadow: 0px 1.5px 0px 0px #d9d9d9;
 }
 .gpaWords {
   padding: 5%;
-  width:55%;
-  color: rgba(28, 69, 135, 0.8);
+  /* width:55%; */
+  color: #e69138;
   background-color: #ffe599;
   box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9;
   border-radius: 0rpx 10rpx 10rpx 0rpx;
-  font-size: 40rpx;
+  font-size: 35rpx;
 }
-.showYearGpa {
+/* .showYearGpa {
   width: 27.5%;
   font-weight: bold;
   font-size: 34rpx;
@@ -79,7 +79,7 @@ picker.term {
   display: flex;
   align-items: flex-end;
   flex-direction: column;
-}
+} */
 switch {
   transform: scale(.9);
 }

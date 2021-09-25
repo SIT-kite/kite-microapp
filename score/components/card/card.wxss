@@ -24,6 +24,11 @@
 .creditText {
   font-weight: bold;
   font-size: 35rpx;
+  color: rgba(0, 0, 0, 0.7);
+}
+.semesterText {
+  font-weight: bold;
+  font-size: 30rpx;
   color: rgba(0, 0, 0, 0.5);
 }
 .rightContainer {

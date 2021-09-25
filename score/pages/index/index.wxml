@@ -2,35 +2,31 @@
 </navBar>
 <view class="indexPage">
 
-	<text class="text_tip" wx:if="{{isShowText}}">{{tipText}}</text>
+	<text class="text_tip" wx:if="{{isShowText}}">刷新成功!</text>
 
 	<view class="pageHeader">
-		<picker class="select year" mode="selector" range="{{yearList}}" value="{{scorePageInfo.yearIndex}}" bindchange="onSelectChange" data-index_name="yearIndex"><text class="selectText year">{{yearList[scorePageInfo.yearIndex]}}</text></picker>
-		<picker class="select term" mode="selector" range="{{termList}}" value="{{scorePageInfo.termIndex}}" bindchange="onSelectChange" data-index_name="termIndex"><text class="selectText term">{{termList[scorePageInfo.termIndex]}}</text></picker>
-		<view class="btn_refer" bindtap="getScoreList">查询/刷新</view>
+		<picker class="select year" mode="selector" range="{{yearList}}" value="{{scoreInfo.yearIndex}}" bindchange="onSelectChange" data-index_name="yearIndex"><text class="selectText year">{{yearList[scoreInfo.yearIndex]}}</text></picker>
+		<picker class="select term" mode="selector" range="{{termList}}" value="{{scoreInfo.termIndex}}" bindchange="onSelectChange" data-index_name="termIndex"><text class="selectText term">{{termList[scoreInfo.termIndex]}}</text></picker>
+		<image class="btn_refresh" src="../../assets/icons/refresh.svg" bindtap="refresh"></image>
 	</view>
 
 	<view class="gpaContainer">
-		<view class="gpaWords"><text>该学{{isYearGpa? '年':'期'}}绩点为{{isYearGpa? scorePageInfo.yearGpa !== null? scorePageInfo.yearGpa : '' : scorePageInfo.termGpa !== null? scorePageInfo.termGpa : ''}}</text></view>
-		<view class="showYearGpa">
-			<text>显示学年绩点</text>
-			<switch bindchange="switchGpa"></switch>
-		</view>
+		<view class="gpaWords"><text>该学{{scoreInfo.termIndex == termList.length - 1? '年':'期'}}绩点为{{gpa !== null? gpa + ',努力会有回报的!' : ''}}</text></view>
 	</view>
 
-	<view class="container_info" wx:if="{{!isReferred}}">
+	<!-- <view class="container_info" wx:if="{{scoreInfo.isFirstTime}}">
 		<image class="img_info" src="/score/assets/pic/info1.png"></image>
 		<text class="text_info">快点击查询试试吧!</text>
-	</view>
+	</view> -->
 
-	<view class="container_info" wx:if="{{scorePageInfo.currentScoreList.length == 0 && isReferred}}">
+	<view class="container_info" wx:if="{{scoreList.length == 0}}">
 		<image class="img_info" src="/score/assets/pic/info2.png"></image>
 		<text class="text_info">暂时还没有成绩哦!</text>
 	</view>
 
-	<scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" wx:if="{{scorePageInfo.currentScoreList[0] != null}}">
+	<scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" wx:if="{{scoreList[0] != null}}">
 
-		<card wx:for="{{scorePageInfo.currentScoreList}}" name="{{item.course}}" credit="{{item.credit}}" grades="{{item.score}}"></card>
+		<card wx:for="{{scoreList}}" name="{{item.isEvaluated? item.course : '未评教'}}" credit="{{item.credit}}" semester="{{['第一学期', '第二学期'][item.semester - 1]}}" grades="{{item.isEvaluated? item.score : '' }}"></card>
 		<view class="notice">已经到底部了哦!</view>
 
 	</scroll-view>

@@ -10,6 +10,9 @@ Component({
     credit: {
       type:String,
     },
+    semester: {
+      type: String,
+    },
     grades: {
       type:String
     }
