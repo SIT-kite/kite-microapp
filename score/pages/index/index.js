@@ -142,7 +142,7 @@ Page({
 
     wx.showLoading({
       title: '加载中2333~',
-      mask: false
+      mask: true
     })
 
     getData.then((res) => {
