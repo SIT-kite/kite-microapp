@@ -3,7 +3,7 @@ export default async (canvas, data) => {
 
   const ctx = canvas.getContext("2d");
 
-  const px = 1; // wx.getSystemInfoSync().windowWidth / 750;
+  const px = wx.getSystemInfoSync().pixelRatio;
   const cw = 650 * px;
   const ch = 1000 * px;
 

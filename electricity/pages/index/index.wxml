@@ -14,22 +14,24 @@
 
 </view>
 
-<view class="instruction" wx:if="{{ !show }}">请输入楼号和寝室号，并点击“查询”</view>
+<view class="instruction" wx:if="{{ !showResult }}">请输入楼号和寝室号，并点击“查询”</view>
 
-<view class="card result {{show}}">
+<view class="card result {{ showResult }}">
 
 	<view class="tab-container">
-		<view class="tab {{ current === 0 }}" data-current="0" bindtap="switchTab">ℹ️ 电费余额</view>
-		<view style="width: 1ch"></view>
-		<view class="tab {{ current === 1 }}" data-current="1" bindtap="switchTab">💹 使用情况</view>
+		<view class="tab {{ currentTab === 0 }}" data-current="0" bindtap="switchTab">ℹ️ 电费余额</view>
+		<view style="width: .5rem"></view>
+		<view class="tab {{ currentTab === 1 }}" data-current="1" bindtap="switchTab">💹 使用情况</view>
 	</view>
 
-	<swiper class="swiper" current="{{current}}" bindchange="swiperChange" duration="200">
+	<swiper class="swiper" current="{{currentTab}}" bindchange="swiperChange" duration="200">
 		<swiper-item>
 			<scroll-view class="scroll-view" scroll-y="true">
 
-				<view class="electricity" wx:if="{{ electricity !== null }}">
-					<button class="button tip" bindtap="showTip">数据有误？</button>
+				<view class="section electricity" wx:if="{{ electricity !== null }}">
+					<button class="button hint" bindtap="showHint"
+						data-content="数据来自学校在线电费查询平台。如有错误，请以充值机显示金额为准。"
+					>数据有误？</button>
 					<view><text class="title">　房间号：</text>{{electricity.room}}</view>
 					<view><text class="title">剩余金额：</text>{{electricity.balance}} 元</view>
 					<view><text class="title">剩余电量：</text>{{electricity.power}} 度</view>
@@ -41,7 +43,7 @@
 		<swiper-item>
 			<scroll-view class="scroll-view" scroll-y="true">
 
-				<view class="rank" wx:if="{{ rank !== null }}">
+				<view class="section rank" wx:if="{{ rank !== null }}">
 					<navigator class="button share"
 						url="../share/share?consumption={{rank.consumption}}&percent={{rank.percent}}"
 						>分享</navigator>
@@ -50,13 +52,24 @@
 					<view>超越了 {{rank.percent}}% 的寝室</view>
 				</view>
 
-				<view class="bill" wx:if="{{ days !== null || hours !== null }}">
+				<view class="section bill" wx:if="{{ days !== null || hours !== null }}">
 					<view class="title">电费使用情况</view>
-					<view class="title">即将支持按小时查看</view>
-					<canvas id="canvas" type="2d"></canvas>
+					<view class="switch-container">
+						<text class="switch-label {{currentRange === 'hours'}}">过去一天</text>
+						<switch class="switch" checked="true" bindchange="changeRange" />
+						<text class="switch-label {{currentRange === 'days'}}">过去一周</text>
+					</view>
+					<canvas id="canvas" canvas-id="canvas" type="{{ canvas2d ? '2d' : '' }}"
+						bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" />
+					<view wx:if="{{currentRange === 'hours'}}">
+					共消费 {{hours.sum}} 元，平均消费 {{hours.median}} 元/小时
+					</view>
+					<view wx:if="{{currentRange === 'days'}}">
+					共消费 {{ days.sum}} 元，平均消费 {{ days.median}} 元/天
+					</view>
 				</view>
 
-				<view class="charge" wx:if="{{ charges.length > 0 }}">
+				<view class="section charge" wx:if="{{ charges.length > 0 }}">
 					<view class="title">近期充值</view>
 					<view wx:for="charges" wx:key="date">{{item.date}} 充值 {{item.charge}} 元</view>
 				</view>

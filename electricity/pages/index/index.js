@@ -10,23 +10,28 @@ import uCharts from "./u-charts";
 const app = getApp();
 const gData = app.globalData;
 
+const { platform, pixelRatio } = wx.getSystemInfoSync();
+
 const electricityAPI = ({api = "", roomId, callback}) => request({
   url: `${gData.apiUrl}/pay/room/${roomId}${api !== "" ? "/" + api : ""}`,
   header: getHeader("urlencoded", gData.token)
 }).then(
   callback
 ).catch(
-  err => wx.showModal({
-    content:
-      err.symbol === request.symbols.codeNotZero
-      ? isNonEmptyString(err.res.data.msg)
-        ? err.res.data.msg
-        : err.res.data.code === 200
-          ? "房间不存在"
-          : "发生未知错误"
-      : "网络错误",
-    showCancel: false
-  })
+  err => {
+    console.error(err);
+    wx.showModal({
+      content:
+        err.symbol === request.symbols.codeNotZero
+        ? isNonEmptyString(err.res.data.msg)
+          ? err.res.data.msg
+          : err.res.data.code === 200
+            ? "房间不存在"
+            : "发生未知错误"
+        : "网络错误",
+      showCancel: false
+    })
+  }
 );
 
 const numberStringFilter = str => str
@@ -50,16 +55,20 @@ Page({
 
 	data: {
 
-    show: false,
-    loading: false,
     focus: false,
-    current: 0,
+    loading: false,
+    showResult: false,
+    currentTab: 0,
+
+    // https://developers.weixin.qq.com/community/develop/doc/00066c12e1cb90d9865a4eea455400
+    canvas2d: ["android", "ios"].some( mobile => platform === mobile ),
 
     building: "",
     room: "",
 
     electricity: null,
     rank: null,
+    currentRange: "days",
     days: null,
     hours: null,
     charges: []
@@ -74,10 +83,10 @@ Page({
     this.setData({ room: numberStringFilter(e.detail.value) });
   },
 
-  showTip() {
+  showHint(e) {
     wx.showModal({
       title: "提示",
-      content: "数据来自学校在线电费查询平台。如有错误，请以充值机显示金额为准。",
+      content: e.target.dataset.content,
       confirmText: "知道了",
       showCancel: false
     });
@@ -153,91 +162,164 @@ Page({
         }),
 
         // 用电历史
-        electricityAPI({
-          api: "bill/days", roomId,
-          callback: res => {
-            const data = res.data.data;
-            console.log("一周历史", data);
-            const categories = [];
-            const charges = [];
-            const consumptions = [];
-
-            data.forEach(
-              ({ date, charge, consumption }) => {
-                categories.push(
-                  // 2021-06-09 -> 6/9
-                  date.replace(/\d\d\d\d-0?(\d{1,2})-0?(\d{1,2})/, "$1/$2")
-                );
-                charge !== 0 && charges.push({ date, charge });
-                consumptions.push(consumption.toFixed(2));
-              }
-            );
-
-            this.setData({
-              days: {
-                categories,
-                series: [{ name: "电费 (元)", type: "line", data: consumptions }]
-              }
-            });
-
-            this.renderChart(this.data.days);
-
-            charges.length > 0 && this.setData({ charges });
-
-          }
-        })
+        this.getBill("days", roomId).then(
+          () => this.renderChart(this.data.days)
+        )
 
       ]).then(
-        () => this.setData({ show: true, loading: false }
-      ));
+        () => this.setData({ showResult: true, loading: false })
+      );
 
     }
   },
 
-  renderChart({categories, series}) {
-    wx.createSelectorQuery().select("#canvas").fields({
-      id: true, size: true, node: true
-    }).exec(res => {
+  // 用电历史
+  getBill(range, roomId) {
 
-      const { id: canvasId, width, height, node: canvas } = res[0];
+    const { datetimeName, trim } = (() => {
+      switch (range) {
+        case "days": return {
+          datetimeName: "date", // 2021-06-09 -> 6/9
+          trim: date => date.replace(/^\d\d\d\d-0?(\d\d?)-0?(\d\d?)$/, "$1/$2")
+        };
+        case "hours": return {
+          datetimeName: "time", // 2021-06-09 15:00 -> 15:00
+          trim: time => time.replace(/^.+ /, "")
+        };
+        default: return { datetimeName: false };
+      }
+    })();
 
-      const uChart = new uCharts({
-        type: "mix",
-        loadingType: 4,
-        canvasId,
-        canvas2d: true,
-        context: canvas.getContext("2d"),
-        // pixelRatio: wx.getSystemInfoSync().pixelRatio,
-        width, height,
-        // dataPointShape: true,
-        // dataPointShapeType: "solid",
-        xAxis: {
-          calibration: true,
-          disableGrid: true
-        },
-        yAxis: {
-          gridType: "dash",
-          showTitle: true, data: [{title: "元"}]
-        },
-        extra: { mix: { column: { width: 4 } } },
-        categories,
-        series
+    if (datetimeName === false) throw "range is not days or hours";
+    else return electricityAPI({
+      api: `bill/${range}`, roomId,
+      callback: res => {
 
-      });
+        const entries = res.data.data;
+        console.log("用电历史", range, entries);
 
-      uChart
-      // uChart.updateData({ categories, series })
+        const categories = [];
+        const consumptions = [];
+        const charges = [];
+        let sum = 0;
 
+        entries.forEach(
+          entry => {
+            const { consumption, charge } = entry;
+            const datetime = entry[datetimeName];
+            categories.push(trim(datetime));
+            consumptions.push(consumption.toFixed(2));
+            charge !== 0 && charges.push({ datetime, charge });
+            sum += consumption;
+          }
+        );
+
+        const billData = {
+          [range]: {
+            categories,
+            series: [{ name: "电费 (元)", data: consumptions }],
+            sum: sum.toFixed(2),
+            median: (sum / consumptions.length).toFixed(2)
+          }
+        }
+
+        if (charges.length > 0) {
+          billData.charges = charges;
+        }
+
+        this.setData(billData);
+
+      }
     });
+
+  },
+
+  chart: null,
+  renderChart({categories, series, median}) {
+
+    const { canvas2d } = this.data;
+    const fields = { id: true, size: true };
+    fields[ canvas2d ? "node" : "context" ] = true;
+
+    wx.createSelectorQuery().select("#canvas").fields(
+      fields, res => {
+
+        const { id: canvasId, width, height, node, context } = res;
+        const formatter = num => num.toFixed(1).replace(".0", "");
+
+        this.chart = new uCharts({
+          type: "line", loadingType: 4, fontSize: 12, tapLegend: true,
+          disableScroll: true, enableScroll: true,
+          animation: true, timing: "easeOut", duration: 250,
+          canvasId, canvas2d, context: canvas2d ? node.getContext("2d") : context,
+          pixelRatio, width: width - 6, height,
+          dataPointShape: true, dataPointShapeType: "solid", enableMarkLine: true,
+          xAxis: { calibration: true, disableGrid: true, itemCount: 8 },
+          yAxis: {
+            gridType: "dash", showTitle: true, formatter, data: [{
+              textAlign: "left", title: "元", titleOffsetX: -18, min: 0, formatter
+            }]
+          },
+          legend: { show: false },
+          extra: {
+            markLine: {
+              type: "dash",
+              data: [{
+                value: median,
+                lineColor: "#03A9F4",
+                showLabel: true,
+                labelBgOpacity: .5
+              }]
+            },
+          },
+          categories,
+          series
+        });
+
+        // this.chart.updateData({ categories, series });
+
+      }
+    ).exec();
+
+  },
+
+  changeRange(e) {
+    const range = e.detail.value ? "days" : "hours";
+    const cachedData = this.data[range];
+    const updateData = () => {
+      this.chart.updateData(this.data[range]);
+      this.setData({ currentRange: range });
+    };
+    if (Array.isArray(cachedData) && cachedData.length > 0) {
+      updateData();
+    } else {
+      this.getBill(range, this.data.electricity.room).then(updateData);
+    }
   },
 
   switchTab(e) {
-    this.setData({ current: e.target.dataset.current });
+    this.setData({ currentTab: e.target.dataset.current });
   },
 
   swiperChange(e) {
-    this.setData({ current: e.detail.current });
+    this.setData({ currentTab: e.detail.current });
   },
+
+  touchStart(e) {
+    this.chart.scrollStart(e);
+  },
+
+  touchMove(e) {
+    this.chart.scroll(e);
+  },
+
+  touchEnd(e) {
+    this.chart.scrollEnd(e);
+    this.chart.showToolTip(e/* , {
+      formatter: (item, category) => category + ' ' + item.name + ':' + item.data
+    } */);
+  },
+
 
 	onLoad() {
 
@@ -254,6 +336,7 @@ Page({
       const [building, room] = ["floor", "room"].map(
         name => wx.getStorageSync(`electricity_${name}`)
       );
+
       if ( check(building, "Number") && check(room, "Number") ) {
         // 旧
         const electricity = { building, room };
@@ -278,10 +361,15 @@ Page({
 	},
 
 	onPullDownRefresh() {
+    this.getElectricity().then(
+      () => wx.stopPullDownRefresh()
+    );
 
 	},
 
-	onShareAppMessage() {
+  onShareAppMessage: () => ({
+    title: "试试用上应小风筝查电费吧！支持用电排名和历史！",
+    path: "pages/index/index"
+  })
 
-	}
 })

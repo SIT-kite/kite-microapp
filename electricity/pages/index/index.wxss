@@ -24,6 +24,7 @@ page {
 	padding: .5em;
 }
 
+
 /* input */
 .input-container {
 	flex-grow: 1;
@@ -51,7 +52,7 @@ page {
 	padding: .25em 1ch;
 	font-size: inherit;
 }
-.button.tip {
+.button.hint {
 	float: right;
 	width: max-content !important;
 	margin: 0 auto !important;
@@ -71,6 +72,7 @@ page {
 	font-weight: bold;
 }
 
+
 /* instruction */
 .instruction {
 	margin: 1em 0;
@@ -84,8 +86,9 @@ page {
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-	margin-top: .5em;
-	padding: .5em;
+	height: 100%;
+	margin-top: .5rem;
+	padding: .5rem;
 	transition:
 		height var(--transition),
 		var(--transition-opacity);
@@ -120,9 +123,25 @@ page {
 .scroll-view {
 	box-sizing: border-box;
 	height: 100%;
-	padding-top: .5em;
+	padding-top: .5rem;
+	contain: content;
+}
+
+.switch-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.switch-label.true {
+	font-weight: 500;
+}
+
+.switch {
+	margin: 0 .5em;
 }
 
 #canvas {
 	width: 100%;
+	height: 12em;
 }

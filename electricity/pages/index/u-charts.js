@@ -4,16 +4,16 @@
  * Copyright (c) 2021 QIUN®秋云 https://www.ucharts.cn All rights reserved.
  * Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * 复制使用请保留本段注释，感谢支持开源！
- * 
+ *
  * uCharts®官方网站
  * https://www.uCharts.cn
- * 
+ *
  * 开源地址:
  * https://gitee.com/uCharts/uCharts
- * 
+ *
  * uni-app插件市场地址：
  * http://ext.dcloud.net.cn/plugin?id=271
- * 
+ *
  */
 
 'use strict';
@@ -435,7 +435,7 @@ function fillCustomColor(linearType, customColor, series, config) {
   }
   return newcolor;
 }
-  
+
 function getDataRange(minData, maxData) {
   var limit = 0;
   var range = maxData - minData;
@@ -977,7 +977,7 @@ function splitPoints(points,eachSeries) {
         items = [];
       }
     }
-    
+
   });
   if (items.length) {
     newPoints.push(items);
@@ -3197,7 +3197,7 @@ function drawAreaDataPoints(series, opts, config, context) {
               context.bezierCurveTo(ctrlPoint.ctrA.x, ctrlPoint.ctrA.y, ctrlPoint.ctrB.x, ctrlPoint.ctrB.y, item.x, item.y);
             }
           };
-        } 
+        }
         if (areaOption.type === 'straight') {
           for (let j = 0; j < points.length; j++) {
             let item = points[j];
@@ -3445,7 +3445,7 @@ function drawBubbleDataPoints(series, opts, config, context) {
     context.closePath();
     context.fill();
     context.stroke();
-    
+
     if (opts.dataLabel !== false && process === 1) {
       points.forEach(function(item, index) {
         context.beginPath();
@@ -4068,7 +4068,7 @@ function drawYAxis(series, opts, config, context) {
   }
   context.closePath();
   context.stroke();
-  
+
   let tStartLeft = opts.area[3];
   let tStartRight = opts.width - opts.area[1];
   let tStartCenter = opts.area[3] + (opts.width - opts.area[1] - opts.area[3]) / 2;
@@ -4561,7 +4561,7 @@ function drawArcbarDataPoints(series, opts, config, context) {
     radius -= arcbarOption.width / 2;
   }
   arcbarOption.customColor = fillCustomColor(arcbarOption.linearType, arcbarOption.customColor, series, config);
-  
+
   for (let i = 0; i < series.length; i++) {
     let eachSeries = series[i];
     //背景颜色
@@ -4830,7 +4830,7 @@ function drawRadarDataPoints(series, opts, config, context) {
   });
   context.stroke();
   context.closePath();
-  
+
   // 画背景网格
   var _loop = function _loop(i) {
     var startPos = {};
@@ -4888,7 +4888,7 @@ function drawRadarDataPoints(series, opts, config, context) {
   });
   // draw label text
   drawRadarLabel(coordinateAngle, radius, centerPosition, opts, config, context);
-  
+
   // draw dataLabel
   if (opts.dataLabel !== false && process === 1) {
     radarDataPoints.forEach(function(eachSeries, seriesIndex) {
@@ -4923,7 +4923,7 @@ function drawRadarDataPoints(series, opts, config, context) {
     });
     context.setTextAlign('left');
   }
-  
+
   return {
     center: centerPosition,
     radius: radius,
@@ -5477,7 +5477,7 @@ function drawFunnelDataPoints(series, opts, config, context) {
       context.translate(0, -eachSpacing)
     }
   }
-  
+
   context.restore();
   if (opts.dataLabel !== false && process === 1) {
     drawFunnelText(series, opts, context, eachSpacing, funnelOption.labelAlign, activeWidth, centerPosition);
@@ -6262,7 +6262,7 @@ var uCharts = function uCharts(opts) {
   opts.animation = opts.animation ? true : false;
   opts.rotate = opts.rotate ? true : false;
   opts.canvas2d = opts.canvas2d ? true : false;
-  
+
   let config$$1 = JSON.parse(JSON.stringify(config));
   config$$1.color = opts.color ? opts.color : config$$1.color;
   config$$1.yAxisTitleWidth = opts.yAxis.disabled !== true && opts.yAxis.title ? config$$1.yAxisTitleWidth : 0;

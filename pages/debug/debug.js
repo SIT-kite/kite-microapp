@@ -134,12 +134,14 @@ Page({
         const has = (array, value) => array.some(item => item === value);
 
         const is = {
+
           api: (key, value) => (
             has([ "apiUrl", "commonUrl" ], key) || (
               typeof value === "string" &&
               value.includes("kite.sunnysab.cn")
             )
           ),
+
           token: (key, value) => (
             key === "token" &&
             value !== ""
@@ -152,27 +154,28 @@ Page({
             key === "userDetail" &&
             value !== null
           ),
+          credentials: (key, value) => (
+            ["token", "userInfo", "userDetail"].every(
+              credential => is[credential](key, value)
+            )
+          ),
+
           timetable: (key, value) => (
-            key === "timetable_schedule" &&
+            key.startsWith("timetable_") &&
             value !== null
           )
+
         };
 
-        // TODO：分成多个不同函数，进一步按需使用，比如无论如何都隐藏 timetable_schedule
-        const removeToken =
-          gData.isDev
-          ? null
-          : (key, value) => (
-            is.api(key, value)
-            ? undefined
-            : is.token(key, value) ||
-              is.userInfo(key, value) ||
-              is.userDetail(key, value)
-              ? "[已隐藏]"
-              : is.timetable(key, value)
-              ? "[长度过长，已隐藏]"
-              : value
-          );
+
+        // 隐藏 timetable；如果不在开发者工具中，则隐藏 api 和 credentials
+        const removeToken = (key, value) => {
+          is.timetable(key, value) ? "[长度过长，已隐藏]"
+          : gData.isDev ? value
+          : is.api(key, value) ? undefined
+          : is.credentials(key, value) ? "[已隐藏]"
+          : value
+        };
 
         const stringify = (data, replacer = null) => JSON.stringify(data, replacer, 2);
 
