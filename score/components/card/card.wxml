@@ -1,5 +1,5 @@
 <!--score/components/card/card.wxml-->
-<card class="card">
+<card class="card" bindtap="onTap">
 
   <view class="leftContainer">
     <text class="nameText">{{name == ''? '(空)' : name}}</text>

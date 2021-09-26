@@ -2,6 +2,7 @@
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import onShareAppMessage from "../../../utils/onShareAppMessage";
 import getHeader from "../../../utils/getHeader";
+import {doGET} from "../../../utils/requestUtils";
 
 const app = getApp();
 const requestUtils = require("../../../utils/requestUtils");
@@ -128,14 +129,14 @@ Page({
 
     switch (requestPurpose) {
       case (REQUEST_PURPOSE[0]) : apiUrl = `${API_URL_PREFIX.LIST}year=${params.year}&semester=${params.semester}&force=${params.force}`; break;
-      case (REQUEST_PURPOSE[1]) : apiUrl = `${API_URL_PREFIX}year=${params.year}&semester=${params.semester}&class_id=${params.classId}`; break;
+      case (REQUEST_PURPOSE[1]) : apiUrl = `${API_URL_PREFIX.DETAIL}year=${params.year}&semester=${params.semester}&class_id=${params.classId}`; break;
     }
 
     return apiUrl
 
   },
 
-  fetch: function(apiUrl, callback) {
+  fetchList: function(apiUrl, callback) {
 
     let scoreList = []
     let getData = requestUtils.doGET(apiUrl, {}, header)
@@ -150,12 +151,12 @@ Page({
       scoreList =  res.data.data.score
       callback(scoreList)
     }).catch((err) => {
-      this.handleFetchError(err)
+      this.handlefetchListError(err)
     })
 
   },
 
-  handleFetchError(err) {
+  handlefetchListError(err) {
 
     wx.showModal({
       title: "哎呀，出错误了 >.<",
@@ -194,12 +195,14 @@ Page({
     setTimeout(() => this.setData({isShowText: false}), 2000)
   },
 
-  //TODO: 请求返回数据的同步处理
   referList(force) {
 
-    let scoreList = [] 
-    this.fetch(this.constructApiUrl('FOR_LIST', this.constructParams('FOR_LIST', force)), (res) => {
+    let scoreList = []
+    this.fetchList(this.constructApiUrl('FOR_LIST', this.constructParams('FOR_LIST', force)), (res) => {
       scoreList = res
+      scoreList.forEach((item) => {
+        item.isFolded = true
+      })
       this.setPageData(['scoreList','gpa'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null])
     })
     wx.setStorageSync('scoreInfo', this.data.scoreInfo)
@@ -210,6 +213,60 @@ Page({
 
   refresh() {
     this.referList(true)
+  },
+
+  fetchDetail(apiUrl, callback) {
+
+    let detail = []
+    let getData = requestUtils.doGET(apiUrl, {}, header)
+    console.log(apiUrl)
+    wx.showLoading({
+      title: '加载中2333~',
+      mask: true
+    })
+
+    getData.then((res) => {
+      wx.hideLoading()
+      detail = res.data.data.score_detail
+      callback(detail)
+    }).catch((err) => {
+      this.handlefetchListError(err)
+    })
+
+  },
+
+  doAnimation(isFolded) {
+
+  },
+
+  referDetail(course, callback) {
+    let detail = []
+    this.fetchDetail(this.constructApiUrl('FOR_DETAIL', this.constructParams('FOR_DETAIL', course.classId)), (res) => {
+      detail = res
+    })
+    callback(detail)
+  },
+
+  showDetail(index, course) {
+    let detailToSet = `scoreList[${index}].detail`
+    !course.detail
+      ? this.referDetail(course, (res) => {
+        this.setData({[detailToSet] : res})
+      })
+      : () => {
+        this.doAnimation()
+      }
+  },
+
+  bindCard(e) {
+    let index = e.currentTarget.dataset.index
+    let course = this.data.scoreList[index]
+    course.isFolded
+      ? course.isEvaluated
+          ? this.showDetail(index, course)
+          : {}
+      : {}
+
   },
 
   handlerGohomeClick,
