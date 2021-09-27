@@ -244,23 +244,19 @@ Page({
 
   },
 
-  referDetail(course, callback) {
-    let detail = []
+  referDetail(course, detailToSet) {
     this.fetchDetail(this.constructApiUrl('FOR_DETAIL', this.constructParams('FOR_DETAIL', course.classId)), (res) => {
-      detail = res
+      res.forEach(item => {
+        item.score = item.score.toFixed(1)
+      })
+      this.setData({[detailToSet] : res})
     })
-    callback(detail)
   },
 
   showDetail(index, course) {
     let detailToSet = `scoreList[${index}].detail`
     !course.detail
-      ? this.referDetail(course, (res) => {
-        res.forEach(item => {
-          item.score = item.score.forEach(1)
-        })
-        this.setData({[detailToSet] : res})
-      })
+      ? this.referDetail(course, detailToSet)
       : () => {
         this.doAnimation()
       }
