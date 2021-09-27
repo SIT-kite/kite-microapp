@@ -24,9 +24,9 @@ Component({
     _showSelectWeek() {
       this.setData({isShowSelectWeek: true})
       this.animation.scale(1).step()
-      setTimeout(() => {
+      // setTimeout(() => {
         this.setData({animation: this.animation.export()})
-      }, 100)
+      // }, 100)
       // this.setData({isShowSelectWeek: !this.data.isShowSelectWeek})
       // this.animation.scale(1).step()
       // setTimeout(() => {
