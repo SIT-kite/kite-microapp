@@ -5,6 +5,9 @@
     <text class="nameText">{{name == ''? '(空)' : name}}</text>
     <text class="creditText">学分：{{credit}}</text>
     <text class="semesterText">{{semester}}</text>
+    <view class="detailContainer" wx:if="{{!isFolded}}" animation="{{animation}}">
+      <text class="detailText" wx:for="{{detailList}}" >{{item.scoreType + ' : ' + item.score + ' 占比 ' + (item.percentage === '0%'? '100%' : item.percentage)}}</text>
+    </view>
   </view>
   <view class="rightContainer">
     <text class="gradesText {{grades < 60? fail : ''}}">{{grades}}</text>

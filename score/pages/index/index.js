@@ -200,8 +200,13 @@ Page({
     let scoreList = []
     this.fetchList(this.constructApiUrl('FOR_LIST', this.constructParams('FOR_LIST', force)), (res) => {
       scoreList = res
-      scoreList.forEach((item) => {
-        item.isFolded = true
+      scoreList.forEach((course) => {
+        course.isFolded = true
+        if(course.detail) {
+          course.detail.forEach(item => {
+            item.score = item.score.toFixed(1)
+          })
+        }
       })
       this.setPageData(['scoreList','gpa'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null])
     })
@@ -251,6 +256,9 @@ Page({
     let detailToSet = `scoreList[${index}].detail`
     !course.detail
       ? this.referDetail(course, (res) => {
+        res.forEach(item => {
+          item.score = item.score.forEach(1)
+        })
         this.setData({[detailToSet] : res})
       })
       : () => {

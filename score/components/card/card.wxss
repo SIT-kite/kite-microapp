@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 40rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
   margin: 30rpx;
   border-radius: 10rpx;
   background-color:#9fc5e8;
@@ -31,6 +33,19 @@
   font-size: 30rpx;
   color: rgba(0, 0, 0, 0.5);
 }
+
+.detailContainer {
+	display: flex;
+	flex-direction: column;
+	font-size: 30rpx;
+  color: rgba(0, 0, 0, 0.5);
+  transform: scale(1, 0);
+}
+
+.detailText {
+  
+}
+
 .rightContainer {
   margin-left: 0rpx;
   display: flex;
