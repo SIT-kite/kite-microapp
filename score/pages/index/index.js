@@ -107,17 +107,18 @@ Page({
   constructParams(requestPurpose, param) {
     let params = {
       year: this.data.yearList[this.data.scoreInfo.yearIndex],
-      semester: parseInt(this.data.scoreInfo.termIndex) + 1 === this.data.termList.length
-        ? 0
-        : parseInt(this.data.scoreInfo.termIndex) + 1
     };
     switch (requestPurpose) {
       case (REQUEST_PURPOSE[0]) : {
         params.force = param
+        params.semester = parseInt(this.data.scoreInfo.termIndex) + 1 === this.data.termList.length
+        ? 0
+        : parseInt(this.data.scoreInfo.termIndex) + 1
         break;
       }
       case (REQUEST_PURPOSE[1]) : {
-        params.classId = param
+        params.classId = param.classId
+        params.semester = param.semester
         break;
       }
     }
@@ -196,23 +197,28 @@ Page({
     setTimeout(() => this.setData({isShowText: false}), 2000)
   },
 
+  handleList(scoreList) {
+    scoreList.forEach((course) => {
+      course.isFolded = true
+      if(course.detail) {
+        course.detail.forEach(item => {
+          item.score = item.score.toFixed(1)
+        })
+      }
+    })
+
+    this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null, scoreList.length != 0
+      ? false : true])
+    wx.setStorageSync('scoreInfo', this.data.scoreInfo)
+  },
+
   referList(force) {
 
     let scoreList = []
     this.fetchList(this.constructApiUrl('FOR_LIST', this.constructParams('FOR_LIST', force)), (res) => {
-      scoreList = res
-      scoreList.forEach((course) => {
-        course.isFolded = true
-        if(course.detail) {
-          course.detail.forEach(item => {
-            item.score = item.score.toFixed(1)
-          })
-        }
-      })
-      this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null, scoreList.length != 0
-        ? false : true])
-      wx.setStorageSync('scoreInfo', this.data.scoreInfo)
+      this.handleList(res)
     })
+
     force
       ? this.popUpTip()
       : {}
@@ -247,7 +253,7 @@ Page({
   },
 
   referDetail(course, detailToSet) {
-    this.fetchDetail(this.constructApiUrl('FOR_DETAIL', this.constructParams('FOR_DETAIL', course.classId)), (res) => {
+    this.fetchDetail(this.constructApiUrl('FOR_DETAIL', this.constructParams('FOR_DETAIL', course)), (res) => {
       res.forEach(item => {
         item.score = item.score.toFixed(1)
       })
