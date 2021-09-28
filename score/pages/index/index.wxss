@@ -52,14 +52,15 @@ picker.term {
   border-radius: 5rpx; */
 }
 .gpaContainer {
-  /* display: flex; */
   /* flex-direction: row;
   justify-content: space-between; */
   padding-bottom: 10px;
   box-shadow: 0px 1.5px 0px 0px #d9d9d9;
 }
-.gpaWords {
-  padding: 5%;
+.gpaContainer .text {
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
   /* width:55%; */
   color: #e69138;
   background-color: #ffe599;

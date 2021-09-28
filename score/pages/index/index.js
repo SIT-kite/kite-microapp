@@ -23,6 +23,7 @@ Page({
     scoreList: [],
     gpa: [],
     isShowText: false,
+    isShowTip: true,
     scoreInfo: {
       isFirstTime: true,
       termIndex: 0,
@@ -208,9 +209,10 @@ Page({
           })
         }
       })
-      this.setPageData(['scoreList','gpa'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null])
+      this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null, scoreList.length != 0
+        ? false : true])
+      wx.setStorageSync('scoreInfo', this.data.scoreInfo)
     })
-    wx.setStorageSync('scoreInfo', this.data.scoreInfo)
     force
       ? this.popUpTip()
       : {}
@@ -273,6 +275,12 @@ Page({
 
   },
 
+  setIsShowTip(isFirstTime) {
+    !isFirstTime
+      ? this.setData({isShowTip: false})
+      : {}
+  },
+
   handlerGohomeClick,
   handlerGobackClick,
   onShareAppMessage,
@@ -286,7 +294,7 @@ Page({
     scoreInfo
       ? this.setData({scoreInfo})
       : {}
+    this.setIsShowTip(this.data.scoreInfo.isFirstTime)
     this.referList(this.data.scoreInfo.isFirstTime)
-    this.setData({'scoreInfo.isFirstTime': false})
   },
 })

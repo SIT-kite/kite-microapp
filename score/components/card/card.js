@@ -41,13 +41,13 @@ Component({
       if(this.data.isFolded) {
         this.setData({isFolded: false})
         this.animation.scale(1, 1).step()
-        this.setData({animation: this.animation.export()}) 
+        this.setData({animation: this.animation.export()})
       }else {
-        this.animation.scale(1, 0).step()
-          this.setData({animation: this.animation.export()}) 
-          setTimeout(() => {
+        // this.animation.scale(1, 0).step()
+        //   this.setData({animation: this.animation.export()})
+        //   setTimeout(() => {
             this.setData({isFolded: true})
-          }, 1000);
+          // }, 100);
       }
     }
   },
