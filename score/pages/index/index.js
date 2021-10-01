@@ -2,7 +2,6 @@
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import onShareAppMessage from "../../../utils/onShareAppMessage";
 import getHeader from "../../../utils/getHeader";
-import {doGET} from "../../../utils/requestUtils";
 
 const app = getApp();
 const requestUtils = require("../../../utils/requestUtils");
@@ -153,12 +152,12 @@ Page({
       scoreList =  res.data.data.score
       callback(scoreList)
     }).catch((err) => {
-      this.handlefetchListError(err)
+      this.handleFetchListError(err)
     })
 
   },
 
-  handlefetchListError(err) {
+  handleFetchListError(err) {
 
     wx.showModal({
       title: "哎呀，出错误了 >.<",
@@ -243,12 +242,8 @@ Page({
       detail = res.data.data.score_detail
       callback(detail)
     }).catch((err) => {
-      this.handlefetchListError(err)
+      this.handleFetchListError(err)
     })
-
-  },
-
-  doAnimation(isFolded) {
 
   },
 

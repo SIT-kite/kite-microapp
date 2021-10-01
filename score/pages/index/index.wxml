@@ -20,7 +20,7 @@
 	</view> -->
 
 	<view class="container_info" wx:if="{{scoreList.length == 0}}">
-		<image class="img_info" src="/score/assets/pic/info2.png"></image>
+		<image class="img_info" src="/score/assets/pic/info2.svg"></image>
 		<text class="text_info">暂时还没有成绩哦!</text>
 	</view>
 
