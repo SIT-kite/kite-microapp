@@ -28,7 +28,7 @@ Page({
     itemList: [],
     mineTotalList: [],
     mineScoreList: [],
-    pageIndex: 800,
+    pageIndex: 1,
     showNotice: false,
     notice: "已经到底部了哦",
     option: {
