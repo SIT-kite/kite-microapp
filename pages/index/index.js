@@ -52,16 +52,11 @@ Page({
       url: "/activity/pages/index/index",
       iconPath: "/assets/icons/index/activity.png"
     },
-    /* {
-      text: "拼车",
-      url: "/carpool/pages/car-pool/car-pool",
-      iconPath: "/assets/icons/index/carpool.png"
-    },
     {
-      text: "搜索",
-      url: "/search/pages/index/index",
-      iconPath: "/assets/icons/index/search.png"
-    } */
+      text: "消费",
+      url: "/consume/pages/index/index",
+      iconPath: "/assets/icons/index/consume.png"
+    },
     ]
 
   },

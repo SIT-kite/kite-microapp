@@ -1,0 +1,43 @@
+/* consume/components/card/card.wxss */
+.page {
+    background-color: #f0f0f0;
+    height: 200%;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fff;
+    border: solid #f0f0f0 1px;
+    box-shadow: 0rpx 5rpx 20rpx 0rpx #d9d9d9;
+    border-radius: 15rpx;
+    margin: 20rpx 40rpx 20rpx 40rpx;
+    padding: 20rpx 30rpx 20rpx 30rpx;
+}
+
+.icon_category {
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.container_center {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20rpx;
+    margin-left: 10rpx;
+    font-size: 30rpx;
+}
+
+.text_time {
+    color: #8c8c8c;
+}
+
+.text_position {
+    color: rgba(89,89,89, 0.9);
+}
+
+.text_expense {
+    color: #ff4d4f;
+    font-size: 50rpx;
+}

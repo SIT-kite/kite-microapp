@@ -109,6 +109,12 @@
 				"pages/index/index",
 				"pages/detail/detail"
 			]
+		},
+		{
+			"root": "consume",
+			"pages": [
+				"pages/index/index"
+			]
 		}
 	],
 	"tabBar": {

@@ -1,0 +1,21 @@
+<!--consume/components/card/card.wxml-->
+<view class="page">
+    <card class="main">
+        <image class="icon_category" src="../../assets/icons/catering.svg"></image>
+            <view class="container_center">
+                <text class="text_position">奉贤二食堂三楼汇多POS-6新</text>
+                <text class="text_time">11:48:08</text>
+            </view>
+        <text class="text_expense">14.00</text>
+    </card>
+
+    <card class="main">
+        <image class="icon_category" src="../../assets/icons/catering.svg"></image>
+            <view class="container_center">
+                <text class="text_position">奉贤二食堂三楼汇多POS-6新</text>
+                <text class="text_time">11:48:08</text>
+            </view>
+        <text class="text_expense">14.00</text>
+    </card>
+</view>
+
