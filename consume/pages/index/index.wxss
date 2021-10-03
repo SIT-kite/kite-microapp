@@ -1,1 +1,62 @@
-/* consume/pages/index/index.wxss */
+.main {
+	height:200%;
+}
+
+.container_header {
+	display:flex;
+	flex-direction: row;
+	position: fixed;
+	padding: 10rpx 0rpx 10rpx 40rpx;
+}
+.container_select {
+	display:flex;
+	align-items: center;
+	/*justify-content: flex-end;*/
+	position: relative;
+	width: 200rpx;
+	height: 70rpx;
+	box-sizing: border-box;
+	border: solid #2c80c5 2.5px;
+	border-radius:5px;
+}
+.container_select_list.month {
+	padding-left: 75rpx;
+}
+.text_select_item {
+	margin: 7rpx 0rpx 7rpx 0rpx;
+}
+.container_select_list {
+	display:flex;
+	flex-direction: column;
+	position: absolute;
+	box-sizing: border-box;
+	border-radius: 10%;
+	border:solid rgba(191,191,191, 0.5) 2px;
+	box-shadow: 0rpx 5rpx 10rpx 0rpx rgba(191,191,191, 0.5);
+	top:80rpx;
+	left: -4.5rpx;
+	width: 200rpx;
+	padding-left:50rpx;
+}
+.year {
+	margin-right: 60rpx;
+}
+.text_selected_year {
+	margin-left: 50rpx;
+}
+.text_selected_month {
+	margin-left: 75rpx;
+}
+.arrows {
+	color: #2c80c5;
+	margin-left: 20rpx;
+}
+
+.arrows.month {
+	margin-left: 55rpx;
+}
+.placeholder {
+	width: 100%;
+	height: 100rpx;
+	box-shadow: 0rpx 1rpx 10rpx 0rpx #d9d9d9;
+}

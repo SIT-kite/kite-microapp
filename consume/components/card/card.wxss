@@ -1,9 +1,4 @@
 /* consume/components/card/card.wxss */
-.page {
-    background-color: #f0f0f0;
-    height: 200%;
-}
-
 .main {
     display: flex;
     flex-direction: row;

@@ -1,2 +1,37 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
 </navBar>
+
+<view class="main">
+
+	<view class="container_header">
+
+		<view class="container_select year">
+
+			<text class="text_selected"><text class="text_selected_year">2020</text><text class="arrows year">🞁</text></text>
+			<!-- <view class="container_select_list year">
+				<text class="text_select_item">2020</text>
+				<text class="text_select_item">2019</text>
+			</view> -->
+
+		</view>
+
+		<view class="container_select month">
+
+			<text class="text_selected"><text class="text_selected_month">8</text><text class="arrows month">🞁</text></text>
+			<!-- <view class="container_select_list month">
+				<text class="text_select_item">8</text>
+				<text class="text_select_item">9</text>
+			</view> -->
+
+		</view>
+
+	</view>
+	<view class="placeholder"></view>
+	<scroll-view>
+		<card></card>
+		<card></card>
+		<card></card>
+		<card></card>
+	</scroll-view>
+
+</view>
