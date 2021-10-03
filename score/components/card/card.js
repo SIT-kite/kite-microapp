@@ -10,6 +10,9 @@ Component({
     credit: {
       type:String,
     },
+    isRequiredCourse: {
+      type:Boolean,
+    },
     semester: {
       type: String,
     },

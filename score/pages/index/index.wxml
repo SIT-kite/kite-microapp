@@ -26,10 +26,10 @@
 
 	<scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" wx:if="{{scoreList[0] != null}}">
 
-		<card wx:for="{{scoreList}}" name="{{item.isEvaluated? item.course : '未评教'}}" credit="{{item.credit}}" semester="{{['第一学期', '第二学期'][item.semester - 1]}}" grades="{{item.isEvaluated? item.score : '' }}" detailList="{{item.detail}}" isFolded="{{item.isFolded}}" data-classId="{{item.classId}}" data-index="{{index}}" bind:bindCard="bindCard"></card>
+		<card wx:for="{{scoreList}}" name="{{item.isEvaluated? item.course : '未评教'}}" credit="{{item.credit}}" isRequiredCourse="{{item.isRequiredCourse}}" semester="{{['第一学期', '第二学期'][item.semester - 1]}}" grades="{{item.isEvaluated? item.score : '' }}" detailList="{{item.detail}}" isFolded="{{item.isFolded}}" data-classId="{{item.classId}}" data-index="{{index}}" bind:bindCard="bindCard"></card>
 		<view class="notice">已经到底部了哦!</view>
 
 	</scroll-view>
 
-
+	<view ></view>
 </view>

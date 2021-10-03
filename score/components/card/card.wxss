@@ -1,24 +1,38 @@
 /* score/components/card/card.wxss */
-.card {
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15rpx;
+}
+.placeholder_state {
+  margin: auto;
+  height: 75%;
+  width: 75%;
+  border-radius: 10%;
+  background-color: #2e62cd;
+}
+.container_content {
+  flex-basis: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 40rpx;
-  padding-top: 20rpx;
-  padding-bottom: 20rpx;
-  margin: 30rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  margin: 15rpx 30rpx 15rpx 15rpx;
   border-radius: 12rpx;
   background-color:#ffffff;
   border: solid rgb(121, 177, 250) 2px;
   box-shadow: 0rpx 5rpx 10rpx 0rpx rgba(102, 102, 102, 0.2);
   border-left: solid rgb(121, 177, 250) 4px;
 }
-.leftContainer {
+.container_left {
   display: flex;
   flex-direction: column;
   width: 450rpx;
 }
-.nameText {
+.text_name {
   color: #343a40;
   word-wrap: break-word;
   margin-bottom: 10rpx;
@@ -26,18 +40,18 @@
   font-size: 40rpx;
   box-shadow: 0rpx 5rpx 0rpx 0rpx #ffc53d;
 }
-.creditText {
+.text_credit {
   font-weight: bold;
   font-size: 35rpx;
   color: rgba(52,58,64, 0.8);
 }
-.semesterText {
+.text_semester {
   font-weight: bold;
   font-size: 30rpx;
   color: rgba(0, 0, 0, 0.5);
 }
 
-.detailContainer {
+.container_detail {
 	display: flex;
 	flex-direction: column;
 	font-size: 30rpx;
@@ -45,11 +59,11 @@
   
 }
 
-.detailText {
+.text_detail {
   transform: scale(1, 0);
 }
 
-.rightContainer {
+.container_right {
   margin-right: 20rpx;
   display: flex;
   /* align-items: center; */
@@ -59,7 +73,7 @@
   /* background-color: #ffe599;
   box-shadow: 0rpx 0rpx 40rpx 0rpx rgba(102, 102, 102, 0.2); */
 }
-.gradesText {
+.text_grades {
   /* margin:auto; */
   font-weight: bold;
   font-size:x-large;

@@ -196,13 +196,19 @@ Page({
     setTimeout(() => this.setData({isShowText: false}), 2000)
   },
 
+  handleDetail(detail) {
+    detail.forEach(item => {
+      item.score = item.score.toFixed(1)
+    })
+    return detail
+  },
+
   handleList(scoreList) {
     scoreList.forEach((course) => {
       course.isFolded = true
+      course.isRequiredCourse = course.courseId[0] !== 'G'? true : false
       if(course.detail) {
-        course.detail.forEach(item => {
-          item.score = item.score.toFixed(1)
-        })
+        course.detail = this.handleDetail(course.detail)
       }
     })
 
@@ -249,9 +255,7 @@ Page({
 
   referDetail(course, detailToSet) {
     this.fetchDetail(this.constructApiUrl('FOR_DETAIL', this.constructParams('FOR_DETAIL', course)), (res) => {
-      res.forEach(item => {
-        item.score = item.score.toFixed(1)
-      })
+      res = this.handleDetail(res)
       this.setData({[detailToSet] : res})
     })
   },
