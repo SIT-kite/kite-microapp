@@ -7,16 +7,20 @@
 		</view>
 
 		<!--Schedule_Main -->
-		<view class="course">
+		<view class="course" wx:if="{{wlist !=0}}">
 			<view class="schedule-item" wx:for="{{wlist}}" wx:key="index"
-			data-data="{{item.courseName}}" data-index="{{index}}" bindtap="getdata"
+			data-data="{{item}}" data-index="{{index}}" bindtap="getdata"
 			style="height: {{item.time*100+(item.time/2-1)*10}}rpx; left: calc({{(item.day-1)}} * 100% / 7); top: {{(item.section-1)*105}}rpx; background-color: {{colorArrays[item.colorArrays]}}; border:2px solid #daebfa;">
 				<view class="schedule-name">{{item.courseName}}</view>
 				<view class="schedule-info">{{item.place}}</view>
 				<view class="schedule-info">{{item.teacher}}</view>
+				<view class="triangle" wx:if = "{{item.repeat}}"> </view>
 			</view>
 		</view>
-
+		<view wx:if= "{{wlist==0}}" class="loading-free">
+			<image src="../../assets/free.png" class="images"></image>
+			<view class="text">今天休息ヾ(^▽^*)))</view>
+		</view>
 	</view>
 
 </scroll-view>

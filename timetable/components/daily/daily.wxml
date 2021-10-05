@@ -2,7 +2,7 @@
 <view class="daily">
     <view class="todo"></view>
     <scroll-view scroll-y="{{true}}" scroll-with-animation="true" class="course" show-scrollbar="{{false}}" wx:if="{{list}}" enhanced="{{ true }}">
-        <view class="list" wx:for="{{list}}" wx:for-index="list_course" wx:for-item="list_content" wx:key="index" data-data="{{list_content.courseName}}" bindtap="getdata" >
+        <view class="list" wx:for="{{list}}" wx:for-index="list_course" wx:for-item="list_content" wx:key="index" data-data="{{list_content}}" bindtap="getdata" >
             <view class="table"  >
                 <view class="td">
                     <view class="icon_course">

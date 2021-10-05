@@ -52,9 +52,44 @@
 	flex-shrink: 1;
 	margin-bottom: auto;
 	overflow: hidden;
+	/* text-align: center; */
 }
 
 .schedule-info {
 	margin-top: 1px;
-	text-align: center;
+	/* text-align: center; */
+}
+.triangle{
+    width: 0;
+    height: 0;
+	display: flex;
+	right: 0rpx;
+    border-bottom: 20rpx solid rgba(255, 255, 255, 0.877);
+    border-right: 20rpx solid transparent;
+}
+.loading-free {
+	margin-left: 10rpx;
+	background-color: white;
+	border-radius: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: calc(100% - 2rem);
+	padding-top: 400rpx;
+	padding-bottom: 400rpx;
+	margin-left: 10rpx;
+	margin-right: 20rpx;
+	border: 0.5px solid #58A2E7;
+}
+.text {
+	margin: .5em;
+	display: flex;
+	flex-direction: column;
+	/* background: rgb(168, 158, 158); */
+	color: #377ec0;
+	font-weight: bold;
+}
+.images {
+	width: 70px;
+	height: 70px;
 }
