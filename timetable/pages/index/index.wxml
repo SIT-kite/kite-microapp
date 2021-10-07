@@ -1,6 +1,6 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="background" >
-    <swiper class="time" bindchange="bindchange" duration="500" easing-function="east-out" circular="true"  >
+    <swiper class="time" bindchange="bindChangeWeek" duration="500" easing-function="east-out" circular="true"  >
         <swiper-item>
             <view class="time" >
                 <view class="date">
@@ -20,9 +20,9 @@
                         <text>周</text>
                     </view>
                     <view class="choose_time">
-                        <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                        <view class="days {{choosedDay.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
                             <view class="day">{{days.day}}</view>
-                            <view class="week">{{days.weeks}}</view>
+                            <view class="week">{{days.weekday}}</view>
                         </view>
                     </view>
                 </view>
@@ -45,9 +45,9 @@
                         <text>周</text>
                     </view>
                     <view class="choose_time" >
-                        <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                        <view class="days {{choosedDay.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
                             <view class="day">{{days.day}}</view>
-                            <view class="week">{{days.weeks}}</view>
+                            <view class="week">{{days.weekday}}</view>
                         </view>
                     </view>
                 </view>
@@ -70,9 +70,9 @@
                         <text>周</text>
                     </view>
                     <view class="choose_time">
-                        <view class="days {{choosedday.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
+                        <view class="days {{choosedDay.week == days.week? 'choose_couple':''}}" wx:for="{{date}}" wx:for-index="day" wx:key="day" wx:for-item="days" data-days="{{days}}" bindtap="tapDays">
                             <view class="day">{{days.day}}</view>
-                            <view class="week">{{days.weeks}}</view>
+                            <view class="week">{{days.weekday}}</view>
                         </view>
                     </view>
                 </view>
@@ -80,25 +80,25 @@
         </swiper-item>
     </swiper>
     <block wx:if="{{timetableMode == 1}}">
-    <swiper class="main" bindchange="bindchangeday" duration="300" easing-function="ease-in-out" circular="true" bindtap = "collapse" >
+    <swiper class="main" bindchange="bindChangeDay" duration="300" easing-function="ease-in-out" circular="true" bindtap = "collapse" >
         <swiper-item>
             <view class="main1" >
                 <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}" id="the-id" bindcustomevent="getName"></daily>
+                    <daily list="{{courseDay}}" id="the-id" bindcustomevent="getDetail"></daily>
                 </view>
             </view>
         </swiper-item>
         <swiper-item>
             <view class="main1" >
                 <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}" bindcustomevent="getName"></daily>
+                    <daily list="{{courseDay}}" id="the-id" bindcustomevent="getDetail"></daily>
                 </view>
             </view>
         </swiper-item>
         <swiper-item>
             <view class="main1" >
                 <view wx:if="{{timetableMode == 1}}">
-                    <daily list="{{course_data}}" bindcustomevent="getName"></daily>
+                    <daily list="{{courseDay}}" id="the-id" bindcustomevent="getDetail"></daily>
                 </view>
             </view>
         </swiper-item>
@@ -106,7 +106,7 @@
     </block>
     <view class="tapSet" wx:if="{{tapSet == true}}">
         <view class="slider_text">周数</view>
-        <slider bindchange="sliderchange" min="1" max="20" value="{{thisWeek}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
+        <slider bindchange="sliderChange" min="1" max="20" value="{{thisWeek}}" activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
         <!-- <view class="set_bottom">
             <view class="sart_time">
                 <picker class="picker" mode="date" value="{{toschool}}" start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">
@@ -125,16 +125,16 @@
         </view> -->
 	</view>
 
-	<swiper wx:if="{{timetableMode == 2}}" bindtap="collapse" class="main" bindchange="bindchange" duration="400"
+	<swiper wx:if="{{timetableMode == 2}}" bindtap="collapse" class="main" bindchange="bindChangeWeek" duration="400"
 		easing-function="east-out" circular="true">
 		<swiper-item>
-			<weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>
+			<weekly wlist="{{courseWeek}}" bindcustomevent="getDetail"></weekly>
 		</swiper-item>
 		<swiper-item>
-			<weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>
+			<weekly wlist="{{courseWeek}}" bindcustomevent="getDetail"></weekly>
 		</swiper-item>
 		<swiper-item>
-			<weekly wlist="{{course_week}}" bindcustomevent="getName"></weekly>
+			<weekly wlist="{{courseWeek}}" bindcustomevent="getDetail"></weekly>
 		</swiper-item>
 	</swiper>
 	<!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
