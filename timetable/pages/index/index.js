@@ -406,16 +406,11 @@ Page({
   //对课程贴入标签
   Label(dayList) {
     let discipline = this.data.discipline.discipline;
-    for (let i = 0; i < dayList.length; i++) {
-      for (let j = 0; j < discipline.length; j++) {
-        if (dayList[i].courseName === discipline[j].subject) {
-          dayList[i].discipline = discipline[j].discipline;
-        }
-      }
-      if (!dayList[i].discipline) {
-        dayList[i].discipline = "generality";
-      }
-    }
+    dayList.map((el) => {
+      discipline[el.courseName] != undefined
+        ? (el.discipline = discipline[el.courseName])
+        : (el.discipline = "generality");
+    });
     return dayList;
   },
   //插入作息表
