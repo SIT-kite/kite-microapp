@@ -121,6 +121,7 @@ Page({
         break;
       }
     }
+    
     return params
   },
 
@@ -130,7 +131,7 @@ Page({
 
     switch (requestPurpose) {
       case (REQUEST_PURPOSE[0]) : apiUrl = `${API_URL_PREFIX.LIST}year=${params.year}&semester=${params.semester}&force=${params.force}`; break;
-      case (REQUEST_PURPOSE[1]) : apiUrl = `${API_URL_PREFIX.DETAIL}year=${params.year}&semester=${params.semester}&class_id=${params.classId}`; break;
+      case (REQUEST_PURPOSE[1]) : apiUrl = `${API_URL_PREFIX.DETAIL}year=${params.year}&semester=${params.semester}&classId=${params.classId}`; break;
     }
 
     return apiUrl
@@ -237,7 +238,6 @@ Page({
 
     let detail = []
     let getData = requestUtils.doGET(apiUrl, {}, header)
-    console.log(apiUrl)
     wx.showLoading({
       title: '加载中2333~',
       mask: true
@@ -245,7 +245,7 @@ Page({
 
     getData.then((res) => {
       wx.hideLoading()
-      detail = res.data.data.score_detail
+      detail = res.data.data.scoreDetail
       callback(detail)
     }).catch((err) => {
       this.handleFetchListError(err)
