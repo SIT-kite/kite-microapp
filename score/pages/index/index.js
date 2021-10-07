@@ -99,7 +99,7 @@ Page({
       })
     }
 
-    this.referList(true)
+    this.referList(false)
 
   },
 

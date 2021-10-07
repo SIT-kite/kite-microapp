@@ -11,7 +11,7 @@
 	</view>
 
 	<view class="gpaContainer">
-		<view class="text"><text>该学{{scoreInfo.termIndex == termList.length - 1? '年':'期'}}绩点为{{gpa !== null? gpa + ',努力会有回报的!' : ''}}</text><view wx:if="{{isShowTip && scoreList.length != 0}}">(点击课程卡片可以查看详情哦!)</view></view>
+		<view class="text"><text>该学{{scoreInfo.termIndex == termList.length - 1? '年':'期'}}绩点为 {{gpa !== null? gpa + ' , 努力会有回报的!' : ''}}</text><view wx:if="{{isShowTip && scoreList.length != 0}}">(点击课程卡片可以查看详情哦!)</view></view>
 	</view>
 
 	<!-- <view class="container_info" wx:if="{{scoreInfo.isFirstTime}}">
@@ -20,7 +20,7 @@
 	</view> -->
 
 	<view class="container_info" wx:if="{{scoreList.length == 0}}">
-		<image class="img_info" src="/score/assets/pic/info2.svg"></image>
+		<image class="img_info" src="/score/assets/pic/info1.svg"></image>
 		<text class="text_info">暂时还没有成绩哦!</text>
 	</view>
 
