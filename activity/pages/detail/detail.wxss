@@ -102,14 +102,14 @@
   align-self: center;
 }
 
-.container_population {
+.container_category {
   align-items: center;
   display: flex;
   flex-direction: row;
   margin-bottom: 20rpx;
 }
 
-.icon_population {
+.icon_category {
   width: 40rpx;
   height: 40rpx;
   margin-right: 10rpx;
@@ -124,6 +124,20 @@
 }
 
 .icon_activity_id {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+  align-self: center;
+}
+
+.container_activity_telephone {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20rpx;
+}
+
+.icon_activity_telephone {
   width: 40rpx;
   height: 40rpx;
   margin-right: 10rpx;
@@ -232,10 +246,10 @@
 }
  
 .container_content {
-  height: 20%;
   display: flex;
   flex-direction: column;
   margin-top: 60rpx;
+  /* padding-bottom: 60rpx; */
   background-color: #fff;
   box-shadow: 0rpx 0rpx 2rpx 0rpx;
 }
@@ -291,7 +305,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+  background-image: linear-gradient(135deg, #ABDCFF 5%, #0396FF 60%);
   font-size: large;
   font-weight: bold;
   color: rgba(255, 255, 255, 1);
@@ -349,4 +363,9 @@
 .text_read {
   font-size: small;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder {
+  width: 100vw;
+  height: 150rpx;
 }

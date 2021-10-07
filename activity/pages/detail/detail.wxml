@@ -7,41 +7,49 @@
   <view class="container_header">
 
     <view class="container_header_img">
-      <image class="img_header" src="../../assets/pic/pyq5.png"></image>
+      <image class="img_header" src="{{src}}"></image>
     </view>
 
     <view class="container_header_content">
 
       <view class="container_header_content_top">
         <!-- <view class="lump_title" ></view> -->
-        <view class="text_title" id="title">全国信息技术应用水平大赛全国信息技术应用水平大赛</view>
+        <view class="text_title" id="title">{{detail.title}}</view>
       </view>
+      
 
       <view class="container_header_content_bottom">
+      
 
         <view class="container_position">
           <image class="icon_position" src="../../assets/icons/position.svg"></image>
-          <view class="text_position">地点: 线上</view>
+          <view class="text_position">地点: {{detail.place}}</view>
         </view>
 
         <view class="container_time">
           <image class="icon_time" src="../../assets/icons/time1.svg"></image>
-          <view class="text_time">时间: 2021/8/14 0:00 - 23:59</view>
+          <view class="text_time">时间: {{detail.startTime + ' ' + detail.duration + '分钟' }}</view>
         </view>
 
-        <view class="container_population">
-          <image class="icon_population" src="../../assets/icons/population.svg"></image>
-          <view class="text_max_people">最大人数: 200</view>
+        <view class="container_category">
+          <image class="icon_category" src="../../assets/icons/square_black.svg"></image>
+          <view class="text_max_people">类别: {{CATEGORY[detail.category]}}</view>
         </view>
 
         <view class="container_activity_id">
           <image class="icon_activity_id" src="../../assets/icons/number.svg"></image>
-          <view class="text_activity_id">活动编号: 200234235</view>
+          <view class="text_activity_id">活动编号: {{detail.activityId}}</view>
+        </view>
+
+        <view class="container_activity_telephone">
+          <image class="icon_activity_telephone" src="../../assets/icons/telephone.svg"></image>
+          <view class="text_activity_telephone">联系电话: {{detail.contact}}</view>
         </view>
 
         <view class="container_publisher">
-          <image class="img_publisher" src="../../assets/pic/activityItem.jpeg"></image>
-          <view class="text_publisher">张林鑫</view>
+<!--          <image class="img_publisher" src="../../assets/pic/activityItem.jpeg"></image>-->
+          <view class="text_publisher">{{detail.organizer}}</view>
+<!--										<view class="text_faculty">{{detail.undertaker}}</view>-->
         </view>
 
       </view>
@@ -65,10 +73,10 @@
       </view> -->
 
     </view>
-    
+
   </view>
 
-  
+
 
   <view class="container_content">
 
@@ -78,12 +86,12 @@
     </view>
 
     <view class="container_content_text">
-      <view class="text_content">1. 这是活动详情</view>
+      <rich-text class="text_content" nodes="{{detail.description}}"></rich-text>
     </view>
 
   </view>
 
-  <view class="container_info_page">
+  <!-- <view class="container_info_page">
     <view class="container_like">
       <image class="icon_like" src="../../assets/icons/like.svg"></image>
       <view class="text_like">12</view>
@@ -92,7 +100,9 @@
       <image class="icon_read" src="../../assets/icons/read.svg"></image>
       <view class="text_read">100</view>
     </view>
-  </view>
+  </view> -->
+
+  <view class="placeholder"></view>
 
   <view class="container_fixed_bar">
     <view class="btn_join"><image class="icon_join" src="../../assets/icons/join.svg"></image></view>
