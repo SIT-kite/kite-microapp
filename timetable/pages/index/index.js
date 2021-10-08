@@ -71,21 +71,21 @@ Page({
   handlerGohomeClick,
   handlerGobackClick,
 
-  //发送请求
+  // 发送请求
   SendData() {
     let _this = this;
     wx.showLoading({
-      //加载动画
+      // 加载动画
       title: "加载中",
       mask: true,
     });
     _this.setSchedule();
     _this.setCalendar();
   },
-  //请求作息表
+  // 请求作息表
   setSchedule() {
     let dataSchedule = {};
-    let schedule = requestUtils.doGET(urlSchedule, dataSchedule, header); //作息表请求
+    let schedule = requestUtils.doGET(urlSchedule, dataSchedule, header); // 作息表请求
     schedule
       .then((res) => {
         dataSchedule = res.data.data;
@@ -96,15 +96,15 @@ Page({
         this.getError(err);
       });
   },
-  //请求开学时间
+  // 请求开学时间
   setCalendar() {
     let _this = this;
     let dataCalendar = {};
-    let calendar = requestUtils.doGET(urlCalendar, dataCalendar, header); //请求开学时间
+    let calendar = requestUtils.doGET(urlCalendar, dataCalendar, header); // 请求开学时间
     calendar
       .then((res) => {
         dataCalendar = res.data.data;
-        dataCalendar.start = dataCalendar.start.replace(/-/g, "/"); //解决ios时间问题
+        dataCalendar.start = dataCalendar.start.replace(/-/g, "/"); // 解决ios时间问题
         _this.setData({
           calendar: dataCalendar,
           toSchool: dataCalendar.start,
@@ -115,15 +115,15 @@ Page({
           Date.parse(new Date()) < Date.parse(dataCalendar.start)
             ? dataCalendar.start
             : new Date();
-        _this.setTime(dataCalendar.start, startTime); //加载时间函数
-        _this.setTimetable(year, semester); //请求课表
+        _this.setTime(dataCalendar.start, startTime); // 加载时间函数
+        _this.setTimetable(year, semester); // 请求课表
         wx.setStorageSync("timetableCalendar", dataCalendar);
       })
       .catch((err) => {
         _this.getError(err);
       });
   },
-  //请求课表函数
+  // 请求课表函数
   setTimetable(year, semester) {
     let _this = this;
     let courseDay;
@@ -142,12 +142,9 @@ Page({
           _this.data.thisWeek,
           _this.data.choosedDay
         );
-        courseDay = Data[0]; //日课表数据
-        courseWeek = Data[1]; //周课表数据
-        _this.setData({
-          courseDay: courseDay,
-          courseWeek: courseWeek,
-        });
+        courseDay = Data[0]; // 日课表数据
+        courseWeek = Data[1]; // 周课表数据
+        _this.setData({ courseDay, courseWeek });
         wx.setStorageSync("timetableList", dataTimetable);
         wx.hideLoading();
       })
@@ -155,18 +152,18 @@ Page({
         _this.getError(err);
       });
   },
-  //报错处理方案
+  // 报错处理方案
   getError(err) {
     wx.hideLoading();
     wx.showModal({
       title: "请及时联系工作人员",
       content:
-        err.data.code != 1
+        err.data.code !== 1
           ? err.data.msg
           : "业务逻辑出错,研究生暂不支持（＞人＜；）,认证密码可能更改",
       showCancel: false,
       complete:
-        err.data.code == 6
+        err.data.code === 6
           ? () => {
               app.globalData.identity = {};
               app.globalData.verified = false;
@@ -180,7 +177,7 @@ Page({
             },
     });
   },
-  //计算一周日期
+  // 计算一周日期
   setTime(schoolHolidayDirectory, givenTime) {
     const _this = this;
     let startWeek = _this.data.startWeek;
@@ -206,7 +203,7 @@ Page({
       startWeek: startWeek,
     });
   },
-  //计算所给日期与开学的周数差
+  // 计算所给日期与开学的周数差
   distanceFromSchoolWeek(schoolHolidayDirectory, givenTime) {
     let thisWeek = timeUtils.getIntervalToCurrentWeek(
       schoolHolidayDirectory,
@@ -214,7 +211,7 @@ Page({
     );
     return thisWeek;
   },
-  //添加星期
+  // 添加星期
   addWeeks(date, week) {
     switch (week) {
       case 0:
@@ -242,7 +239,7 @@ Page({
     }
     return date;
   },
-  //对选择日期处理
+  // 对选择日期处理
   assignChoosedDay(givenTime) {
     let nowDate = new Date(givenTime);
     console.log();
@@ -252,7 +249,7 @@ Page({
       : (nowDate = nowDate.getDay() != 0 ? nowDate.getDay() : 7);
     return nowDate;
   },
-  //转换课时时间
+  // 转换课时时间
   tableTime(e) {
     let y = 0;
     for (var j = 0; j < e.length; j++) {
@@ -269,7 +266,7 @@ Page({
     }
     return e;
   },
-  //刷新函数
+  // 刷新函数
   refresh() {
     this.data.refresh
       ? wx.showModal({
@@ -284,7 +281,7 @@ Page({
         })
       : this.SendData();
   },
-  //时间改变函数
+  // 时间改变函数
   changeTime(startTime, givenTime) {
     let _this = this;
     let nowTime = _this.TermBegins();
@@ -295,7 +292,7 @@ Page({
     _this.setTime(startTime, time);
     _this.setData(thisWeek);
   },
-  //读取缓存
+  // 读取缓存
   readData() {
     let _this = this;
     _this.data.list = wx.getStorageSync("timetableList");
@@ -311,36 +308,36 @@ Page({
     }
     _this.data.timetableMode = wx.getStorageSync("timetableMode");
   },
-  //时间判断（是否开学）
+  // 时间判断（是否开学）
   TermBegins() {
     let _this = this;
     let time = 0;
-    Date.parse(new Date()) < Date.parse(_this.data.toSchool) //是否开学
+    Date.parse(new Date()) < Date.parse(_this.data.toSchool) // 是否开学
       ? (time = _this.data.toSchool)
       : (time = new Date());
     return time;
   },
 
-  //判断是否有数据
+  // 判断是否有数据
   isEmptyValue() {
     let _this = this;
     console.log(
-      _this.data.list.length != 0 &&
-        _this.data.calendar.length != 0 &&
-        _this.data.table.length != 0
+      _this.data.list.length !== 0 &&
+        _this.data.calendar.length !== 0 &&
+        _this.data.table.length !== 0
     );
     return (
-      _this.data.list.length != 0 &&
-      _this.data.calendar.length != 0 &&
-      _this.data.table.length != 0
+      _this.data.list.length !== 0 &&
+      _this.data.calendar.length !== 0 &&
+      _this.data.table.length !== 0
     );
   },
-  //是否接收数据判断
+  // 是否接收数据判断
   receiveData(time) {
     let _this = this;
     let courseDay, courseWeek;
     if (_this.isEmptyValue()) {
-      //判断是否有请求数据
+      // 判断是否有请求数据
       _this.setTime(_this.data.toSchool, time);
       // console.log(_this.data.list);
       let Data = _this.processData(
@@ -348,19 +345,19 @@ Page({
         _this.data.thisWeek,
         _this.data.choosedDay
       );
-      courseDay = Data[0]; //日课表数据
-      courseWeek = Data[1]; //周课表数据
+      courseDay = Data[0]; // 日课表数据
+      courseWeek = Data[1]; // 周课表数据
     } else {
-      _this.SendData(); //请求数据
+      _this.SendData(); // 请求数据
     }
     let list = [courseDay, courseWeek];
     return list;
   },
-  //渲染开始
+  // 渲染开始
   onLoad(options) {
     let _this = this;
     _this.animation = wx.createAnimation({
-      //设置动画初始设置
+      // 设置动画初始设置
       duration: 300,
       timingFunction: "ease",
     });
@@ -383,27 +380,27 @@ Page({
     });
   },
 
-  //课表数据处理
+  // 课表数据处理
   processData(list, thisWeek, day) {
     let weekList = [];
     let dayList = [];
     // console.log(list);
     list = this.binary(list);
-    weekList = list.filter((el) => el.weeks[thisWeek - 1] == "1"); //筛出对应周的数据
+    weekList = list.filter((el) => el.weeks[thisWeek - 1] == "1"); // 筛出对应周的数据
     weekList = this.processWeek(weekList);
-    dayList = weekList.filter((el) => el.day == day.week); //筛出对应日期的数据
+    dayList = weekList.filter((el) => el.day == day.week); // 筛出对应日期的数据
     dayList = this.processDay(dayList);
     let data = [dayList, weekList];
     return data;
   },
-  //日课表数据处理
+  // 日课表数据处理
   processDay(dayList) {
-    dayList.sort((a, b) => a.time_index - b.time_index); //对课程进行排序
+    dayList.sort((a, b) => a.time_index - b.time_index); // 对课程进行排序
     dayList = this.Label(dayList);
     dayList = this.table(dayList);
     return dayList;
   },
-  //对课程贴入标签
+  // 对课程贴入标签
   Label(dayList) {
     let discipline = this.data.discipline.discipline;
     dayList.map((el) => {
@@ -413,7 +410,7 @@ Page({
     });
     return dayList;
   },
-  //插入作息表
+  // 插入作息表
   table(e) {
     let _this = this;
     let table = _this.data.table;
@@ -438,7 +435,7 @@ Page({
     }
     return e;
   },
-  //周课表数据处理
+  // 周课表数据处理
   processWeek(weekList) {
     for (let i = 0; i < weekList.length; i++) {
       let section = 0;
@@ -450,14 +447,14 @@ Page({
         } else if (weekList[i].table[x] == 1) {
           time++;
         }
-        let color = i % 9; //选取颜色
+        let color = i % 9; // 选取颜色
         weekList[i].colorArrays = color;
         weekList[i].section = section;
         weekList[i].time = time;
         weekList[i] = this.courseRepeat(i, weekList[i], weekList);
       }
     }
-    //todo: 暂时不知道是否需要删除
+    // todo: 暂时不知道是否需要删除
     // list.map((el) => {
     //   //对多余数据进行删除
     //   delete el.weeks;
@@ -476,11 +473,11 @@ Page({
     weekList.repeat == undefined ? (weekList.repeat = false) : "";
     return weekList;
   },
-  //部分二进制数据转换
+  // 部分二进制数据转换
   binary(list) {
     // console.log(list);
     if (list.length === 0) {
-      //防止t.map的出现
+      // 防止t.map的出现
       return 0;
     } else {
       list.map((el) => {
@@ -533,7 +530,7 @@ Page({
    */
   onShareAppMessage() {},
 
-  //敲击日按钮
+  // 敲击日按钮
   tapDays(e) {
     let _this = this;
     let date = e.currentTarget.dataset.days.week;
@@ -544,10 +541,10 @@ Page({
       _this.data.thisWeek,
       _this.data.choosedDay
     )[0];
-    _this.setData({ courseDay: courseDay });
+    _this.setData({ courseDay });
     // console.log(_this.selectComponent('#the-id'))
   },
-  //敲击周日切换按钮
+  // 敲击周日切换按钮
   tapActivity(e) {
     let _this = this;
     let timetableMode = _this.data.timetableMode;
@@ -558,14 +555,14 @@ Page({
       data: timetableMode,
     });
   },
-  //敲击设置按钮（暂未使用）
+  // 敲击设置按钮（暂未使用）
   tapSet(e) {
     let _this = this;
     let tapSet = _this.data.tapSet;
     tapSet = !tapSet;
-    _this.setData({ tapSet: tapSet });
+    _this.setData({ tapSet });
   },
-  //周数设置按钮函数
+  // 周数设置按钮函数
   sliderChange(e) {
     let _this = this;
     let sliderChange = e.detail.value;
@@ -580,9 +577,9 @@ Page({
       _this.data.thisWeek,
       _this.data.choosedDay
     )[1];
-    _this.setData({ courseDay: courseDay, courseWeek: courseWeek });
+    _this.setData({ courseDay, courseWeek });
   },
-  //滑动换算函数
+  // 滑动换算函数
   conversionPage(index, page, data) {
     switch (index) {
       case 1:
@@ -597,7 +594,7 @@ Page({
     }
     return data;
   },
-  //时间滑动函数
+  // 时间滑动函数
   bindChangeWeek(e) {
     let index = e.detail.current;
     let _this = this;
@@ -606,7 +603,7 @@ Page({
     thisWeek = _this.conversionPage(index, page, thisWeek);
     page = index;
     if (thisWeek <= 0) {
-      //第一周到底
+      // 第一周到底
       thisWeek = 1;
     }
     _this.changeTime(_this.data.toSchool, thisWeek);
@@ -622,7 +619,7 @@ Page({
       courseWeek,
       navState: index,
       page,
-      thisWeek: thisWeek,
+      thisWeek,
     });
   },
 
@@ -642,7 +639,7 @@ Page({
         break;
       case 0:
         _this.data.thisWeek--;
-        _this.data.thisWeek == 0 ? (_this.data.thisWeek = 1) : ""; //第一周到底
+        _this.data.thisWeek == 0 ? (_this.data.thisWeek = 1) : ""; // 第一周到底
         _this.changeTime(_this.data.toSchool, _this.data.thisWeek);
         break;
     }
@@ -655,18 +652,18 @@ Page({
       navState_day: index,
       page_day,
       choosedDay: _this.data.choosedDay,
-      courseDay: courseDay,
+      courseDay
     });
   },
-  //情侣课表扫码
-  scanCode(e) {
+  // 情侣课表扫码
+  scanCode() {
     wx.scanCode({
       success(res) {
         console.log(res.result);
       },
     });
   },
-  code(e) {
+  code() {
     this.data.choosedCouple = !this.data.choosedCouple;
     this.setData(choosedCouple);
   },
@@ -699,7 +696,7 @@ Page({
       let data = _this.getName(nameList[j]);
       detail.push(data);
     }
-    //动画判断
+    // 动画判断
     this.detailAnimation(detail);
     _this.data.isShow_detail = !_this.data.isShow_detail;
     _this.setData({ detail: detail, isShow_detail: _this.data.isShow_detail });
@@ -708,20 +705,20 @@ Page({
     let _this = this;
     let name = e.courseName;
     let nameList = _this.data.list.filter((el) => el.courseName == name);
-    //获取相应的课程时间
+    // 获取相应的课程时间
     nameList = _this.tableTime(nameList);
-    //获取相应的上课时间
+    // 获取相应的上课时间
     nameList = _this.processDetail(nameList);
-    //内容整合去重
+    // 内容整合去重
     let detail = _this.duplicateRemoval(nameList);
     return detail;
   },
-  //获取相应的上课时间
+  // 获取相应的上课时间
   processDetail(nameList) {
     let _this = this;
     for (let i = 0; i < nameList.length; i++) {
       nameList[i].table_time =
-        nameList[i].table_time[0] + "~" + nameList[i].table_time[1] + "节"; //上课时间
+        nameList[i].table_time[0] + "~" + nameList[i].table_time[1] + "节"; // 上课时间
       nameList[i] = _this.addWeeks(nameList[i], nameList[i].day);
       let section = 0;
       let time = 0;
@@ -755,7 +752,7 @@ Page({
     }
     return nameList;
   },
-  //详情页动画判断
+  // 详情页动画判断
   detailAnimation(e) {
     let _this = this;
     let hight = e.length == 1 ? 450 : 500;
@@ -768,7 +765,7 @@ Page({
       _this.setData({ animation: _this.animation.export() });
     }
   },
-  //去重合并
+  // 去重合并
   duplicateRemoval(nameList) {
     let courseName = [],
       teacher = [],

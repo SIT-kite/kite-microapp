@@ -23,7 +23,6 @@
 		"semi-spacing": "warn",
 		"arrow-spacing": "warn",
 		"space-before-blocks": "warn",
-		"switch-colon-spacing": "warn",
 		"spaced-comment": "warn"
 	},
 	"globals": {

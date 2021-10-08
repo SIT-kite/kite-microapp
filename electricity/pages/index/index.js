@@ -245,7 +245,10 @@ Page({
       fields, res => {
 
         const { id: canvasId, width, height, node, context } = res;
-        const formatter = num => num.toFixed(1).replace(".0", "");
+        const formatter = num =>
+          typeof num === "number"
+          ? num.toFixed(1).replace(".0", "")
+          : num;
 
         this.chart = new uCharts({
           type: "line", loadingType: 4, fontSize: 12, tapLegend: true,
