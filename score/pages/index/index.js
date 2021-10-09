@@ -121,7 +121,7 @@ Page({
         break;
       }
     }
-    
+
     return params
   },
 
@@ -168,20 +168,19 @@ Page({
           : "业务逻辑出错",
       showCancel: false,
       complete: err.data.code === 6
-        ? () => {
+        ? (() => {
           app.globalData.identity = {}
           app.globalData.verified = false
           wx.setStorageSync('verified', false)
           wx.setStorageSync('identity', {})
           wx.redirectTo({url: '/pages/verify/verify'})
-        }
-        : () => {
+        })()
+        : (() => {
           wx.switchTab({
             url: '/pages/index/index'
           })
-        }
+        })()
     })
-
   },
 
   setPageData(pageData, data) {
@@ -205,22 +204,21 @@ Page({
   },
 
   handleList(scoreList) {
+
     scoreList.forEach((course) => {
       course.isFolded = true
-      course.isRequiredCourse = course.courseId[0] !== 'G'? true : false
+      course.isRequiredCourse = course.courseId[0] !== 'G'
       if(course.detail) {
         course.detail = this.handleDetail(course.detail)
       }
     })
 
-    this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length != 0? this.getGPA(scoreList).toFixed(2) : null, scoreList.length != 0
-      ? false : true])
+    this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length !== 0? this.getGPA(scoreList).toFixed(2) : null, scoreList.length === 0])
     wx.setStorageSync('scoreInfo', this.data.scoreInfo)
   },
 
   referList(force) {
 
-    let scoreList = []
     this.fetchList(this.constructApiUrl('FOR_LIST', this.constructParams('FOR_LIST', force)), (res) => {
       this.handleList(res)
     })
@@ -264,9 +262,7 @@ Page({
     let detailToSet = `scoreList[${index}].detail`
     !course.detail
       ? this.referDetail(course, detailToSet)
-      : () => {
-        this.doAnimation()
-      }
+      : {}
   },
 
   bindCard(e) {
