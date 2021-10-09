@@ -45,15 +45,14 @@
 
 .menu {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(2, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	margin-bottom: 0;
 }
 
 .menu-cell {
 	display: grid;
 	justify-items: center;
-	padding: 1.5em .5em;
+	padding: 1em .5em;
 	gap: .5em;
 	font-size: .9em;
 	font-weight: 500;
