@@ -52,7 +52,6 @@ Page({
     startWeek,
     courseDay,
     choosedDay,
-    discipline,
     page_day,
     toSchool,
     code,
@@ -402,13 +401,9 @@ Page({
   },
   // 对课程贴入标签
   Label(dayList) {
-    let discipline = this.data.discipline.discipline;
-    dayList.map((el) => {
-      discipline[el.courseName] != undefined
-        ? (el.discipline = discipline[el.courseName])
-        : (el.discipline = "generality");
-    });
-    return dayList;
+    return dayList.map(
+      el => el.discipline = discipline.get(el.courseName) ?? "generality"
+    );
   },
   // 插入作息表
   table(e) {

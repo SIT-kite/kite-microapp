@@ -15,6 +15,9 @@
 	interval="7500" duration="500" easing-function="ease-out" circular="true">
 		<template is="swiper-banner-image" data="{{src:'/assets/pic/temp_activity.png', bindtap: goTemp}}" />
 		<template is="swiper-banner-image" data="{{src:'/assets/pic/banner.png', bindtap: doNothing}}" />
+		<!-- <swiper-item>
+			<view class="card" style="text-align: center;">小风筝招新中</view>
+		</swiper-item> -->
 	</swiper>
 
 	<!-- 滚动通知 -->
