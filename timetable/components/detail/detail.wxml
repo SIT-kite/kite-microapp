@@ -1,81 +1,81 @@
 <!--timetable/components/detail/detail.wxml-->
-<view class="background" wx:if = "{{detail.length == 1}}">
-    <view class = "slider"> 
-        <view class = "slider_color"></view>
-    </view>
-    <view  class = "content" wx:if="{{detail!=0}}">
-        <view class = "title">{{detail[0].courseName}}</view>
-        <scroll-view scroll-y="true" class = "information">
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/courseId.png"></image>
-                <view class = "text weekday">{{detail[0].courseId}}</view>
-            </view>
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/dynClassId.png"></image>
-                <view class = "text weekday">{{detail[0].dynClassId}}</view>
-            </view>
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/campus.png"></image>
-                <view class = "text">{{detail[0].place}}</view>
-            </view>
-            <view class = "table" wx:for="{{detail[0].weeksday}}" wx:key="index">
-                <image class="icon" src="../../assets/icons/day.png"></image>
-                <view class = "text weekday">{{item}}</view>
-            </view>
-        </scroll-view>
-    </view>
+<view class="background" wx:if="{{detail.length == 1}}">
+	<view class="slider">
+		<view class="slider_color"></view>
+	</view>
+	<view class="content" wx:if="{{detail!=0}}">
+		<view class="title">{{detail[0].courseName}}</view>
+		<scroll-view scroll-y="true" class="information">
+			<view class="table">
+				<image class="icon" src="../../assets/icons/courseId.png"></image>
+				<view class="text weekday">{{detail[0].courseId}}</view>
+			</view>
+			<view class="table">
+				<image class="icon" src="../../assets/icons/dynClassId.png"></image>
+				<view class="text weekday">{{detail[0].dynClassId}}</view>
+			</view>
+			<view class="table">
+				<image class="icon" src="../../assets/icons/campus.png"></image>
+				<view class="text">{{detail[0].place}}</view>
+			</view>
+			<view class="table" wx:for="{{detail[0].weeksday}}" wx:key="index">
+				<image class="icon" src="../../assets/icons/day.png"></image>
+				<view class="text weekday">{{item}}</view>
+			</view>
+		</scroll-view>
+	</view>
 </view>
-<block wx:if = "{{detail.length == 2}}">
-<view class="background1" animation="{{animation1}}">
-    <view class = "slider" bindtap="detailAnimation1">
-        <view class = "slider_color"></view>
-    </view>
-    <view  class = "content" wx:if="{{detail!=0}}"  bindtap="detailAnimation1">
-        <view class = "title">{{detail[0].courseName}}</view>
-        <scroll-view scroll-y="true" class = "information">
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/courseId.png"></image>
-                <view class = "text weekday">{{detail[0].courseId}}</view>
-            </view>
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/dynClassId.png"></image>
-                <view class = "text weekday">{{detail[0].dynClassId}}</view>
-            </view>
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/campus.png"></image>
-                <view class = "text">{{detail[0].place}}</view>
-            </view>
-            <view class = "table" wx:for="{{detail[0].weeksday}}" wx:key="index">
-                <image class="icon" src="../../assets/icons/day.png"></image>
-                <view class = "text weekday">{{item}}</view>
-            </view>
-        </scroll-view>
-    </view>
-</view>
-<view class="background2" animation="{{animation2}}">
-    <view class = "slider" bindtap="detailAnimation2"> 
-        <view class = "slider_color"></view>
-    </view>
-    <view  class = "content" wx:if="{{detail!=0}}">
-        <view class = "title" bindtap="detailAnimation2">{{detail[1].courseName}}</view>
-        <scroll-view scroll-y="true" class = "information">
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/courseId.png"></image>
-                <view class = "text weekday">{{detail[1].courseId}}</view>
-            </view>
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/dynClassId.png"></image>
-                <view class = "text weekday">{{detail[1].dynClassId}}</view>
-            </view>
-            <view class = "table">
-                <image class="icon" src="../../assets/icons/campus.png"></image>
-                <view class = "text">{{detail[1].place}}</view>
-            </view>
-            <view class = "table" wx:for="{{detail[1].weeksday}}" wx:key="index">
-                <image class="icon" src="../../assets/icons/day.png"></image>
-                <view class = "text weekday">{{item}}</view>
-            </view>
-        </scroll-view>
-    </view>
-</view>
+<block wx:if="{{detail.length == 2}}">
+	<view class="background1" animation="{{animation1}}">
+		<view class="slider" bindtap="detailAnimation1">
+			<view class="slider_color"></view>
+		</view>
+		<view class="content" wx:if="{{detail!=0}}" bindtap="detailAnimation1">
+			<view class="title">{{detail[0].courseName}}</view>
+			<scroll-view scroll-y="true" class="information">
+				<view class="table">
+					<image class="icon" src="../../assets/icons/courseId.png"></image>
+					<view class="text weekday">{{detail[0].courseId}}</view>
+				</view>
+				<view class="table">
+					<image class="icon" src="../../assets/icons/dynClassId.png"></image>
+					<view class="text weekday">{{detail[0].dynClassId}}</view>
+				</view>
+				<view class="table">
+					<image class="icon" src="../../assets/icons/campus.png"></image>
+					<view class="text">{{detail[0].place}}</view>
+				</view>
+				<view class="table" wx:for="{{detail[0].weeksday}}" wx:key="index">
+					<image class="icon" src="../../assets/icons/day.png"></image>
+					<view class="text weekday">{{item}}</view>
+				</view>
+			</scroll-view>
+		</view>
+	</view>
+	<view class="background2" animation="{{animation2}}">
+		<view class="slider" bindtap="detailAnimation2">
+			<view class="slider_color"></view>
+		</view>
+		<view class="content" wx:if="{{detail!=0}}">
+			<view class="title" bindtap="detailAnimation2">{{detail[1].courseName}}</view>
+			<scroll-view scroll-y="true" class="information">
+				<view class="table">
+					<image class="icon" src="../../assets/icons/courseId.png"></image>
+					<view class="text weekday">{{detail[1].courseId}}</view>
+				</view>
+				<view class="table">
+					<image class="icon" src="../../assets/icons/dynClassId.png"></image>
+					<view class="text weekday">{{detail[1].dynClassId}}</view>
+				</view>
+				<view class="table">
+					<image class="icon" src="../../assets/icons/campus.png"></image>
+					<view class="text">{{detail[1].place}}</view>
+				</view>
+				<view class="table" wx:for="{{detail[1].weeksday}}" wx:key="index">
+					<image class="icon" src="../../assets/icons/day.png"></image>
+					<view class="text weekday">{{item}}</view>
+				</view>
+			</scroll-view>
+		</view>
+	</view>
 </block>

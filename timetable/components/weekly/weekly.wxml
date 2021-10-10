@@ -19,7 +19,7 @@
 		</view>
 		<view wx:if= "{{wlist==0}}" class="loading-free">
 			<image src="../../assets/free.png" class="images"></image>
-			<view class="text">今天休息ヾ(^▽^*)))</view>
+			<view class="text">今天休息 ヾ(^▽^*)))</view>
 		</view>
 	</view>
 
