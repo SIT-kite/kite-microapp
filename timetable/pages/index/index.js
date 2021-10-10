@@ -198,8 +198,8 @@ Page({
       date: weekDate,
       days: _this.data.days,
       choosedDay: { week: nowDate },
-      thisWeek: thisWeek,
-      startWeek: startWeek,
+      thisWeek,
+      startWeek
     });
   },
   // 计算所给日期与开学的周数差
