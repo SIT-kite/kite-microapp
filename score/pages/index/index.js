@@ -153,6 +153,7 @@ Page({
       scoreList =  res.data.data.score
       callback(scoreList)
     }).catch((err) => {
+      wx.hideLoading()
       this.handleFetchListError(err)
     })
 
