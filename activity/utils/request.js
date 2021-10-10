@@ -1,23 +1,23 @@
-import getHeader from "../../../utils/getHeader";
+import getHeader from "../../utils/getHeader.js";
 
-const requestUtils = require("../../../utils/requestUtils");
+const requestUtils = require("../../utils/requestUtils");
 const app = getApp();
 const eventApiPrefix = `${app.globalData.apiUrl}/event`;
 const header = getHeader("urlencoded", app.globalData.token);
 
 const REQUEST_PURPOSE = ["EVENT_LIST", "EVENT_DETAIL", "EVENT_JOIN", "SCORE_SUMMARY", "SCORE_DETAIL", "EVENT_JOINED"];
 
-const constructUrl = function (requestPurpose, params) {
+const constructUrl = (requestPurpose, params) => {
   let url = eventApiPrefix;
 
   const [first, second, third, fourth, fifth, sixth] = REQUEST_PURPOSE;
   switch (requestPurpose) {
     case(first): {
-      url += `?index=${params.index}`;
+      url += `/sc?index=${params.index}`;
       break;
     }
     case(second):{
-      url += `/sc/score_detail?force=${params.force}`;
+      url += `/sc/${params.eventId}`;
       break;
     }
     case(third): {
@@ -25,11 +25,11 @@ const constructUrl = function (requestPurpose, params) {
       break;
     }
     case(fourth): {
-      url += `/sc/score`
+      url += `/sc/score/summary`
       break;
     }
     case(fifth): {
-      url += `/sc/score_detail?force=${params.force}`
+      url += `/sc/score?force=${params.force}`
       break;
     }
     case(sixth): {
@@ -41,18 +41,18 @@ const constructUrl = function (requestPurpose, params) {
   return url;
 }
 
-const fetchData = function (url, requestPurpose, callback) {
+const fetchData =  (url, requestPurpose, callback) => {
   let getData = requestUtils.doGET(url, {}, header);
   getData.then(res => {
     let data;
     const [first, second, third, fourth, fifth, sixth] = REQUEST_PURPOSE;
     switch(requestPurpose) {
       case(first): {
-        data = res.data.data;
+        data = res.data.data.activityList;
         break
       }
       case(second): {
-        data = res.data.data;
+        data = res.data.data.activityDetail;
         break;
       }
       case(fourth): {
@@ -74,7 +74,7 @@ const fetchData = function (url, requestPurpose, callback) {
   })
 };
 
-const submitData = function (url, requestPurpose, callback) {
+const submitData = (url, requestPurpose, callback) => {
   let postData = requestUtils.doPOST(url, {}, header);
 
   postData.then(res => {
@@ -93,30 +93,32 @@ const submitData = function (url, requestPurpose, callback) {
 
 }
 
-const handleFetchListError = function (err) {
+const handleFetchListError =  (err) => {
 
   wx.showModal({
     title: "哎呀，出错误了 >.<",
-    content:
-      err.data.code !== 1
-        ? err.data.msg
-        : "业务逻辑出错",
+    content: err.data.msg,
     showCancel: false,
     complete: err.data.code === 6
-      ? () => {
+      ? (() => {
         app.globalData.identity = {}
         app.globalData.verified = false
         wx.setStorageSync('verified', false)
         wx.setStorageSync('identity', {})
         wx.redirectTo({url: '/pages/verify/verify'})
-      }
-      : () => {
+      })()
+      : (() => {
         wx.switchTab({
           url: '/pages/index/index'
         })
-      }
+      })()
   })
 }
 
-
+module.exports = {
+  constructUrl,
+  fetchData,
+  submitData,
+  handleFetchListError
+}
 

@@ -1,13 +1,16 @@
 // activity/pages/index/index.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import onShareAppMessage from "../../../utils/onShareAppMessage";
-import getHeader from "../../../utils/getHeader";
+import getHeader from "../../../utils/getHeader.js";
 
-const app = getApp();
 const requestUtils = require("../../../utils/requestUtils");
-const timeUtils = require("../../../utils/timeUtils")
+const app = getApp();
 const activityApiPrefix = `${app.globalData.apiUrl}/event`;
 const header = getHeader("urlencoded", app.globalData.token);
+const request = require("../../utils/request");
+const timeUtils = require("../../../utils/timeUtils")
+
+
 
 const SWITCH_LIST = {
   ZERO: 0,
@@ -72,55 +75,57 @@ Page({
 
   // 发请求获取初始活动列表
   getItemList() {
-    let data = {};
-    let url = activityApiPrefix + `?index=${this.data.pageIndex}`
-    let getData = requestUtils.doGET(url, data, header);
-    getData.then((res) => {
-      console.log("开始请求");
-      if(res.data.data[0] == null){
-        this.setData({showNotice: true});
-      }else {
-        let itemList = this.data.itemList;
-        let list = this.handleProperty(res);
-        this.setData({itemList: itemList.concat(list)});
-      }
-    }).catch(() => {
-      console.log("请求失败");
-    })
+    request.fetchData(request.constructUrl('EVENT_LIST',{index:this.data.pageIndex}), "EVENT_LIST", res => {
+      let list = res;
+      list = this.handleProperty(list);
+      this.setPageData(['itemList'], [this.data.itemList.concat(list)])
+    });
   },
 
   // 对列表数组每一项的属性进行处理
   handleProperty(res) {
-    let list = res.data.data;
-    let regexp1 = /\u3010.+\u3011/g;
-    let regexp2 = /[0-9]*.+日/g;
-    let regexp3 = /日/;
-    let regexp4 = /[0-9]*.+号/g;
-    let regexp5 = /[0-9]*\u002e[0-9]*/g;
-    let regexp6 = /[0-9]*\u002e[0-9]*\u002e[0-9]*/g;
-    let regexp7 = /[0-9]*年/g;
-    list[0].startTime = "2021-12-15T00:00:00"
-    list.forEach(item => {
-      item.title = item.title.replace(regexp1, "");
-      let regexp3Index = item.title.search(regexp3)
-      if(regexp3Index != -1) {
-        if(item.title[regexp3Index + 1] != "常")
-          item.title = item.title.replace(regexp2, "");
-      }
-      item.title = item.title.replace(regexp4, "");
-      item.title = item.title.replace(regexp5, "");
-      item.title = item.title.replace(regexp6, "");
-      item.title = item.title.replace(regexp7, "");
+    // let list = res.data.activityList;
+    // let regexp1 = /\u3010.+\u3011/g;
+    // let regexp2 = /[0-9]*.+日/g;
+    // let regexp3 = /日/;
+    // let regexp4 = /[0-9]*.+号/g;
+    // let regexp5 = /[0-9]*\u002e[0-9]*/g;
+    // let regexp6 = /[0-9]*\u002e[0-9]*\u002e[0-9]*/g;
+    // let regexp7 = /[0-9]*年/g;
+    // list[0].startTime = "2021-12-15T00:00:00"
+    res.forEach(item => {
+      // item.title = item.title.replace(regexp1, "");
+      // let regexp3Index = item.title.search(regexp3)
+      // if(regexp3Index != -1) {
+      //   if(item.title[regexp3Index + 1] != "常")
+      //     item.title = item.title.replace(regexp2, "");
+      // }
+      // item.title = item.title.replace(regexp4, "");
+      // item.title = item.title.replace(regexp5, "");
+      // item.title = item.title.replace(regexp6, "");
+      // item.title = item.title.replace(regexp7, "");
       item.startTime = item.startTime.replace(/-/g, "/")
-      item.endTime = item.endTime.replace(/-/g, "/")
-      item.timeInterval = timeUtils.getIntervalToCurrentTime(item.startTime)
-      if(timeUtils.getTimeStamp(item.startTime) / 1000 - parseInt(new Date().getTime() / 1000) > 0) {
-        item.timeInterval += "后"
-      }else {
-        item.timeInterval += "前"
+      item.signEndTime = item.signEndTime.replace(/-/g, "/")
+      item.src =  `../../assets/pic/category/${item.category}.png`
+      if(new Date(item.startTime.replace(/T/g, " ")).getDate() === new Date(). getDate()) {
+        item.timeInterval = "今天";
+        if (new Date().getTime() > new Date(item.signEndTime.replace(/T/g, " "))) {
+          item.state = '已结束';
+        } else if (new Date().getTime() - new Date(item.startTime.replace(/T/g, " ")) > 0) {
+          item.state = '进行中';
+        }
+      }
+      else {
+        item.timeInterval = timeUtils.getIntervalToCurrentTime(item.startTime)
+        if(timeUtils.getTimeStamp(item.startTime) - new Date().getTime() > 0) {
+          item.timeInterval += "后";
+        }else {
+          item.state = '已结束';
+          item.timeInterval += "前";
+        }
       }
     })
-    return list;
+    return res;
   },
 
   // 滑倒底部获取接下来一页列表
@@ -133,7 +138,7 @@ Page({
 
   // 点击活动跳转到详情
   toItemDetails(e) {
-    let eventId = this.data.itemList[e.currentTarget.dataset.index].id;
+    let eventId = this.data.itemList[e.currentTarget.dataset.index].activityId;
     console.log(eventId)
     wx.navigateTo({
       url: `/activity/pages/detail/detail?eventId=${eventId}`,
@@ -167,7 +172,11 @@ Page({
       this.setData({selected: e.currentTarget.dataset.selected})
     }
     this.data.selected === SWITCH_LIST.TWO && this.data.mineScoreList.length === 0
-      ? this.getScoreList(wx.getStorageSync('isActivityMinePageLatest'))
+      ? (() => {
+        console.log("yes")
+        this.referSummary();
+        this.getScoreList(wx.getStorageSync('isActivityMinePageLatest'));
+      })()
       : () => {}
   },
 
@@ -183,7 +192,7 @@ Page({
     let isGetNew = typeof isLatest !== "boolean"
       ? true
       : !isLatest
-    let url = activityApiPrefix + '/sc/score_detail?force=' + isGetNew
+    let url = activityApiPrefix + '/sc/score?force=' + isGetNew
     let getData = requestUtils.doGET(url, {}, header)
 
     isGetNew
@@ -216,20 +225,29 @@ Page({
       wx.showModal({
         title: "哎呀，出错误了 >.<",
         content:
-          err.data.code != 1
+          err.data.code !== 1
             ? err.data.msg
             : "业务逻辑出错",
         showCancel: false,
-        complete: err.data.code == 6
-          ? () => {
+        complete: err.data.code === 6
+          ? (() => {
             app.globalData.identity = {}
             app.globalData.verified = false
             wx.setStorageSync('verified', false)
             wx.setStorageSync('identity', {})
             wx.redirectTo({url: '/pages/verify/verify'})
-          }
+          })()
           : () => {}
       })
+    })
+  },
+
+  referSummary() {
+    request.fetchData(request.constructUrl("SCORE_SUMMARY", {}), "SCORE_SUMMARY", res => {
+      this.setData({
+        'option.series[0].data[0].value':[res.themeReport, res.socialPractice, res.campusCulture, res.creativity, res.charity, res.safetyCivilization]
+      })
+      console.log(res)
     })
   },
 
@@ -252,6 +270,12 @@ Page({
     })
   },
 
+  setPageData(pageData, data) {
+    for(let index in pageData) {
+      this.setData({[pageData[index]]: data[index]})
+    }
+  },
+
   handlerGohomeClick,
   handlerGobackClick,
   onShareAppMessage,
@@ -266,46 +290,4 @@ Page({
       verified: app.globalData.verified
     });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady () {
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom () {
-
-  }
-
 })
