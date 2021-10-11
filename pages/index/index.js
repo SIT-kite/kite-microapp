@@ -12,7 +12,7 @@ Page({
   data: {
     isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
-    notice: [], // 通知
+    notices: [], // 通知
     items: [{
       text: "新生",
       url: "/freshman/pages/welcome/welcome",
@@ -77,26 +77,26 @@ Page({
     });
   },
 
-  setNotice(notice) {
+  setNotice(notices) {
 
     const noNotice = () => {
-      this.setData({ notice: [{ id: -1, title: "暂无通知" }] });
+      this.setData({ notices: [{ id: -1, title: "暂无通知" }] });
       console.log("暂无通知");
     };
 
-    if (Array.isArray(notice)) {
+    if (Array.isArray(notices)) {
 
-      if (notice.length > 0) {
-        this.setData({ notice });
+      if (notices.length > 0) {
+        this.setData({notices});
         console.groupCollapsed("%c通知数据", "font-weight: normal");
-        notice.forEach( (item, index) => console.log(`通知 ${index}:`, item) );
+        notices.forEach( (item, index) => console.log(`通知 ${index}:`, item) );
         console.groupEnd();
       } else {
         noNotice();
       }
 
     } else {
-      console.error("notice is not an Array", notice);
+      console.error("notice is not an Array", notices);
       noNotice();
     }
 
