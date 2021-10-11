@@ -10,9 +10,11 @@ const gData = app.globalData;
 
 Page({
   data: {
+
     isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
     notices: [], // 通知
+
     items: [{
       text: "新生",
       url: "/freshman/pages/welcome/welcome",
