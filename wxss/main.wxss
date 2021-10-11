@@ -1,7 +1,4 @@
 /* /wxss/main.wxss */
-page {
-	height: auto;
-}
 
 .background {
 	position: fixed;
@@ -16,12 +13,23 @@ page {
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	margin-top: 10vh;
+	max-width: 32rem;
+	margin: 3.5rem auto 0;
 	padding: 1rem;
 	z-index: 1;
 }
 
 .card {
-	margin-bottom: 1rem;
 	box-sizing: border-box;
+	margin-bottom: 1rem;
+	box-shadow: var(--shadow);
+	opacity: 98%;
+	transition:
+		var(--transition-shadow),
+		var(--transition-opacity);
+}
+
+.card:active {
+	box-shadow: var(--shadow-hover);
+	opacity: 100%;
 }
