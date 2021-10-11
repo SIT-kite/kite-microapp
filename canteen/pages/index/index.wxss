@@ -1,0 +1,15 @@
+/* canteen/pages/index/index.wxss */
+.icon {
+	width: 24px;
+	height: 24px;
+}
+
+.icon-button {
+	width: auto !important;
+	margin: 0 !important;
+	padding: 0;
+}
+
+.header {
+	display: flex;
+}

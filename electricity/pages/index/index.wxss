@@ -6,8 +6,9 @@ page {
 	justify-content: center;
 	box-sizing: border-box;
 	padding: .5em;
+	background-color: #E3F2FD;
+	--theme-color: #2196F3;
 }
-
 
 .card {
 	border-radius: 2px;
@@ -16,6 +17,7 @@ page {
 
 .title {
 	font-size: inherit;
+	/* color: #0D47A1; */
 }
 
 .inquiry {
@@ -51,6 +53,7 @@ page {
 	margin: 0 !important;
 	padding: .25em 1ch;
 	font-size: inherit;
+	background-color: var(--theme-color);
 }
 .button.hint {
 	float: right;
@@ -68,7 +71,7 @@ page {
 	margin: 0 auto;
 	padding: .25em 1ch;
 	color: white;
-	background-color: #07C160;
+	background-color: var(--theme-color);
 	font-weight: bold;
 }
 
@@ -112,7 +115,7 @@ page {
 	text-align: center;
 }
 .tab.true {
-	border-color: currentColor;
+	border-color: var(--theme-color);
 	font-weight: bold;
 }
 
@@ -139,6 +142,7 @@ page {
 
 .switch {
 	margin: 0 .5em;
+	/* background-color: var(--theme-color); */
 }
 
 #canvas {
