@@ -1,0 +1,100 @@
+/* timetable/components/detail/detail.wxss */
+.background {
+	border-radius: 38px 38px 0px 0px;
+	width: 90vw;
+	height: 500px;
+	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.background1 {
+	border-radius: 38px 38px 0px 0px;
+	width: 90vw;
+	height: 400px;
+	z-index: 1;
+	position: absolute;
+	top: 320px;
+	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.background2 {
+	border-radius: 38px 38px 0px 0px;
+	width: 90vw;
+	height: 500px;
+	z-index: 2;
+	position: absolute;
+	top: 410px;
+	box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.slider {
+	background: #E4EBF5;
+	height: 40px;
+	width: 90vw;
+	border-radius: 25px 25px 0px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.slider_color {
+	background: #d4d4d4;
+	height: 10rpx;
+	width: 22vw;
+	border-radius: 7rpx 7rpx 7rpx 7rpx;
+}
+
+.content {
+	background: #E4EBF5;
+	display: flex;
+	width: 90vw;
+	height: 500px;
+	flex-direction: column;
+}
+
+.title {
+	color: #14446A;
+	font-size: 34rpx;
+	font-weight: bolder;
+	margin-left: 6vw;
+	flex-direction: row;
+}
+
+.information {
+	width: 82vw;
+	height: 300px;
+	background: #fff;
+	margin-top: 2vh;
+	margin-left: 4vw;
+	border-radius: 25px;
+}
+
+.icon {
+	width: 60rpx;
+	height: 60rpx;
+}
+
+.table {
+	display: flex;
+	margin-left: 25px;
+	margin-top: 40rpx;
+	margin-right: 25px;
+	flex-direction: row;
+	align-items: center;
+}
+
+.text {
+	margin-left: 15rpx;
+	font-weight: 500;
+	font-size: 28rpx;
+	color: #94baff;
+	width: 65vw;
+	height: 80rpx;
+	align-items: center;
+	justify-self: center;
+}
+
+.weekday {
+	align-items: center;
+	justify-self: center;
+	height: 35rpx;
+}
