@@ -142,9 +142,8 @@ Page({
   },
 
   goToShare() {
-    wx.navigateTo({
-      url: `/electricity/pages/share/share?rank=${JSON.stringify(this.data.rank)}`
-    });
+    const { con, percen } = this.data.rank;
+    wx.navigateTo({ url: `../share/share?consumption=${con}&percent=${percen}` });
     // this.onInstance(echarts);
   },
 

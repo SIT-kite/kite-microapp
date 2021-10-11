@@ -1,200 +1,187 @@
 // drawCanvas(canvas, data)
 export default async (canvas, data) => {
 
-	const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d");
 
-	const px = 1; // wx.getSystemInfoSync().windowWidth / 750;
-	const cw =  650 * px;
-	const ch = 1000 * px;
+  const px = wx.getSystemInfoSync().pixelRatio;
+  const cw = 650 * px;
+  const ch = 1000 * px;
 
-	canvas.width = cw;
-	canvas.height = ch;
+  canvas.width = cw;
+  canvas.height = ch;
 
-	console.log({ data, px, cw, ch });
+  console.log("分享图参数:", { data, px, cw, ch });
 
-	// 绘制图像时，需要先载入图像，再在回调函数 onload 中绘制图像
-	/* drawImageBySrc(
-		src: String, dx: Number, dy: number, dWidth: Number, dHeight: Number,
-		callback?: Function
-	): Promise */
-	const drawImageBySrc = (src, dx, dy, dWidth, dHeight, callback) => new Promise(
-		(resolve, reject) => Object.assign(
-			canvas.createImage(), {
-				src,
-				onload: e => {
-					ctx.drawImage(e.target, dx, dy, dWidth, dHeight);
-					typeof callback === "function" && callback();
-					resolve();
-				},
-				onerror: err => {
-					console.error("drawImageBySrc():", err);
-					reject("drawImageBySrc(): image load error");
-				}
-			}
-		)
-	);
+  // 绘制图像时，需要先载入图像，再在回调函数 onload 中绘制图像
+  /* drawImageBySrc(
+    src: String, dx: Number, dy: number, dWidth: Number, dHeight: Number,
+    callback?: Function
+  ): Promise */
+  const drawImageBySrc = (src, dx, dy, dWidth, dHeight, callback) => new Promise(
+    (resolve, reject) => {
+      const image = canvas.createImage();
+      return Object.assign(
+        image, {
+        src,
+        onload() {
+          ctx.drawImage(image, dx, dy, dWidth, dHeight);
+          typeof callback === "function" && callback();
+          resolve();
+        },
+        onerror: err => {
+          console.error("drawImageBySrc():", err);
+          reject("drawImageBySrc(): image load error");
+        }
+      }
+      );
+    }
+  );
 
-	const saveRestore = async callback => {
-		ctx.save();
-		await callback();
-		ctx.restore();
-	}
+  const saveRestore = async callback => {
+    ctx.save();
+    await callback();
+    ctx.restore();
+  }
 
-	const arcPath = (...arg) => {
-		ctx.beginPath();
-		ctx.arc(...arg);
-		ctx.closePath();
-	};
+  const arcPath = (...arg) => {
+    ctx.beginPath();
+    ctx.arc(...arg);
+    ctx.closePath();
+  };
 
-	// 头像 直径 d 半径 r 坐标 x y
-	const avatar_d = 150 * px;
-	const avatar_r = avatar_d / 2;
-	const avatar_x = cw / 2 - avatar_r;
-	const avatar_y = 20 * px;
+  // 从 对象宽度 和 canvas 宽度 计算 使对象居中的X坐标
+  // calcXfromW(w): x
+  const centerXfromW = w => (cw - w) / 2;
+  const centerXfromR = r => cw / 2 - r;
 
-	// 白色背景 坐标 x y 宽高 w h
-	const main_x = 50 * px;
-	const main_y = avatar_d + avatar_y;
-	const main_w = 550 * px;
-	const main_h = ch - 40 * px - avatar_r - avatar_y;
+  // const measureText = text => {
+  //   const {fontBoundingBoxAscent, fontBoundingBoxDescent} = ctx.measureText(text);
+  // }
 
-	const getCenter_x = w => main_x + (main_w - w) / 2;
+  // 各种间距
+  const gap = 20 * px;
 
-	// 背景
-	// 渐变背景
-	var gra = ctx.createLinearGradient(0, 0, cw, ch);
-	gra.addColorStop(0.1, "#ABDCFF");
-	gra.addColorStop(1, "#0396FF");
+  // 计算加上间距后的总宽度
+  // addGap(...w)
+  const addGap = (...w) => w.reduce((sum, cur) => sum + gap + cur);
 
-	ctx.fillStyle = gra; // "rgb(48,191,109)"
-	ctx.fillRect(0, 0, cw, ch);
+  // 头像 直径 d 半径 r 坐标 x y
+  const avatar_d = 150 * px;
+  const avatar_r = avatar_d / 2;
+  const avatar_x = centerXfromR(avatar_r);
+  const avatar_y = 25 * px;
 
-	// 白色背景
-	ctx.fillStyle = "#FAFAFA";
-	ctx.fillRect(main_x, main_y - avatar_r, main_w, main_h);
+  // 白色背景 坐标 x y 宽高 w h
+  const main_x = 50 * px;
+  const main_y = avatar_y + avatar_d + 25 * px;
+  const main_w = 550 * px;
+  const main_h = ch - 50 * px - avatar_r - avatar_y;
 
-	// 头像白底
-	ctx.fillStyle = "white";
-	arcPath(
-		avatar_x + avatar_r, avatar_y + avatar_r, avatar_r + 5 * px, 0, Math.PI * 2
-	);
-	ctx.fill();
+  // 随机方向随机颜色渐变背景
+  const randomColor = [0, 0, 0].map( () => Math.ceil(191 + Math.random() * 64) );
+  const randomDirection = [0, 0, cw, ch].sort(() => Math.random() - 0.5);
+  const gra = ctx.createLinearGradient(...randomDirection);
+  gra.addColorStop(0, `rgb(${ randomColor.join(", ") })`);
+  gra.addColorStop(1, `rgb(${ randomColor.map(color => color - 128).join(", ") })`);
+  ctx.fillStyle = gra;
+  ctx.fillRect(0, 0, cw, ch);
 
-	// 头像
-	await saveRestore(async () => {
-		arcPath(
-			avatar_x + avatar_r, avatar_y + avatar_r, avatar_r, 0, Math.PI * 2
-		);
-		ctx.clip();
-		await drawImageBySrc(data.avatarPath, avatar_x, avatar_y, avatar_d, avatar_d);
-	})
+  // 白色背景
+  ctx.fillStyle = "#FAFAFA";
+  ctx.fillRect(main_x, avatar_y + avatar_r, main_w, main_h);
 
-	// 用户昵称 y = 60
-	ctx.font = `normal bold ${Math.round(42*px)}px Microsoft YaHei`;
-	ctx.fillStyle = "black";
-	const name = data.nickName;
-	const name_w = ctx.measureText(name).width;
-	ctx.fillText(name, getCenter_x(name_w), main_y + 60 * px, 500 * px);
+  // 头像白底
+  ctx.fillStyle = "white";
+  arcPath(avatar_x + avatar_r, avatar_y + avatar_r, avatar_r + 5 * px, 0, Math.PI * 2);
+  ctx.fill();
 
-	const gap_w =  20 * px;
-	const font_normal = `normal bold ${Math.round(36*px)}px Microsoft YaHei`;
-	const font_large  = `normal bold ${Math.round(50*px)}px Microsoft YaHei`;
+  // 头像
+  await saveRestore(async () => {
+    arcPath(avatar_x + avatar_r, avatar_y + avatar_r, avatar_r, 0, Math.PI * 2);
+    ctx.clip();
+    await drawImageBySrc(data.avatarPath, avatar_x, avatar_y, avatar_d, avatar_d);
+  });
 
-	// 第一行字 y = 160
-	// 昨日消耗电费 xx.xx 元
-	// bill1        bill2 bill3
-	{
+  // 用户昵称 y = 20
+  ctx.textAlign = "center";
+  ctx.textBaseline = "top";
 
-		ctx.font = font_normal;
-		const bill1 = "昨日消耗电费";
-		const bill3 = "元";
-		const bill1_w = ctx.measureText(bill1).width;
-		const bill3_w = ctx.measureText(bill3).width;
+  ctx.font = `bold ${Math.round(42 * px)}px sans-serif`;
+  ctx.fillStyle = "black";
+  const name = data.nickName;
+  ctx.fillText(name, cw / 2, main_y + gap, 500 * px);
 
-		ctx.font = font_large;
-		const bill2 = `${data.rank.con}`;
-		const bill2_w = ctx.measureText(bill2).width;
+  ctx.textAlign = "start";
+  ctx.textBaseline = "middle";
 
-		const bill_w = bill1_w + gap_w + bill2_w + gap_w + bill3_w;
-		const bill_x = getCenter_x(bill_w);
-		const bill_y = main_y + 160 * px;
+  // 绘制电费数据行
+  // renderLine(prefix, text, suffix, y)
+  const renderLine = (prefix, text, suffix, y) => {
 
-		ctx.font = font_normal;
-		ctx.fillStyle = "black";
-		ctx.fillText(bill1, bill_x, bill_y);
-		ctx.fillText(bill3, bill_x + bill1_w + gap_w + bill2_w + gap_w, bill_y);
+    const font_normal = `${Math.round(36 * px)}px sans-serif`;
+    const font_large = `bold ${Math.round(50 * px)}px sans-serif`;
 
-		ctx.font = font_large;
-		ctx.fillStyle = "red";
-		ctx.fillText(bill2, bill_x + bill1_w + gap_w, bill_y);
+    ctx.font = font_normal;
+    const prefix_w = ctx.measureText(prefix).width;
+    const suffix_w = ctx.measureText(suffix).width;
 
-	}
+    ctx.font = font_large;
+    const text_w = ctx.measureText(text).width;
 
-	// 第二行字 y = 230
-	// 超越了   yy.yy%   的寝室
-	// percent1 percent2 percent3
-	{
+    const line_w = addGap(prefix_w, text_w, suffix_w);
+    const line_x = centerXfromW(line_w);
+    const line_y = main_y + y;
 
-		ctx.font = font_normal;
-		const percent1 = "超越了";
-		const percent3 = "的寝室";
-		const percent1_w = ctx.measureText(percent1).width;
-		const percent3_w = ctx.measureText(percent1).width;
+    ctx.font = font_normal;
+    ctx.fillStyle = "black";
+    ctx.fillText(prefix, line_x, line_y);
+    ctx.fillText(suffix, addGap(line_x, prefix_w, text_w), line_y);
 
-		ctx.font = font_large;
-		const percent2 = `${data.rank.percen}%`;
-		const percent2_w = ctx.measureText(percent2).width;
+    ctx.font = font_large;
+    ctx.fillStyle = "red";
+    ctx.fillText(text, addGap(line_x, prefix_w), line_y);
 
-		const percent_w =
-			percent1_w + gap_w + percent2_w + gap_w + percent3_w;
-		const percent_x = getCenter_x(percent_w);
-		const percent_y = main_y + 230 * px;
+  };
 
-		ctx.fillStyle = "black";
-		ctx.font = font_normal;
-		ctx.fillText(percent1, percent_x, percent_y);
-		ctx.fillText(percent3, percent_x + percent1_w + gap_w + percent2_w + gap_w, percent_y);
+  const { consumption, percent } = data.rank;
 
-		ctx.fillStyle = "red";
-		ctx.font = font_large;
-		ctx.fillText(percent2, percent_x + percent1_w + gap_w, percent_y);
+  // 电费 y = 125
+  renderLine("昨日消耗电费", `${consumption}`, "元", 125 * px);
+  // 排名 y = 200
+  renderLine("超越了", `${percent}%`, "的寝室", 200 * px);
 
-	}
+  // 图片 省电达人 / 空调才是本体 / 正常用电 y = 250 d = 330
+  const power_d = 330 * px;
+  await drawImageBySrc(
+    `/electricity/assets/power_${
+      percent <= 30 ? "saver.png"
+      : percent >= 70 ? "user.png"
+      : "common.svg"
+    }`, centerXfromW(power_d), main_y + 250 * px, power_d, power_d
+  );
 
-	// 图片 省电达人 / 空调才是本体 y = 270
-	const power_d = 330 * px;
-	const power_args = [ getCenter_x(power_d), main_y + 270 * px, power_d, power_d ];
-	if (data.rank.percen <= 25) {
-		await drawImageBySrc(
-			"/electricity/assets/power_saver.png", ...power_args
-		);
-	} else if (data.rank.percen >= 75) {
-		await drawImageBySrc(
-			"/electricity/assets/power_user.png", ...power_args
-		);
-	}
+  // 图片 小程序码 d = 150
+  const shareCode_d = 150 * px;
+  const shareCode_xy = addGap(shareCode_d, 50 * px);
+  await drawImageBySrc(
+    "/assets/share_code.png",
+    cw - shareCode_xy, ch - shareCode_xy, shareCode_d, shareCode_d
+  );
 
-	// 图片 小程序码
-	await drawImageBySrc(
-		"/assets/share_code.png",
-		main_w - 110 * px,
-		main_y + main_h - 170 * px - avatar_r,
-		150 * px, 150 * px
-	);
+  // 长按识别小程序码 打开上应小风筝，享受便利校园
 
-	// 长按识别小程序码 打开上应小风筝，享受便利校园
+  ctx.textAlign = "end";
+  ctx.textBaseline = "middle";
 
-	const share_x = main_x + main_w - 180 * px;
-	const share_y = main_y + main_h - avatar_r;
-	const getShare_x = sharetext =>
-		share_x - ctx.measureText(sharetext).width;
+  const share_x = cw - addGap(0, 50 * px, 150 * px);
+  const share_y = ch - addGap(0, 50 * px);
 
-	const share1 = "长按识别小程序码";
-	const share2 = "打开上应小风筝，享受便利校园";
+  const share1 = "长按识别小程序码";
+  const share2 = "打开上应小风筝，享受便利校园";
 
-	ctx.font = `normal ${Math.round(24*px)}px Microsoft YaHei`;
-	ctx.fillStyle = "#9E9E9E";
-	ctx.fillText(share1, getShare_x(share1), share_y - 100 * px);
-	ctx.fillText(share2, getShare_x(share2), share_y -  60 * px);
+  ctx.font = `${Math.round(24 * px)}px sans-serif`;
+  ctx.fillStyle = "#9E9E9E";
+  ctx.fillText(share1, share_x, share_y - 90 * px);
+  ctx.fillText(share2, share_x, share_y - 50 * px);
 
 };

@@ -1,28 +1,81 @@
 <!-- electricity/pages/index/index.wxml -->
 
-<!-- <view>电费余额查询</view> -->
+<view class="card inquiry">
 
-<view class="input-container">
-	<text>10</text>
-	<input class="input building" value="{{building}}" placeholder="楼号" maxlength="2"
-		confirm-type="next" bindinput="inputBuilding" focus="{{ focus }}" />
-	<input class="input room" value="{{room}}" placeholder="寝室号" maxlength="4"
-		confirm-type="send" bindinput="inputRoom" bindconfirm="getEData" />
+	<view class="input-container">
+		<text>10</text>
+		<input class="input building" value="{{building}}" placeholder="楼号" maxlength="2"
+			confirm-type="next" bindinput="inputBuilding" focus="{{ focus }}" />
+		<input class="input room" value="{{room}}" placeholder="寝室号" maxlength="4"
+			confirm-type="send" bindinput="inputRoom" bindconfirm="getElectricity" />
+	</view>
+
+	<button class="button submit" type="primary" loading="{{loading}}" bindtap="getElectricity">查询</button>
+
 </view>
 
-<view class="button-container">
-	<button class="button" bindtap="getElectricity">查询</button>
-	<button class="button" bindtap="getHistory">查看使用情况</button>
-</view>
+<view class="instruction" wx:if="{{ !showResult }}">请输入楼号和寝室号，并点击“查询”</view>
 
-<view wx:if="{{show === 'electricity'}}">
-	<view>房间号：{{electricity.room}}</view>
-	<view>剩余金额：{{electricity.balance}} 元</view>
-	<view>剩余电量：{{electricity.power}} 度</view>
-	<view>更新时间：{{electricity.datetime}}</view>
-</view>
+<view class="card result {{ showResult }}">
 
-<view wx:elif="{{show === 'history'}}">
-	<view>24小时使用电费 {{rank.consumption}} 元</view>
-	<view>超越了 {{rank.percent}}% 的寝室</view>
+	<view class="tab-container">
+		<view class="tab {{ currentTab === 0 }}" data-current="0" bindtap="switchTab">ℹ️ 电费余额</view>
+		<view style="width: .5rem"></view>
+		<view class="tab {{ currentTab === 1 }}" data-current="1" bindtap="switchTab">💹 使用情况</view>
+	</view>
+
+	<swiper class="swiper" current="{{currentTab}}" bindchange="swiperChange" duration="200">
+		<swiper-item>
+			<scroll-view class="scroll-view" scroll-y="true">
+
+				<view class="section electricity" wx:if="{{ electricity !== null }}">
+					<button class="button hint" bindtap="showHint"
+						data-content="数据来自学校在线电费查询平台。如有错误，请以充值机显示金额为准。"
+					>数据有误？</button>
+					<view><text class="title">　房间号：</text>{{electricity.room}}</view>
+					<view><text class="title">剩余金额：</text>{{electricity.balance}} 元</view>
+					<view><text class="title">剩余电量：</text>{{electricity.power}} 度</view>
+					<view><text class="title">更新时间：</text>{{electricity.datetime}}</view>
+				</view>
+
+			</scroll-view>
+		</swiper-item>
+		<swiper-item>
+			<scroll-view class="scroll-view" scroll-y="true">
+
+				<view class="section rank" wx:if="{{ rank !== null }}">
+					<navigator class="button share"
+						url="../share/share?consumption={{rank.consumption}}&percent={{rank.percent}}"
+						>分享</navigator>
+					<view class="title">24小时内</view>
+					<view>使用电费 {{rank.consumption}} 元</view>
+					<view>超越了 {{rank.percent}}% 的寝室</view>
+				</view>
+
+				<view class="section bill" wx:if="{{ days !== null || hours !== null }}">
+					<view class="title">电费使用情况</view>
+					<view class="switch-container">
+						<text class="switch-label {{currentRange === 'hours'}}">过去一天</text>
+						<switch class="switch" checked="true" bindchange="changeRange" />
+						<text class="switch-label {{currentRange === 'days'}}">过去一周</text>
+					</view>
+					<canvas id="canvas" canvas-id="canvas" type="{{ canvas2d ? '2d' : '' }}"
+						bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" />
+					<view wx:if="{{currentRange === 'hours'}}">
+					共消费 {{hours.sum}} 元，平均消费 {{hours.median}} 元/小时
+					</view>
+					<view wx:if="{{currentRange === 'days'}}">
+					共消费 {{ days.sum}} 元，平均消费 {{ days.median}} 元/天
+					</view>
+				</view>
+
+				<view class="section charge" wx:if="{{ charges.length > 0 }}">
+					<view class="title">近期充值</view>
+					<view wx:for="charges" wx:key="date">{{item.date}} 充值 {{item.charge}} 元</view>
+				</view>
+
+				</scroll-view>
+		</swiper-item>
+	</swiper>
+
 </view>

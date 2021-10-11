@@ -3,7 +3,6 @@
 
 // TODO: 支持选择是否显示用户名、头像和寝室号
 
-import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import promisify from "../../../utils/promisify";
 import loading   from "../../../utils/loading";
 import drawCanvas from "./drawCanvas";
@@ -18,17 +17,34 @@ Page({
     nickName: app.globalData.nickName,
     avatarPath: "",
     imagePath: "",
-    rank: {
-      con: 0,
-      percen: ' '
-    },
-    error: "",
-    globalwidth: 0,
-    globalheight: 0
+    rank: null,
+    error: ""
   },
 
-  handlerGohomeClick,
-  handlerGobackClick,
+  onLoad(options) {
+
+    const { consumption, percent } = options;
+    this.data.rank = { consumption, percent };
+
+  },
+
+  onShow() {
+
+    // 预先缓存头像
+    promisify(wx.downloadFile)({ url: app.globalData.avatarUrl }).then(
+      res => {
+        this.data.avatarPath = res.tempFilePath;
+      }
+    ).catch(
+      err => {
+        this.catchError("头像获取失败，改用默认头像", err);
+        this.data.avatarPath = "/assets/pic/default-avatar.png";
+      }
+    ).finally(
+      () => this.draw()
+    );
+
+  },
 
   catchError(msg, err) {
     console.error(msg, err);
@@ -49,6 +65,7 @@ Page({
       // 绘制 canvas 并将 canvas 保存为临时文件
       loading({
         title: "正在绘制…",
+        mask: true,
         callback: async () => {
 
           await drawCanvas(canvas, this.data);
@@ -66,31 +83,9 @@ Page({
 
   },
 
-  onLoad(options) {
-
-    console.log("传入参数:", options);
-
-    this.data.rank = JSON.parse(options.rank);
-
-    // 预先缓存头像
-    promisify(wx.downloadFile)({ url: app.globalData.avatarUrl }).then(
-      res => {
-        this.data.avatarPath = res.tempFilePath;
-      }
-    ).catch(
-      err => {
-        this.catchError("头像获取失败，改用默认头像", err);
-        this.data.avatarPath = "/assets/pic/default-avatar.png";
-      }
-    ).finally(
-      () => this.draw()
-    );
-
-  },
-
   share() {
     wx.previewImage({ urls: [ this.data.imagePath ] });
-    noIconToast("长按图片以分享");
+    noIconToast("长按图片即可分享");
   },
 
   saveShareImg() {

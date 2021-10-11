@@ -58,4 +58,5 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 			<text>点此生成分享海报</text>
 		</view>
 	</view>
+	<navigator url="../index/index" style="margin-top: 1em; color: dodgerblue;">点此试用新版电费查询</navigator>
 </view>
