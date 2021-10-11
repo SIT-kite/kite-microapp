@@ -27,14 +27,10 @@ App({
     signPrivacyConfirm:     false, // 实名隐私协议
     freshmanPrivacyConfirm: false, // 迎新隐私协议
 
-    visible: false, // 迎新 inputInfo 页面 复选框 同城可见
-    userInfo: {},   // 迎新 inputInfo 页面 验证信息 姓名/考生号/准考证号，身份证后六位
-    contact: {},    // 迎新 inputInfo 页面 联系方式 手机号 tel，qq，微信 wechat
-
-    userDetail: null, // {} 迎新 stuInfoDetail 页面 用户详情
-    classmates: null, // [] 迎新      newClass 页面 同班同学
-    roommates:  null, // [] 迎新     newFriend 页面 我的室友
-    familiar:   null, // [] 迎新     newFriend 页面 可能认识的人
+    visible: false,   // 迎新 inputInfo 页面 复选框 同城可见
+    userInfo: {},     // 迎新 inputInfo 页面 验证信息 姓名/考生号/准考证号，身份证后六位
+    contact: {},      // 迎新 inputInfo 页面 联系方式 手机号 tel，qq，微信 wechat
+    userDetail: null, // 迎新 stuInfoDetail 页面 用户详情
 
     searchResultList: [],
     searchHistoryList: [],
@@ -99,9 +95,10 @@ App({
       }
     );
 
-    // 设置 isDev，按照 isDev 打印调试信息或检查更新
+    // 设置 isDev
     gData.isDev = systemInfo.platform === "devtools";
 
+    // 按照 isDev 打印调试信息或检查更新
     if (gData.isDev) {
       console.groupCollapsed("%c调试信息", "color: #0075E8");
       new Map([

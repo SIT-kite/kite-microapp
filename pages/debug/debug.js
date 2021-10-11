@@ -5,6 +5,7 @@ import { getAllStorageAsObject } from "../../utils/storage";
 import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
 import copyText  from "../../utils/copyText";
+import loading   from "../../utils/loading";
 
 const app = getApp();
 const gData = app.globalData;
@@ -19,9 +20,9 @@ Page({
 
   data: {
     error: "",
-    globalData: "",
-    storage: "",
-    systemInfo: ""
+    globalData: "尚未获取",
+    storage: "尚未获取",
+    systemInfo: "尚未获取"
   },
 
   onShareAppMessage,
@@ -113,69 +114,86 @@ Page({
         all: {
           title: "是否清空本地数据",
           content: "清空后，再次进入小程序时需要重新登录。确定要清空吗？",
-          success: res => res.confirm && clearStorageAndToast("已清空本地数据")
+          success: res => {
+            if (res.confirm) {
+              gData.isLogin = false;
+              clearStorageAndToast("已清空本地数据");
+            }
+          }
         }
       })[e.target.dataset.clear]
     );
 
   },
 
+  setDebugInfo() {
+    loading({
+      title: "正在获取…",
+      callback: async () => {
+
+        const has = (array, value) => array.some(item => item === value);
+
+        const is = {
+
+          api: (key, value) => (
+            has([ "apiUrl", "commonUrl" ], key) || (
+              typeof value === "string" &&
+              value.includes("kite.sunnysab.cn")
+            )
+          ),
+
+          token: (key, value) => (
+            key === "token" &&
+            value !== ""
+          ),
+          userInfo: (key, value) => (
+            has([ "userInfo", "contact" ], key) &&
+            JSON.stringify(value) !== "{}"
+          ),
+          userDetail: (key, value) => (
+            key === "userDetail" &&
+            value !== null
+          ),
+          credentials: (key, value) => (
+            ["token", "userInfo", "userDetail"].every(
+              credential => is[credential](key, value)
+            )
+          ),
+
+          timetable: (key, value) => (
+            key.startsWith("timetable_") &&
+            value !== null
+          )
+
+        };
+
+
+        // 隐藏 timetable；如果不在开发者工具中，则隐藏 api 和 credentials
+        const removeToken = (key, value) => {
+          is.timetable(key, value) ? "[长度过长，已隐藏]"
+          : gData.isDev ? value
+          : is.api(key, value) ? undefined
+          : is.credentials(key, value) ? "[已隐藏]"
+          : value
+        };
+
+        const stringify = (data, replacer = null) => JSON.stringify(data, replacer, 2);
+
+        this.setData({
+          globalData: stringify(gData, removeToken),
+          storage:    stringify(getAllStorageAsObject(), removeToken),
+          systemInfo: stringify(wx.getSystemInfoSync())
+        });
+
+      }
+    });
+  },
+
   copy(e) {
     copyText(this.data[e.target.dataset.name]);
   },
 
-  onLoad() {
-
-    const has = (array, value) => array.some(item => item === value);
-
-    const is = {
-      api: (key, value) => (
-        has([ "apiUrl", "commonUrl" ], key) || (
-          typeof value === "string" &&
-          value.includes("kite.sunnysab.cn")
-        )
-      ),
-      token: (key, value) => (
-        key === "token" &&
-        value !== ""
-      ),
-      userInfo: (key, value) => (
-        has([ "userInfo", "contact" ], key) &&
-        JSON.stringify(value) !== "{}"
-      ),
-      userDetail: (key, value) => (
-        has([ "userDetail", "classmates", "roommates", "familiar" ], key) &&
-        value !== null
-      ),
-      timetable: (key, value) => (
-        key === "timetable" &&
-        value !== null
-      )
-    };
-
-    const removeToken =
-      gData.isDev
-      ? null
-      : (key, value) => (
-        is.api(key, value)
-        ? undefined
-        : is.token(key, value) ||
-          is.userInfo(key, value) ||
-          is.userDetail(key, value)
-          ? "[已隐藏]"
-          : value
-      );
-
-    const stringify = (data, replacer = null) => JSON.stringify(data, replacer, 2);
-
-    this.setData({
-      globalData: stringify(gData, removeToken),
-      storage:    stringify(getAllStorageAsObject(), removeToken),
-      systemInfo: stringify(wx.getSystemInfoSync())
-    });
-
-  },
-
+  // onLoad() {},
   // onReady() {},
   // onShow() {}
 

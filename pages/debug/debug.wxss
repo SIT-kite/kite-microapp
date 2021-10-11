@@ -61,5 +61,5 @@
 	border: 1px solid currentColor;
 	border-radius: 1px;
 	font-size: .75em;
-	font-family: Consolas, monospace;
+	font-family: Consolas, Roboto, monospace;
 }

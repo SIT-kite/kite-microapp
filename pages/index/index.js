@@ -1,6 +1,7 @@
 // 主页
 // pages/index/index.js
 
+import { isNonEmptyString } from "../../utils/type";
 import onShareAppMessage from "../../utils/onShareAppMessage";
 import getHeader from "../../utils/getHeader";
 
@@ -24,7 +25,7 @@ Page({
       text: "商城",
       url: "/shop/pages/index/index",
       iconPath: "/assets/icons/index/shop.png"
-    }, 
+    },
     {
       text: "活动",
       url: "/activity/pages/index/index",
@@ -105,14 +106,23 @@ Page({
     const notice = this.data.notice.find(
       item => item.id === e.target.dataset.id
     );
-    notice !== undefined &&
-    notice.title.length > 20 &&
-    wx.showModal({
-      title: "通知详情",
-      content: notice.title,
-      confirmText: "关闭",
-      showCancel: false
-    });
+    if (notice !== undefined) {
+      if (notice.title.length > 20) {
+        wx.showModal({ // 长通知
+          title: "通知",
+          content: notice.title,
+          confirmText: "关闭",
+          showCancel: false
+        });
+      } else if (isNonEmptyString(notice.content)) {
+        wx.showModal({ // 含内容通知
+          title: notice.title,
+          content: notice.content,
+          confirmText: "关闭",
+          showCancel: false
+        });
+      }
+    }
   },
 
   router(e) {

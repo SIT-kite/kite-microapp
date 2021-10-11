@@ -1,7 +1,6 @@
 <!-- pages/about/about.wxml -->
 
-<navBar background="white" back="{{true}}" home="{{true}}"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<template name="copy"><text bindtap="copy" data-text="{{text}}">{{text}}</text></template>
 
 <background />
 
@@ -9,21 +8,36 @@
 
 	<view class="title">关于上应小风筝</view>
 
-	<view class="center oblique">上应小风筝，这里的校园很棒！</view>
+	<view class="subtitle">上应小风筝，这里的校园很棒！</view>
 
-	<view class="contact">
+	<view class="section">
 		<view class="title">联系我们</view>
-		<view class="hint">点击群号即可复制</view>
-		<view>1. 小程序反馈群：<text bindtap="copy" data-text="943110696">943110696</text></view>
-		<view>2. 2021级易班新生群：<text bindtap="copy" data-text="147239936">147239936</text></view>
-		<view>3. 奉贤校区大学生活动中心309室</view>
+		<view class="hint center">点击群号即可复制</view>
+		<view class="content ol">
+			<view class="li">小程序反馈群：<template     is="copy" data="{{text: '943110696'}}" /></view>
+			<view class="li">2021级易班新生群：<template is="copy" data="{{text: '147239936'}}" /></view>
+			<view class="li">奉贤校区大学生活动中心309室</view>
+		</view>
 	</view>
 
+	<!-- 关于我们 参与贡献 -->
 	<rich-text class="content" nodes="{{html}}" />
 
-	<view class="source">
+	<view class="section">
+		<view class="title">贡献者</view>
+		<view class="content contributors ul">
+			<view class="contributor li" wx:for="{{contributors}}" wx:key="*this">{{item}}</view>
+		</view>
+	</view>
+
+	<view class="section">
 		<view class="title">开源代码</view>
-		<view class="repo-link">https://github.com/SIT-Yiban/kite-microapp</view>
+		<view class="content repo-links ul">
+			<view class="repo-link li">https://github.com/SIT-Yiban/kite-microapp</view>
+			<text style="font-weight: 500;">镜像：</text>
+			<view class="repo-link li">https://hub.fastgit.org/SIT-Yiban/kite-microapp</view>
+			<view class="repo-link li">https://github.com.cnpmjs.org/SIT-Yiban/kite-microapp</view>
+		</view>
 	</view>
 
 </view>

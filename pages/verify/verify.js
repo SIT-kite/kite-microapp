@@ -1,44 +1,43 @@
 // 实名认证
 // pages/verify/verify.js
 
-import getHeader from "../../utils/getHeader";
-import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
+// import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
 import onShareAppMessage from "../../utils/onShareAppMessage";
-import request from "../../utils/request";
+import request   from "../../utils/request";
+import getHeader from "../../utils/getHeader";
+import { check } from "../../utils/type";
 
 const app = getApp();
 const gData = app.globalData;
 
-const getCanVerify = identity => Boolean(
-  identity.studentId && identity.oaSecret
-);
-
 Page({
 
   data: {
+    showHint: false,
     canVerify: false,
-    identity: {
-      studentId: "",
-      oaSecret: "",
-    }
+    identity: { studentId: "", oaSecret: "" }
   },
 
-  handlerGohomeClick,
-  handlerGobackClick,
+  // handlerGohomeClick,
+  // handlerGobackClick,
   onShareAppMessage,
 
-  bindId(e) {
+  setCenVerify() {
     this.setData({
-      "identity.studentId": e.detail.value,
-      canVerify: getCanVerify(this.data.identity)
+      canVerify: [ "studentId", "oaSecret" ].every(
+        prop => this.data.identity[prop] !== ""
+      )
     })
+  },
+
+  bindId(e) {
+    this.setData({ "identity.studentId": e.detail.value });
+    this.setCenVerify();
   },
 
   bindSecret(e) {
-    this.setData({
-      "identity.oaSecret": e.detail.value,
-      canVerify: getCanVerify(this.data.identity)
-    })
+    this.setData({ "identity.oaSecret": e.detail.value });
+    this.setCenVerify();
   },
 
   verify() {
@@ -94,16 +93,23 @@ Page({
 
   },
 
+  toggleHint() {
+    const showHint = !this.data.showHint;
+    this.setData({ showHint });
+    showHint && ( // 如果是在展开而不是收起提示
+        () => setTimeout( // 那么展开动画结束后，将页面滚动至提示最下方
+          () => wx.pageScrollTo({ selector: ".hint-last", duration: 100 }), 201
+        )
+      )
+  },
+
   onLoad() {
 
     const identity = gData.identity;
 
-    typeof identity === "object" &&
-    "studentId" in identity &&
-    "oaSecret" in identity &&
-    this.setData({
-      identity, canVerify: getCanVerify(identity)
-    });
+    check(identity, "Object", { has: [ "studentId", "oaSecret" ] }) &&
+    this.setData({ identity });
+    this.setCenVerify();
 
   },
 

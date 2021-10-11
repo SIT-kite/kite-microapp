@@ -28,7 +28,8 @@
 		"pages/user/user",
 		"pages/verify/verify",
 		"pages/about/about",
-		"pages/debug/debug"
+		"pages/debug/debug",
+		"pages/article/article"
 	],
 	"subpackages": [
 		{
@@ -94,7 +95,7 @@
 			"pages": [
 				"pages/index/index",
 				"pages/details/details",
-				"pages/derivate/derivate" 
+				"pages/derivate/derivate"
 			]
 		},
 		{

@@ -1,0 +1,2 @@
+<!-- pages/article/article.wxml -->
+<web-view src="{{articleUrl}}" binderror="error" />

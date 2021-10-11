@@ -24,18 +24,7 @@ page {
 
 .card {
 	background-color: white;
-	transition:
-		var(--transition-shadow),
-		var(--transition-opacity);
-  box-shadow: var(--shadow);
-	opacity: 98%;
 }
-
-.card:hover {
-	box-shadow: var(--shadow-hover);
-	opacity: 100%;
-}
-
 
 .title {
 	font-weight: 500;

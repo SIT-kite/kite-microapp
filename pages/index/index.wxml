@@ -6,7 +6,14 @@
 
 	<!-- banner -->
 	<swiper class="card banner" indicator-dots="true" autoplay="true"
-	interval="7500" duration="500" easing-function="east-out" circular="true">
+	interval="7500" duration="500" easing-function="ease-out" circular="true">
+		<swiper-item>
+				<navigator
+					url="../article/article?url=https://mp.weixin.qq.com/s/-8EokbVdYlmfGSBPV2DSEg"
+					style="display: contents;">
+					<image class="banner-image" src="/assets/pic/article.png" />
+				</navigator>
+		</swiper-item>
 		<swiper-item>
 			<image class="banner-image" src="/assets/pic/temp_activity.png" bindtap="goTemp" />
 		</swiper-item>
@@ -18,19 +25,18 @@
 	<!-- 滚动通知 -->
 	<view class="card notice">
 		<image src="/assets/icons/index/notice.png" />
-		<swiper autoplay="true"
-			interval="7500" duration="500" circular="true" vertical="true">
-			<swiper-item wx:for="{{notice}}" wx:key="id" data-id="{{item.id}}"
+		<swiper autoplay="true" interval="7500" duration="500" circular="true" vertical="true">
+			<swiper-item wx:for="{{notices}}" wx:key="id" data-id="{{item.id}}"
 			bindtap="showNotice">{{item.title}}</swiper-item>
 		</swiper>
 	</view>
 
 	<!-- 功能索引 -->
 	<view class="card menu">
-		<view class="menu-cell" wx:for="{{items}}" wx:key="url"
-			data-index="{{index}}" data-url="{{item.url}}" bindtap="router">
+		<view class="menu-cell" wx:for="{{items}}" wx:key="url" bindtap="router"
+			data-index="{{index}}" data-url="{{item.url}}">
 			<image class="{{ index === clicked ? 'living' : '' }}"
-				src="{{item.iconPath}}" mode="aspectFit" />
+				src="{{item.iconPath}}" mode="heightFix" />
 			{{item.text}}
 		</view>
 	</view>
