@@ -35,15 +35,12 @@ Page({
         console.error("班级同学获取失败", err);
         wx.showModal({
           title: "哎呀，出错误了 >.<",
-          content: (
+          content: `错误信息：${
             err.symbol === request.symbols.codeNotZero &&
-            isNonEmptyString(err.res.data.msg)
-            ? `错误信息：${err.res.data.msg}`
-            : typeof err.res.errMsg === "string" &&
-              err.res.errMsg.startsWith("request:fail")
-              ? "网络不在状态"
-              : "发生未知错误"
-          ),
+            isNonEmptyString(err.data.msg)
+            ? err.data.msg
+            : err.msg
+          }`,
           showCancel: false
         });
       }

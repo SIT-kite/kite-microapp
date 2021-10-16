@@ -8,7 +8,7 @@ const contentTypeMap = new Map([
 ]);
 
 // getHeader(headerType: ["urlencoded", "json"], token?: String): header: Object
-export default (headerType, token) => {
+export default (headerType = "urlencoded", token) => {
 
   if ( !isString(headerType) ) {
     throw "headerType is not a String";
@@ -16,7 +16,7 @@ export default (headerType, token) => {
 
   const contentType = contentTypeMap.get(headerType);
 
-  if ( contentType === undefined ) {
+  if (contentType === undefined) {
     throw "headerType not found in contentTypeMap";
   }
 

@@ -21,14 +21,15 @@ const electricityAPI = ({api = "", roomId, callback}) => request({
   err => {
     console.error(err);
     wx.showModal({
-      content:
-        err.symbol === request.symbols.codeNotZero
-        ? isNonEmptyString(err.res.data.msg)
-          ? err.res.data.msg
-          : err.res.data.code === 200
-            ? "房间不存在"
-            : "发生未知错误"
-        : "网络错误",
+      title: "发生错误",
+      content: `错误信息：${
+        err.symbol === request.symbols.codeNotZero &&
+        isNonEmptyString(err.data.msg)
+        ? err.data.msg
+        : err.data.code === 200
+        ? "房间不存在"
+        : err.msg
+      }`,
       showCancel: false
     })
   }
