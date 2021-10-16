@@ -3,10 +3,12 @@ export default async ({ title, mask, callback }) => {
 
 	wx.showLoading({ title, mask });
 
-	// 不加括号会变成：
+	// 这里不加括号会变成：
 	// (await typeof callback === "function") ? callback() : callback;
-	await (typeof callback === "function" ? callback() : callback);
+	const result = await (typeof callback === "function" ? callback() : callback);
 
-	wx.hideLoading();
+  wx.hideLoading();
+
+  return result;
 
 };

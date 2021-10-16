@@ -1,6 +1,6 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}"
 bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
-<view wx:if="{{show}}">
+<view wx:if="{{userDetail !== null}}">
 
 	<!-- 头像 问候语 -->
 	<view bindtap="bindViewTap" class="header">

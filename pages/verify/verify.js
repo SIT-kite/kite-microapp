@@ -80,11 +80,12 @@ Page({
       ).catch(
         err => wx.showModal({
           title: "哎呀，出错误了 >.<",
-          content:
+          content: `错误信息：${
             err.symbol === request.symbols.codeNotZero &&
-            typeof err.res.data.msg === "string"
-            ? err.res.data.msg
-            : "业务逻辑出错",
+            typeof err.data.msg === "string"
+            ? err.data.msg
+            : err.msg
+          }`,
           showCancel: false
         })
       );

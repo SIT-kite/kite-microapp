@@ -1,27 +1,29 @@
 <!-- timetable/components/daily/daily.wxml -->
 <view class="daily">
-    <view class="todo"></view>
-    <scroll-view scroll-y="{{true}}" scroll-with-animation="true" class="course" show-scrollbar="{{false}}" wx:if="{{list}}" enhanced="{{ true }}">
-        <view class="list" wx:for="{{list}}" wx:for-index="list_course" wx:for-item="list_content" wx:key="index">
-            <view class="table">
-                <view class="td">
-                    <view class="icon_course">
-                        <!-- icon地址 https://www.iconfont.cn/collections/detail?cid=8530 -->
-                        <image src="../../assets/icons/course/{{list_content.discipline}}.png" class="icon_1" />
-                    </view>
-                    <view class="text">
-                        <view class="course_name">{{list_content.courseName}}</view>
-                        <view class="course_teacher">{{list_content.teacher}}</view>
-                        <view class="course_time">
-                        {{list_content.tables[0]}}~{{list_content.tables[1]}} · {{list_content.place}}
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-        <view wx:if= "{{list==0}}" class="loading-free">
-        <image src="../../assets/free.png" class="images"></image>
-        <view class="text">今天休息ヾ(^▽^*)))</view>
-        </view>
-    </scroll-view>
+	<view class="todo"></view>
+	<scroll-view wx:if="{{list}}" class="course" scroll-y="{{true}}"
+	scroll-with-animation="true" show-scrollbar="{{false}}" enhanced="{{true}}">
+		<view class="list" wx:for="{{list}}" wx:for-index="list_course" wx:for-item="list_content" wx:key="index"
+			data-data="{{list_content}}" bindtap="getdata">
+			<view class="table">
+				<view class="td">
+					<view class="icon_course">
+						<!-- icon地址 https://www.iconfont.cn/collections/detail?cid=8530 -->
+						<image src="../../assets/icons/course/{{list_content.discipline}}.png" class="icon_1" />
+					</view>
+					<view class="text">
+						<view class="course_name">{{list_content.courseName}}</view>
+						<view class="course_teacher">{{list_content.teacher}}</view>
+						<view class="course_time">
+							{{list_content.tables[0]}}~{{list_content.tables[1]}} · {{list_content.place}}
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view wx:if="{{list==0}}" class="loading-free">
+			<image src="../../assets/free.png" class="images"></image>
+			<view class="text">今天休息ヾ(^▽^*)))</view>
+		</view>
+	</scroll-view>
 </view>
