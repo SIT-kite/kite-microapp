@@ -9,12 +9,24 @@ import request from "../../../utils/request";
 const app = getApp();
 const availableSuffix = "/contact";
 
+const departmentMap = new Map([
+  [ "资产与实验室管理处", "资产处" ],
+  [ "信息化技术中心",     "信息办" ],
+  [ "国际交流处",         "国交处" ],
+  [ "学生工作部",         "学工部" ],
+  [ "科学技术研究院",     "科研院" ],
+  [ "安全保卫处",         "保卫处" ],
+  [ "后勤保障与服务中心", "后保处" ],
+  [ "校长办公室",         "校办"   ],
+  [ "党委办公室",         "党委"   ]
+]);
+
 let dataChange = []
 let department = []
 let contact_data = []
 let date = 0
 let newdate = 0
-let chooseddata = "研究生院"
+let choosedData = "研究生院"
 let departmentChange = []
 let isHidden = true;
 let click = 1;
@@ -22,93 +34,73 @@ let click = 1;
 Page({
 
   data: {
-    department, contact_data, date, newdate, chooseddata, departmentChange, isHidden, dataChange, click
+    department,
+    contact_data,
+    date,
+    newdate,
+    choosedData, departmentChange, isHidden, dataChange, click
   },
 
   handlerGohomeClick,
   handlerGobackClick,
 
-  setdata() {
-    let _this = this
-    _this.setDate();
+  fetchData() {
+    date = Date.now() + 2592000000;
+    wx.setStorageSync("contact_date", date);
+    this.setData({ date });
     request({
-      url: `${app.globalData.commonUrl}${availableSuffix}`,
+      url: `${app.globalData.apiUrl}${availableSuffix}`,
       header: getHeader("urlencoded", app.globalData.token)
-    }).then((res) => {
+    }).then(res => {
       const data = res.data.data.contacts;
-      _this.classification(data);
-      _this.setData({
-        data: data,
-        contact_data: data
-      })
-      wx.setStorage({
-        key: 'contact_data',
-        data: data
-      })
+      this.classification(data);
+      this.setData({ data, contact_data: data })
+      wx.setStorageSync("contact_data", data);
     })
-  },
-  setDate() {
-    let _this = this
-    let date = _this.data.date
-    date = Date.parse(new Date());
-    date = date + 2592000000;
-    wx.setStorageSync('contact_date', date);
-    _this.setData({ date })
   },
 
-  classification(frag_data) {
-    let dataChange = []
-    let departmentChange = this.data.departmentChange
-    frag_data = frag_data.map(el => {
-      switch (el.department) {
-        case "资产与实验室管理处": el.department = "资产处"; break;
-        case "信息化技术中心":     el.department = "信息办"; break;
-        // case "国际交流处":         el.department = "国交处"; break;
-        case "学生工作部":         el.department = "学工部"; break;
-        case "科学技术研究院":     el.department = "科研院"; break;
-        case "安全保卫处":         el.department = "保卫处"; break;
-        case "后勤保障与服务中心": el.department = "后保处"; break;
-        case "校长办公室":         el.department = "校办"; break;
-        case "党委办公室":         el.department = "党委"; break;
-      }
-      return el;
-    })
-    for (let i = 0; i < frag_data.length; i++) {
-      if (departmentChange.indexOf(frag_data[i].department) === -1) {
-        frag_data[i].isShow = true
-        dataChange.push({
-          department: frag_data[i].department,
-          origin: [frag_data[i]]
-        })
-        departmentChange.push(frag_data[i].department)
+  // 设置 dataChange 和 departmentChange
+  classification(contacts) {
+    const dataChange = [];
+    const departmentChange = this.data.departmentChange;
+
+    contacts.forEach(contact => {
+
+      // 如果 departmentMap 中有对应的缩写，就将部门名称转为缩写
+      const shortDpmt = departmentMap.get(contact.department);
+      if (shortDpmt !== undefined) contact.department = shortDpmt;
+
+      const department = contact.department;
+
+      // TODO：修改整体逻辑，简化下面的代码
+      if (departmentChange.includes(department)) {
+        dataChange.forEach(
+          el =>
+            el.department === department &&
+            el.origin.push(contact)
+        );
       } else {
-        for (let j = 0; j < dataChange.length; j++) {
-          frag_data[i].isShow = true;
-          if (dataChange[j].department === frag_data[i].department) {
-            dataChange[j].origin.push(frag_data[i]);
-          }
-        }
+        dataChange.push({ department, origin: [contact] });
+        departmentChange.push(contact.department);
       }
-    }
 
-    this.setData({
-      dataChange,
-      departmentChange
+      contact.isShow = true;
+
     })
+
+    this.setData({ dataChange, departmentChange })
   },
 
   onLoad() {
-    let {contact_data, date, newdate} = this.data;
-    newdate = Date.parse(new Date());
-    date = wx.getStorageSync('contact_date');
+
+    let newdate = Date.parse(new Date());
+    let date = wx.getStorageSync('contact_date');
     this.setData({ newdate, date });
-    contact_data = wx.getStorageSync('contact_data')
-    this.setData({
-      data: contact_data,
-      contact_data
-    })
+
+    let data = wx.getStorageSync('contact_data')
+    this.setData({ data, contact_data: data })
     if (contact_data.length === 0 || date < newdate) {
-      this.setdata();
+      this.fetchData();
       this.setData({ newdate, date });
     } else { this.classification(contact_data); }
   },
@@ -135,25 +127,28 @@ Page({
 
   call(e) {
     let phone = e.currentTarget.dataset.phone;
-    phone.substring(0, 1) == 0 ? '' : phone = '021' + phone
-    if (phone == '') {
+    if (phone === "") {
       app.msg("电话号码为空，无法拨打");
     } else {
+      if (!phone.startsWith("0")) { phone = "021" + phone; }
       wx.makePhoneCall({ phoneNumber: phone });
     }
   },
 
   copy(e) {
-    let phone = e.currentTarget.dataset.phone
-    phone.substring(0, 1) == 0 ? '' : phone = '021' + phone
-    wx.setClipboardData({ data: phone })
+    let phone = e.currentTarget.dataset.phone;
+    if (phone === "") {
+      app.msg("电话号码为空，无法复制");
+    } else {
+      if (!phone.startsWith("0")) { phone = "021" + phone; }
+      wx.setClipboardData({ data: phone });
+    }
   },
 
   tapdata(e) {
-    let _this = this
     const department = e.currentTarget.dataset.department
-    const index = _this.data.departmentChange.indexOf(department)
-    _this.setData({ chooseddata: department, toView: 'index' + index })
+    const index = this.data.departmentChange.indexOf(department)
+    this.setData({ choosedData: department, toView: 'index' + index })
   },
 
   search(e) {

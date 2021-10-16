@@ -52,7 +52,7 @@ Page({
       : (time = _this.data.choosed_time);
     console.log(time);
     time = time * 60;
-    let url = `${app.globalData.commonUrl}${urlSuffix}?year=${year}&semester=${semester}&alarm=${time}`;
+    let url = `${app.globalData.apiUrl}${urlSuffix}?year=${year}&semester=${semester}&alarm=${time}`;
     let seturl = requestUtils.doGET(url, data, header);
     seturl.then((res) => {
       data = res.data.data.url;

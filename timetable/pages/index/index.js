@@ -8,9 +8,9 @@ const transformationsUtils = require("../../../utils/transformationsUtils");
 
 const app = getApp();
 
-const urlCalendar  = `${app.globalData.commonUrl}/edu/calendar`;
-const urlSchedule  = `${app.globalData.commonUrl}/edu/schedule`;
-const urlTimetable = `${app.globalData.commonUrl}/edu/timetable`;
+const urlCalendar  = `${app.globalData.apiUrl}/edu/calendar`;
+const urlSchedule  = `${app.globalData.apiUrl}/edu/schedule`;
+const urlTimetable = `${app.globalData.apiUrl}/edu/timetable`;
 
 const header = getHeader("urlencoded", app.globalData.token);
 

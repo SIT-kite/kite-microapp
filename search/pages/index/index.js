@@ -52,7 +52,7 @@ Page({
         title: "正在搜索…",
 
         callback: async () => await request({
-          url: `${app.globalData.commonUrl}${searchSuffix}${content}`,
+          url: `${app.globalData.apiUrl}${searchSuffix}${content}`,
           header: getHeader("urlencoded", app.globalData.token)
         }).then((res) => {
 
