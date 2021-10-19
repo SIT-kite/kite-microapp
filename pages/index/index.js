@@ -51,11 +51,11 @@ Page({
       url: "/score/pages/index/index",
       iconPath: "/assets/icons/index/score.png"
     },
-    {
-      text: "拼车",
-      url: "/carpool/pages/car-pool/car-pool",
-      iconPath: "/assets/icons/index/carpool.png"
-    },
+      // {
+      //   text: "拼车",
+      //   url: "/carpool/pages/car-pool/car-pool",
+      //   iconPath: "/assets/icons/index/carpool.png"
+      // },
       // {
       //   text: "消费",
       //   url: "/consume/pages/index/index",
