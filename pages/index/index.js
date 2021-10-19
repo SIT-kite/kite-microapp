@@ -50,17 +50,22 @@ Page({
       text: "成绩",
       url: "/score/pages/index/index",
       iconPath: "/assets/icons/index/score.png"
-    }
-    /* {
+    },
+    {
       text: "拼车",
       url: "/carpool/pages/car-pool/car-pool",
       iconPath: "/assets/icons/index/carpool.png"
     },
-    {
-      text: "搜索",
-      url: "/search/pages/index/index",
-      iconPath: "/assets/icons/index/search.png"
-    } */
+      // {
+      //   text: "活动",
+      //   url: "/activity/pages/index/index",
+      //   iconPath: "/assets/icons/index/activity.png"
+      // },
+      // {
+      //   text: "消费",
+      //   url: "/consume/pages/index/index",
+      //   iconPath: "/assets/icons/index/consume.png"
+      // },
     ]
 
   },
@@ -87,9 +92,9 @@ Page({
     if (Array.isArray(notices)) {
 
       if (notices.length > 0) {
-        this.setData({notices});
+        this.setData({ notices });
         console.groupCollapsed("%c通知数据", "font-weight: normal");
-        notices.forEach( (item, index) => console.log(`通知 ${index}:`, item) );
+        notices.forEach((item, index) => console.log(`通知 ${index}:`, item));
         console.groupEnd();
       } else {
         noNotice();
@@ -181,7 +186,7 @@ Page({
 
   onShow() {
     this.data.isLogin !== gData.isLogin &&
-    this.setData({ isLogin: gData.isLogin });
+      this.setData({ isLogin: gData.isLogin });
   }
 
 })
