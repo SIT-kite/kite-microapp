@@ -19,7 +19,7 @@ Page({
       iconPath: "/assets/icons/index/freshman.png"
     }, {
       text: "电费",
-      url: "/electricity/pages/show/show",
+      url: "/pages/article/article?url=https://mp.weixin.qq.com/s/W2wqTQqg00jy1jQm73s63Q",
       iconPath: "/assets/icons/index/electricity.png"
     }, /* {
       text: "商城",
@@ -56,11 +56,6 @@ Page({
       url: "/carpool/pages/car-pool/car-pool",
       iconPath: "/assets/icons/index/carpool.png"
     },
-      // {
-      //   text: "活动",
-      //   url: "/activity/pages/index/index",
-      //   iconPath: "/assets/icons/index/activity.png"
-      // },
       // {
       //   text: "消费",
       //   url: "/consume/pages/index/index",
