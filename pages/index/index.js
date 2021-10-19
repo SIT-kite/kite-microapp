@@ -21,7 +21,7 @@ Page({
       iconPath: "/assets/icons/index/freshman.png"
     }, {
       text: "电费",
-      url: "/electricity/pages/show/show",
+      url: "/pages/article/article?url=https://mp.weixin.qq.com/s/W2wqTQqg00jy1jQm73s63Q",
       iconPath: "/assets/icons/index/electricity.png"
     }, /* {
       text: "商城",
@@ -54,11 +54,11 @@ Page({
       url: "/activity/pages/index/index",
       iconPath: "/assets/icons/index/activity.png"
     },
-    // {
-    //   text: "消费",
-    //   url: "/consume/pages/index/index",
-    //   iconPath: "/assets/icons/index/consume.png"
-    // },
+      // {
+      //   text: "消费",
+      //   url: "/consume/pages/index/index",
+      //   iconPath: "/assets/icons/index/consume.png"
+      // },
     ]
 
   },
@@ -66,7 +66,7 @@ Page({
   onShareAppMessage,
 
   // banner 点击事件
-  doNothing() {},
+  doNothing() { },
   goTemp() {
     wx.navigateTo({
       url: "/freshman/pages" + (
@@ -89,7 +89,7 @@ Page({
       if (notices.length > 0) {
         this.setData({ notices });
         console.groupCollapsed("%c通知数据", "font-weight: normal");
-        notices.forEach( notice => console.log(notice) );
+        notices.forEach(notice => console.log(notice));
         console.groupEnd();
       } else {
         noNotice();
@@ -183,7 +183,7 @@ Page({
 
     // 如果页面 isLogin 与全局 isLogin 不一致，则从全局同步到页面
     this.data.isLogin !== gData.isLogin &&
-    this.setData({ isLogin: gData.isLogin });
+      this.setData({ isLogin: gData.isLogin });
 
   }
 
