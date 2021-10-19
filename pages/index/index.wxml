@@ -9,9 +9,9 @@
 	interval="7500" duration="500" easing-function="ease-out" circular="true">
 		<swiper-item>
 				<navigator
-					url="../article/article?url=https://mp.weixin.qq.com/s/-8EokbVdYlmfGSBPV2DSEg"
+					url="../article/article?url=https://mp.weixin.qq.com/s/RuQsCKZtXLvDjenBo7cXQg"
 					style="display: contents;">
-					<image class="banner-image" src="/assets/pic/article.png" />
+					<image class="banner-image" src="/assets/pic/recur.png" />
 				</navigator>
 		</swiper-item>
 		<swiper-item>
