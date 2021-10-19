@@ -54,11 +54,11 @@ Page({
       url: "/activity/pages/index/index",
       iconPath: "/assets/icons/index/activity.png"
     },
-    {
-      text: "消费",
-      url: "/consume/pages/index/index",
-      iconPath: "/assets/icons/index/consume.png"
-    },
+    // {
+    //   text: "消费",
+    //   url: "/consume/pages/index/index",
+    //   iconPath: "/assets/icons/index/consume.png"
+    // },
     ]
 
   },
