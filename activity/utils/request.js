@@ -43,7 +43,12 @@ const constructUrl = (requestPurpose, params) => {
 
 const fetchData =  (url, requestPurpose, callback) => {
   let getData = requestUtils.doGET(url, {}, header);
+  wx.showLoading({
+    title: '加载中2333~',
+    mask: true
+  })
   getData.then(res => {
+    wx.hideLoading();
     let data;
     const [first, second, third, fourth, fifth, sixth] = REQUEST_PURPOSE;
     switch(requestPurpose) {
@@ -70,14 +75,20 @@ const fetchData =  (url, requestPurpose, callback) => {
     }
     callback(data);
   }).catch(err => {
+    wx.hideLoading();
     handleFetchListError(err);
   })
 };
 
 const submitData = (url, requestPurpose, callback) => {
+  wx.showLoading({
+    title: '发送中2333~',
+    mask: true
+  })
   let postData = requestUtils.doPOST(url, {}, header);
 
   postData.then(res => {
+    wx.hideLoading();
     let code;
     const [first, second, third, fourth, fifth, sixth] = REQUEST_PURPOSE;
     switch(requestPurpose) {
@@ -88,13 +99,13 @@ const submitData = (url, requestPurpose, callback) => {
       }
     }
   }).catch(err => {
+    wx.hideLoading();
     handleFetchListError(err);
   })
 
 }
 
 const handleFetchListError =  (err) => {
-
   wx.showModal({
     title: "哎呀，出错误了 >.<",
     content: err.data.msg,

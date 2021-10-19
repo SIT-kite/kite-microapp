@@ -8,9 +8,46 @@ const app = getApp();
 const activityApiPrefix = `${app.globalData.apiUrl}/event`;
 const header = getHeader("urlencoded", app.globalData.token);
 const request = require("../../utils/request");
-const timeUtils = require("../../../utils/timeUtils")
+const timeUtils = require("../../../utils/timeUtils");
 
+const CATEGORY = ['主题报告', '社会实践', '创新创业创意', '校园安全文明', '公益志愿', '校园文化', '主题教育', '易班 、社区', '安全网络教育', '论文专利', '会议']
 
+const SCORE_MAX = [{campusCulture: 2.0,
+  charity: 0.0,
+  creativity: 1.5,
+  safetyCivilization: 1.0,
+  socialPractice: 2.0,
+  themeReport: 1.5,},{campusCulture: 1.0,
+    charity: 1.0,
+    creativity: 1.5,
+    safetyCivilization: 1.0,
+    socialPractice: 2.0,
+    themeReport: 1.5,}]
+
+const INDICATOR = [[
+  { name: '主题报告', max: 1.5},
+  { name: '社会实践', max: 2.0},
+  { name: '校园文化', max: 2.0},
+  { name: '三创', max: 1.5},
+  { name: '公益志愿', max: 0.0},
+  { name: '安全文明', max: 1.0}
+],[
+  { name: '主题报告', max: 1.5},
+  { name: '社会实践', max: 2.0},
+  { name: '校园文化', max: 1.0},
+  { name: '三创', max: 1.5},
+  { name: '公益志愿', max: 1.0},
+  { name: '安全文明', max: 1.0}
+]]
+
+const SUMMARY_ARRAY_INDEX = {
+  themeReport: 0,
+  socialPractice: 1,
+  campusCulture: 2,
+  creativity: 3,
+  charity: 4,
+  safetyCivilization: 5,
+}
 
 const SWITCH_LIST = {
   ZERO: 0,
@@ -31,6 +68,7 @@ Page({
     itemList: [],
     mineTotalList: [],
     mineScoreList: [],
+    CATEGORY,
     pageIndex: 1,
     showNotice: false,
     notice: "已经到底部了哦",
@@ -41,21 +79,21 @@ Page({
         top: 5,
       },
       radar: {
-        radius: "65%",
+        radius: "70%",
         indicator: [
             { name: '主题报告', max: 1.5},
-            { name: '社会实践', max: 2},
-            { name: '校园文化', max: 1},
+            { name: '社会实践', max: 2.0},
+            { name: '校园文化', max: 1.0},
             { name: '三创', max: 1.5},
-            { name: '公益志愿', max: 1},
-            { name: '安全文明', max: 1}
+            { name: '公益志愿', max: 1.0},
+            { name: '安全文明', max: 1.0}
         ],
       },
       series: [{
           type: 'radar',
           data: [
               {
-                  value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+                  value: [0, 0, 0, 0, 0, 0],
                   name: '现有分数',
                   label: {
                     show: true,
@@ -107,7 +145,9 @@ Page({
       item.startTime = item.startTime.replace(/-/g, "/")
       item.signEndTime = item.signEndTime.replace(/-/g, "/")
       item.src =  `../../assets/pic/category/${item.category}.png`
-      if(new Date(item.startTime.replace(/T/g, " ")).getDate() === new Date(). getDate()) {
+      let startTime = new Date(item.startTime.replace(/T/g, " "))
+      let nowDate = new Date()
+      if(startTime.getFullYear() === nowDate.getFullYear() && startTime.getMonth() === nowDate.getMonth() && startTime.getDate() === nowDate.getDate()) {
         item.timeInterval = "今天";
         if (new Date().getTime() > new Date(item.signEndTime.replace(/T/g, " "))) {
           item.state = '已结束';
@@ -139,15 +179,12 @@ Page({
   // 点击活动跳转到详情
   toItemDetails(e) {
     let eventId = this.data.itemList[e.currentTarget.dataset.index].activityId;
-    console.log(eventId)
     wx.navigateTo({
       url: `/activity/pages/detail/detail?eventId=${eventId}`,
     })
   },
 
   switch(e) {
-    // console.log(e.detail.current)
-
     // 滑动时，e.currentTarget.dataset.selected没有定义
     if (e.currentTarget.dataset.selected === undefined) {
       if (this.data.logined) {
@@ -171,11 +208,9 @@ Page({
     } else {
       this.setData({selected: e.currentTarget.dataset.selected})
     }
-    this.data.selected === SWITCH_LIST.TWO && this.data.mineScoreList.length === 0
+    this.data.selected === SWITCH_LIST.ONE && this.data.mineScoreList.length === 0
       ? (() => {
-        console.log("yes")
-        this.referSummary();
-        this.getScoreList(wx.getStorageSync('isActivityMinePageLatest'));
+        this.getScoreList(wx.getStorageSync(true));
       })()
       : () => {}
   },
@@ -191,7 +226,7 @@ Page({
 
     let isGetNew = typeof isLatest !== "boolean"
       ? true
-      : !isLatest
+      : isLatest
     let url = activityApiPrefix + '/sc/score?force=' + isGetNew
     let getData = requestUtils.doGET(url, {}, header)
 
@@ -221,7 +256,10 @@ Page({
       this.setData({mineTotalList: this.data.mineTotalList.concat(mineScoreList)})
       wx.setStorageSync('isActivityMinePageLatest', isGetNew)
 
+      this.referSummary()
+
     }).catch(err => {
+      wx.hideLoading()
       wx.showModal({
         title: "哎呀，出错误了 >.<",
         content:
@@ -244,30 +282,43 @@ Page({
 
   referSummary() {
     request.fetchData(request.constructUrl("SCORE_SUMMARY", {}), "SCORE_SUMMARY", res => {
+      let summary = res
+      let index_SCORE_MAX = parseInt(app.globalData.identity.studentId.slice(0,2)) - 18 <= 0
+        ? 0
+        : 1
+      for(let item in summary) {
+        if (item === 'total') continue;
+        summary[item]= summary[item].toFixed(2)
+        console.log(SCORE_MAX[index_SCORE_MAX][item])
+        if(summary[item] > SCORE_MAX[index_SCORE_MAX][item]) {
+          summary[item] = SCORE_MAX[index_SCORE_MAX][item]
+        }
+      }
       this.setData({
-        'option.series[0].data[0].value':[res.themeReport, res.socialPractice, res.campusCulture, res.creativity, res.charity, res.safetyCivilization]
+        'option.rader.indicator': INDICATOR[index_SCORE_MAX],
+        'option.series[0].data[0].value':[summary.themeReport, summary.socialPractice, summary.campusCulture, summary.creativity, summary.charity, summary.safetyCivilization]
       })
-      console.log(res)
     })
   },
 
   // "我的" 下拉刷新
   refresh() {
-    console.log("!")
-    setTimeout(() => this.setData({refresherTriggered: false}), 2000)
-    let date = new Date().getDate()
-    console.log(date)
+    // this.setData({refresherTriggered: false})
+    setTimeout(() => this.setData({refresherTriggered: false}), 1000)
+    // let date = new Date().getDate()
+    // console.log(date)
     // app.globalData.verified = false
     // app.globalData.identity = {}
     // wx.setStorageSync('identity', data)
     // wx.setStorageSync('verified', data)
-    wx.showModal({
-      showCancel: false,
-      content: 'OA密码可能发生更改',
-      complete: () => {
-        this.jumpToVerify()
-      }
-    })
+    // wx.showModal({
+    //   showCancel: false,
+    //   content: 'OA密码可能发生更改',
+    //   complete: () => {
+    //     this.jumpToVerify()
+    //   }
+    // })
+    this.getScoreList(true)
   },
 
   setPageData(pageData, data) {

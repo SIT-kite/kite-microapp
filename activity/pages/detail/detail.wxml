@@ -16,10 +16,10 @@
         <!-- <view class="lump_title" ></view> -->
         <view class="text_title" id="title">{{detail.title}}</view>
       </view>
-      
+
 
       <view class="container_header_content_bottom">
-      
+
 
         <view class="container_position">
           <image class="icon_position" src="../../assets/icons/position.svg"></image>
@@ -28,12 +28,12 @@
 
         <view class="container_time">
           <image class="icon_time" src="../../assets/icons/time1.svg"></image>
-          <view class="text_time">时间: {{detail.startTime + ' ' + detail.duration + '分钟' }}</view>
+          <view class="text_time">时间: {{detail.startTime + ' ' + detail.duration }}</view>
         </view>
 
         <view class="container_category">
           <image class="icon_category" src="../../assets/icons/square_black.svg"></image>
-          <view class="text_max_people">类别: {{CATEGORY[detail.category]}}</view>
+          <view class="text_max_people">类别: {{CATEGORY[detail.category - 1]}}</view>
         </view>
 
         <view class="container_activity_id">
@@ -104,8 +104,8 @@
 
   <view class="placeholder"></view>
 
-  <view class="container_fixed_bar">
-    <view class="btn_join"><image class="icon_join" src="../../assets/icons/join.svg"></image></view>
-  </view>
+  <!-- <view class="container_fixed_bar">
+    <view class="btn_join" bindtap="join"><image class="icon_join" src="../../assets/icons/join.svg"></image></view>
+  </view> -->
 
 </view>

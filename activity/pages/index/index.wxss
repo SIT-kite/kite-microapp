@@ -54,7 +54,7 @@ swiper-item {
 .activity_item {
   display: flex;
   flex-direction: column;
-  margin: 40rpx;
+  margin: 20rpx 30rpx 20rpx 30rpx;
   border-radius: 10rpx;
   background-color: #fff;
   box-shadow: 0rpx 0rpx 100rpx 5rpx #d9d9d9;
@@ -128,10 +128,6 @@ swiper-item {
   color: #6fa8dc;
 }
 
-.blank_space {
-  height: 200rpx;
-}
-
 .container_attention {
   border-radius: 20rpx;
   margin-top: 200rpx;
@@ -165,7 +161,6 @@ swiper-item {
   color: #3d85c6;
   background-color:rgba(217, 217, 217, 0.5)
 }
-
 
 /* .btn_verify {
   border-radius: 15rpx;

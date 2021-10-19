@@ -6,11 +6,11 @@
   margin: 20rpx;
   border-radius: 10rpx;
   background-color: rgba(202, 225, 255, 0.5);
-  box-shadow: 0px 10px 20px 0px rgba(67, 67, 67, 0.15);
-  border:0.5px solid rgba(202, 225, 255, 0.5);
+  box-shadow: 0px 3px 5px 0px rgba(67, 67, 67, 0.1);
+  border:0.5px solid rgba(217,217,217, 0.8);
 }
 
-.container_header {
+.container_left {
   display: flex;
   flex-direction: column;
   margin: 20rpx;
@@ -44,6 +44,12 @@
 }
 
 .text_id {
+	margin-right: 15rpx;
+}
+
+.container_left_center {
+	display: flex;
+	flex-direction: row;
   padding-left: 10rpx;
   font-size: small;
   color: rgba(0, 0, 0, 0.6);
@@ -56,8 +62,8 @@
 }
 
 .text_detail {
-  color: #6aa84f;
-  align-self: center;
-  margin-right: 60rpx;
-  font-size: 50rpx;
-}
+	color: #6aa84f;
+	align-self: center;
+	margin-right: 60rpx;
+	font-size: 50rpx;
+  }

@@ -1,18 +1,16 @@
 <!--activity/components/card.wxml-->
-<view class="card">
+<view class="card" bindtap="onTap">
 
-  <view class="container_header">
-
+  <view class="container_left">
     <view class="container_title">
       <view class="text_title"><text class="text_condition">{{condition}}</text>{{title}}</view>
     </view>
-
-    <text class="text_id">{{item_id}}</text>
+				<view class="container_left_center">
+					<text class="text_id">{{item_id}} </text>
+					<text class="text_category">{{category}}</text>
+				</view>
     <text class="text_date">{{date}}</text>
-
   </view>
-
-
-  <text class="text_detail">{{detail}}</text>
+		<text class="text_detail">{{detail}}</text>
 
 </view>
