@@ -49,11 +49,11 @@ Page({
       url: "/score/pages/index/index",
       iconPath: "/assets/icons/index/score.png"
     },
-      // {
-      //   text: "活动",
-      //   url: "/activity/pages/index/index",
-      //   iconPath: "/assets/icons/index/activity.png"
-      // },
+      {
+        text: "活动",
+        url: "/activity/pages/index/index",
+        iconPath: "/assets/icons/index/activity.png"
+      },
       // {
       //   text: "消费",
       //   url: "/consume/pages/index/index",

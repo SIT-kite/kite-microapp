@@ -210,7 +210,7 @@ Page({
     }
     this.data.selected === SWITCH_LIST.ONE && this.data.mineScoreList.length === 0
       ? (() => {
-        this.getScoreList(wx.getStorageSync(true));
+        this.getScoreList(!wx.getStorageSync('isActivityMinePageLatest'));
       })()
       : () => {}
   },
@@ -289,14 +289,15 @@ Page({
       for(let item in summary) {
         if (item === 'total') continue;
         summary[item]= summary[item].toFixed(2)
-        console.log(SCORE_MAX[index_SCORE_MAX][item])
         if(summary[item] > SCORE_MAX[index_SCORE_MAX][item]) {
           summary[item] = SCORE_MAX[index_SCORE_MAX][item]
         }
       }
+      console.log(INDICATOR[index_SCORE_MAX])
       this.setData({
-        'option.rader.indicator': INDICATOR[index_SCORE_MAX],
-        'option.series[0].data[0].value':[summary.themeReport, summary.socialPractice, summary.campusCulture, summary.creativity, summary.charity, summary.safetyCivilization]
+        'option.radar.indicator': INDICATOR[index_SCORE_MAX],
+        'option.series[0].data[0].value':[summary.themeReport, summary.socialPractice, summary.campusCulture, summary.creativity, summary.charity, summary.safetyCivilization],
+        'option.series[0].data[1].value':[INDICATOR[index_SCORE_MAX][0].max, INDICATOR[index_SCORE_MAX][1].max, INDICATOR[index_SCORE_MAX][2].max, INDICATOR[index_SCORE_MAX][3].max, INDICATOR[index_SCORE_MAX][4].max, INDICATOR[index_SCORE_MAX][5].max]
       })
     })
   },

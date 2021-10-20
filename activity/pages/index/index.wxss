@@ -101,7 +101,7 @@ swiper-item {
   margin-bottom: 10rpx;
 }
 
-.block_state {
+.activity_item_footer_left {
   color: rgb(122, 122, 122);
   text-align: center;
   height: 100%;
@@ -123,7 +123,7 @@ swiper-item {
 }
 
 .notice {
-  height: 100rpx;
+  height: 300rpx;
   text-align: center;
   color: #6fa8dc;
 }

@@ -7,7 +7,7 @@
 			<view class="navigator_school {{selected == '0'? 'navigator_selected': ''}}" bindtap="switch" data-selected="0">第二课堂</view>
 			<!-- <view class="navigator__individual {{selected == 'individual'? 'navigator_selected': ''}}">广场</view> -->
 			<!-- <view class="navigator_subscribe {{selected == '1'? 'navigator_selected': ''}}" bindtap="switch" data-selected="1">订阅</view> -->
-			<view class="navigator_mine {{selected == '2'? 'navigator_selected': ''}}" bindtap="switch" data-selected="1">我的</view>
+			<view class="navigator_mine {{selected == '1'? 'navigator_selected': ''}}" bindtap="switch" data-selected="1">我的</view>
 		</view>
 	</view>
 
