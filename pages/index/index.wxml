@@ -26,19 +26,20 @@
 	<view class="card notice">
 		<image src="/assets/icons/index/notice.png" />
 		<swiper autoplay="true" interval="7500" duration="500" circular="true" vertical="true">
-			<swiper-item wx:for="{{notices}}" wx:key="id" data-id="{{item.id}}"
-			bindtap="showNotice">{{item.title}}</swiper-item>
+			<block wx:for="{{notices}}" wx:key="id">
+				<swiper-item data-id="{{item.id}}" bindtap="showNotice">{{item.title}}</swiper-item>
+			</block>
 		</swiper>
 	</view>
 
 	<!-- 功能索引 -->
 	<view class="card menu">
-		<view class="menu-cell" wx:for="{{items}}" wx:key="url" bindtap="router"
-			data-index="{{index}}" data-url="{{item.url}}">
-			<image class="{{ index === clicked ? 'living' : '' }}"
-				src="{{item.iconPath}}" mode="heightFix" />
-			{{item.text}}
-		</view>
+		<block wx:for="{{items}}" wx:key="url">
+			<view class="menu-cell" data-url="{{item.url}}" bindtap="router">
+				<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" mode="heightFix" />
+				{{item.text}}
+			</view>
+		</block>
 	</view>
 
 	<view wx:if="{{ !isLogin }}" class="tip-login">尚未登录，请先在“我”中登录</view>
