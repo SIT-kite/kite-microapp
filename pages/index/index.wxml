@@ -35,7 +35,7 @@
 	<!-- 功能索引 -->
 	<view class="card menu">
 		<block wx:for="{{items}}" wx:key="url">
-			<view class="menu-cell" data-url="{{item.url}}" bindtap="router">
+			<view class="menu-cell" data-url="{{item.url}}" data-index="index" bindtap="router">
 				<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" mode="heightFix" />
 				{{item.text}}
 			</view>

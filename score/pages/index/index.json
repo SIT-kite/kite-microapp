@@ -1,7 +1,7 @@
 {
-  "usingComponents": {
-    "navBar" : "/components/navBar/navBar",
-    "card": "/score/components/card/card"
-  },
-  "disableScroll": true
+	"usingComponents": {
+		"navBar": "/components/navBar/navBar",
+		"card": "/score/components/card/card"
+	},
+	"disableScroll": true
 }

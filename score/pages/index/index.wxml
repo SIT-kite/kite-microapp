@@ -1,32 +1,64 @@
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick">
-</navBar>
+<navBar background='#fff' back="{{true}}" home="{{true}}"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
 <view class="indexPage">
 
 	<text class="text_tip" wx:if="{{isShowText}}">刷新成功!</text>
 
 	<view class="pageHeader">
-		<picker class="select year" mode="selector" range="{{yearList}}" value="{{scoreInfo.yearIndex}}" bindchange="onSelectChange" data-index_name="yearIndex"><text class="selectText year">{{yearList[scoreInfo.yearIndex]}}</text></picker>
-		<picker class="select term" mode="selector" range="{{termList}}" value="{{scoreInfo.termIndex}}" bindchange="onSelectChange" data-index_name="termIndex"><text class="selectText term">{{termList[scoreInfo.termIndex]}}</text></picker>
-		<image class="btn_refresh" src="../../assets/icons/refresh.svg" bindtap="refresh"></image>
+
+		<!-- 学年 -->
+		<picker class="select year"
+			mode="selector" range="{{yearList}}" value="{{scoreInfo.yearIndex}}"
+			bindchange="onSelectChange" data-index_name="yearIndex">
+			<text class="selectText year">{{yearList[scoreInfo.yearIndex]}}</text>
+		</picker>
+
+		<!-- 学期 -->
+		<picker class="select term"
+			mode="selector" range="{{termList}}" value="{{scoreInfo.termIndex}}"
+			bindchange="onSelectChange" data-index_name="termIndex">
+			<text class="selectText term">{{termList[scoreInfo.termIndex]}}</text>
+		</picker>
+
+		<!-- 刷新 -->
+		<image class="btn_refresh" src="../../assets/icons/refresh.svg" bindtap="refresh" />
+
 	</view>
 
 	<view class="gpaContainer">
-		<view class="text"><text>该学{{scoreInfo.termIndex == termList.length - 1? '年':'期'}}绩点为 {{gpa !== null? gpa + ' , 努力会有回报的!' : ''}}</text><view wx:if="{{isShowTip && scoreList.length != 0}}">(点击课程卡片可以查看详情哦!)</view></view>
+		<view class="text">
+			<text>该学{{
+				scoreInfo.termIndex == termList.length - 1 ? '年' : '期'
+			}}绩点为 {{
+				gpa !== null ? gpa + ' , 努力会有回报的!' : ''
+			}}</text>
+			<view wx:if="{{isShowTip && scoreList.length != 0}}">(点击课程卡片可以查看详情哦!)</view>
+		</view>
 	</view>
 
 	<!-- <view class="container_info" wx:if="{{scoreInfo.isFirstTime}}">
-		<image class="img_info" src="/score/assets/pic/info1.png"></image>
+		<image class="img_info" src="/score/assets/pic/info1.png" />
 		<text class="text_info">快点击查询试试吧!</text>
 	</view> -->
 
 	<view class="container_info" wx:if="{{scoreList.length == 0}}">
-		<image class="img_info" src="/score/assets/pic/info1.svg"></image>
+		<image class="img_info" src="/score/assets/pic/info1.svg" />
 		<text class="text_info">暂时还没有成绩哦!</text>
 	</view>
 
-	<scroll-view class="scroll_space" scroll-x="{{false}}" scroll-y="{{true}}" scroll-anchoring="{{true}}" wx:if="{{scoreList[0] != null}}">
+	<scroll-view class="scroll_space" wx:if="{{scoreList[0] != null}}"
+		scroll-x="{{false}}" scroll-y="{{true}}" scroll-anchoring="{{true}}">
 
-		<card wx:for="{{scoreList}}" name="{{item.course}}" credit="{{item.credit}}" isRequiredCourse="{{item.isRequiredCourse}}" semester="{{['第一学期', '第二学期'][item.semester - 1]}}" grades="{{item.isEvaluated? item.score : '未评教' }}" detailList="{{item.detail}}" isFolded="{{item.isFolded}}" data-classId="{{item.classId}}" data-index="{{index}}" bind:bindCard="bindCard"></card>
+		<card wx:for="{{scoreList}}" wx:key="course"
+			name="{{item.course}}" credit="{{item.credit}}"
+			isRequiredCourse="{{item.isRequiredCourse}}"
+			semester="{{ ['第一学期', '第二学期'][item.semester - 1] }}"
+			grades="{{ item.isEvaluated ? item.score : '未评教' }}"
+			detailList="{{item.detail}}" isFolded="{{item.isFolded}}"
+			data-classId="{{item.classId}}" data-index="{{index}}"
+			bind:bindCard="bindCard" />
+
 		<view class="notice">已经到底部了哦!</view>
 
 	</scroll-view>

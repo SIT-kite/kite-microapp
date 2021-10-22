@@ -1,74 +1,86 @@
 /* score/pages/index/index.wxss */
-Page {
-  background-color: #F7F7F7;
+
+page {
+	background-color: #F7F7F7;
 }
+
+.indexPage {
+	display: flex;
+	flex-direction: column;
+}
+
 .text_tip {
-  text-align: center;
-  width: 300rpx;
-  font-weight: bold;
-  background-color: rgba(61, 133, 198, 0.2);
-  opacity: 0.7;
-  padding: 20rpx;
-  border-radius: 10rpx;
-  position: fixed;
-  top: 250rpx;
-  left: 225rpx;
+	text-align: center;
+	width: 300rpx;
+	font-weight: bold;
+	background-color: rgba(61, 133, 198, 0.2);
+	opacity: 0.7;
+	padding: 20rpx;
+	border-radius: 10rpx;
+	position: fixed;
+	top: 250rpx;
+	left: 225rpx;
 }
 
 .pageHeader {
-  display: flex;
-  padding: 20rpx;
-  align-items: center;
-  position: relative;
+	display: flex;
+	padding: 20rpx;
+	align-items: center;
+	position: relative;
 }
+
 .selectText {
-  color: #002766;
-  font-weight: bold;
+	color: #002766;
+	font-weight: bold;
 }
 
 picker.year {
-  margin-left: 20rpx;
-  margin-right: 80rpx;
-  box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
-  font-size: 40rpx;
+	margin-left: 20rpx;
+	margin-right: 80rpx;
+	box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
+	font-size: 40rpx;
 }
+
 picker.term {
-  font-size: 40rpx;
-  margin-right: 200rpx;
-  box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
+	font-size: 40rpx;
+	margin-right: 200rpx;
+	box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
 }
 
 
 .btn_refresh {
-  right: 60rpx;
-  height: 60rpx;
-  width: 60rpx;
-  /* display: flex; */
-  position: absolute;
-  /* align-items: center;
+	right: 60rpx;
+	height: 60rpx;
+	width: 60rpx;
+	/* display: flex; */
+	position: absolute;
+	/* align-items: center;
   justify-content: center; */
-  /* color: #fff;
+	/* color: #fff;
   background-color: #337ab7; */
-  /* border-color: #2e6da4;
+	/* border-color: #2e6da4;
   border-radius: 5rpx; */
 }
+
 .gpaContainer {
-  /* flex-direction: row;
+	/* flex-direction: row;
   justify-content: space-between; */
-  padding-bottom: 10px;
-  box-shadow: 0px 1.5px 0px 0px #d9d9d9;
+	padding-bottom: 10px;
+	box-shadow: 0px 1.5px 0px 0px #d9d9d9;
 }
+
 .gpaContainer .text {
-  display: flex;
-  flex-direction: column;
-  padding: 3%;
-  /* width:55%; */
-  color: #e69138;
-  background-color: #ffe599;
-  /* box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9; */
-  /* border-radius: 0rpx 10rpx 10rpx 0rpx; */
-  font-size: 35rpx;
+	display: flex;
+	flex-direction: column;
+	padding: 3%;
+	/* width:55%; */
+	color: #e69138;
+	background-color: #ffe599;
+	/* box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9; */
+	/* border-radius: 0rpx 10rpx 10rpx 0rpx; */
+	font-size: 35rpx;
 }
+
 /* .showYearGpa {
   width: 27.5%;
   font-weight: bold;
@@ -83,40 +95,38 @@ picker.term {
   flex-direction: column;
 } */
 switch {
-  transform: scale(.9);
+	transform: scale(.9);
 }
 
 .container_info {
-  margin-top: 5vh;
-  margin-bottom: 15vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	margin-top: 5vh;
+	margin-bottom: 15vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .img_info {
-  z-index: 1000;
-  width: 500rpx;
-  height: 500rpx;
+	z-index: 1000;
+	width: 500rpx;
+	height: 500rpx;
 }
 
 .text_info {
-  font-size: 50rpx;
-  font-weight: bold;
-  color: #6fa8dc;
-  /* box-shadow: 0px 0px 20px 0px; */
-  border-radius: 10rpx;
-  padding: 10rpx;
+	font-size: 50rpx;
+	font-weight: bold;
+	color: #6fa8dc;
+	/* box-shadow: 0px 0px 20px 0px; */
+	border-radius: 10rpx;
+	padding: 10rpx;
 }
 
 .scroll_space {
-  display: flex;
-  flex-direction: column;
-  height: 75vh;
+	height: 100%;
 }
 
 .notice {
-  height: 100rpx;
-  text-align: center;
-  color: #6fa8dc;
+	height: 100rpx;
+	text-align: center;
+	color: #6fa8dc;
 }

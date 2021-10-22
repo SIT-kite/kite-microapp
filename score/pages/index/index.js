@@ -8,11 +8,11 @@ const requestUtils = require("../../../utils/requestUtils");
 const scoreApiUrlPrefix = `${app.globalData.apiUrl}/edu/score`;
 const header = getHeader("urlencoded", app.globalData.token);
 
-const REQUEST_PURPOSE = ['FOR_LIST', 'FOR_DETAIL']
+const REQUEST_PURPOSE = [ "FOR_LIST", "FOR_DETAIL" ];
 const API_URL_PREFIX = {
   LIST: `${scoreApiUrlPrefix}?`,
   DETAIL: `${scoreApiUrlPrefix}/detail?`
-}
+};
 
 Page({
 
@@ -41,9 +41,9 @@ Page({
     let yearInterval = parseInt(termInterval / 2 + termInterval % 2)
 
     return {
-      startYear: startYear,
-      termInterval: termInterval,
-      yearInterval: yearInterval,
+      startYear,
+      termInterval,
+      yearInterval,
     }
 
   },
@@ -138,7 +138,7 @@ Page({
 
   },
 
-  fetchList: function(apiUrl, callback) {
+  fetchList(apiUrl, callback) {
 
     let scoreList = []
     let getData = requestUtils.doGET(apiUrl, {}, header)
@@ -185,13 +185,13 @@ Page({
   },
 
   setPageData(pageData, data) {
-    for(let index in pageData) {
+    for (let index in pageData) {
       this.setData({[pageData[index]]: data[index]})
     }
 
   },
 
-  //弹出提示语
+  // 弹出提示语
   popUpTip() {
     this.setData({isShowText: true})
     setTimeout(() => this.setData({isShowText: false}), 2000)
@@ -209,12 +209,12 @@ Page({
     scoreList.forEach((course) => {
       course.isFolded = true
       course.isRequiredCourse = course.courseId[0] !== 'G'
-      if(course.detail) {
+      if (course.detail) {
         course.detail = this.handleDetail(course.detail)
       }
     })
 
-    this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length !== 0? this.getGPA(scoreList).toFixed(2) : null, scoreList.length === 0])
+    this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length !== 0 ? this.getGPA(scoreList).toFixed(2) : null, scoreList.length === 0])
     wx.setStorageSync('scoreInfo', this.data.scoreInfo)
   },
 
