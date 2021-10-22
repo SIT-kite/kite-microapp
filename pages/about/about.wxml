@@ -26,16 +26,19 @@
 	<view class="section">
 		<view class="title">贡献者</view>
 		<view class="content contributors ul">
-			<view class="contributor li" wx:for="{{contributors}}" wx:key="*this">{{item}}</view>
+			<block wx:for="{{contributors}}" wx:key="*this">
+				<view class="contributor li">{{item}}</view>
+			</block>
 		</view>
 	</view>
 
 	<view class="section">
 		<view class="title">开源代码</view>
 		<view class="content repo-links ul">
+			<view class="repo-link-label center">主站</view>
 			<view class="repo-link li">https://github.com/SIT-Yiban/kite-microapp</view>
-			<text style="font-weight: 500;">镜像：</text>
-			<view class="repo-link li">https://hub.fastgit.org/SIT-Yiban/kite-microapp</view>
+			<view class="repo-link-label center">镜像</view>
+			<view class="repo-link li">https://hub.fastgit.org/SIT-Yaiban/kite-microapp</view>
 			<view class="repo-link li">https://github.com.cnpmjs.org/SIT-Yiban/kite-microapp</view>
 		</view>
 	</view>

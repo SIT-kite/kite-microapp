@@ -92,6 +92,19 @@
 }
 
 /* 开源代码 */
+.repo-link-label {
+	margin-top: .5em;
+	margin-inline-start: -1em;
+	padding-bottom: .25em;
+	border-bottom: 1px dashed #9E9E9E;
+	font-weight: 500;
+}
+/* letter-spacing 不是在字符之间增加间距，
+而是给每一个字符后面加行内边距，这也包括最后一个字符…
+还好，.repo-link-label 只会有两个字。 */
+.repo-link-label::first-letter {
+	letter-spacing: .5ch;
+}
 .repo-link {
 	font-family: Consolas, monospace;
 }
