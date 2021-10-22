@@ -123,6 +123,7 @@ Page({
         // setIdentity() 会设置用户信息元素中的“已/未实名”，
         // setIsLogin()  会将用户信息元素显示出来，
         // 所以最好先执行 setIdentity()，再执行 setIsLogin()。
+
         this.setUserData(data.data, data.token);
         this.setIdentity();
         this.setIsLogin();
@@ -138,7 +139,7 @@ Page({
           this.setData({ needRegister: true });
           wx.showModal({
             title: "需要授权",
-            content: "请再次点击按钮以进行授权。",
+            content: "首次使用，请再次点击按钮进行授权。",
             confirmText: "好的",
             showCancel: false
           });
