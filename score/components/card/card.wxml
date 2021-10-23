@@ -8,7 +8,7 @@
 
 			<view class="name">{{ name === '' ? '(空)' : name }}</view>
 			<view class="info">{{ ['第一学期', '第二学期'][semester - 1] }}｜{{
-				isRequiredCourse ? '必修' : '选修' }}｜学分: {{credit}}</view>
+				required ? '必修' : '选修' }}｜学分: {{credit}}</view>
 
 			<view class="details" wx:if="{{!isFolded}}">
 				<block wx:for="{{detailList}}" wx:key="*this">

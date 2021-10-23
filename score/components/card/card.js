@@ -5,7 +5,7 @@ Component({
   properties: {
     name:{ type: String },
     credit: { type: String },
-    isRequiredCourse: { type: Boolean },
+    required: { type: Boolean },
     semester: { type: Number },
     grades: { type: String },
     isFolded: { type: Boolean, value: true },

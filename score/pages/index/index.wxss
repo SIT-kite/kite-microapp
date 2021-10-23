@@ -13,16 +13,19 @@
 .notice + .scroll { height: calc(100% - 5.25rem); }
 
 .text_tip {
-	text-align: center;
-	width: 300rpx;
-	font-weight: bold;
-	background-color: rgba(61, 133, 198, 0.2);
-	opacity: 0.7;
-	padding: 20rpx;
-	border-radius: 10rpx;
 	position: fixed;
-	top: 250rpx;
-	left: 225rpx;
+	top: 12em;
+	left: 50%;
+	z-index: 10;
+	width: 16em;
+	margin-left: -8em;
+	padding: .5em;
+	text-align: center;
+	font-weight: bold;
+	background-color: #6fa8dc;
+	opacity: .75;
+	border-radius: 2px;
+	box-shadow: var(--shadow-hover);
 }
 
 .header {

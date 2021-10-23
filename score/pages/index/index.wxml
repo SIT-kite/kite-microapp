@@ -49,8 +49,7 @@
 
 		<card wx:for="{{scoreList}}" wx:key="course"
 			name="{{item.course}}" credit="{{item.credit}}"
-			isRequiredCourse="{{item.isRequiredCourse}}"
-			semester="{{item.semester}}"
+			semester="{{item.semester}}" required="{{item.required}}"
 			grades="{{ item.isEvaluated ? item.score : '未评教' }}"
 			detailList="{{item.detail}}" isFolded="{{item.isFolded}}"
 			data-classId="{{item.classId}}" data-index="{{index}}"

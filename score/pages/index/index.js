@@ -241,13 +241,13 @@ Page({
 
   handleList(scoreList) {
 
-    scoreList.forEach((course) => {
+    scoreList.forEach(course => {
       course.isFolded = true
-      course.isRequiredCourse = course.courseId[0] !== 'G'
-      if (course.detail) {
-        course.detail = this.handleDetail(course.detail)
-      }
+      course.required = course.courseId[0] !== 'G'
+      course.detail = course.detail ? this.handleDetail(course.detail) : []
     })
+
+    scoreList.sort( (a, b) => a.course < b.course ? -1 : 0 )
 
     this.setData({
       scoreList,
@@ -282,7 +282,6 @@ Page({
         res => callback(res.data.data.scoreDetail)
       ).catch(this.handleFetchError)
     })
-
 
   },
 
