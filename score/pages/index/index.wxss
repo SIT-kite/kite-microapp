@@ -1,13 +1,10 @@
 /* score/pages/index/index.wxss */
 
-page {
-	background-color: #F7F7F7;
-}
-
 .main {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	background-color: #F7F7F7;
 }
 /* .header, .notice, .scroll { box-sizing: border-box; }
 .header { height: 3rem; }
@@ -43,20 +40,26 @@ page {
 	position: relative;
 	color: #002766;
 	font-weight: bold;
-	margin-inline-end: .1em;
+	margin-inline-end: .25em;
 }
+
 .options {
 	position: absolute;
-	z-index: 1;
+	z-index: 2;
 	margin-top: .25em;
 	border-radius: 2px;
 	background-color: white;
-	box-shadow: var(--shadow-hover);
+	box-shadow: var(--shadow);
 	overflow: hidden;
-	transition: height var(--transition), var(--transition-shadow);
+	transition:
+		transform var(--transition),
+		opacity var(--transition),
+		var(--transition-shadow);
 }
 .options.false {
+	transform: scaleY(0);
 	height: 0;
+	opacity: 0;
 	box-shadow: none;
 }
 
@@ -71,7 +74,7 @@ page {
 }
 .current {
 	margin: 0 .5em;
-	padding: .1em;
+	padding-bottom: .1em;
 	border-bottom: 2px solid #337ab7;
 }
 .option {
@@ -83,6 +86,7 @@ page {
 	height: 1.5em;
 	padding: .25em;
 	margin: -.25em;
+	margin-right: .1em; /* 和左边对齐 */
 }
 
 /*
@@ -105,10 +109,13 @@ picker.term {
 } */
 
 .notice {
+	position: relative;
+	z-index: 1;
 	padding: .5em 1em;
+	text-align: center;
+	font-size: 14px;
 	color: #e69138;
 	background-color: #ffe599;
-	font-size: 14px;
 	box-shadow: 0px 1.5px 0px 0px #d9d9d9;
 	/* box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9; */
 }
@@ -148,9 +155,13 @@ picker.term {
 	padding: .25em 0;
 }
 
+.scroll {
+	background-color: white;
+}
 
 .end {
 	height: 25vh;
+	padding-top: .5em;
 	text-align: center;
 	color: #6fa8dc;
 }
