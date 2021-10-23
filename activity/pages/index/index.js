@@ -180,7 +180,7 @@ Page({
   toItemDetails(e) {
     let eventId = this.data.itemList[e.currentTarget.dataset.index].activityId;
     wx.navigateTo({
-      url: `/activity/pages/detail/detail?eventId=${eventId}`,
+      url: `/activity/pages/detail/detail?eventId=${eventId}&shared=false`,
     })
   },
 

@@ -1,5 +1,6 @@
 // activity/pages/activityDetails/activityDetails.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+const app = getApp();
 
 
 const request = require("../../utils/request");
@@ -12,7 +13,9 @@ Page({
     // showText: false,
     detail: null,
     src: '',
-    CATEGORY
+    CATEGORY,
+    shared: false,
+    timesOfShow: 0
   },
 
   //解析字段-持续时间
@@ -36,7 +39,7 @@ Page({
       detail.startTime = detail.startTime.replace(/:\d\d[+]08:00/g, "")
       detail.duration = this.handleDuration(detail.duration)
       console.log(detail.description.search(/src=\"/))
-      detail.description = detail.description.replace(/src=\"/," style=\"height:100%;width:100%;\" src=\"https://kite.sunnysab.cn/static/event/image/")
+      detail.description = detail.description.replace(/src=\"/," style=\"height:100%;width:100%;\" src=\"")
       // detail.startTime = new Date(detail.startTime)
       // detail.endTime = new Date(detail.startTime)
       // detail.endTime.setMinutes(detail.startTime.getMinutes() + detail.duration)
@@ -46,14 +49,27 @@ Page({
   },
 
   join() {
-    wx.getStorageSync('verified')
-      ? request.submitData(request.constructUrl('EVENT_JOIN',{eventId:this.data.detail.activityId}),'EVENT_JOIN', res => {})
-      : wx.showModal({
+    app.globalData.isLogin
+      ? app.globalData.verified
+        ? request.submitData(request.constructUrl('EVENT_JOIN',{eventId:this.data.detail.activityId,force:false}),'EVENT_JOIN', res => {
+          console.log(res.data)
+            wx.showModal({
+              title:'提示',
+              content: res.data.result,
+              showCancel: false
+            })
+        })
+        : wx.showModal({
           title:'提示',
           content: '只有认证后才能报名哦!',
           showCancel: false,
           success: wx.navigateTo({url: '/pages/verify/verify'})
         })
+    : wx.showModal({
+      title:'提示',
+      content: '请前往小程序登录和认证',
+      showCancel: false
+    })
   },
 
   handlerGohomeClick,
@@ -62,7 +78,7 @@ Page({
   onShareAppMessage () {
     return {
       title: this.data.detail.title,
-      path: `/activity/pages/detail/detail?eventId=${this.data.detail.activityId}`,
+      path: `/activity/pages/detail/detail?eventId=${this.data.detail.activityId}&shared=true`,
     }
   },
 
@@ -71,7 +87,15 @@ Page({
    */
   onLoad(options) {
     this.getActivityDetails(options.eventId);
+    if(options.shared === 'true') this.setData({shared: true});
   },
+
+  onShow() {
+    this.setData({timesOfShow: this.data.timesOfShow + 1})
+    if(this.data.shared === true && this.data.timesOfShow > 1) {wx.switchTab({
+      url: '/pages/index/index',
+    })}
+  }
 
   // 生命周期函数--监听页面初次渲染完成
   // onReady() {},

@@ -1,5 +1,5 @@
 <navBar background='#fff' back="{{true}}" home="{{true}}"
-  bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+  bindback="handlerGobackClick" bindhome="handlerGohomeClick"  wx:if="{{detail}}"/>
 <view class="main">
 
   <!-- <view class="text_fixed" wx:if="{{showText}}">全国信息技术应用水平大赛</view> -->
@@ -28,7 +28,7 @@
 
         <view class="container_time">
           <image class="icon_time" src="../../assets/icons/time1.svg"></image>
-          <view class="text_time">时间: {{detail.startTime + ' ' + detail.duration }}</view>
+          <view class="text_time">时间: {{detail.startTime + ' ' + detail.duration === "undefined undefined" ? ' ': detail.startTime + ' ' + detail.duration}}</view>
         </view>
 
         <view class="container_category">
@@ -54,7 +54,7 @@
 
       </view>
 
-      <view class="container_share">
+      <view class="container_share" wx:if="{{detail}}">
           <button class="btn_share" open-type="share"><image class="icon_share" src="../../assets/icons/share.svg" open-type="onShareAppMessage"></image></button>
       </view>
 
@@ -104,8 +104,8 @@
 
   <view class="placeholder"></view>
 
-  <!-- <view class="container_fixed_bar">
+  <view class="container_fixed_bar">
     <view class="btn_join" bindtap="join"><image class="icon_join" src="../../assets/icons/join.svg"></image></view>
-  </view> -->
+  </view>
 
 </view>

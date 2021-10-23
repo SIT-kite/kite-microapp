@@ -21,7 +21,7 @@ const constructUrl = (requestPurpose, params) => {
       break;
     }
     case(third): {
-      url = `/${params.eventId}/participant`;
+      url += `/sc/${params.eventId}/apply?force=${params.force}`;
       break;
     }
     case(fourth): {
@@ -81,6 +81,7 @@ const fetchData =  (url, requestPurpose, callback) => {
 };
 
 const submitData = (url, requestPurpose, callback) => {
+  console.log(url)
   wx.showLoading({
     title: '发送中2333~',
     mask: true
@@ -89,12 +90,12 @@ const submitData = (url, requestPurpose, callback) => {
 
   postData.then(res => {
     wx.hideLoading();
-    let code;
+    let data;
     const [first, second, third, fourth, fifth, sixth] = REQUEST_PURPOSE;
     switch(requestPurpose) {
       case (third) : {
-        code = res.data.code;
-        callback(code)
+        data = res.data;
+        callback(data)
         break;
       }
     }
@@ -108,21 +109,24 @@ const submitData = (url, requestPurpose, callback) => {
 const handleFetchListError =  (err) => {
   wx.showModal({
     title: "哎呀，出错误了 >.<",
-    content: err.data.msg,
+    content: err.data.code === 4
+      ? "请前往小程序主页登录和认证"
+      : err.data.data.result,
     showCancel: false,
     complete: err.data.code === 6
-      ? (() => {
-        app.globalData.identity = {}
-        app.globalData.verified = false
-        wx.setStorageSync('verified', false)
-        wx.setStorageSync('identity', {})
-        wx.redirectTo({url: '/pages/verify/verify'})
-      })()
-      : (() => {
-        wx.switchTab({
-          url: '/pages/index/index'
-        })
-      })()
+      ? () => {
+          app.globalData.identity = {}
+          app.globalData.verified = false
+          wx.setStorageSync('verified', false)
+          wx.setStorageSync('identity', {})
+          wx.redirectTo({url: '/pages/verify/verify'})
+        }
+      : {}
+      // : err.data.code === 4
+      //     ? wx.switchTab({
+      //         url: '/pages/index/index'
+      //       })
+      //     : {}
   })
 }
 
