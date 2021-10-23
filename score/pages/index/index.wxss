@@ -4,10 +4,16 @@ page {
 	background-color: #F7F7F7;
 }
 
-.indexPage {
+.main {
 	display: flex;
 	flex-direction: column;
+	height: 100%;
 }
+/* .header, .notice, .scroll { box-sizing: border-box; }
+.header { height: 3rem; }
+.notice { height: 2.25rem; } */
+.header + .scroll { height: calc(100% - 3rem); }
+.notice + .scroll { height: calc(100% - 5.25rem); }
 
 .text_tip {
 	text-align: center;
@@ -22,13 +28,64 @@ page {
 	left: 225rpx;
 }
 
-.pageHeader {
+.header {
 	display: flex;
-	padding: 20rpx;
+	justify-content: space-between;
 	align-items: center;
-	position: relative;
+	padding: .5em;
 }
 
+.selects {
+	display: flex;
+}
+
+.select {
+	position: relative;
+	color: #002766;
+	font-weight: bold;
+	margin-inline-end: .1em;
+}
+.options {
+	position: absolute;
+	z-index: 1;
+	margin-top: .25em;
+	border-radius: 2px;
+	background-color: white;
+	box-shadow: var(--shadow-hover);
+	overflow: hidden;
+	transition: height var(--transition), var(--transition-shadow);
+}
+.options.false {
+	height: 0;
+	box-shadow: none;
+}
+
+.current,
+.option {
+	box-sizing: border-box;
+	transition: background-color var(--transition);
+}
+.current:active,
+.option:active {
+	background-color: #EEE;
+}
+.current {
+	margin: 0 .5em;
+	padding: .1em;
+	border-bottom: 2px solid #337ab7;
+}
+.option {
+	padding: .25em .5em;
+}
+
+.btn_refresh {
+	width: 1.5em;
+	height: 1.5em;
+	padding: .25em;
+	margin: -.25em;
+}
+
+/*
 .selectText {
 	color: #002766;
 	font-weight: bold;
@@ -45,40 +102,15 @@ picker.term {
 	font-size: 40rpx;
 	margin-right: 200rpx;
 	box-shadow: 0rpx 5rpx 0rpx 0rpx #337ab7;
-}
+} */
 
-
-.btn_refresh {
-	right: 60rpx;
-	height: 60rpx;
-	width: 60rpx;
-	/* display: flex; */
-	position: absolute;
-	/* align-items: center;
-  justify-content: center; */
-	/* color: #fff;
-  background-color: #337ab7; */
-	/* border-color: #2e6da4;
-  border-radius: 5rpx; */
-}
-
-.gpaContainer {
-	/* flex-direction: row;
-  justify-content: space-between; */
-	padding-bottom: 10px;
-	box-shadow: 0px 1.5px 0px 0px #d9d9d9;
-}
-
-.gpaContainer .text {
-	display: flex;
-	flex-direction: column;
-	padding: 3%;
-	/* width:55%; */
+.notice {
+	padding: .5em 1em;
 	color: #e69138;
 	background-color: #ffe599;
+	font-size: 14px;
+	box-shadow: 0px 1.5px 0px 0px #d9d9d9;
 	/* box-shadow: 0rpx 0rpx 40rpx 0rpx #d9d9d9; */
-	/* border-radius: 0rpx 10rpx 10rpx 0rpx; */
-	font-size: 35rpx;
 }
 
 /* .showYearGpa {
@@ -94,39 +126,31 @@ picker.term {
   align-items: flex-end;
   flex-direction: column;
 } */
-switch {
-	transform: scale(.9);
+
+.info {
+	width: 80%;
+	height: 80%;
+	margin: auto;
+	padding: 1em;
+	color: #6fa8dc;
+	text-align: center;
 }
 
-.container_info {
-	margin-top: 5vh;
-	margin-bottom: 15vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.img_info {
+.info-image {
 	z-index: 1000;
 	width: 500rpx;
 	height: 500rpx;
 }
 
-.text_info {
-	font-size: 50rpx;
-	font-weight: bold;
-	color: #6fa8dc;
+.info > .title {
 	/* box-shadow: 0px 0px 20px 0px; */
-	border-radius: 10rpx;
-	padding: 10rpx;
+	margin-inline-end: -.5em; /* 对齐中文感叹号 */
+	padding: .25em 0;
 }
 
-.scroll_space {
-	height: 100%;
-}
 
-.notice {
-	height: 100rpx;
+.end {
+	height: 25vh;
 	text-align: center;
 	color: #6fa8dc;
 }

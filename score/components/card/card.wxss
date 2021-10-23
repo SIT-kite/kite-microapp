@@ -8,15 +8,12 @@
 	background-color: #2e62cd;
 }
 
-.container_content {
-	flex-basis: 100%;
+.main {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 40rpx;
-	padding-top: 15rpx;
-	padding-bottom: 15rpx;
-	margin: 30rpx 25rpx 30rpx 25rpx;
+	margin: .75em;
+	padding: .5em 1em;
 	border-radius: 12rpx;
 	background-color: #ffffff;
 	border: solid rgb(121, 177, 250) 2px;
@@ -51,16 +48,11 @@
 	color: rgba(0, 0, 0, 0.5);
 }
 
-.container_detail {
+.details {
 	display: flex;
 	flex-direction: column;
 	font-size: 30rpx;
 	color: rgba(0, 0, 0, 0.5);
-
-}
-
-.text_detail {
-	transform: scale(1, 0);
 }
 
 .container_right {

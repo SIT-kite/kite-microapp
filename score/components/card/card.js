@@ -6,7 +6,7 @@ Component({
     name:{ type: String },
     credit: { type: String },
     isRequiredCourse: { type: Boolean },
-    semester: { type: String },
+    semester: { type: Number },
     grades: { type: String },
     isFolded: { type: Boolean, value: true },
     detailList: { type: Array }
@@ -18,14 +18,14 @@ Component({
     onTap() {
       this.triggerEvent('bindCard')
       if (this.data.isFolded) {
-        this.setData({isFolded: false})
+        this.setData({ isFolded: false })
         this.animation.scale(1, 1).step()
-        this.setData({animation: this.animation.export()})
+        this.setData({ animation: this.animation.export() })
       } else {
         // this.animation.scale(1, 0).step()
         //   this.setData({animation: this.animation.export()})
         //   setTimeout(() => {
-            this.setData({isFolded: true})
+            this.setData({ isFolded: true })
           // }, 100);
       }
     }

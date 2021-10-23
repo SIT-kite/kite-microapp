@@ -1,26 +1,62 @@
 // score/pages/index/index.js
+
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import onShareAppMessage from "../../../utils/onShareAppMessage";
 import getHeader from "../../../utils/getHeader";
+import loading from "../../../utils/loading";
+import { isNonEmptyString } from "../../../utils/type";
+const requestUtils = require("../../../utils/requestUtils");
 
 const app = getApp();
-const requestUtils = require("../../../utils/requestUtils");
-const scoreApiUrlPrefix = `${app.globalData.apiUrl}/edu/score`;
-const header = getHeader("urlencoded", app.globalData.token);
+const gData = app.globalData;
+const header = getHeader("urlencoded", gData.token);
 
 const REQUEST_PURPOSE = [ "FOR_LIST", "FOR_DETAIL" ];
+
+const scoreApiUrlPrefix = `${gData.apiUrl}/edu/score`;
 const API_URL_PREFIX = {
   LIST: `${scoreApiUrlPrefix}?`,
   DETAIL: `${scoreApiUrlPrefix}/detail?`
 };
 
+// getYears(): years: [ "2020-2021", "2021-2022", ... ]
+// 这这这得好好简化一下
+const getYears = (studentId) => {
+
+  const date = new Date()
+  const nowMonth = date.getMonth()
+  const nowYear = parseInt(date.getFullYear().toString().slice(2, 4))
+  const startYear = parseInt(studentId.slice(0, 2))
+
+  let diffYear = nowYear - startYear;
+  diffYear = diffYear > 1 ? diffYear - 1 : 0;
+
+  const termInterval = parseInt(diffYear * 2 + (nowMonth + 4) / 6 + 1)
+  const yearInterval = parseInt(termInterval / 2 + termInterval % 2)
+
+  // console.log({nowMonth, nowYear, startYear, diffYear, termInterval, yearInterval});
+
+  let baseString = '20'
+  let years = []
+
+  for (let i = 0, year = startYear; i < yearInterval; i++, year++) {
+    // console.log(year);
+    years.push(`${baseString}${year}-${baseString}${year + 1}`)
+  }
+
+  return years
+
+}
+
 Page({
 
   data: {
-    termList: [],
-    yearList: [],
+    showSelectYear: false,
+    showSelectTerm: false,
+    terms: [ '第一学期', '第二学期', '整个学年' ],
+    years: [ '学年' ],
     scoreList: [],
-    gpa: [],
+    gpa: null,
     isShowText: false,
     isShowTip: true,
     scoreInfo: {
@@ -31,46 +67,61 @@ Page({
 
   },
 
-  createDateInfoObjectForSetSelectList() {
+  onLoad() {
 
-    let date = new Date()
-    let nowYear = parseInt(date.getFullYear().toString().slice(2, 4))
-    let nowMonth = date.getMonth()
-    let startYear = parseInt(wx.getStorageSync('identity').studentId.slice(0, 2))
-    let termInterval = parseInt(((nowYear - startYear) > 1 ? (nowYear - startYear) - 1 : 0) * 2 + (nowMonth + 4) / 6 + 1)
-    let yearInterval = parseInt(termInterval / 2 + termInterval % 2)
+    const studentId = gData.identity?.studentId;
+    if ( gData.verified !== true || !isNonEmptyString(studentId) ) {
+      // 未认证
+      wx.redirectTo({ url: '/pages/verify/verify' })
+    } else {
+      // 已认证
+      const years = getYears(studentId);
+      this.setData({ years, 'scoreInfo.yearIndex': years.length - 1 })
+    }
 
-    return {
-      startYear,
-      termInterval,
-      yearInterval,
+    const scoreInfo = wx.getStorageSync('scoreInfo')
+    if (scoreInfo !== '') {
+      this.setData({scoreInfo})
+      const isFirstTime = this.data.scoreInfo.isFirstTime
+      this.setIsShowTip(isFirstTime)
+      this.referList(isFirstTime)
     }
 
   },
 
-  setYearList(object) {
-    let baseString = '20'
-    let yearList = []
+  // toggleSelect(e.target.dataset?.select: String)
+  // 按照被点击元素，展开或收起选择器
+  toggleSelect(e) {
 
-    for (let i = 0, year = object.startYear; i < object.yearInterval; i++, year++) {
-      yearList.push(`${baseString}${year}-${baseString}${year + 1}`)
+    // 选择器列表
+    let selects = [ "showSelectYear", "showSelectTerm" ];
+
+    // 如果点击了某个列表内的选择器，展开或收起它，并从要收起的选择器列表中排除它
+    const select = e.target.dataset.select;
+    if ( select !== undefined && selects.includes(select) ) {
+      this.setData({ [select]: !this.data[select] })
+      selects.splice(selects.indexOf(select))
     }
 
-    this.setData({yearList})
-    this.setData({'scoreInfo.yearIndex': yearList.length - 1})
+    // 收起其他展开的选择器
+    selects = selects.filter( key => this.data[key] === true )
+
+    selects.length > 0 &&
+    this.setData(
+      Object.fromEntries(
+        selects.map( key => [key, false] )
+      )
+    )
+
   },
 
-  setTermList() {
-    this.setData({termList: ['第一学期', '第二学期', '整个学年']})
+  selectYear(e) {
+    this.setData({ 'scoreInfo.yearIndex': parseInt(e.target.dataset.index) })
+    this.referList(false)
   },
-
-  setSelectList() {
-
-    let object = this.createDateInfoObjectForSetSelectList()
-
-    this.setYearList(object)
-    this.setTermList(true)
-
+  selectTerm(e) {
+    this.setData({ 'scoreInfo.termIndex': parseInt(e.target.dataset.index) })
+    this.referList(false)
   },
 
   // 计算绩点
@@ -92,11 +143,9 @@ Page({
   onSelectChange(e) {
 
     if (e.currentTarget.dataset.index_name === "yearIndex") {
-      this.setData({'scoreInfo.yearIndex': parseInt(e.detail.value)})
+      this.setData({ 'scoreInfo.yearIndex': parseInt(e.detail.value) })
     } else {
-      this.setData({
-        'scoreInfo.termIndex': e.detail.value,
-      })
+      this.setData({ 'scoreInfo.termIndex': e.detail.value })
     }
 
     this.referList(false)
@@ -105,12 +154,12 @@ Page({
 
   constructParams(requestPurpose, param) {
     let params = {
-      year: this.data.yearList[this.data.scoreInfo.yearIndex],
+      year: this.data.years[this.data.scoreInfo.yearIndex],
     };
     switch (requestPurpose) {
       case (REQUEST_PURPOSE[0]) : {
         params.force = param
-        params.semester = parseInt(this.data.scoreInfo.termIndex) + 1 === this.data.termList.length
+        params.semester = parseInt(this.data.scoreInfo.termIndex) + 1 === this.data.terms.length
         ? 0
         : parseInt(this.data.scoreInfo.termIndex) + 1
         break;
@@ -130,36 +179,33 @@ Page({
     let apiUrl = '';
 
     switch (requestPurpose) {
-      case (REQUEST_PURPOSE[0]) : apiUrl = `${API_URL_PREFIX.LIST}year=${params.year}&semester=${params.semester}&force=${params.force}`; break;
-      case (REQUEST_PURPOSE[1]) : apiUrl = `${API_URL_PREFIX.DETAIL}year=${params.year}&semester=${params.semester}&classId=${params.classId}`; break;
+      case REQUEST_PURPOSE[0]:
+        apiUrl = `${API_URL_PREFIX.LIST}year=${params.year}&semester=${
+          params.semester}&force=${params.force}`;
+      break;
+      case REQUEST_PURPOSE[1]:
+        apiUrl = `${API_URL_PREFIX.DETAIL}year=${params.year}&semester=${
+          params.semester}&classId=${params.classId}`;
+      break;
     }
 
     return apiUrl
 
   },
 
-  fetchList(apiUrl, callback) {
+  fetchScore(apiUrl, callback) {
 
-    let scoreList = []
-    let getData = requestUtils.doGET(apiUrl, {}, header)
-
-    wx.showLoading({
+    loading({
       title: '加载中2333~',
-      mask: true
-    })
-
-    getData.then((res) => {
-      wx.hideLoading()
-      scoreList =  res.data.data.score
-      callback(scoreList)
-    }).catch((err) => {
-      wx.hideLoading()
-      this.handleFetchListError(err)
+      mask: true,
+      callback: requestUtils.doGET(apiUrl, {}, header).then(
+        res => callback(res.data.data.score)
+      ).catch(this.handleFetchError)
     })
 
   },
 
-  handleFetchListError(err) {
+  handleFetchError(err) {
 
     wx.showModal({
       title: "哎呀，出错误了 >.<",
@@ -169,26 +215,15 @@ Page({
           : "业务逻辑出错",
       showCancel: false,
       complete: err.data.code === 6
-        ? (() => {
-          app.globalData.identity = {}
-          app.globalData.verified = false
+        ? () => {
+          gData.identity = {}
+          gData.verified = false
           wx.setStorageSync('verified', false)
           wx.setStorageSync('identity', {})
-          wx.redirectTo({url: '/pages/verify/verify'})
-        })()
-        : (() => {
-          wx.switchTab({
-            url: '/pages/index/index'
-          })
-        })()
+          wx.redirectTo({ url: '/pages/verify/verify' })
+        }
+        : () => wx.switchTab({ url: '/pages/index/index' })
     })
-  },
-
-  setPageData(pageData, data) {
-    for (let index in pageData) {
-      this.setData({[pageData[index]]: data[index]})
-    }
-
   },
 
   // 弹出提示语
@@ -198,9 +233,9 @@ Page({
   },
 
   handleDetail(detail) {
-    detail.forEach(item => {
-      item.score = item.score.toFixed(1)
-    })
+    detail.forEach(
+      item => item.score = item.score.toFixed(1)
+    )
     return detail
   },
 
@@ -214,19 +249,24 @@ Page({
       }
     })
 
-    this.setPageData(['scoreList','gpa', 'scoreInfo.isFirstTime'], [scoreList, scoreList.length !== 0 ? this.getGPA(scoreList).toFixed(2) : null, scoreList.length === 0])
+    this.setData({
+      scoreList,
+      gpa: scoreList.length !== 0 ? this.getGPA(scoreList).toFixed(2) : null,
+      'scoreInfo.isFirstTime': scoreList.length === 0
+    })
     wx.setStorageSync('scoreInfo', this.data.scoreInfo)
   },
 
   referList(force) {
 
-    this.fetchList(this.constructApiUrl('FOR_LIST', this.constructParams('FOR_LIST', force)), (res) => {
-      this.handleList(res)
-    })
+    this.fetchScore(
+      this.constructApiUrl(
+        'FOR_LIST', this.constructParams('FOR_LIST', force)
+      ), this.handleList
+    )
 
-    force
-      ? this.popUpTip()
-      : {}
+    force && this.popUpTip()
+
   },
 
   refresh() {
@@ -235,68 +275,51 @@ Page({
 
   fetchDetail(apiUrl, callback) {
 
-    let detail = []
-    let getData = requestUtils.doGET(apiUrl, {}, header)
-    wx.showLoading({
+    loading({
       title: '加载中2333~',
-      mask: true
+      mask: true,
+      callback: requestUtils.doGET(apiUrl, {}, header).then(
+        res => callback(res.data.data.scoreDetail)
+      ).catch(this.handleFetchError)
     })
 
-    getData.then((res) => {
-      wx.hideLoading()
-      detail = res.data.data.scoreDetail
-      callback(detail)
-    }).catch((err) => {
-      this.handleFetchListError(err)
-    })
 
   },
 
   referDetail(course, detailToSet) {
-    this.fetchDetail(this.constructApiUrl('FOR_DETAIL', this.constructParams('FOR_DETAIL', course)), (res) => {
-      res = this.handleDetail(res)
-      this.setData({[detailToSet] : res})
-    })
+    this.fetchDetail(
+      this.constructApiUrl(
+        'FOR_DETAIL', this.constructParams('FOR_DETAIL', course)
+      ),
+      (res) => {
+        res = this.handleDetail(res)
+        this.setData({[detailToSet] : res})
+      }
+    )
   },
 
   showDetail(index, course) {
     let detailToSet = `scoreList[${index}].detail`
-    !course.detail
-      ? this.referDetail(course, detailToSet)
-      : {}
+    !course.detail &&
+    this.referDetail(course, detailToSet)
   },
 
   bindCard(e) {
-    let index = e.currentTarget.dataset.index
-    let course = this.data.scoreList[index]
-    course.isFolded
-      ? course.isEvaluated
-          ? this.showDetail(index, course)
-          : {}
-      : {}
+    const index = e.currentTarget.dataset.index
+    const course = this.data.scoreList[index]
+    course.isFolded &&
+    course.isEvaluated &&
+    this.showDetail(index, course)
 
   },
 
   setIsShowTip(isFirstTime) {
-    !isFirstTime
-      ? this.setData({isShowTip: false})
-      : {}
+    !isFirstTime &&
+    this.setData({isShowTip: false})
   },
 
   handlerGohomeClick,
   handlerGobackClick,
-  onShareAppMessage,
+  onShareAppMessage
 
-  onLoad () {
-    !app.globalData.verified || !wx.getStorageSync('identity').studentId
-      ? wx.redirectTo({ url: '/pages/verify/verify' })
-      : this.setSelectList()
-
-    let scoreInfo = wx.getStorageSync('scoreInfo')
-    scoreInfo
-      ? this.setData({scoreInfo})
-      : {}
-    this.setIsShowTip(this.data.scoreInfo.isFirstTime)
-    this.referList(this.data.scoreInfo.isFirstTime)
-  },
 })

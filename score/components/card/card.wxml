@@ -1,20 +1,25 @@
 <!--score/components/card/card.wxml-->
 
-<card class="main">
-	<view class="container_content" bindtap="onTap">
-		<view class="container_left">
-			<text class="text_name">{{name == ''? '(空)' : name}}</text>
-			<text class="text_credit">学分: {{credit}} | {{isRequiredCourse? ' 必修':' 选修'}}</text>
-			<text class="text_semester">{{semester}}</text>
-			<view class="container_detail" wx:if="{{!isFolded}}">
-				<text class="text_detail" wx:for="{{detailList}}" wx:key="*this" animation="{{animation}}">{{
-					item.scoreType + ' : ' +
-					item.score + ' 占比 ' + (item.percentage === '0%'? '100%' : item.percentage)
+<card class="main" bindtap="onTap">
+
+	<view class="container_left">
+
+		<text class="text_name">{{ name === '' ? '(空)' : name }}</text>
+		<text class="text_credit">{{ isRequiredCourse ? '必修' : '选修' }}｜学分: {{credit}}</text>
+		<text class="text_semester">{{ ['第一学期', '第二学期'][semester - 1] }}</text>
+
+		<view class="details" wx:if="{{!isFolded}}">
+			<block wx:for="{{detailList}}" wx:key="*this">
+				<text class="detail" animation="{{animation}}">{{
+					item.scoreType}}：{{item.score}} 占比 {{item.percentage === '0%' ? '100%' : item.percentage
 				}}</text>
-			</view>
+			</block>
 		</view>
-		<view class="container_right">
-			<text class="text_grades {{grades < 60? fail : ''}}">{{grades}}</text>
-		</view>
+
 	</view>
+
+	<view class="container_right">
+		<text class="text_grades {{ grades < 60 ? fail : '' }}">{{grades}}</text>
+	</view>
+
 </card>
