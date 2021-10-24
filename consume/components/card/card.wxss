@@ -24,7 +24,9 @@
     margin-left: 10rpx;
     font-size: 30rpx;
 }
-
+.text_position {
+	font-size: 1.05em;
+}
 .text_time {
     color: #8c8c8c;
 }
