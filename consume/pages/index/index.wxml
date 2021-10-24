@@ -4,34 +4,43 @@
 <view class="main">
 
 	<view class="container_header">
+		<text class="tips">暂时只支持查 10月1号 之后的哦! 10月1号 之前的记录敬请等待! ( 下拉可刷新 ) </text>
+<!--		<picker mode="date" fields="month"><view><text class="text_select">2020 - 10</text><view></view></view></picker>-->
 
-		<view class="container_select year">
+<!--		<view class="container_select year">-->
 
-			<text class="text_selected"><text class="text_selected_year">2020</text><text class="arrows year">🞁</text></text>
+<!--			<text class="text_selected"><text class="text_selected_year">2020</text><text class="arrows year">🞁</text></text>-->
 			<!-- <view class="container_select_list year">
 				<text class="text_select_item">2020</text>
 				<text class="text_select_item">2019</text>
 			</view> -->
 
-		</view>
+<!--		</view>-->
 
-		<view class="container_select month">
+<!--		<view class="container_select month">-->
 
-			<text class="text_selected"><text class="text_selected_month">8</text><text class="arrows month">🞁</text></text>
+<!--			<text class="text_selected"><text class="text_selected_month">8</text><text class="arrows month">🞁</text></text>-->
 			<!-- <view class="container_select_list month">
 				<text class="text_select_item">8</text>
 				<text class="text_select_item">9</text>
 			</view> -->
 
-		</view>
+<!--		</view>-->
 
 	</view>
-	<view class="placeholder"></view>
-	<scroll-view>
-		<card></card>
-		<card></card>
-		<card></card>
-		<card></card>
+	<scroll-view scroll-x="{{false}}" scroll-y="{{true}}"
+			refresher-enabled="{{true}}"
+			refresher-triggered="{{isRefresh}}"
+			bindrefresherrefresh="refresh"
+			scroll-anchoring="{{true}}" bindscrolltolower="getNextPage" lower-threshold="200">
+		<card wx:for="{{list}}" address="{{item.address}}" amount="{{item.amount}}" time="{{item.ts}}" src="{{SRC_LIST[item.category]}}"></card>
+		<view class="notice" wx:if="isAllRecords">已经到底部了哦!</view>
 	</scroll-view>
-
 </view>
+
+<view class="mask_loading" wx:if="{{isShowLoading}}">
+		<view>
+	<image class="mask_loading_image" src="../../assets/pics/loading.gif"></image>
+	<text>已经在很努力地加载啦!\n( 大概10S )</text>
+		</view>
+		</view>

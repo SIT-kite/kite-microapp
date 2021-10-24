@@ -1,12 +1,31 @@
 .main {
-	height:200%;
+	z-index: 300;
 }
 
 .container_header {
 	display:flex;
 	flex-direction: row;
-	position: fixed;
-	padding: 10rpx 0rpx 10rpx 40rpx;
+	padding: .75em 1em .25em 1em;
+}
+.tips {
+	color: #55aaff;
+
+}
+picker view {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+picker view text {
+	font-size: 40rpx;
+	font-weight: bold;
+
+}
+picker view view {
+	width: 85%;
+	height: 4px;
+	background-color: #9cceff;
+	border-radius: 2px 2px 2px 2px;
 }
 .container_select {
 	display:flex;
@@ -60,3 +79,39 @@
 	height: 100rpx;
 	box-shadow: 0rpx 1rpx 10rpx 0rpx #d9d9d9;
 }
+scroll-view {
+	display: flex;
+	flex-direction: column;
+	height: 90vh;
+}
+.mask_loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	height:100vh;
+	width:100vw;
+	position: absolute;
+	z-index: 400;
+}
+.mask_loading view {
+	padding: 1em 2em 1em 2em;
+	border: .25em solid #dbe4ff;
+	border-radius: .5em;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.6);
+	background-color: #fff;
+}
+.mask_loading_image {
+	height: 10em;
+	width: 10em;
+}
+.notice {
+	/* margin-top: 1em; */
+	height: 6em;
+	text-align: center;
+	color: #6fa8dc;
+  }

@@ -1,6 +1,7 @@
 /* consume/components/card/card.wxss */
 .main {
-    display: flex;
+	display: flex;
+	justify-content: space-between;
     flex-direction: row;
     align-items: center;
     background-color: #fff;
