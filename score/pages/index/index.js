@@ -299,7 +299,7 @@ Page({
 
   showDetail(index, course) {
     let detailToSet = `scoreList[${index}].detail`
-    !course.detail &&
+    !course.detail.length &&
     this.referDetail(course, detailToSet)
   },
 
