@@ -54,10 +54,29 @@ Page({
           item.ts = item.ts.replace(/\d{4}-/g,'')
           item.ts = item.ts.replace(/-/g,'/')
           if(item.address.indexOf('食堂') !== -1) item.category = 'catering'
-          else if(item.address.indexOf('浴室' !== -1)) item.category = 'showering'
+          else if(item.address.indexOf('浴室')  !== -1 ) item.category = 'showering'
           else item.category = 'shopping'
         })
         callback(records)
+      }).catch(err => {
+        wx.hideLoading()
+        wx.showModal({
+          title: "哎呀，出错误了 >.<",
+          content:
+            err.data.code !== 1
+              ? err.data.msg
+              : "业务逻辑出错",
+          showCancel: false,
+          complete: err.data.code === 6
+            ? (() => {
+              app.globalData.identity = {}
+              app.globalData.verified = false
+              wx.setStorageSync('verified', false)
+              wx.setStorageSync('identity', {})
+              wx.redirectTo({url: '/pages/verify/verify'})
+            })()
+            : () => {}
+        })
       })
     },
 
@@ -102,6 +121,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      if( !(wx.getStorageSync('verified') && wx.getStorageSync('identity'))) wx.redirectTo({
+        url: '/pages/verify/verify',
+      })
       this.setData({nowDate: formatTime(new Date())})
       this.checkFirstRefer()
         ? (() => {
