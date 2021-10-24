@@ -54,8 +54,9 @@
 
       </view>
 
-      <view class="container_share" wx:if="{{detail}}">
-          <button class="btn_share" open-type="share"><image class="icon_share" src="../../assets/icons/share.svg" open-type="onShareAppMessage"></image></button>
+      <view class="container_header_bottom_bar" wx:if="{{detail}}">
+								<image class="icon_copy" src="../../assets/icons/copy.svg" bindtap="copy" data-text="{{headerText}}"></image>
+        <!-- <button class="btn_share" open-type="share"><image class="icon_share" src="../../assets/icons/share.svg"></image></button> -->
       </view>
 
       <!-- <view class="container_like">

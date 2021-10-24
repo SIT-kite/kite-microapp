@@ -59,9 +59,9 @@
 				<view class="blank_space"></view>
 				<chart chart-class="chart" option="{{ option }}" height="700rpx" width="750rpx"/>
 
-				<block wx:if="{{mineTotalList.length}}">
-					<block wx:for="{{mineTotalList}}">
-						<card-mine title="{{item.title}}" condition="{{item.status}}" category="{{CATEGORY[item.category - 1]}}" item_id="{{item.activityId}}" detail="{{'+' + item.amount}}" date="{{item.time}}"></card-mine>
+				<block wx:if="{{mineScoreList.length}}">
+					<block wx:for="{{mineScoreList}}">
+						<card-mine title="{{item.title}}" condition="{{item.status}}" category="{{CATEGORY[item.category - 1]}}" item_id="{{item.activityId}}" detail="{{item.amount? '+' + item.amount:''}}" date="{{item.time}}"></card-mine>
 					</block>
 				</block>
 

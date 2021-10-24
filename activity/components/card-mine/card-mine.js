@@ -1,5 +1,10 @@
 // activity/components/card.js
-
+const CSS_CLASS_STATES = {
+  '审核中':'underway',
+  '通过':'succeed',
+  '未通过':'fail',
+  '已撤销': 'fail'
+}
 
 Component({
   /**
@@ -22,13 +27,14 @@ Component({
       type: String,
     },
     detail: {
-      type:Number
+      type:String
     }
   },
   /**
    * 组件的初始数据
    */
   data: {
+    CSS_CLASS_STATES
 
   },
 

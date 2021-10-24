@@ -78,8 +78,13 @@ swiper-item {
   bottom: 10rpx;
   left: 20rpx;
   font-size: 40rpx;
-  font-weight: bold;
+  /* font-weight: bold; */
   z-index: 2;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .black_shadow {

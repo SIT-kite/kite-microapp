@@ -66,7 +66,6 @@ Page({
     refresherTriggered: false,
     selected: '0',
     itemList: [],
-    mineTotalList: [],
     mineScoreList: [],
     CATEGORY,
     pageIndex: 1,
@@ -244,7 +243,7 @@ Page({
       let mineScoreList = res.data.data.detail
 
       mineScoreList.forEach(item => {
-        item.amount = item.amount.toFixed(1)
+        item.amount = item.amount? item.amount.toFixed(1) : ''
         item.time = item.time.replace(/-/g, " / ")
         item.time = item.time.replace(/T/g, " ")
         item.time = item.time.replace(/\+08:00/g, "")
@@ -252,8 +251,6 @@ Page({
       })
 
       this.setData({mineScoreList: mineScoreList})
-      //拼接数组操作
-      this.setData({mineTotalList: this.data.mineTotalList.concat(mineScoreList)})
       wx.setStorageSync('isActivityMinePageLatest', isGetNew)
 
       this.referSummary()

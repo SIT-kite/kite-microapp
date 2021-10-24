@@ -3,7 +3,7 @@
 
   <view class="container_left">
     <view class="container_title">
-      <view class="text_title"><text class="text_condition">{{condition}}</text>{{title}}</view>
+      <view class="text_title"><text class="text_condition {{CSS_CLASS_STATES[condition]}}">{{condition}}</text>{{title}}</view>
     </view>
 				<view class="container_left_center">
 					<text class="text_id">{{item_id}} </text>

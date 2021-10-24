@@ -1,5 +1,6 @@
 // activity/pages/activityDetails/activityDetails.js
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import copyText from "../../../utils/copyText";
 const app = getApp();
 
 
@@ -12,6 +13,7 @@ Page({
   data: {
     // showText: false,
     detail: null,
+    headerText: '',
     src: '',
     CATEGORY,
     shared: false,
@@ -40,24 +42,35 @@ Page({
       detail.duration = this.handleDuration(detail.duration)
       console.log(detail.description.search(/src=\"/))
       detail.description = detail.description.replace(/src=\"/," style=\"height:100%;width:100%;\" src=\"")
-      // detail.startTime = new Date(detail.startTime)
-      // detail.endTime = new Date(detail.startTime)
-      // detail.endTime.setMinutes(detail.startTime.getMinutes() + detail.duration)
       this.setData({detail: detail})
+      this.setData({headerText: `${detail.title}\n地点 : ${detail.place}\n时间 : ${detail.startTime}\n类别 : ${CATEGORY[detail.category - 1]}\n 编号 : ${detail.activityId}\n电话 : ${detail.contact}\n部门 : ${detail.organizer}`})
       this.setData({src: `../../assets/pic/category/${detail.category}.png`})
     })
   },
 
+  copy: e => copyText(e.target.dataset.text),
+
   join() {
+    let that = this;
     app.globalData.isLogin
       ? app.globalData.verified
-        ? request.submitData(request.constructUrl('EVENT_JOIN',{eventId:this.data.detail.activityId,force:false}),'EVENT_JOIN', res => {
-          console.log(res.data)
-            wx.showModal({
-              title:'提示',
-              content: res.data.result,
-              showCancel: false
+        ? wx.showModal({
+          title:'提示',
+          content:'想参加该活动吗？',
+          showCancel:true,
+          cancelText:'不想...',
+          confirmText: '对!',
+          success(res) {
+            res.confirm &&
+            request.submitData(request.constructUrl('EVENT_JOIN',{eventId: that.data.detail.activityId,force:false}),'EVENT_JOIN', res => {
+              console.log(res.data)
+              wx.showModal({
+                title:'提示',
+                content: res.data.result,
+                showCancel: false
+              })
             })
+          }
         })
         : wx.showModal({
           title:'提示',
@@ -96,6 +109,7 @@ Page({
       url: '/pages/index/index',
     })}
   }
+
 
   // 生命周期函数--监听页面初次渲染完成
   // onReady() {},

@@ -166,11 +166,17 @@
   font-size: 28rpx;
 }
 
-.container_share {
+.container_header_bottom_bar {
   position: relative;
   display: flex;
   justify-content: flex-end;
   padding: 20rpx;
+}
+
+.icon_copy {
+	margin: 5rpx;
+	width: 60rpx;
+	height: 60rpx;
 }
 
 .icon_share {
@@ -178,9 +184,10 @@
   height: 60rpx;
 }
 
+
 .btn_share {
   padding: 0rpx !important;
-  margin: 0rpx !important;
+  margin: 5rpx !important;
   width: 60rpx !important;
   height: 60rpx !important;
 }
@@ -244,7 +251,7 @@
   background: -webkit-linear-gradient(to right, #F2C94C, #F2994A);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #F2C94C, #F2994A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
- 
+
 .container_content {
   display: flex;
   flex-direction: column;
@@ -342,7 +349,7 @@
 .text_like {
   font-size: small;
   color: rgba(0, 0, 0, 0.5);
-} 
+}
 
 .container_read {
   display: flex;
