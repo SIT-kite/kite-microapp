@@ -243,7 +243,7 @@ Page({
       let mineScoreList = res.data.data.detail
 
       mineScoreList.forEach(item => {
-        item.amount = item.amount? item.amount.toFixed(1) : ''
+        item.amount = item.amount? item.amount.toFixed(2) : ''
         item.time = item.time.replace(/-/g, " / ")
         item.time = item.time.replace(/T/g, " ")
         item.time = item.time.replace(/\+08:00/g, "")
