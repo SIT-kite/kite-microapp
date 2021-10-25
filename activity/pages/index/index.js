@@ -209,7 +209,7 @@ Page({
     }
     this.data.selected === SWITCH_LIST.ONE && this.data.mineScoreList.length === 0
       ? (() => {
-        this.getScoreList(!wx.getStorageSync('isActivityMinePageLatest'));
+        this.getScoreList(wx.getStorageSync('isActivityMinePageLatest'));
       })()
       : () => {}
   },
@@ -225,7 +225,7 @@ Page({
 
     let isGetNew = typeof isLatest !== "boolean"
       ? true
-      : isLatest
+      : !isLatest
     let url = activityApiPrefix + '/sc/score?force=' + isGetNew
     let getData = requestUtils.doGET(url, {}, header)
 
@@ -316,7 +316,7 @@ Page({
     //     this.jumpToVerify()
     //   }
     // })
-    this.getScoreList(true)
+    this.getScoreList(false)
   },
 
   setPageData(pageData, data) {
