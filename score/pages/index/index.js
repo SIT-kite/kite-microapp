@@ -100,7 +100,7 @@ Page({
     const select = e.target.dataset.select;
     if ( select !== undefined && selects.includes(select) ) {
       this.setData({ [select]: !this.data[select] })
-      selects.splice(selects.indexOf(select), 1)
+      selects.splice(selects.indexOf(select), 1) // 删除 select 所在索引的选择器
     }
 
     // 收起其他展开的选择器

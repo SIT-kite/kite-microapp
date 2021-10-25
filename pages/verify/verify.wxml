@@ -4,15 +4,17 @@
 
 <image class="image" src="/assets/pic/verify.jpg" mode="widthFix" />
 
-<view class="title">实名认证</view>
+<view class="title">身份认证</view>
+
+<view class="content">
 
 <view class="input-container">
 	<input value="{{ identity.studentId }}"  placeholder="学号"    bindinput="bindId" />
 	<input value="{{ identity.oaSecret  }}"  placeholder="OA 密码" bindinput="bindSecret" type="password" />
 </view>
 
-<button class="upload {{canVerify}}" bindtap="verify" disabled="{{!canVerify}}">
-	<image class="upload-icon" src="/assets/icons/upload.png" />
+<button class="upload" disabled="{{!canVerify}}" size="mini" bindtap="verify">
+	<image class="upload-icon" src="/assets/icons/upload.png" /> 认证
 </button>
 
 <view class="hint-container">
@@ -23,4 +25,6 @@
 		<view class="li">设置密码时，建议满足一定的复杂度要求</view>
 	</view>
 	<view class="hint-last"></view>
+</view>
+
 </view>

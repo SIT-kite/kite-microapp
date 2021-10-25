@@ -1,153 +1,138 @@
-import {
-  handlerGohomeClick,
-  handlerGobackClick,
-} from "../../utils/navBarUtils";
+import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
+import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
 
 const app = getApp();
-const availableSuffix = `/edu/classroom/available`;
-const requestUtils = require("../../utils/requestUtils");
 const transformationsUtils = require("../../utils/transformationsUtils");
 const timeUtils = require("../../utils/timeUtils");
 
-const campuses = ["奉贤校区", "徐汇校区"];
-let choosedCampus = "奉贤校区";
+const campusMap = new Map([
+  [ "奉贤校区", { campus: 1, building: "region"   } ],
+  [ "徐汇校区", { campus: 2, building: "building" } ]
+]);
 
-const buildings = {
-  奉贤校区: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
-  徐汇校区: ["教学楼", "南图"],
+const getCampusAndBuilding = choosedCampus => {
+  const result = campusMap.get(choosedCampus);
+  if (result === undefined) {
+    throw "choosedCampus is not in campusMap!";
+  } else {
+    return result;
+  }
 };
 
-let choosedBuilding = "A";
-let data_content = {};
-let content = {};
 Page({
   data: {
-    campuses,
-    choosedCampus,
-    buildings,
-    choosedBuilding,
-    hideBottom: true,
+    buildings: {
+      奉贤校区: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+      徐汇校区: ["教学楼", "南图"],
+    },
+    campuses: ["奉贤校区", "徐汇校区"],
+    weekDates: [],
+    choosedCampus: "奉贤校区",
+    choosedBuilding: "A",
     index: 1,
-    content,
-    data_content,
+    content: []
   },
 
   // 导航栏函数
-  handlerGohomeClick: handlerGohomeClick,
-  handlerGobackClick: handlerGobackClick,
+  handlerGohomeClick,
+  handlerGobackClick,
 
-  Choosed: function () {
-    let campus;
-    let building;
-    if (this.data.choosedCampus == "奉贤校区") {
-      (campus = 1), (building = "region");
-    } else if (this.data.choosedCampus == "徐汇校区") {
-      (campus = 2), (building = "building");
-    }
-    return [campus, building];
-  },
-  //发送请求
-  sendData(Campus, building, index, date) {
-    let _this = this;
-    let available = `?campus=${Campus}&date=${date}&${building}=${this.data.choosedBuilding}&index=${index}`;
-    let url = `${app.globalData.commonUrl}${availableSuffix}${available}`;
-    let header = getHeader("urlencoded", app.globalData.token);
-    let dataInitial = {};
-    let content = _this.data.content;
-    let sendData = requestUtils.doGET(url, content, header);
-    let dataContent = {};
-    sendData.then((res) => {
-      dataInitial = res.data.data.rooms;
-      dataInitial.map((el) => {
-        el.busyTime = transformationsUtils.transformations(el.busyTime, 11);
-      });
-      index != 1
-        ? (dataContent = content.concat(dataInitial))
-        : (dataContent = dataInitial);
-      _this.setData({
-        content: dataContent,
-      });
-    });
-  },
-  //上拉加载
-  loadMore() {
-    let _this = this;
-    console.log("上拉加载更多");
-    let pages = _this.data.index;
-    pages = pages + 1;
-    _this.setData({
-      index: pages,
-    });
-    _this.sendData(
-      _this.Choosed()[0],
-      _this.Choosed()[1],
-      pages,
-      _this.data.choosedDate
+  scroll: null,
+
+  // 渲染开始
+  onLoad() {
+
+    const index = this.data.index;
+    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
+    const weekDates = timeUtils.getTimeOfHebdomad(Date.now()).map(
+      date => ["year", "month", "day"].map(key => date[key]).join("-")
     );
-  },
-  //渲染开始
-  onLoad: function (options) {
-    let _this = this;
-    let index = _this.data.index;
-    let campus = _this.Choosed()[0];
-    let building = _this.Choosed()[1];
-    let today = Date.parse(new Date());
-    let dates = timeUtils.getTimeOfHebdomad(today);
-    let weekDates = [];
-    for (let i = 0; i < dates.length; i++) {
-      weekDates[i] = dates[i].year + "-" + dates[i].month + "-" + dates[i].day;
-    }
     let choosedDate = weekDates[0];
     this.sendData(campus, building, index, weekDates[0]);
     this.setData({ weekDates, choosedDate });
+
   },
 
-  onShow: function () {},
-  //选择时间
-  tapDate: function (event) {
-    let _this = this;
-    const date = event.currentTarget.dataset.date;
-    _this.setData({
-      index: 1,
-      choosedDate: date,
-    });
-    this.sendData(
-      _this.Choosed()[0],
-      _this.Choosed()[1],
-      1,
-      this.data.choosedDate
+  // onShow () {},
+
+  // 发送请求
+  sendData(campus, building, index, date) {
+
+    console.log(campus, building, index, date);
+
+    const url = new webkitURL(`${app.globalData.commonUrl}/edu/classroom/available`);
+    Object.entries({
+      date, index, campus, [building]: this.data.choosedBuilding
+    }).forEach(
+      ([key, value]) => url.searchParams.set(key, value)
     );
+    const content = this.data.content;
+
+    return request({
+      url: url.href,
+      header: getHeader("urlencoded", app.globalData.token),
+      content
+    }).then(res => {
+      const rooms = res.data.data.rooms;
+      if (rooms.length > 0) {
+        rooms.forEach(
+          el => el.busyTime = transformationsUtils.transformations(el.busyTime, 11)
+        );
+        this.setData({
+          content: index !== 1 ? content.concat(rooms) : rooms
+        });
+      } else if (index === 1) {
+        wx.showToast({ title: "暂无数据", icon: "none" });
+        this.setData({ content: {} });
+      } else {
+        wx.showToast({ title: "没有更多数据了", icon: "none" });
+        this.data.index -= 1;
+      }
+    });
+
   },
-  //选择校区
-  tapCampus: function (event) {
-    let _this = this;
-    const campus = event.currentTarget.dataset.campus;
+
+  // 上拉加载
+  loadMore() {
+    console.log("上拉加载更多");
+    this.setData({ index: this.data.index + 1 });
+    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
+    const {index, choosedDate} = this.data;
+    this.sendData(campus, building, index, choosedDate);
+  },
+
+  // 选择时间
+  tapDate (event) {
     this.setData({
-      choosedCampus: campus,
-      choosedBuilding: buildings[campus][0],
       index: 1,
+      choosedDate: event.currentTarget.dataset.date
     });
-    this.sendData(
-      _this.Choosed()[0],
-      _this.Choosed()[1],
-      1,
-      _this.data.choosedDate
-    );
+    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
+    const {index, choosedDate} = this.data;
+    this.sendData(campus, building, index, choosedDate);
   },
-  //选择教学楼
-  tapBuilding: function (event) {
-    let _this = this;
-    const building = event.currentTarget.dataset.building;
-    _this.setData({
-      index: 1,
-      choosedBuilding: building,
+
+  // 选择校区
+  tapCampus(event) {
+    const choosedCampus = event.currentTarget.dataset.campus;
+    this.setData({
+      choosedCampus: choosedCampus,
+      choosedBuilding: this.data.buildings[choosedCampus][0],
+      index: 1
     });
-    this.sendData(
-      _this.Choosed()[0],
-      _this.Choosed()[1],
-      1,
-      _this.data.choosedDate
-    );
+    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
+    const {index, choosedDate} = this.data;
+    this.sendData(campus, building, index, choosedDate);
   },
+
+  // 选择教学楼
+  tapBuilding(event) {
+    const choosedBuilding = event.currentTarget.dataset.building;
+    this.setData({ choosedBuilding, index: 1 });
+    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
+    const {index, choosedDate} = this.data;
+    this.sendData(campus, building, index, choosedDate);
+  },
+
 });

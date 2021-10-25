@@ -35,29 +35,34 @@
 		<view class="gpa">
 			该学{{ scoreInfo.termIndex == terms.length - 1 ? '年' : '期' }}绩点为 {{gpa}}，努力会有回报的！
 		</view>
-		<view wx:if="{{isShowTip && scoreList.length > 0}}">（点击下方课程卡片可以查看详情哦！）</view>
+		<view wx:if="{{isShowTip && scoreList.length > 0}}">（点击下方课程卡片即可查看详情）</view>
 	</view>
 
-	<view class="info" wx:if="{{scoreList.length === 0}}">
-		<image class="info-image" src="/score/assets/pic/info1.svg" />
-		<view class="title">暂时还没有成绩哦！</view>
-		<view class="content">如果成绩刚刚出炉，可点击右上角刷新按钮尝试刷新~</view>
-	</view>
+	<block wx:if="{{scoreList.length > 0}}">
 
-	<scroll-view class="scroll" wx:if="{{scoreList[0] !== null}}"
-		scroll-y="true" scroll-anchoring="true">
+		<scroll-view class="scroll" scroll-y="true" scroll-anchoring="true">
 
-		<card wx:for="{{scoreList}}" wx:key="course"
-			name="{{item.course}}" credit="{{item.credit}}"
-			semester="{{item.semester}}" required="{{item.required}}"
-			grades="{{ item.isEvaluated ? item.score : '未评教' }}"
-			detailList="{{item.detail}}" isFolded="{{item.isFolded}}"
-			data-classId="{{item.classId}}" data-index="{{index}}"
-			bind:bindCard="bindCard" />
+			<card wx:for="{{scoreList}}" wx:key="course"
+				name="{{item.course}}" credit="{{item.credit}}"
+				semester="{{item.semester}}" required="{{item.required}}"
+				grades="{{ item.isEvaluated ? item.score : '未评教' }}"
+				detailList="{{item.detail}}" isFolded="{{item.isFolded}}"
+				data-classId="{{item.classId}}" data-index="{{index}}"
+				bind:bindCard="bindCard" />
 
-		<view class="end">已经到底部了哦!</view>
+			<view class="end">已经到底部了哦!</view>
 
-	</scroll-view>
+		</scroll-view>
 
-	<!-- <view></view> -->
+	</block>
+	<block wx:else>
+
+		<view class="info">
+			<image class="info-image" src="/score/assets/pic/info1.svg" />
+			<view class="title">暂时还没有成绩哦！</view>
+			<view class="content">如果成绩刚刚出炉，可点击右上角刷新按钮尝试刷新~</view>
+		</view>
+
+	</block>
+
 </view>

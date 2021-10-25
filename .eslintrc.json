@@ -47,7 +47,8 @@
 		"require": "writable",
 		"requireOnce": "writable",
 		"requirePlugin": "writable",
-		"wx": "writable"
+		"wx": "writable",
+		"webkitURL": "writable"
 	},
 	"ignorePatterns": [
 		"carpool/components/calendar/**",

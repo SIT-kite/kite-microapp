@@ -7,9 +7,9 @@ page {
 	line-height: 1.5;
 	font-family: system-ui, sans-serif;
 
-	--shadow: 0 0  8px  4px rgba(127, 127, 127, .1);
-	--shadow-hover: 0 0 16px  8px rgba(127, 127, 127, .2);
-	--shadow-modal: 0 0 32px 16px rgba(127, 127, 127, .3);
+	--shadow       : 0 0  8px  4px rgba(127, 127, 127, .125);
+	--shadow-hover : 0 0 16px  8px rgba(127, 127, 127, .25);
+	--shadow-modal : 0 0 32px 16px rgba(127, 127, 127, .5);
 
 	--transition: 200ms cubic-bezier(.4, 0, .2, 1);
 	--transition-shadow: box-shadow 200ms cubic-bezier(.4, 0, 1, 1);
