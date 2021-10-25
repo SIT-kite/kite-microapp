@@ -26,6 +26,7 @@ Page({
       isShowLoading: false,
       isRefresh: false,
       isAllRecords: false,
+      fetchSec: null,
       SRC_LIST
     },
 
@@ -58,6 +59,9 @@ Page({
           else item.category = 'shopping'
         })
         callback(records)
+        let time = new Date();
+        wx.setStorageSync('fetchConsumeDate', parseInt(time.getDate()))
+        this.setData({fetchMinute: time.getSeconds()})
       }).catch(err => {
         wx.hideLoading()
         wx.showModal({
@@ -96,21 +100,30 @@ Page({
 
     //刷新
     refresh() {
-      this.setData({isRefresh: true})
-      this.triggerSpider('2');
-      this.setData({isShowLoading: true})
-      setTimeout(() => {
-        this.fetchData('1', res => {
-          this.setData({isShowLoading: false})
-          res.length
-            ? this.setData({list: res})
-            : wx.showModal({
-              title: '提示',
-              content: '是不是未产生消费呢?\n(或许过几分钟来看?)',
-              showCancel: false,
-            })
+      if(new Date().getSeconds - this.data.fetchSec > 10 || new Date().getSeconds - this.data.fetchSec < 0) {
+        this.setData({isRefresh: true})
+        this.triggerSpider('2');
+        this.setData({isShowLoading: true})
+        setTimeout(() => {
+          this.fetchData('1', res => {
+            this.setData({isShowLoading: false})
+            res.length
+              ? this.setData({list: res})
+              : wx.showModal({
+                title: '提示',
+                content: '是不是未产生消费呢?\n(或许过几分钟来看?)',
+                showCancel: false,
+              })
+          })
+        }, 10000)
+        this.setData({isRefresh: false})
+      } else {
+        wx.showModal({
+          title: '咳咳!',
+          content: '要累坏啦~~~, 过一会儿再刷新哦!',
+          showCancel: false,
         })
-      }, 10000)
+      }
       this.setData({isRefresh: false})
     },
 
@@ -144,15 +157,48 @@ Page({
           this.triggerSpider('2')
         })()
         : (() => {
-            wx.showLoading({
-              title: '加载中2333~',
-              mask: true
-            })
-            this.fetchData('1', res => {
-              this.setData({list: res})
-              wx.hideLoading();
-            })
+          let lastDate = wx.getStorageSync('fetchConsumeDate');
+          typeof lastDate === 'number'
+            ? new Date().getDate() - lastDate >= 1 || new Date().getDate() - lastDate < 0
+              ? (() => {
+                  this.triggerSpider('2');
+                  this.setData({isShowLoading: true})
+                  setTimeout(() => {
+                    this.fetchData('1', res => {
+                      this.setData({isShowLoading: false})
+                      res.length
+                        ? this.setData({list: res})
+                        : wx.showModal({
+                          title: '提示',
+                          content: '是不是未产生消费呢?\n(或许过几分钟来看?)',
+                          showCancel: false,
+                        })
+                    })
+                  }, 10000)
+                })
+              : (() => {
+                  this.fetchData('1', res => {
+                    this.setData({list: res})
+                    wx.hideLoading();
+                  })
+                  this.triggerSpider('2');
+                })
+          : (() => {
             this.triggerSpider('2');
+            this.setData({isShowLoading: true})
+            setTimeout(() => {
+              this.fetchData('1', res => {
+                this.setData({isShowLoading: false})
+                res.length
+                  ? this.setData({list: res})
+                  : wx.showModal({
+                    title: '提示',
+                    content: '是不是未产生消费呢?\n(或许过几分钟来看?)',
+                    showCancel: false,
+                  })
+              })
+            }, 10000)
+          })
           })()
     },
 
