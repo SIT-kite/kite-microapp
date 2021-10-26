@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "navBar": "/components/navBar/navBar",
-    "b-schedule-card": "../../components/schedule-card/index"
-  }
-}
