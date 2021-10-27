@@ -5,7 +5,7 @@
 import copyText from "../../utils/copyText";
 
 const html = [
-
+/*
 `<h2 class="title">关于我们</h2>
 
 <blockquote class="blockquote content">
@@ -29,12 +29,12 @@ const html = [
 -->了解招新信息，加入校易班工作站。<small class="welcome">（欢迎来技术部！）</small></p>
 
 <p class="p">你也可以直接向有关项目提交 Issue 或 PR，留下你的痕迹；开源代码仓库见下。</p>`
-
+ */
 ].map(
   section => `<section class="section">${section}</section>`
 ).join("");
 
-const contributors = [
+const contributors = [ "上海应用技术大学学生" ]; /*  [
   [ 2017, "外国语", "张城" ],
   [ 2017,     "理", "Snowstar Cyan" ],
   [ 2017, "计算机科学与信息工程", "peanut996" ],
@@ -51,7 +51,7 @@ const contributors = [
   [ 2020,             "机械工程", "记者团廾匸" ]
 ].map(
   ([year, college, name]) => `${year}级 ${college.padStart(10, "　")}学院 ${name}`
-);
+); */
 
 Page({
   // handlerGohomeClick,

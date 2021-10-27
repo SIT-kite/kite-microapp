@@ -16,20 +16,8 @@ const checkUrl = url => {
 
   switch (url) {
 
-    // TEMP 电费升级通知
-    case "/electricity/pages/show/show":
-      wx.showModal({
-        title: "提示",
-        content: "电费模块正在升级中，详情请见公告~",
-        cancelText: "关闭",
-        confirmText: "查看公告",
-        success: res => res.confirm && wx.navigateTo({
-          url: "/pages/article/article?url=https://mp.weixin.qq.com/s/W2wqTQqg00jy1jQm73s63Q"
-        })
-      });
-      return false;
-
     // 如果点击“迎新”，但是 userDetail 不为空，则直接跳转到 stuInfoDetail
+    // 这里用了 always return，不用在末尾加 break
     case "/freshman/pages/welcome/welcome":
       if (gData.userDetail !== null) {
         return "/freshman/pages/stuInfoDetail/stuInfoDetail";
@@ -48,7 +36,7 @@ Page({
   data: {
     isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
-    notices: [], // 通知
+    notices: [{  id: 1, title: "正在加载通知…" }], // 通知
     modules
   },
 
@@ -100,7 +88,7 @@ Page({
       if (notices.length > 0) {
         this.setData({ notices });
         console.groupCollapsed("%c通知数据", "font-weight: normal");
-        notices.forEach(notice => console.log(notice));
+        notices.forEach( notice => console.log(notice) );
         console.groupEnd();
       } else {
         noNotice();
@@ -121,20 +109,14 @@ Page({
       item => item.id === e.target.dataset.id
     );
     if (notice !== undefined) {
-      if (isNonEmptyString(notice.content)) {
-        wx.showModal({ // 含内容通知
-          title: notice.title,
-          content: notice.content,
-          confirmText: "关闭",
-          showCancel: false
-        });
-      } else if (notice.title.length > 20) {
-        wx.showModal({ // 长通知
-          title: "通知详情",
-          content: notice.title,
-          confirmText: "关闭",
-          showCancel: false
-        });
+      const noticeModal = (title, content) => wx.showModal({
+        title, content, confirmText: "关闭", showCancel: false
+      });
+      const { title, content } = notice;
+      if (isNonEmptyString(content)) {
+        noticeModal(title, content); // 含内容通知
+      } else if (title.length > 20) {
+        noticeModal("通知详情", title); // 长通知
       }
     }
   },
