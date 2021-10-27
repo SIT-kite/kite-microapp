@@ -18,13 +18,13 @@ App({
     token: "", // 登录需要的授权码
 
     isLogin:  false, // 是否已登录
-    verified: false, // 是否已实名
-    identity: {},    // 实名认证信息, 该字段替换原有的 uploadInfo
+    verified: false, // 是否已认证
+    identity: {},    // 身份认证信息，含校园账号登录信息, 该字段替换原有的 uploadInfo
 
     nickName:  null, // 昵称
     avatarUrl: null, // 头像
 
-    signPrivacyConfirm:     false, // 实名隐私协议
+    signPrivacyConfirm:     false, // 认证隐私协议
     freshmanPrivacyConfirm: false, // 迎新隐私协议
 
     visible: false,   // 迎新 inputInfo 页面 复选框 同城可见
@@ -98,8 +98,9 @@ App({
     // 设置 isDev
     gData.isDev = systemInfo.platform === "devtools";
 
-    // 按照 isDev 打印调试信息或检查更新
+    // 按照 isDev 进行收尾操作
     if (gData.isDev) {
+      // 打印调试信息
       console.groupCollapsed("%c调试信息", "color: #0075E8");
       new Map([
         [ "全局数据 globalData" , gData ],
@@ -110,6 +111,7 @@ App({
       );
       console.groupEnd();
     } else {
+      // 检查更新
       updateManager();
     }
 

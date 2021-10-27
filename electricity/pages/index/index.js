@@ -6,6 +6,7 @@ import { check, isNonEmptyString } from "../../../utils/type";
 import request   from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 import uCharts from "./u-charts";
+import { getDateTime } from "../../../utils/timeUtils";
 
 const app = getApp();
 const gData = app.globalData;
@@ -22,14 +23,7 @@ const electricityAPI = ({api = "", roomId, callback}) => request({
     console.error(err);
     wx.showModal({
       title: "发生错误",
-      content: `错误信息：${
-        err.symbol === request.symbols.codeNotZero &&
-        isNonEmptyString(err.data.msg)
-        ? err.data.msg
-        : err.data.code === 200
-        ? "房间不存在"
-        : err.msg
-      }`,
+      content: `错误信息：${ request.getMsg(err) }`,
       showCancel: false
     })
   }
@@ -40,17 +34,6 @@ const numberStringFilter = str => str
   .filter( char => "1234567890".includes(char) )
   .join("")
   .replace(/^0+(.+)/, "$1");
-
-const getDateTime = date => [
-  [ "FullYear" , "年"  ],
-  [ "Month"    , "月" , 1 ],
-  [ "Day"      , "日 " ],
-  [ "Hours"    , ":"   ],
-  [ "Minutes"  , ":"   ],
-  [ "Seconds"  , ""    ],
-].map(
-  ([name, suffix, offset = 0]) => `${date["get" + name]() + offset}${suffix}`
-).join("");
 
 Page({
 

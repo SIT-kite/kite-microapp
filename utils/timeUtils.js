@@ -119,6 +119,7 @@ const getTimeOfWeek = (givenTime) => {
   }
   return intervalWeek;
 };
+
 // getTimeOfHebdomad(Giventime: String): intervalWeek :array
 // 获得给定时间后七天的日期和星期
 // 返回格式 [{ year: yyyy, month: MM, day: dd, week: number }]
@@ -151,6 +152,20 @@ const getTimeOfHebdomad = (givenTime) => {
   }
   return intervalWeek;
 };
+
+const getDateTime = date => [
+  [ "FullYear" , "年"  , 0 ],
+  [ "Month"    , "月"  , 0, 1 ],
+  [ "Day"      , "日 " , 0 ],
+  [ "Hours"    , ":"   , 2 ],
+  [ "Minutes"  , ":"   , 2 ],
+  [ "Seconds"  , ""    , 2 ],
+].map(
+  ([name, suffix, padLength, offset = 0]) => `${
+    (date["get" + name]() + offset).toString().padStart(padLength, "0")
+  }${suffix}`
+).join("");
+
 module.exports = {
   getTimeStamp,
   getIntervalToCurrentTime,
@@ -158,4 +173,5 @@ module.exports = {
   getIntervalToCurrentWeek,
   getTimeOfWeek,
   getTimeOfHebdomad,
+  getDateTime
 };

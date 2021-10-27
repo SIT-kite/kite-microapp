@@ -7,13 +7,13 @@
 	<!-- banner -->
 	<swiper class="card banner" indicator-dots="true" autoplay="true"
 	interval="7500" duration="500" easing-function="ease-out" circular="true">
-		<swiper-item>
+		<!-- <swiper-item>
 				<navigator
 					url="../article/article?url=https://mp.weixin.qq.com/s/RuQsCKZtXLvDjenBo7cXQg"
 					style="display: contents;">
 					<image class="banner-image" src="/assets/pic/recur.png" />
 				</navigator>
-		</swiper-item>
+		</swiper-item> -->
 		<swiper-item>
 			<image class="banner-image" src="/assets/pic/temp_activity.png" bindtap="goTemp" />
 		</swiper-item>
@@ -34,14 +34,17 @@
 
 	<!-- 功能索引 -->
 	<view class="card menu">
-		<block wx:for="{{items}}" wx:key="url">
-			<view class="menu-cell" data-url="{{item.url}}" data-index="index" bindtap="router">
+		<block wx:for="{{modules}}" wx:key="url">
+			<view class="menu-cell" bindtap="router"
+				data-index="index" data-url="{{item.url}}" data-verify="{{item.verify}}">
 				<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" mode="heightFix" />
 				{{item.text}}
 			</view>
 		</block>
 	</view>
 
-	<view wx:if="{{ !isLogin }}" class="tip-login">尚未登录，请先在“我”中登录</view>
+	<button wx:if="{{ !isLogin }}" class="card hint-login" bindtap="goUser">
+		尚未登录，请先在“我”中登录
+	</button>
 
 </view>

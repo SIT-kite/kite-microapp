@@ -5,6 +5,8 @@ import { isNonEmptyString } from "../../utils/type";
 import onShareAppMessage from "../../utils/onShareAppMessage";
 import getHeader from "../../utils/getHeader";
 
+import modules from "./modules";
+
 const app = getApp();
 const gData = app.globalData;
 
@@ -14,20 +16,8 @@ const checkUrl = url => {
 
   switch (url) {
 
-    // TEMP 电费升级通知
-    case "/electricity/pages/show/show":
-      wx.showModal({
-        title: "提示",
-        content: "电费模块正在升级中，详情请见公告~",
-        cancelText: "关闭",
-        confirmText: "查看公告",
-        success: res => res.confirm && wx.navigateTo({
-          url: "/pages/article/article?url=https://mp.weixin.qq.com/s/W2wqTQqg00jy1jQm73s63Q"
-        })
-      });
-      return false;
-
     // 如果点击“迎新”，但是 userDetail 不为空，则直接跳转到 stuInfoDetail
+    // 这里用了 always return，不用在末尾加 break
     case "/freshman/pages/welcome/welcome":
       if (gData.userDetail !== null) {
         return "/freshman/pages/stuInfoDetail/stuInfoDetail";
@@ -44,59 +34,10 @@ const checkUrl = url => {
 Page({
 
   data: {
-
     isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
-    notices: [], // 通知
-
-    items: [
-      {
-        text: "新生",
-        url: "/freshman/pages/welcome/welcome",
-        iconPath: "/assets/icons/index/freshman.png"
-      },
-      {
-        text: "电费",
-        url: "/electricity/pages/show/show",
-        iconPath: "/assets/icons/index/electricity.png"
-      },
-      {
-        text: "空教室",
-        url: "/class-room/pages/available-room",
-        iconPath: "/assets/icons/index/availroom.png"
-      },
-      {
-        text: "课表",
-        url: "/timetable/pages/index/index",
-        iconPath: "/assets/icons/index/timetable.png"
-      },
-      {
-        text: "常用电话",
-        url: "/contact/pages/show/show",
-        iconPath: "/assets/icons/index/telephone.png"
-      },
-      {
-        text: "成绩",
-        url: "/score/pages/index/index",
-        iconPath: "/assets/icons/index/score.png"
-      },
-      {
-        text: "活动",
-        url: "/activity/pages/index/index",
-        iconPath: "/assets/icons/index/activity.png"
-      },
-      {
-        text: "消费",
-        url: "/consume/pages/index/index",
-        iconPath: "/assets/icons/index/consume.png"
-      },
-      // {
-      //   text: "商城",
-      //   url: "/shop/pages/index/index",
-      //   iconPath: "/assets/icons/index/shop.png"
-      // },
-    ]
-
+    notices: [{  id: 1, title: "正在加载通知…" }], // 通知
+    modules
   },
 
   onShareAppMessage,
@@ -133,6 +74,10 @@ Page({
     });
   },
 
+  goUser() {
+    wx.switchTab({ url: "/pages/user/user" });
+  },
+
   // setNotice(notices: Array)
   setNotice(notices) {
 
@@ -147,7 +92,7 @@ Page({
       if (notices.length > 0) {
         this.setData({ notices });
         console.groupCollapsed("%c通知数据", "font-weight: normal");
-        notices.forEach(notice => console.log(notice));
+        notices.forEach( notice => console.log(notice) );
         console.groupEnd();
       } else {
         noNotice();
@@ -168,20 +113,14 @@ Page({
       item => item.id === e.target.dataset.id
     );
     if (notice !== undefined) {
-      if (isNonEmptyString(notice.content)) {
-        wx.showModal({ // 含内容通知
-          title: notice.title,
-          content: notice.content,
-          confirmText: "关闭",
-          showCancel: false
-        });
-      } else if (notice.title.length > 20) {
-        wx.showModal({ // 长通知
-          title: "通知详情",
-          content: notice.title,
-          confirmText: "关闭",
-          showCancel: false
-        });
+      const noticeModal = (title, content) => wx.showModal({
+        title, content, confirmText: "关闭", showCancel: false
+      });
+      const { title, content } = notice;
+      if (isNonEmptyString(content)) {
+        noticeModal(title, content); // 含内容通知
+      } else if (title.length > 20) {
+        noticeModal("通知详情", title); // 长通知
       }
     }
   },
@@ -196,13 +135,27 @@ Page({
     this.setData({ clicked: dataset.index });
     setTimeout(() => this.setData({ clicked: -1 }), 1000);
 
-    /* if (url) {
-      isLogin ? 跳转到目标页面 : 提示用户登录
-    } */
     const url = checkUrl(dataset.url);
     url && (
-      gData.isLogin
-      ? wx.navigateTo({ // 已登录，跳转到目标页面
+      // url 可用
+
+      !gData.isLogin
+      ? wx.showModal({ // 未登录，提示用户登录，确定后切换到“我”
+        title: "请登录",
+        content: "尚未登录，请前往登录",
+        confirmText: "前往",
+        success: res => res.confirm && wx.switchTab({ url: "/pages/user/user" })
+      })
+
+      : dataset.needVerify && !gData.verified
+      ? wx.showModal({ // 需要认证但未认证，提示用户认证，确定后导航至认证页面
+        title: "需要认证",
+        content: "此功能需要认证本校账号，请先认证",
+        confirmText: "认证",
+        success: res => res.confirm && wx.navigateTo({ url: "/pages/verify/verify" })
+      })
+
+      : wx.navigateTo({ // 已登录，跳转到目标页面
         url, fail: () => wx.showModal({ // 页面跳转失败时，显示未完成
           title: "正在开发",
           content: "功能尚未完成，正在努力开发~",
@@ -210,11 +163,7 @@ Page({
           showCancel: false
         })
       })
-      : wx.showModal({ // 未登录，提示用户登录，点击“确定”后切换到“我”
-        title: "请登录",
-        content: "尚未登录，请前往登录",
-        success: res => res.confirm && wx.switchTab({ url: "/pages/user/user" })
-      })
+
     );
 
   }

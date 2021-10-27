@@ -111,7 +111,7 @@ const handleFetchListError =  (err) => {
     title: "哎呀，出错误了 >.<",
     content: err.data.code === 4
       ? "请前往小程序主页登录和认证"
-      : err.data.data.result,
+      : err.data.msg,
     showCancel: false,
     complete: err.data.code === 6
       ? () => {

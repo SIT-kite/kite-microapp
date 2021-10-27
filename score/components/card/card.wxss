@@ -14,7 +14,7 @@
 	justify-content: space-between;
 	margin: 0 1em;
 	background-color: white;
-	border-bottom: 1px solid rgb(121, 177, 250);
+	border-bottom: 1px solid #BBDEFB;
 	/* box-shadow: 0rpx 5rpx 5rpx 0rpx rgba(102, 102, 102, 0.2); */
 }
 
@@ -31,7 +31,7 @@
 .name {
 	overflow-wrap: break-word;
 	font-weight: bold;
-	color: #343a40;
+	color: #333;
 }
 
 .info {
@@ -40,20 +40,22 @@
 	border-top: 2px solid #ffc53d;
 	font-size: 14px;
 	font-weight: 500;
-	color: rgba(52, 58, 64, 0.8);
+	color: #555;
 }
 
 .details {
-	padding-top: .1rem;
+	margin-top: .25rem;
+	padding-left: .5ch;
+	border-left: 2px solid #64B5F6;
 	font-size: 13px;
-	color: rgba(0, 0, 0, 0.5);
+	color: #555;
 }
 
 .text_grades {
 	/* margin:auto; */
 	font-weight: 500;
 	font-size: x-large; /* 1.5em */
-	color: #69c0ff;
+	color: #2196F3;
 }
 
 .fail {

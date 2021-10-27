@@ -34,13 +34,8 @@ Page({
       err => {
         console.error("班级同学获取失败", err);
         wx.showModal({
-          title: "哎呀，出错误了 >.<",
-          content: `错误信息：${
-            err.symbol === request.symbols.codeNotZero &&
-            isNonEmptyString(err.data.msg)
-            ? err.data.msg
-            : err.msg
-          }`,
+          title: "班级同学获取失败",
+          content: `错误信息：${ request.getMsg(err) }`,
           showCancel: false
         });
       }

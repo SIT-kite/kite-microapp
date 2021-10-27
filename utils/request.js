@@ -1,5 +1,7 @@
 // request.js
 
+import { isNonBlankString } from "./type";
+
 const symbols = {
   codeNotZero: Symbol("codeNotZero"),
   codeError:   Symbol("codeError"),
@@ -35,8 +37,8 @@ const errors = {
   }
 }
 
-// getError(errorType, res): Object.assign(res, { option, msg, symbol })
-const addErrorInfo = (errorType, res, option) => Object.assign(
+// addErrorInfo(res, errorType, option): Object.assign(res, { option, msg, symbol })
+const addErrorInfo = (res, errorType, option) => Object.assign(
   res, { option }, (() => {
 
     switch (errorType) {
@@ -58,48 +60,53 @@ const addErrorInfo = (errorType, res, option) => Object.assign(
   })()
 );
 
-const request = option => new Promise(
-  (resolve, reject) => {
-    wx.request(
-      Object.assign(
-        {}, option, {
+// request(option): Promise
+const request = option => new Promise((resolve, reject) => {
 
-          success: res => {
+  // success(res)
+  const success = res => {
 
-            const rejectFor = errorType => reject(
-              addErrorInfo(errorType, res, option)
-            );
+    const rejectFor = (errorType) => reject(
+      addErrorInfo(res, errorType, option)
+    );
 
-            typeof res !== "object"
-            ? rejectFor("res")
+    // check res
+    typeof res !== "object" ? rejectFor("res")
+    // check res.statusCode
+    :  res.statusCode !== 200      ? rejectFor("status")
+    // check res.data (Object or ArrayBuffer)
+    : typeof res.data !== "object"
+      // check res.data (String)
+      ? typeof res.data !== "string" ? rejectFor("data") : resolve(res)
+      // check res.data.code
+      :   res.data.code !== 0        ? rejectFor("code") : resolve(res);
 
-            : res.statusCode !== 200
-            ? rejectFor("status")
+  };
 
-              : typeof res.data !== "object"
+  wx.request(
+    Object.assign({}, option, { success, fail: reject })
+  );
 
-                ? typeof res.data !== "string"
-                  ? rejectFor("data")
-                  : resolve(res)
+});
 
-                : res.data.code !== 0
-                  ? rejectFor("code")
-                  : resolve(res);
+// getMsg(res): msg: String
+const getMsg = res =>
+  res?.symbol === symbols.codeNotZero &&
+  isNonBlankString(res?.data?.msg)
+    ? res.data.msg
+    : res.msg;
 
-          },
-
-          fail: reject
-
-        }
-      )
-    )
-  }
-);
+// checkCode(res, code): Boolean
+const checkCode = (res, code) =>
+  res?.symbol === symbols.codeNotZero &&
+  res?.data?.code === code;
 
 // request(obj): Promise
 export default Object.assign(
-  request, { symbols }
+  request, { symbols, getMsg, checkCode }
 );
+
+
 
 // https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html
 /* wx.request({
@@ -108,13 +115,13 @@ export default Object.assign(
   dataType: "json" | "其他",
   enableCache: true,
   enableHttp2: true,
-  enableQuic: true,
+  enableQuic:  true,
   header: header,
-  method: method,
-  responseType: responseType,
+  method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "OPTIONS" | "TRACE" | "CONNECT",
+  responseType: "text" | "arraybuffer",
   timeout: 0,
-  success: res => {},
-  fail: res => {},
+  success:  res => {},
+  fail:     res => {},
   complete: res => {},
 });
 
@@ -122,5 +129,6 @@ res = {
   statusCode: Number,
   header: {},
   data: {},
-  cookies: []
+  cookies: [],
+  profile: {}
 }; */
