@@ -32,7 +32,7 @@ page {
 	font-size: 12px;
 }
 
-.nav-item.choosed {
+.nav-item.true {
 	background-color: #276eb1;
 }
 

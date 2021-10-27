@@ -6,133 +6,109 @@ const app = getApp();
 const transformationsUtils = require("../../utils/transformationsUtils");
 const timeUtils = require("../../utils/timeUtils");
 
-const campusMap = new Map([
-  [ "奉贤校区", { campus: 1, building: "region"   } ],
-  [ "徐汇校区", { campus: 2, building: "building" } ]
-]);
-
-const getCampusAndBuilding = choosedCampus => {
-  const result = campusMap.get(choosedCampus);
-  if (result === undefined) {
-    throw "choosedCampus is not in campusMap!";
-  } else {
-    return result;
-  }
-};
-
 Page({
+
   data: {
-    buildings: {
-      奉贤校区: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
-      徐汇校区: ["教学楼", "南图"],
-    },
+
+    // 日期 校区 教学楼 / 区域
+    dates: [],
     campuses: ["奉贤校区", "徐汇校区"],
-    weekDates: [],
+    buildings: {
+      // 奉贤校区: { campus: 1, key: "building", value: ["一教", "二教"] }
+      奉贤校区: { campus: 1, key: "region",   value: "ABCDEFGHI" },
+      徐汇校区: { campus: 2, key: "building", value: ["教学楼", "南图"] },
+    },
+
+    choosedDate: "",
     choosedCampus: "奉贤校区",
     choosedBuilding: "A",
+
     index: 1,
-    content: []
+    rooms: []
+
   },
 
   // 导航栏函数
   handlerGohomeClick,
   handlerGobackClick,
 
-  scroll: null,
-
-  // 渲染开始
   onLoad() {
 
-    const index = this.data.index;
-    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
-    const weekDates = timeUtils.getTimeOfHebdomad(Date.now()).map(
+    const dates = timeUtils.getTimeOfHebdomad(Date.now()).map(
       date => ["year", "month", "day"].map(key => date[key]).join("-")
     );
-    let choosedDate = weekDates[0];
-    this.sendData(campus, building, index, weekDates[0]);
-    this.setData({ weekDates, choosedDate });
+    this.setData({ dates, choosedDate: dates[0] });
+    this.fetchRooms();
 
   },
 
-  // onShow () {},
+  onShow () {},
 
   // 发送请求
-  sendData(campus, building, index, date) {
+  fetchRooms(index = 1) {
 
-    console.log(campus, building, index, date);
+    // choosedCampus 是校区名称，campus 是校区 id
+    const { choosedDate: date, choosedBuilding: building } = this.data;
+    const { buildings, choosedCampus } = this.data;
+    const { campus, key } = buildings[choosedCampus];
 
-    const url = new webkitURL(`${app.globalData.commonUrl}/edu/classroom/available`);
-    Object.entries({
-      date, index, campus, [building]: this.data.choosedBuilding
-    }).forEach(
-      ([key, value]) => url.searchParams.set(key, value)
-    );
-    const content = this.data.content;
+    console.log({ date, campus, [key]: building, index });
 
     return request({
-      url: url.href,
+      url: `${app.globalData.commonUrl}/edu/classroom/available`,
       header: getHeader("urlencoded", app.globalData.token),
-      content
+      data: { date, campus, [key]: building, index }
     }).then(res => {
+
       const rooms = res.data.data.rooms;
+
       if (rooms.length > 0) {
-        rooms.forEach(
+
+        // 有数据
+        rooms.forEach( // 转换二进制数据
           el => el.busyTime = transformationsUtils.transformations(el.busyTime, 11)
         );
-        this.setData({
-          content: index !== 1 ? content.concat(rooms) : rooms
+        this.setData({ // 按照获取的是否为第一页数据，更新或附加数据
+          rooms: index === 1 ? rooms : this.data.rooms.concat(rooms)
         });
+
       } else if (index === 1) {
+        // 无数据，第一页，提示 “暂无数据”，并清空 rooms
         wx.showToast({ title: "暂无数据", icon: "none" });
-        this.setData({ content: {} });
+        this.setData({ rooms: [] });
       } else {
+        // 无数据，非第一页，提示 “没有更多数据了”，并将 index 减去 1
         wx.showToast({ title: "没有更多数据了", icon: "none" });
         this.data.index -= 1;
       }
+
     });
 
   },
 
-  // 上拉加载
-  loadMore() {
-    console.log("上拉加载更多");
-    this.setData({ index: this.data.index + 1 });
-    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
-    const {index, choosedDate} = this.data;
-    this.sendData(campus, building, index, choosedDate);
+  // 选择日期
+  tapDate(e) {
+    this.setData({ choosedDate: e.target.dataset.date });
+    this.fetchRooms();
   },
 
-  // 选择时间
-  tapDate (event) {
-    this.setData({
-      index: 1,
-      choosedDate: event.currentTarget.dataset.date
-    });
-    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
-    const {index, choosedDate} = this.data;
-    this.sendData(campus, building, index, choosedDate);
-  },
-
-  // 选择校区
-  tapCampus(event) {
-    const choosedCampus = event.currentTarget.dataset.campus;
-    this.setData({
-      choosedCampus: choosedCampus,
-      choosedBuilding: this.data.buildings[choosedCampus][0],
-      index: 1
-    });
-    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
-    const {index, choosedDate} = this.data;
-    this.sendData(campus, building, index, choosedDate);
+  // 选择校区 同时重置选中的教学楼
+  tapCampus(e) {
+    const choosedCampus = e.target.dataset.campus;
+    const buildings = this.data.buildings;
+    this.setData({ choosedCampus, choosedBuilding: buildings[choosedCampus].value[0] });
+    this.fetchRooms();
   },
 
   // 选择教学楼
-  tapBuilding(event) {
-    const choosedBuilding = event.currentTarget.dataset.building;
-    this.setData({ choosedBuilding, index: 1 });
-    const {campus, building} = getCampusAndBuilding(this.data.choosedCampus);
-    const {index, choosedDate} = this.data;
-    this.sendData(campus, building, index, choosedDate);
+  tapBuilding(e) {
+    this.setData({ choosedBuilding: e.target.dataset.building });
+    this.fetchRooms();
+  },
+
+  // 上拉加载更多（下一页）
+  loadMore() {
+    this.fetchRooms(++this.data.index);
   },
 
 });
