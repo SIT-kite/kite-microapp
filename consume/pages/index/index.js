@@ -61,7 +61,7 @@ Page({
         callback(records)
         let time = new Date();
         wx.setStorageSync('fetchConsumeDate', parseInt(time.getDate()))
-        this.setData({fetchMinute: time.getSeconds()})
+        this.setData({fetchSec: time.getSeconds()})
       }).catch(err => {
         wx.hideLoading()
         wx.showModal({
@@ -100,7 +100,7 @@ Page({
 
     //刷新
     refresh() {
-      if(new Date().getSeconds - this.data.fetchSec > 10 || new Date().getSeconds - this.data.fetchSec < 0) {
+      if(new Date().getSeconds() - this.data.fetchSec > 10 || new Date().getSeconds() - this.data.fetchSec < 0) {
         this.setData({isRefresh: true})
         this.triggerSpider('2');
         this.setData({isShowLoading: true})
