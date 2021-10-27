@@ -18,13 +18,13 @@ App({
     token: "", // 登录需要的授权码
 
     isLogin:  false, // 是否已登录
-    verified: false, // 是否已实名
-    identity: {},    // 实名认证信息, 该字段替换原有的 uploadInfo
+    verified: false, // 是否已认证
+    identity: {},    // 身份认证信息，含校园账号登录信息, 该字段替换原有的 uploadInfo
 
     nickName:  null, // 昵称
     avatarUrl: null, // 头像
 
-    signPrivacyConfirm:     false, // 实名隐私协议
+    signPrivacyConfirm:     false, // 认证隐私协议
     freshmanPrivacyConfirm: false, // 迎新隐私协议
 
     visible: false,   // 迎新 inputInfo 页面 复选框 同城可见

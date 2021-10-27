@@ -1,8 +1,9 @@
-// 我
+// 用户页面（我）
 // pages/user/user.js
 
+// 为方便调试，用户页面登录注册流程会全程打印日志
+
 import onShareAppMessage from "../../utils/onShareAppMessage";
-import { isNonEmptyString } from "../../utils/type";
 import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
 import promisify from "../../utils/promisify";
@@ -12,20 +13,19 @@ import loading   from "../../utils/loading";
 const app = getApp();
 const gData = app.globalData;
 
+const errorModal = (title, msg = "") => wx.showModal({
+  title,
+  content: `${title}，请检查网络或稍后重试。${msg}`,
+  showCancel: false
+});
+
 const catchError = (prefix, msg, err) => {
   console.error(`${prefix} ${msg}`, err);
-  wx.showModal({
-    title: msg,
-    content: `${msg}，请检查网络或稍后再试。\n错误信息：${
-      err.symbol === request.symbols.codeNotZero &&
-      isNonEmptyString(err.data.msg)
-        ? err.data.msg
-        : err.msg
-    }`,
-    showCancel: false
-  });
+  errorModal(msg, `错误信息：${request.getMsg(err) }`);
 }
 
+// wxLogin(): Promise: code: String | null
+// wx.login(): { code: String }
 const wxLogin = () => loading({
   title: "正在登录…",
   callback: promisify(wx.login)().then(
@@ -34,11 +34,7 @@ const wxLogin = () => loading({
     err => {
       const title = "微信登录失败";
       console.error(title, err);
-      wx.showModal({
-        title,
-        content: "请检查网络或稍后重试。",
-        showCancel: false
-      });
+      errorModal(title);
       return null;
     }
   )
@@ -120,7 +116,7 @@ Page({
         // setIdentity() 会用到 uid 和 token，
         // 所以必须先执行 setUserData()，再执行 setIdentity()；
 
-        // setIdentity() 会设置用户信息元素中的“已/未实名”，
+        // setIdentity() 会设置用户信息元素中的“已/未认证”，
         // setIsLogin()  会将用户信息元素显示出来，
         // 所以最好先执行 setIdentity()，再执行 setIsLogin()。
 
@@ -131,10 +127,7 @@ Page({
       }).catch(res => {
 
         // 判断是用户不存在，还是出错了
-        if (
-          res.symbol === request.symbols.codeNotZero &&
-          res.data.code === 51
-        ) {
+        if ( request.checkCode(51) ) {
           // 用户不存在，准备请求授权并注册用户
           this.setData({ needRegister: true });
           wx.showModal({
@@ -153,7 +146,7 @@ Page({
 
   },
 
-  // 通过授权，获取微信用户信息
+  // 通过 wx.getUserProfile() 授权，获取微信用户信息
   register() {
 
     wx.getUserProfile({
@@ -161,21 +154,22 @@ Page({
       desc: "上应小风筝需要获得您的公开信息" // 昵称和头像
     }).then(res => {
 
-      const wxUserInfo = res.userInfo;
-      console.log("用户信息 userinfo:", wxUserInfo);
+      // { nickName: String, avatarUrl: String, language: "zh_CN" }
+      const data = res.userInfo;
+      console.log("用户信息 userinfo:", data);
 
       // POST user 创建用户
       request({
-        url: `${gData.apiUrl}/user`,
         method: "POST",
+        url: `${gData.apiUrl}/user`,
         header: getHeader("urlencoded"),
-        data: wxUserInfo
+        data
       }).then(res => {
 
         console.log("POST user 用户创建成功", res);
         const data = res.data.data;
 
-        // 新注册用户肯定没实名，所以跳过 setIdentity()
+        // 新注册用户肯定没认证，所以跳过 setIdentity()
         this.setUserData(data, data.token);
         this.setIsLogin();
 

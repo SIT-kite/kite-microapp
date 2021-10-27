@@ -19,7 +19,7 @@
 
 			<view class="verified {{ verified }}">
 				<image src="/assets/icons/{{ verified ? 'right' : 'wrong' }}.png" />
-				{{ verified ? "已" : "未" }}实名
+				{{ verified ? "已" : "未" }}认证
 			</view>
 
 			<navigator class="verify" url="/pages/verify/verify">

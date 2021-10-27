@@ -74,6 +74,10 @@ Page({
     });
   },
 
+  goUser() {
+    wx.switchTab({ url: "/pages/user/user" });
+  },
+
   // setNotice(notices: Array)
   setNotice(notices) {
 

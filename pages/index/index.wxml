@@ -43,6 +43,8 @@
 		</block>
 	</view>
 
-	<view wx:if="{{ !isLogin }}" class="tip-login">尚未登录，请先在“我”中登录</view>
+	<button wx:if="{{ !isLogin }}" class="card hint-login" bindtap="goUser">
+		尚未登录，请先在“我”中登录
+	</button>
 
 </view>

@@ -1,4 +1,4 @@
-// 实名认证
+// 身份认证
 // pages/verify/verify.js
 
 // import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
@@ -33,10 +33,10 @@ Page({
 
     const url = options.url;
     if ("url" in options) {
-      if (isNonEmptyString(url)) {
+      if ( isNonEmptyString(url) ) {
         this.data.url = url;
       } else {
-        console.warn("页面参数 url 不是非空字符串，认证后将不会跳转", url);
+        console.warn("页面参数 url 不是非空字符串，认证后将不会跳转至 url", url);
       }
     }
 
@@ -102,38 +102,31 @@ Page({
         url: `${gData.apiUrl}/user/${gData.uid}/identity`,
         header: getHeader("urlencoded", gData.token),
         data: identity,
-      }).then(
-        res => {
+      }).then(res => {
 
-          console.log("POST identity", res);
+        console.log("POST identity", res);
 
-          Object.assign(gData, { identity, verified: true });
-          wx.setStorageSync("identity", identity);
-          wx.setStorageSync("verified", true);
+        Object.assign(gData, { identity, verified: true });
+        wx.setStorageSync("identity", identity);
+        wx.setStorageSync("verified", true);
 
-          const url = this.data.url;
-          wx.showModal({
-            title: "认证成功",
-            content: "认证成功！您将能够使用课表、成绩等需要认证的功能。",
-            showCancel: false,
-            confirmText: "返回",
-            success: res => res.confirm && (
-              url !== null
-              ? wx.redirectTo({ url })
-              : wx.navigateBack({ delta: 1 })
-            )
-          });
+        const url = this.data.url;
+        wx.showModal({
+          title: "认证成功",
+          content: "认证成功！您将能够使用课表、成绩等需要认证的功能。",
+          showCancel: false,
+          confirmText: "返回",
+          success: res => res.confirm && (
+            url !== null
+            ? wx.redirectTo({ url })
+            : wx.navigateBack({ delta: 1 })
+          )
+        });
 
-        }
-      ).catch(
+      }).catch(
         err => wx.showModal({
-          title: "哎呀，出错误了 >.<",
-          content: `错误信息：${
-            err.symbol === request.symbols.codeNotZero &&
-            typeof err.data.msg === "string"
-            ? err.data.msg
-            : err.msg
-          }`,
+          title: "认证失败",
+          content: `错误信息：${ request.getMsg(err) }`,
           showCancel: false
         })
       );
@@ -145,8 +138,8 @@ Page({
   toggleHint() {
     const showHint = !this.data.showHint;
     this.setData({ showHint });
-    showHint && ( // 如果是在展开而不是收起提示
-        () => setTimeout( // 那么展开动画结束后，将页面滚动至提示最下方
+    showHint && ( // 如果是在展开提示（而不是收起提示）
+        () => setTimeout( // 那么，展开动画结束后，将页面滚动至提示最下方
           () => wx.pageScrollTo({ selector: ".hint-last", duration: 100 }), 201
         )
       )
