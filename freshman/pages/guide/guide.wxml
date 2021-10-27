@@ -5,8 +5,8 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 <view class="mapContainer">
 
   <map id="campusMap" class="map"
-    setting="{{setting}}" markers="{{markers}}"
-    show-location show-compass show-scale enable-traffic polyline="{{polyline}}"/>
+    setting="{{setting}}" markers="{{markers}}" polyline="{{polyline}}"
+    show-location show-compass show-scale enable-traffic/>
 
     <view class="btn_container" wx:if="{{campus == '奉贤校区'}}">
       <view class="btn car_route" bindtap="showCarRoute">{{showCarRoute}}</view>
