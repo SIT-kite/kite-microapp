@@ -32,8 +32,8 @@ Page({
 
     // 检查是否为第一次使用
     checkFirstRefer() {
-        return (!typeof wx.getStorageSync('isFirstUseConsume') === 'boolean' && wx.setStorageSync('isFirstUseConsume',false))
-          ||
+        return !typeof wx.getStorageSync('fetchConsumeDate') === 'number'
+          &&
           (this.fetchData('1', res => {
             this.setData({list: res});
           }) && this.data.list.length);
