@@ -17,57 +17,49 @@ const isNonBlankString = value => (
 	String.prototype.trim.call(value) !== ""
 );
 
-const check = (
-  value, type, opt = {} // has, length, startsWith, endsWith, contains
-) => {
-  if (getType(value) !== type) {
-    return false;
-  } else switch (type) {
-    case "Object": {
-      if ("has" in opt) {
-        const hasOwn = prop => Object.prototype.hasOwnProperty.call(value, prop);
-        switch (getType(opt.has)) {
-          case "String": return hasOwn(opt.has);
-          case "Array": return opt.has.every(hasOwn);
-          default: return true;
-        }
-      }
-      if ("is" in opt) {
+const check = (value, type) => getType(value) === type;
 
-      }
+// checkObject(obj, ref: Object): Boolean
+const checkObject = (obj, ref) => {
+
+  if (getType(obj) !== "Object") {
+    return false;
+  } else if (getType(ref) !== "Object") {
+    throw "ref is not an Object";
+  } else {
+    const hasOwn = (instance, key) => Object.hasOwnProperty.call(instance, key);
+    const ok = key =>
+      ( ref[key] === "*" && hasOwn(obj, key) ) ||
+      getType(obj[key]) === ref[key];
+    for (const key in ref) {
+      if ( hasOwn(ref, key) && !ok(key) ) { return false; }
     }
-    default: return true;
+    return true;
   }
+
 };
 
-const checkObject = (obj, opt) => {
+// checkObjectHas(obj, has: String | Array): Boolean
+const checkObjectHas = (obj, has) => {
 
   if (getType(obj) !== "Object") {
     return false;
   } else {
-    if ("has" in opt) {
-      const notOwn = prop => !Object.prototype.hasOwnProperty.call(obj, prop);
-      switch (getType(opt.has)) {
-        case "String": if ( notOwn(opt.has)      ) { return false; } break;
-        case "Array":  if ( opt.has.some(notOwn) ) { return false; } break;
-        default: throw "obj.has is not a String or Array";
-      }
-    }
-    if ("is" in opt) {
-      if (getType(obj) !== "Object") {
-        throw "obj.is is not an Object";
-      } else {
-        for (const key in obj.is) {
-          if (
-            Object.hasOwnProperty.call(obj.is, key) &&
-            getType(obj[key]) !== obj.is[key]
-          ) { return false; }
-        }
-        return true;
-      }
+    const hasOwn = prop => Object.hasOwnProperty.call(obj, prop);
+    switch (getType(has)) {
+      case "String": return hasOwn(has);
+      case "Array": return has.every(hasOwn);
+      default: throw "has is not a String or Array";
     }
   }
-}
+
+};
+
+// check(a, "Object")
+// checkObject(a, { b: "String", c: "*" })
+// checkObjectHas(a, ["b", "c"])
+
+// checkStringLength(), checkArrayLength(), startsWith(), endsWith(), contains()...
 
 export {
 	getType,
@@ -75,5 +67,6 @@ export {
 	isNonEmptyString,
   isNonBlankString,
   check,
-  checkObject
+  checkObject,
+  checkObjectHas
 };

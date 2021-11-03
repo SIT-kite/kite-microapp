@@ -7,10 +7,10 @@
 		<input class="input building" value="{{building}}" placeholder="楼号" maxlength="2"
 			confirm-type="next" bindinput="inputBuilding" focus="{{ focus }}" />
 		<input class="input room" value="{{room}}" placeholder="寝室号" maxlength="4"
-			confirm-type="send" bindinput="inputRoom" bindconfirm="getElectricity" />
+			confirm-type="send" bindinput="inputRoom" bindconfirm="fetchElectricity" />
 	</view>
 
-	<button class="button submit" type="primary" loading="{{loading}}" bindtap="getElectricity">查询</button>
+	<button class="button submit" type="primary" loading="{{loading}}" bindtap="fetchElectricity">查询</button>
 
 </view>
 

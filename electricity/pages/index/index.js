@@ -1,8 +1,7 @@
 // electricity/pages/index/index.js
 // https://github.com/SIT-Yiban/kite-server/blob/develop/docs/APIv1/消费查询.md
 
-// TODO: 应该只剩下切换一周/一天用电历史没支持了
-import { check, isNonEmptyString } from "../../../utils/type";
+import { check, checkObject, isNonEmptyString } from "../../../utils/type";
 import request   from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 import uCharts from "./u-charts";
@@ -45,7 +44,7 @@ Page({
     currentTab: 0,
 
     // https://developers.weixin.qq.com/community/develop/doc/00066c12e1cb90d9865a4eea455400
-    canvas2d: ["android", "ios"].some( mobile => platform === mobile ),
+    canvas2d: ["android", "ios"].some( supported => platform === supported ),
 
     building: "",
     room: "",
@@ -58,6 +57,41 @@ Page({
     charges: []
 
   },
+
+
+	onLoad() {
+
+    const electricity = wx.getStorageSync("electricity");
+
+    if ( checkObject(electricity, { building: "String", room: "String" }) ) {
+
+      // 新
+      const { building, room } = electricity;
+      this.setData({ building, room });
+      this.fetchElectricity();
+
+    } else {
+
+      const [building, room] = ["floor", "room"].map(
+        name => wx.getStorageSync(`electricity_${name}`)
+      );
+
+      if ( check(building, "Number") && check(room, "Number") ) {
+        // 旧
+        wx.setStorageSync("electricity", { building, room });
+        this.setData({ building, room });
+        this.fetchElectricity();
+      } else {
+        // 无
+        this.setData({ focus: true });
+      }
+
+    }
+
+	},
+
+	// onReady() {},
+	// onShow() {},
 
   inputBuilding(e) {
     this.setData({ building: numberStringFilter(e.detail.value) });
@@ -97,7 +131,8 @@ Page({
 
   },
 
-  getElectricity() {
+  // 电费余额
+  fetchElectricity() {
 
     const roomId = this.getRoomId();
 
@@ -146,7 +181,7 @@ Page({
         }),
 
         // 用电历史
-        this.getBill("days", roomId).then(
+        this.fetchBill("days", roomId).then(
           () => this.renderChart(this.data.days)
         )
 
@@ -158,7 +193,7 @@ Page({
   },
 
   // 用电历史
-  getBill(range, roomId) {
+  fetchBill(range, roomId) {
 
     const { datetimeName, trim } = (() => {
       switch (range) {
@@ -280,7 +315,7 @@ Page({
     if (Array.isArray(cachedData) && cachedData.length > 0) {
       updateData();
     } else {
-      this.getBill(range, this.data.electricity.room).then(updateData);
+      this.fetchBill(range, this.data.electricity.room).then(updateData);
     }
   },
 
@@ -307,51 +342,10 @@ Page({
     } */);
   },
 
-
-	onLoad() {
-
-    const electricity = wx.getStorageSync("electricity");
-    if ( check(electricity, "Object", { has: ["building", "room"] }) ) {
-
-      // 新
-      const { building, room } = electricity;
-      this.setData({ building, room });
-      this.getElectricity();
-
-    } else {
-
-      const [building, room] = ["floor", "room"].map(
-        name => wx.getStorageSync(`electricity_${name}`)
-      );
-
-      if ( check(building, "Number") && check(room, "Number") ) {
-        // 旧
-        const electricity = { building, room };
-        this.setStorageSync("electricity", electricity);
-        this.setData(electricity);
-        this.getElectricity();
-      } else {
-        // 无
-        this.setData({ focus: true });
-      }
-
-    }
-
-	},
-
-	onReady() {
-
-	},
-
-	onShow() {
-
-	},
-
 	onPullDownRefresh() {
-    this.getElectricity().then(
+    this.fetchElectricity().then(
       () => wx.stopPullDownRefresh()
     );
-
 	},
 
   onShareAppMessage: () => ({

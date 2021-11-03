@@ -5,7 +5,7 @@
 import onShareAppMessage from "../../utils/onShareAppMessage";
 import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
-import { check, isNonEmptyString } from "../../utils/type";
+import { checkObject, isNonEmptyString } from "../../utils/type";
 
 const app = getApp();
 const gData = app.globalData;
@@ -27,7 +27,7 @@ Page({
 
     const identity = gData.identity;
 
-    check(identity, "Object", { has: [ "studentId", "oaSecret" ] }) &&
+    checkObject(identity, { studentId: "String", oaSecret: "String" }) &&
     this.setData({ identity });
     this.setCenVerify();
 
