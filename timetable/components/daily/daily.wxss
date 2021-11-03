@@ -1,94 +1,56 @@
 /* timetable/components/daily/daily.wxss */
 
-.daily {
-	color: #000;
-	flex-direction: column;
-	/* background:#E4EBF5; */
-	justify-content: center;
-	align-items: center;
-	border-radius: 1.5rem;
-}
-
-.icon_1 {
-	margin-top: 3vh;
-	width: 40px;
-	height: 40px;
-	border-radius: 10px;
-	background: #EEEE;
-	/* border:1px solid rgb(160, 158, 158); */
-}
-
-.text {
-	margin: .5em;
-	display: flex;
-	flex-direction: column;
-	/* background: rgb(168, 158, 158); */
-	color: #377ec0;
-	font-weight: bold;
+.scroll {
+	height: calc(100% - 4.25em);
+	padding-top: .75em;
+	box-sizing: border-box;
 }
 
 .course {
-	box-sizing: border-box;
-	padding: 0 1vw;
-	padding-bottom: 1vh;
-}
-
-.todo {
 	display: flex;
-	/* height: 7vh; */
-	height: 50rpx;
-}
-.list{
-	padding: 0 1vw;
-	padding-bottom: 1vh;
-}
-.table {
-	display: flex;
-	flex-direction: row;
 	align-items: center;
-	border-radius: 15px;
-	/* margin-bottom: 1vh; */
-	background: hsl(0, 0%, 100%);
-	/* border: 1px solid #d4d4d4; */
+	margin: 0 .75em .75em;
+	padding: .5em;
 	border: 1px solid #F5F5F5;
+	border-left: 3px solid #568BE5;
+	border-radius: 1em;
 	box-shadow: 1px 1.5px 3px #c8d0e7,
 		-2px -2px 5px #FFFFFF;
-	border-left: 3px solid #568BE5;
 }
 
-.td {
-	display: flex;
-	width: 70vw;
-	margin-left: 4vw;
-	height: 90px;
-	/* background:#EEEE; */
+.course-icon {
+	display: block;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	margin-inline-end: .5em;
 }
 
-.course_name {
-	font-size: 20px;
-	font-weight: bolder;
-	height: 30px;
-	color: #14446A;
-	overflow: hidden;
+.course-info {
+	flex-grow: 1;
 }
 
-.course_time {
-	margin-top: 0.1vh;
-	font-weight: bolder;
-	height: 20px;
+.course-name {
+	font-weight: bold;
+	color: #0D47A1;
+}
+
+.course-teacher {
 	font-size: 14px;
-	/* color:#fcd144d2; */
-	color: #5d8cae69;
-	overflow: hidden;
+	font-weight: 500;
+	color: #1976D2;
 }
 
-.course_teacher {
-	font-size: 16px;
-	font-weight: bolder;
-	color: #568BE5;
-	overflow: hidden;
-	height: 22px;
+.course-time-location {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	font-size: 14px;
+	font-weight: 500;
 }
+
+.course-time     { color: #212121; }
+.course-location { color: #616161; }
 
 .loading-free {
 	background-color: white;

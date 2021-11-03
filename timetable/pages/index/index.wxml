@@ -16,11 +16,13 @@
 			<text>周</text>
 		</view>
 		<view class="choose_time">
-			<view class="days {{choosedDay.week == days.week ? 'choose_couple' : ''}}"
-				wx:for="{{date}}" wx:key="day" data-days="{{item}}" bindtap="tapDays">
-				<view class="day">{{item.day}}</view>
-				<view class="week">{{item.weekday}}</view>
-			</view>
+			<block wx:for="{{date}}" wx:key="day">
+				<view class="days {{choosedDay.week == item.week ? 'choose_couple' : ''}}"
+						data-week="{{item.week}}" bindtap="tapDays">
+					<view class="day">{{item.day}}</view>
+					<view class="week">{{item.weekday}}</view>
+				</view>
+			</block>
 		</view>
 	</view>
 </template>
@@ -38,25 +40,37 @@
 		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
 	</swiper>
 
-	<!-- 日课表 -->
-	<block wx:if="{{timetableMode == 1}}">
-		<swiper class="main" bindtap="collapse" bindchange="bindChangeDay" duration="300"
-			easing-function="easeOutCubic" circular="true">
-			<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail"></daily></swiper-item>
-			<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail"></daily></swiper-item>
-			<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail"></daily></swiper-item>
-		</swiper>
-	</block>
+		<!-- 日课表 -->
+		<block wx:if="{{timetableMode === 'day'}}">
+			<swiper class="daily" bindchange="bindChangeDay" bindtap="collapse"
+				duration="300" easing-function="easeOutCubic" circular="true">
+				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
+				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
+				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
+			</swiper>
+		</block>
 
-	<!-- 周课表 -->
-	<block wx:if="{{timetableMode == 2}}">
-		<swiper class="main" bindtap="collapse" bindchange="bindChangeWeek" duration="400"
-			easing-function="easeOutCubic" circular="true">
-			<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail"></weekly></swiper-item>
-			<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail"></weekly></swiper-item>
-			<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail"></weekly></swiper-item>
-		</swiper>
-	</block>
+		<!-- 周课表 -->
+		<block wx:if="{{timetableMode === 'week'}}">
+			<scroll-view class="scroll" scroll-y="true" bindtap="collapse">
+				<view class="weekly">
+
+					<view class="weekly-time">
+						<block wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" wx:key="*this">
+							<view class="weekly-time-text">{{item}}</view>
+						</block>
+					</view>
+
+					<swiper class="weekly-main" bindchange="bindChangeWeek"
+						duration="400" easing-function="easeOutCubic" circular="true">
+						<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail" /></swiper-item>
+						<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail" /></swiper-item>
+						<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail" /></swiper-item>
+					</swiper>
+
+				</view>
+			</scroll-view>
+		</block>
 
 	<!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
 		<image class="QRcode" src="{{QRCode}}" ></image>
@@ -89,7 +103,7 @@
 	<!-- 课程详情 -->
 	<view class="masks" wx:if="{{showDetail}}" bindtap="collapseDetail"></view>
 	<view class="detail" animation="{{animation}}">
-		<detail detail="{{detail}}"></detail>
+		<detail detail="{{detail}}" />
 	</view>
 
 </view>

@@ -1,4 +1,5 @@
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import { check } from "../../../utils/type";
 import request from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 import discipline from "./discipline";
@@ -14,6 +15,19 @@ const urlTimetable = `${app.globalData.apiUrl}/edu/timetable`;
 
 const header = getHeader("urlencoded", app.globalData.token);
 
+const checkCourseConflict = (x, course, courses) => {
+  course.conflict = false;
+  for (let i = 0; i < courses.length; i++) {
+    if (
+      i !== x &&
+      course.day === courses[i].day &&
+      course.section === courses[i].section
+    ) {
+      course.conflict = courses[i].conflict = true;
+    }
+  }
+};
+
 // let code = false;
 // let qrcodeWidth = 150;
 // let codeText = "dwdwefewfw";
@@ -21,11 +35,11 @@ const header = getHeader("urlencoded", app.globalData.token);
 Page({
   data: {
     date: [],
-    timetableMode: 1, // 日课表：1，周课表：2
+    timetableMode: "day", // 日课表："day"，周课表："week"
     tapSet: false, // 是否显示设置周数
-    table: [],    // 作息时间表 schedule
+    schedule: [], // 作息时间表 schedule
     calendar: [], //   开学时间 calendar
-    list: [],     //     课程表 timetable
+    timetable: [],     //     课程表 timetable
     page: 0,
     pageDay: 0,
     thisWeek: 0,
@@ -64,42 +78,39 @@ Page({
 
   // 读取缓存
   readStorage() {
-    this.data.list = wx.getStorageSync("timetableList");
-    this.data.table = wx.getStorageSync("timetableSchedule");
-    this.data.calendar = wx.getStorageSync("timetableCalendar");
+    this.data.timetable = wx.getStorageSync("timetableList");
+    this.data.schedule  = wx.getStorageSync("timetableSchedule");
+    this.data.calendar  = wx.getStorageSync("timetableCalendar");
     this.data.toSchool = this.data.calendar.start;
-    this.data.refresh = wx.getStorageSync("timetableRefresh");
-    this.data.refresh.length === 0
-      ? (this.data.refresh = true)
-      : (this.data.refresh = wx.getStorageSync("timetableRefresh"));
+
+    const refresh = wx.getStorageSync("timetableRefresh");
+    this.data.refresh = check(refresh, "Boolean") ? true : refresh;
 
     const timetableMode = wx.getStorageSync("timetableMode");
-    if (timetableMode === 1 || timetableMode === 2) {
-      this.data.timetableMode = timetableMode;
+    if (timetableMode === "day" || timetableMode === "week") {
+      this.setData({timetableMode});
     } else {
-      this.data.timetableMode = 1;
-      wx.setStorageSync("timetableMode", 1);
+      wx.setStorageSync("timetableMode", "day");
     }
   },
 
   // 时间判断（是否开学）
   TermBegins() {
-    return Date.parse(new Date()) < Date.parse(this.data.toSchool)
-    ? this.data.toSchool
-    : new Date();
+    const toSchool = new Date(this.data.toSchool);
+    return Date.now() < toSchool.getTime() ? toSchool : new Date();
   },
 
   // 按需判断是否接收数据
   fetchDataOnDemand(time) {
     let courseDay, courseWeek;
     if (
-      ["list", "calendar", "table"].every(
+      ["timetable", "calendar", "schedule"].every(
         key => this.data[key].length !== 0
       )
     ) {
       // 判断是否有请求数据
       this.setTime(this.data.toSchool, time);
-      let Data = this.processData();
+      let Data = this.processTimetable();
       [courseDay, courseWeek] = Data;
       this.setData({ courseDay, courseWeek });
     } else {
@@ -119,7 +130,7 @@ Page({
   fetchSchedule() {
     return request({ url: urlSchedule, header }).then(res => {
       const dataSchedule = res.data.data;
-      this.setData({ table: dataSchedule });
+      this.setData({ schedule: dataSchedule });
       wx.setStorageSync("timetableSchedule", dataSchedule);
     }).catch(this.getError);
   },
@@ -153,9 +164,9 @@ Page({
       header
     }).then(res => {
       const timetable = res.data.data.timeTable;
-      this.setData({ list: timetable });
+      this.setData({ timetable });
       wx.setStorageSync("timetableList", timetable);
-      const [courseDay, courseWeek] = this.processData();
+      const [courseDay, courseWeek] = this.processTimetable();
       this.setData({ courseDay, courseWeek });
     }).catch(this.getError);
   },
@@ -241,54 +252,44 @@ Page({
   },
 
   // 课表数据处理
-  processData(list = this.data.list) {
+  processTimetable(timetable = this.data.timetable) {
     let weekList = [];
     let dayList = [];
-    list.forEach(el => {
-      el.weeks = transformationsUtils.transformations(el.week, 32);
-      el.table = transformationsUtils.transformations(el.timeIndex, 32);
+    timetable.forEach(course => {
+      course.weeks = transformationsUtils.transformations(course.week, 32);
+      course.table = transformationsUtils.transformations(course.timeIndex, 32);
     });
-    weekList = list.filter((el) => el.weeks[this.data.thisWeek - 1] === 1); // 筛出对应周的数据
-    weekList = this.processWeek(weekList);
-    dayList = weekList.filter((el) => el.day === this.data.choosedDay.week); // 筛出对应日期的数据
-    dayList = this.processDay(dayList);
+    weekList = timetable.filter( // 筛出对应周的数据
+      course => course.weeks[this.data.thisWeek - 1] === 1
+    );
+    this.processWeek(weekList);
+    dayList = weekList.filter( // 筛出对应日期的数据
+      course => course.day === this.data.choosedDay.week
+    );
+    this.processDay(dayList);
     return [dayList, weekList];
   },
 
   // 周课表数据处理
-  processWeek(weekList) {
-    for (let i = 0; i < weekList.length; i++) {
-      let section = 0;
-      let time = 0;
-      for (let x = 0; x < weekList[i].table.length; x++) {
-        if (weekList[i].table[x] == 1 && time == 0) {
-          section = x + 1;
-          time++;
-        } else if (weekList[i].table[x] == 1) {
-          time++;
-        }
-        let color = i % 9; // 选取颜色
-        weekList[i].colorArrays = color;
-        weekList[i].section = section;
-        weekList[i].time = time;
-        weekList[i] = this.courseRepeat(i, weekList[i], weekList);
-      }
-    }
-    // todo: 暂时不知道是否需要删除
-    // list.map((el) => {
-    //   //对多余数据进行删除
-    //   delete el.weeks;
-    //   delete el.table;
-    // });
-    return weekList;
+  processWeek(courses) {
+    courses.forEach((course, i) => {
+      const getRange = time => ["indexOf", "lastIndexOf"].map(
+        method => time[method](1)
+      );
+      const [start, end] = getRange(course.table);
+      course.color = i % 9; // 背景色
+      course.section = start; // 开始时间
+      course.time = end - start + 1; // 长度
+      checkCourseConflict(i, course, courses);
+    });
   },
 
   // 日课表数据处理
-  processDay(dayList) {
+  processDay(courses) {
     // 排序
-    dayList.sort((a, b) => a.time_index - b.time_index);
+    courses.sort((a, b) => a.time_index - b.time_index);
     // 设置标签和上课时间
-    dayList.forEach(course => {
+    courses.forEach(course => {
 
       // 标签
       course.discipline = discipline.get(course.courseName) ?? "generality";
@@ -299,41 +300,27 @@ Page({
         [ course.place.slice(0, 2), "default" ]  // 教学楼
       ].reduce(
         (table, [key, fallback]) => table[ key in table ? key : fallback ],
-        this.data.table // 作息表
+        this.data.schedule // 作息表
       );
+
       course.tables = ["indexOf", "lastIndexOf"].map(
         (method, index) => table[ course.table[method](1) ][index]
       );
 
     });
-    return dayList;
-  },
-
-  courseRepeat(x, weekList, list) {
-    for (let i = 0; i < list.length; i++) {
-      weekList.day === list[i].day &&
-      weekList.section === list[i].section &&
-      i != x
-        ? (weekList.repeat = true)
-        : "";
-    }
-    weekList.repeat == undefined ? (weekList.repeat = false) : "";
-    return weekList;
   },
 
   // 敲击日按钮
   tapDays(e) {
-    let date = e.currentTarget.dataset.days.week;
-    this.data.choosedDay.week = date;
-    this.setData({ choosedDay: { week: date } });
-    this.setData({ courseDay: this.processData()[0] });
-    // console.log(this.selectComponent('#the-id'))
+    const week = e.currentTarget.dataset.week;
+    this.setData({ choosedDay: { week }, courseDay: this.processTimetable()[0] });
   },
 
   // 敲击周课表日课表切换按钮
   tapActivity() {
-    this.setData({ timetableMode: this.data.timetableMode === 1 ?  2 : 1 });
-    wx.setStorageSync("timetableMode", this.data.timetableMode);
+    const timetableMode = this.data.timetableMode === "day" ? "week" : "day";
+    this.setData({ timetableMode });
+    wx.setStorageSync("timetableMode", timetableMode);
   },
   // 敲击设置按钮（暂未使用）
   tapSet(e) {
@@ -344,20 +331,19 @@ Page({
 
   // 时间改变函数
   changeTime(startTime, givenTime) {
-    let nowTime = this.TermBegins();
     let startWeek = this.data.startWeek;
-    this.data.thisWeek = givenTime;
-    let time = Date.parse(nowTime) + (givenTime - startWeek) * 604800000;
-    time = new Date(time);
-    this.setTime(startTime, time);
-    this.setData(this.data.thisWeek);
+    console.log("changeTime():", {startTime, givenTime, startWeek})
+    this.setTime(startTime, new Date(
+      this.TermBegins().getTime() + (givenTime - startWeek) * 604800000
+    ));
+    this.setData({thisWeek: givenTime});
   },
 
   // 周数设置按钮函数
   sliderChange(e) {
     let sliderChange = e.detail.value;
     this.changeTime(this.data.toSchool, sliderChange);
-    let [courseDay, courseWeek] = this.processData();
+    let [courseDay, courseWeek] = this.processTimetable();
     this.setData({ courseDay, courseWeek });
   },
   // 滑动换算函数
@@ -383,7 +369,7 @@ Page({
     page = index;
     if (thisWeek <= 0) { thisWeek = 1; } // 第一周到底
     this.changeTime(this.data.toSchool, thisWeek);
-    let [courseDay, courseWeek] = this.processData();
+    let [courseDay, courseWeek] = this.processTimetable();
     this.setData({ courseDay, courseWeek, page, thisWeek });
   },
 
@@ -409,7 +395,7 @@ Page({
         break;
     }
 
-    let courseDay = this.processData()[0];
+    let courseDay = this.processTimetable()[0];
 
     this.setData({
       pageDay,
@@ -448,7 +434,6 @@ Page({
     let courses = [e.detail];
     let detail = [];
     let courseWeek = this.data.courseWeek;
-    // console.log(courseWeek.length);
     courseWeek.filter(
       _ =>
         courses[0].day === _.day &&
@@ -471,7 +456,7 @@ Page({
   },
 
   prepareDetailCourse(e) {
-    let courses = this.data.list.filter(el => el.courseName === e.courseName);
+    let courses = this.data.timetable.filter(el => el.courseName === e.courseName);
     courses.forEach(course => {
       // 设置上课周数、日期与时间
       const getRange = list => ["indexOf", "lastIndexOf"].map(

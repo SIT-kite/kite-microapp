@@ -1,26 +1,19 @@
-<scroll-view scroll-y="true" class="scroll">
-
-	<view class="main">
-
-		<view class="time">
-			<view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" class="left" wx:key="index">{{item}}</view>
-		</view>
-
-		<!--Schedule_Main -->
-		<view class="course" wx:if="{{wlist !=0}}">
-			<view class="schedule-item" wx:for="{{wlist}}" wx:key="index"
-			data-data="{{item}}" data-index="{{index}}" bindtap="getdata"
-			style="height: {{item.time*100+(item.time/2-1)*10}}rpx; left: calc({{(item.day-1)}} * 100% / 7); top: {{(item.section-1)*105}}rpx; background-color: {{colorArrays[item.colorArrays]}}; border:2px solid #daebfa;">
-				<view class="schedule-name">{{item.courseName}}</view>
-				<view class="schedule-info">{{item.place}}</view>
-				<view class="schedule-info">{{item.teacher}}</view>
-				<view class="triangle" wx:if = "{{item.repeat}}"> </view>
-			</view>
-		</view>
-		<view wx:if= "{{wlist==0}}" class="loading-free">
-			<image src="../../assets/free.png" class="images"></image>
-			<view class="text">今天休息 ヾ(^▽^*)))</view>
+<block wx:if="{{wlist.length > 0}}">
+	<view class="course">
+		<view class="schedule-item" wx:for="{{wlist}}" wx:key="index"
+		data-data="{{item}}" data-index="{{index}}" bindtap="getdata"
+		style="height: {{item.time*100+(item.time/2-1)*10}}rpx; left: calc({{(item.day-1)}} * 100% / 7); top: {{(item.section)*105}}rpx; background-color: {{colorArrays[item.color]}};">
+			<view class="schedule-name">{{item.courseName}}</view>
+			<view class="schedule-info">{{item.place}}</view>
+			<view class="schedule-info">{{item.teacher}}</view>
+			<view class="triangle" wx:if="{{item.conflict}}"></view>
 		</view>
 	</view>
+</block>
 
-</scroll-view>
+<block wx:else>
+	<view class="free">
+		<image src="../../assets/free.png" class="free-image" mode="aspectFit" />
+		<view class="free-text">本周休息 ヾ(^▽^*)))</view>
+	</view>
+</block>
