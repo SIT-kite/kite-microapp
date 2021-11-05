@@ -490,7 +490,7 @@ Page({
     wx.showModal({
       cancelColor: 'cancelColor',
       showCancel: false,
-      content:'刷新功能正在维护中~'
+      content:'当前课表只使用小程序缓存数据，刷新功能已禁用'
     })
   },
   onPullDownRefresh() {},
