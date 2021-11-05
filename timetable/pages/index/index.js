@@ -486,6 +486,13 @@ Page({
     return result;
   },
 
+  popUp() {
+    wx.showModal({
+      cancelColor: 'cancelColor',
+      showCancel: false,
+      content:'刷新功能正在维护中~'
+    })
+  },
   onPullDownRefresh() {},
 
   onShareAppMessage: () => ({
