@@ -313,7 +313,10 @@ Page({
   // 敲击日按钮
   tapDays(e) {
     const week = e.currentTarget.dataset.week;
-    this.setData({ choosedDay: { week }, courseDay: this.processTimetable()[0] });
+    this.setData({
+      choosedDay: { week }
+    })
+    this.setData({courseDay: this.processTimetable()[0]});
   },
 
   // 敲击周课表日课表切换按钮
