@@ -41,6 +41,7 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 			<text>24小时消费超越了<text style="font-weight:bold;"> {{rank.percen}}% </text>的寝室</text>
 		</view>
 		<view class="show_block">
+		 <text style="margin-left: .3em;" wx:if="{{selected === 'days'}}">上次充值：{{charge}}元（仅可查询七天内充值记录）</text>
 			<chart chart-class="chart" option="{{ option }}" notMerge />
 		</view>
 		<view class="slider_container">

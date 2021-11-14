@@ -126,7 +126,9 @@ Page({
     rank: {
       con: 0,
       percen: ' '
-    }
+    },
+
+    charge: 0
   },
 
   onClose() {
@@ -224,6 +226,10 @@ Page({
         let tempdata = [];
         let tempx = [];
         let sum = 0;
+
+        //存充值记录
+        let charge = 0;
+
         for (let value of res.data.data) {
           //  console.log(value)
           sum += value.consumption;
@@ -233,7 +239,13 @@ Page({
               ? value.time.split(' ')[1]
               : value.date.substr(5)
           );
+
+          //存充值记录
+          if(value.charge !== 0) charge = value.charge;
         }
+
+        this.setData({charge:charge});
+
         if (type === 'days') {
           let moption = that.data.mdays;
           console.log("保留day数据")
