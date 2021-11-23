@@ -21,7 +21,7 @@ const errorModal = (title, msg = "") => wx.showModal({
 
 const catchError = (prefix, msg, err) => {
   console.error(`${prefix} ${msg}`, err);
-  errorModal(msg, `错误信息：${request.getMsg(err) }`);
+  errorModal(msg, `错误信息：${ request.getMsg(err) }`);
 }
 
 // wxLogin(): Promise: code: String | null
@@ -105,44 +105,44 @@ Page({
         method: "POST",
         header: getHeader("urlencoded"),
         data: { loginType: 0, wxCode }
-      }).then(res => {
-
-        console.log("POST session 登录成功", res);
-
-        // res: { data: { code, data: { token, data: { uid, ... } } } }
-        const data = res.data.data;
-
-        // setUserData() 会向全局变量 globalData 设置 uid 和 token，
-        // setIdentity() 会用到 uid 和 token，
-        // 所以必须先执行 setUserData()，再执行 setIdentity()；
-
-        // setIdentity() 会设置用户信息元素中的“已/未认证”，
-        // setIsLogin()  会将用户信息元素显示出来，
-        // 所以最好先执行 setIdentity()，再执行 setIsLogin()。
-
-        this.setUserData(data.data, data.token);
-        this.setIdentity();
-        this.setIsLogin();
-
-      }).catch(res => {
-
-        // 判断是用户不存在，还是出错了
-        if ( request.checkCode(51) ) {
-          // 用户不存在，准备请求授权并注册用户
-          this.setData({ needRegister: true });
-          wx.showModal({
-            title: "需要授权",
-            content: "首次使用，请再次点击按钮进行授权。",
-            confirmText: "好的",
-            showCancel: false
-          });
-        } else {
-          // 出错了
-          catchError("POST session", "登录失败", res);
-        }
-
       })
-    );
+    ).then(res => {
+
+      console.log("POST session 登录成功", res);
+
+      // res: { data: { code, data: { token, data: { uid, ... } } } }
+      const data = res.data.data;
+
+      // setUserData() 会向全局变量 globalData 设置 uid 和 token，
+      // setIdentity() 会用到 uid 和 token，
+      // 所以必须先执行 setUserData()，再执行 setIdentity()；
+
+      // setIdentity() 会设置用户信息元素中的“已/未认证”，
+      // setIsLogin()  会将用户信息元素显示出来，
+      // 所以最好先执行 setIdentity()，再执行 setIsLogin()。
+
+      this.setUserData(data.data, data.token);
+      this.setIdentity();
+      this.setIsLogin();
+
+    }).catch(res => {
+
+      // 判断是用户不存在，还是出错了
+      if ( request.checkCode(51) ) {
+        // 用户不存在，准备请求授权并注册用户
+        this.setData({ needRegister: true });
+        wx.showModal({
+          title: "需要授权",
+          content: "首次使用，请再次点击按钮进行授权。",
+          confirmText: "好的",
+          showCancel: false
+        });
+      } else {
+        // 出错了
+        catchError("POST session", "登录失败", res);
+      }
+
+    });
 
   },
 
@@ -209,6 +209,6 @@ Page({
       data: res.userInfo
     });
   )
-*/
+  */
 
 })

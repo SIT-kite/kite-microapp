@@ -73,7 +73,7 @@ const request = option => new Promise((resolve, reject) => {
     // check res
     typeof res !== "object" ? rejectFor("res")
     // check res.statusCode
-    :  res.statusCode !== 200      ? rejectFor("status")
+    : res.statusCode !== 200 ? rejectFor("status")
     // check res.data (Object or ArrayBuffer)
     : typeof res.data !== "object"
       // check res.data (String)
