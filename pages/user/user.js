@@ -128,7 +128,7 @@ Page({
     }).catch(res => {
 
       // 判断是用户不存在，还是出错了
-      if ( request.checkCode(51) ) {
+      if ( request.checkCode(res, 51) ) {
         // 用户不存在，准备请求授权并注册用户
         this.setData({ needRegister: true });
         wx.showModal({
