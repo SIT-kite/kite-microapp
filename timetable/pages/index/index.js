@@ -326,10 +326,8 @@ Page({
     wx.setStorageSync("timetableMode", timetableMode);
   },
   // 敲击设置按钮（暂未使用）
-  tapSet(e) {
-    let tapSet = this.data.tapSet;
-    tapSet = !tapSet;
-    this.setData({ tapSet });
+  tapSet() {
+    this.setData({ tapSet: !this.data.tapSet });
   },
 
   // 时间改变函数

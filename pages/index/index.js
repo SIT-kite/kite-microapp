@@ -36,7 +36,7 @@ Page({
   data: {
     isLogin: gData.isLogin,
     clicked: -1, // 被点击功能的索引
-    notices: [{  id: 1, title: "正在加载通知…" }], // 通知
+    notices: [{ id: 1, title: "正在加载通知…" }], // 通知
     modules
   },
 
@@ -49,7 +49,12 @@ Page({
       url: `${gData.apiUrl}/notice`,
       header: getHeader("urlencoded", gData.token),
       success: res => this.setNotice(res.data.data),
-      fail: console.error
+      fail: err => {
+        console.error(err);
+        this.setData({
+          notices: [{ id: -1, title: "发生网络问题，通知获取失败，请联系开发者" }]
+        });
+      }
     });
 
   },
@@ -83,7 +88,7 @@ Page({
 
     const noNotice = () => {
       const title = "暂无通知";
-      this.setData({ notice: [{ title, id: -1 }] });
+      this.setData({ notices: [{ id: -1, title }] });
       console.log(title);
     };
 
