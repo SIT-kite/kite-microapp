@@ -1,4 +1,5 @@
-/* timetable/pages/derivate/derivate.wxss */
+/* timetable/pages/export/export.wxss */
+
 .background {
 	background-color: #E4EBF5;
 	width: 100%;

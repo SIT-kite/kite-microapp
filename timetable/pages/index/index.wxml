@@ -1,9 +1,9 @@
 <template name="header">
 	<view class="date">
 		{{date[6].year}}年{{date[6].month}}月
-		<view class="set">
+		<view class="set"> <!-- 切换日/周视图  导出  刷新 -->
 			<image src="../../assets/icons/calendar.png" class="icon" mode="aspectFit" bindtap="tapActivity" />
-			<navigator url="../derivate/derivate" hover-class="none">
+			<navigator url="../export/export" hover-class="none">
 				<image src="../../assets/icons/export.png" class="icon" mode="aspectFit" />
 			</navigator>
 			<image src="../../assets/icons/refresh.png" class="icon" mode="aspectFit" bindtap="popUp" />

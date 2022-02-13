@@ -1,4 +1,4 @@
-// timetable/pages/derivate/derivate.js
+// timetable/pages/export/export.js
 
 // import date from "../../../carpool/components/calendar/common/async-validator/validator/date";
 import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";

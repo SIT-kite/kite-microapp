@@ -352,17 +352,10 @@ Page({
   // 滑动换算函数
   conversionPage(index, page, data) {
     switch (index) {
-      case 1:
-        page == 0 ? data++ : data--;
-        break;
-      case 2:
-        page == 1 ? data++ : data--;
-        break;
-      case 0:
-        page == 2 ? data++ : data--;
-        break;
+      case 1: return page === 0 ? data++ : data--;
+      case 2: return page === 1 ? data++ : data--;
+      case 0: return page === 2 ? data++ : data--;
     }
-    return data;
   },
   // 时间滑动函数
   bindChangeWeek(e) {

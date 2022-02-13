@@ -87,7 +87,7 @@
 			"pages": [
 				"pages/index/index",
 				"pages/details/details",
-				"pages/derivate/derivate"
+				"pages/export/export"
 			]
 		},
 		{

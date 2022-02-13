@@ -1,4 +1,5 @@
-<!--timetable/pages/derivate/derivate.wxml-->
+<!-- timetable/pages/export/export.wxml -->
+
 <navBar background="fff" back="true" home="true"
 	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
