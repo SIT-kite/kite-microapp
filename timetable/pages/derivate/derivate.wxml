@@ -1,18 +1,33 @@
 <!--timetable/pages/derivate/derivate.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<navBar background="fff" back="true" home="true"
+	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+
 <view class="background">
-    <view class="data">
-        <view class="title_export">课表导出</view>
-        <view class="title te">课前提醒（分钟）</view>
-        <view class="choose_time">
-        <view wx:for="{{time}}" wx:key="index" >
-        <view class="time {{choosed_time== item?'choosed':''}}" bindtap="settime" data-time="{{item}}">{{item}}</view>
-        </view>
-        </view>
-        <view class="url" data-url="{{data}}" bindtap="copy"><view  class="url_text">{{data}}</view><image class="icon" src="../../assets/icons/copy.png"></image></view>
-    </view>
-    <view class="content">
-    <view class="title td">使用说明</view>
-    <view class="instructions td">{{instructions}}</view>
-    </view>
+
+	<view class="data">
+
+		<view class="title_export">课表导出</view>
+		<view class="title te">课前提醒（分钟）</view>
+		<view class="choose_time">
+			<block wx:for="{{ reminder_times }}" wx:key="*this">
+				<view class="time {{ choosed_time === item }}" bindtap="setTime"
+					data-time="{{ item }}">{{ item }}</view>
+			</block>
+		</view>
+
+		<view class="url" bindtap="copy" data-url="{{ url }}">
+			<view class="url_text">{{ url }}</view>
+			<image class="icon" src="../../assets/icons/copy.png"></image>
+		</view>
+
+	</view>
+
+	<view class="content">
+		<view class="title td">使用说明</view>
+		<view class="instructions td"><!--
+-->该页面生成课表的订阅地址。在上方的“课前提醒”中，你可以设置课前提醒的时间差。<!--
+-->将对应的同步地址复制到剪切板后，你可以使用浏览器		下载并导入日历文件到手机<!--
+-->自带的日历软件中，或直接将该同步地址复制到日历软件（如小米日历）里。</view>
+	</view>
+
 </view>
