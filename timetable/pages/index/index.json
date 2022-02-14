@@ -1,9 +1,0 @@
-{
-	"usingComponents": {
-		"navBar": "../../../components/navBar/navBar",
-		"daily": "../../components/daily/daily",
-		"weekly": "../../components/weekly/weekly",
-		"detail": "../../components/detail/detail"
-	},
-	"disableScroll": true
-}

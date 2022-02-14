@@ -1,0 +1,81 @@
+{
+	"style": "v2",
+	"darkmode": false,
+	"resizable": false,
+	"singlePage": {},
+	"lazyCodeLoading": "requiredComponents",
+	"networkTimeout": {
+		"request": 7500,
+		"connectSocket": 15000,
+		"uploadFile": 30000,
+		"downloadFile": 30000
+	},
+	"permission": {
+		"scope.userLocation": {
+			"desc": "你的位置信息将用于报到指南服务。"
+		}
+	},
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "上应小风筝",
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "default"
+	},
+	"sitemapLocation": "sitemap.json",
+	"entryPagePath": "main/pages/index/index",
+	"pages": [
+		"main/pages/index/index",
+		"main/pages/user/user",
+		"main/pages/verify/verify",
+		"main/pages/about/about",
+		"main/pages/debug/debug",
+		"main/pages/article/article"
+	],
+	"subpackages": [
+		{
+			"root": "sub-electricity",
+			"pages": [
+				"pages/share/share",
+				"pages/show/show",
+				"pages/index/index"
+			]
+		},
+		{
+			"root": "sub-timetable",
+			"pages": [
+				"pages/index/index",
+				"pages/details/details",
+				"pages/export/export"
+			]
+		},
+		{ "root": "sub-classroom", "pages": [ "index" ] },
+		{ "root": "sub-phonebook", "pages": [ "index" ] }
+	],
+	"tabBar": {
+		"color": "#9E9E9E",
+		"selectedColor": "#000",
+		"custom": false,
+		"list": [
+			{
+				"text": "主页",
+				"pagePath": "main/pages/index/index",
+				"iconPath": "assets/tabBar/home.png",
+				"selectedIconPath": "assets/tabBar/home_active.png"
+			},
+			{
+				"text": "我",
+				"pagePath": "main/pages/user/user",
+				"iconPath": "assets/tabBar/user.png",
+				"selectedIconPath": "assets/tabBar/user_active.png"
+			}
+		]
+	},
+	"plugins": {
+		"echarts": {
+			"version": "2.1.1",
+			"provider": "wx1db9e5ab1149ea03"
+		}
+	},
+	"usingComponents": {}
+}

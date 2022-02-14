@@ -1,0 +1,8 @@
+<!--timetable/pages/details/details.wxml-->
+
+<view class="details">
+	<view class="courseName" >课程名称：{{showCourse}}</view>
+	<view class="time"       >课程时间：{{showTime}}</view>
+	<view class="tutor"      >上课教师：{{showTutor}}</view>
+	<view class="location"   >上课地点：{{showLocation}}</view>
+</view>

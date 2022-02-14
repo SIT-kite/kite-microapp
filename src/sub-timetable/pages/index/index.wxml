@@ -1,0 +1,106 @@
+<template name="header">
+	<view class="date">
+		{{date[6].year}}年{{date[6].month}}月
+		<view class="set"> <!-- 切换日/周视图  导出  刷新 -->
+			<image src="../../assets/icons/calendar.png" class="icon" mode="aspectFit" bindtap="tapActivity" />
+			<navigator url="../export/export" hover-class="none">
+				<image src="../../assets/icons/export.png" class="icon" mode="aspectFit" />
+			</navigator>
+			<image src="../../assets/icons/refresh.png" class="icon" mode="aspectFit" bindtap="popUp" />
+			<!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
+		</view>
+	</view>
+	<view class="scroll_time" >
+		<view class="this_week" bindtap="tapSet">
+			<view>{{thisWeek}}</view>
+			<text>周</text>
+		</view>
+		<view class="choose_time">
+			<block wx:for="{{date}}" wx:key="day">
+				<view class="days {{choosedDay.week == item.week ? 'choose_couple' : ''}}"
+						data-week="{{item.week}}" bindtap="tapDays">
+					<view class="day">{{item.day}}</view>
+					<view class="week">{{item.weekday}}</view>
+				</view>
+			</block>
+		</view>
+	</view>
+</template>
+
+<view class="background">
+
+	<!-- 顶部 -->
+	<swiper class="header" bindchange="bindChangeWeek" duration="250"
+		easing-function="easeOutCubic" circular="true">
+		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
+		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
+		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
+	</swiper>
+
+		<!-- 日课表 -->
+		<block wx:if="{{timetableMode === 'day'}}">
+			<swiper class="daily" bindchange="bindChangeDay" bindtap="collapse"
+				duration="300" easing-function="easeOutCubic" circular="true">
+				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
+				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
+				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
+			</swiper>
+		</block>
+
+		<!-- 周课表 -->
+		<block wx:if="{{timetableMode === 'week'}}">
+			<scroll-view class="scroll" scroll-y="true" bindtap="collapse">
+				<view class="weekly">
+
+					<view class="weekly-time">
+						<block wx:for="{{[1,2,3,4,5,6,7,8,9,10,11]}}" wx:key="*this">
+							<view class="weekly-time-text">{{item}}</view>
+						</block>
+					</view>
+
+					<swiper class="weekly-main" bindchange="bindChangeWeek"
+						duration="400" easing-function="easeOutCubic" circular="true">
+						<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail" /></swiper-item>
+						<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail" /></swiper-item>
+						<swiper-item><weekly wlist="{{courseWeek}}" bindcustomevent="getDetail" /></swiper-item>
+					</swiper>
+
+				</view>
+			</scroll-view>
+		</block>
+
+	<!-- <view class = "QR_couple" wx:if="{{choosedCouple}}">
+		<image class="QRcode" src="{{QRCode}}" ></image>
+		<text class="QRcode_text">打开扫一扫，近在咫尺</text>
+</view> -->
+
+	<!-- 设置周数 -->
+	<view class="tapSet" wx:if="{{tapSet}}">
+		<view class="slider_text">周数</view>
+		<slider bindchange="sliderChange" min="1" max="20" value="{{thisWeek}}"
+			activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
+		<!-- <view class="set_bottom">
+			<view class="sart_time">
+				<picker class="picker" mode="date" value="{{toschool}}" start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">
+					<image src="../../assets/icons/sarttime.png" class="icon3" />
+					<view>开学时间</view>
+				</picker>
+			</view>
+			<view class="picker">
+				<image src="../../assets/icons/couple.png" class="icon4" bindtap="code" />
+				<view>情侣课表</view>
+			</view>
+			<view class="picker">
+				<image src="../../assets/icons/details.png" class="icon4" bindtap="scanCode" />
+				<view>扫一扫</view>
+			</view>
+		</view> -->
+	</view>
+
+	<!-- 课程详情 -->
+	<view class="masks" wx:if="{{showDetail}}" bindtap="collapseDetail"></view>
+	<view class="detail" animation="{{animation}}">
+		<detail detail="{{detail}}" />
+	</view>
+
+</view>

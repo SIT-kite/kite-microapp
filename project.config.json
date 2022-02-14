@@ -1,5 +1,6 @@
 {
   "description": "项目配置文件 https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "miniprogramRoot": "src/",
   "compileType": "miniprogram",
   "setting": {
     "urlCheck": true,
@@ -28,7 +29,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useIsolateContext": true,
+    "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],

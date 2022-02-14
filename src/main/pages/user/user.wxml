@@ -1,0 +1,49 @@
+<!-- pages/user/user.wxml -->
+
+<background type="index" />
+
+<view class="main">
+
+	<!-- 已登录 -->
+	<block wx:if="{{isLogin}}">
+		<view class="card user info">
+
+			<open-data class="avatar" type="userAvatarUrl" />
+
+			<open-data class="nickname ellipsis" type="userNickName"
+				default-text="微信用户" />
+
+			<view class="verified {{ verified }}">
+				<image src="../../assets/icons/{{ verified ? 'right' : 'wrong' }}.png" />
+				{{ verified ? "已" : "未" }}认证
+			</view>
+
+			<navigator class="verify" url="/pages/verify/verify">
+				认证<text class="arrow">></text>
+			</navigator>
+
+		</view>
+	</block>
+
+	<!-- 未登录 -->
+	<block wx:else>
+		<button class="card user login"
+			bindtap="{{ needRegister ? 'register' : 'login' }}">
+			<image class="login-icon" src="../../assets/icons/person/wechat.png" />
+			{{ needRegister ? '点此授权' : '点此使用微信登录' }}
+		</button>
+	</block>
+
+	<navigator class="card menu-option" url="/pages/about/about">
+		关于我们<text class="arrow">></text>
+	</navigator>
+
+	<button class="card menu-option" open-type="feedback">
+		意见反馈<text class="arrow">></text>
+	</button>
+
+	<navigator class="card menu-option" url="/pages/debug/debug">
+		调试工具<text class="arrow">></text>
+	</navigator>
+
+</view>

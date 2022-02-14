@@ -1,7 +1,0 @@
-{
-	"navigationStyle": "default",
-	"navigationBarTitleText": "关于我们",
-	"usingComponents": {
-		"background": "/components/background/background"
-	}
-}
