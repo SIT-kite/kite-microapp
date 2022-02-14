@@ -1,6 +1,6 @@
 <!-- electricity/pages/show/show.wxml -->
-<navBar background="#fff" back="{{true}}" home="{{true}}"
-bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<navBar background="#fff" back="true" home="true"
+bindback="navBack" bindhome="navHome" />
 
 <view class="main">
 	<view class="title">电费余额查询</view>
@@ -11,7 +11,7 @@ bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
 
 	</view>
 	<view class="button_container">
-		<view class="s_button" bindtap="getEletricityConsume">
+		<view class="s_button" bindtap="getEletricity">
 			查询
 		</view>
 		<view class="s_button" data-init="true" data-type="hours" bindtap="getCostData">

@@ -1,20 +1,18 @@
 // 电费查询
 // electricity/pages/show/show.js
-import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import { navHome, navBack } from "../../../utils/navBarUtils";
 import getHeader from "../../../utils/getHeader";
+import request from "../../../utils/request";
 
 const app = getApp();
 const gData = app.globalData;
-
-const requestUtils = require("../../../utils/requestUtils");
-// const { echarts } = requirePlugin('echarts');
 
 const electricityApiUrl = `${gData.apiUrl}/pay/room/`;
 
 Page({
 
-  handlerGohomeClick,
-  handlerGobackClick,
+  navHome,
+  navBack,
 
   data: {
     show: false,
@@ -218,10 +216,7 @@ Page({
     } else {
       let url = `${electricityApiUrl}${room}/bill/${type}`;
       let header = getHeader("urlencoded", gData.token);
-      let data = {};
-      let getdata = requestUtils.doGET(url, data, header);
-      // console.log(e.currentTarget.dataset.type)
-      getdata.then((res) => {
+      request({url, header}).then((res) => {
         console.log(`开始请求${type}`)
         let tempdata = [];
         let tempx = [];
@@ -282,8 +277,7 @@ Page({
 
     let url = `${electricityApiUrl}${room}/rank`;
     let header = getHeader("urlencoded", gData.token);
-    let data = {};
-    requestUtils.doGET(url, data, header).then((res) => {
+    request({url, header}).then(res => {
       const data = res.data.data
       const rank = data.rank;
       const total = data.room_count;
@@ -325,15 +319,12 @@ Page({
     })
   },
 
-  getEletricityConsume() {
+  getEletricity() {
     const room = this.getRoom();
-    if (room === 'error') {
-      return;
-    }
+    if (room === 'error') return;
     let url = `${electricityApiUrl}${room}`;
     let header = getHeader("urlencoded", gData.token);
-    let data = {};
-    requestUtils.doGET(url, data, header).then((res) => {
+    request({url, header}).then(res => {
       const data = res.data.data;
       const dateTime = data.ts.split('T');
       this.setData({

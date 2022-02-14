@@ -5,7 +5,19 @@ import { check, checkObject, isNonEmptyString } from "../../../utils/type";
 import request   from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 import uCharts from "./u-charts";
-import { getDateTime } from "../../../utils/timeUtils";
+
+const getDateTime = date => [
+  [ "FullYear" , "年"  , 0 ],
+  [ "Month"    , "月"  , 0, 1 ],
+  [ "Day"      , "日 " , 0 ],
+  [ "Hours"    , ":"   , 2 ],
+  [ "Minutes"  , ":"   , 2 ],
+  [ "Seconds"  , ""    , 2 ],
+].map(
+  ([name, suffix, padLength, offset = 0]) => `${
+    (date["get" + name]() + offset).toString().padStart(padLength, "0")
+  }${suffix}`
+).join("");
 
 const app = getApp();
 const gData = app.globalData;

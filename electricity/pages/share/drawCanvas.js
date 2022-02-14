@@ -164,7 +164,7 @@ export default async (canvas, data) => {
   const shareCode_d = 150 * px;
   const shareCode_xy = addGap(shareCode_d, 50 * px);
   await drawImageBySrc(
-    "/assets/share_code.png",
+    "./share_code.png",
     cw - shareCode_xy, ch - shareCode_xy, shareCode_d, shareCode_d
   );
 

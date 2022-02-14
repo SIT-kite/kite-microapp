@@ -38,7 +38,10 @@ Page({
     ).catch(
       err => {
         this.catchError("头像获取失败，改用默认头像", err);
-        this.data.avatarPath = "/assets/pic/default-avatar.png";
+        /* default-avatar:
+          https://www.zhihu.com/question/30059362/answer/301792813
+          https://pic1.zhimg.com/v2-6afa72220d29f045c15217aa6b275808_r.png */
+        this.data.avatarPath = "./default-avatar.png";
       }
     ).finally(
       () => this.draw()

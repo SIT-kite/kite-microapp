@@ -1,4 +1,4 @@
-/* pages/consume/electricity/electricity.wxss */
+/* electricity/pages/show/electricity.wxss */
 .title {
 	margin: .5rem auto;
 	font-size: 2em;
