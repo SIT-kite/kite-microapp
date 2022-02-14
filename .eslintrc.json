@@ -9,6 +9,11 @@
 		"ecmaVersion": 12,
 		"sourceType": "module"
 	},
+	"ignorePatterns": [
+		"archive/**",
+		"carpool/components/calendar/**",
+		"electricity/pages/index/u-charts.js"
+	],
 	"rules": {
 		"eqeqeq": "warn",
 		"no-irregular-whitespace": "off",
@@ -49,9 +54,5 @@
 		"requirePlugin": "writable",
 		"wx": "writable",
 		"webkitURL": "writable"
-	},
-	"ignorePatterns": [
-		"carpool/components/calendar/**",
-		"electricity/pages/index/u-charts.js"
-	]
+	}
 }

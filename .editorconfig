@@ -19,5 +19,9 @@ indent_size = 1
 indent_style = space
 indent_size = 2
 
+[project{,.private}.config.json]
+indent_style = space
+indent_size = 2
+
 [todo.txt]
 indent_size = 8

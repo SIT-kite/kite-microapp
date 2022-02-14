@@ -1,5 +1,5 @@
 {
-  "description": "项目配置文件",
+  "description": "项目配置文件 https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
   "compileType": "miniprogram",
   "setting": {
     "urlCheck": true,
@@ -28,7 +28,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useIsolateContext": false,
+    "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
@@ -39,15 +39,12 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },
-  "libVersion": "2.17.0",
+  "libVersion": "2.19.6",
   "appid": "wxfbc5fc9c0a0be9f9",
   "projectname": "kite-microapp",
   "packOptions": {
+    "include": [],
     "ignore": [
-      {
-        "type": "folder",
-        "value": "archive"
-      },
       {
         "type": "file",
         "value": ".eslintrc.json"
@@ -60,19 +57,7 @@
   "watchOptions": {
     "ignore": []
   },
-  "isGameTourist": false,
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
     "miniprogram": {
       "list": []
     }
