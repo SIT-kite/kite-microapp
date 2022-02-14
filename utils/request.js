@@ -2,6 +2,10 @@
 
 import { isNonBlankString } from "./type";
 
+// request(obj): Promise
+// import promisify from "./promisify";
+// const requestRaw = promisify(wx.request);
+
 const symbols = {
   codeNotZero: Symbol("codeNotZero"),
   codeError:   Symbol("codeError"),
@@ -105,8 +109,6 @@ const checkCode = (res, code) =>
 export default Object.assign(
   request, { symbols, getMsg, checkCode }
 );
-
-
 
 // https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html
 /* wx.request({
