@@ -1,3 +1,0 @@
-<view class="container {{_selected?'selected':''}}" bind:tap="tap">
-  {{content}}
-</view>
