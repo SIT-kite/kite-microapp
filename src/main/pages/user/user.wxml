@@ -1,5 +1,3 @@
-<!-- pages/user/user.wxml -->
-
 <background type="index" />
 
 <view class="main">
@@ -8,17 +6,22 @@
 	<block wx:if="{{isLogin}}">
 		<view class="card user info">
 
-			<open-data class="avatar" type="userAvatarUrl" />
+			<open-data class="avatar" type="userAvatarUrl"
+				default-avatar="/assets/default-avatar.png" />
 
-			<open-data class="nickname ellipsis" type="userNickName"
-				default-text="微信用户" />
+			<view class="info-middle">
 
-			<view class="verified {{ verified }}">
-				<image src="../../assets/icons/{{ verified ? 'right' : 'wrong' }}.png" />
-				{{ verified ? "已" : "未" }}认证
+				<open-data class="nickname ellipsis" type="userNickName"
+					default-text="微信用户" />
+
+				<view class="verified {{ verified }}">
+					<image src="../../assets/icons/{{ verified ? 'right' : 'wrong' }}.png" />
+					{{ verified ? "已" : "未" }}认证
+				</view>
+
 			</view>
 
-			<navigator class="verify" url="/pages/verify/verify">
+			<navigator class="verify" url="../verify/verify">
 				认证<text class="arrow">></text>
 			</navigator>
 
@@ -34,7 +37,7 @@
 		</button>
 	</block>
 
-	<navigator class="card menu-option" url="/pages/about/about">
+	<navigator class="card menu-option" url="../about/about">
 		关于我们<text class="arrow">></text>
 	</navigator>
 
@@ -42,7 +45,7 @@
 		意见反馈<text class="arrow">></text>
 	</button>
 
-	<navigator class="card menu-option" url="/pages/debug/debug">
+	<navigator class="card menu-option" url="../debug/debug">
 		调试工具<text class="arrow">></text>
 	</navigator>
 

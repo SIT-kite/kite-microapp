@@ -1,4 +1,4 @@
-@import "../../main.wxss";
+@import "../../wxss/main.wxss";
 
 /* swiper */
 /* 横向边距：左右各 1rem */

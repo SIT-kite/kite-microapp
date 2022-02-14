@@ -123,7 +123,7 @@
 
 .scroll {
 	width: auto;
-	height: calc(100% - 11.5rem);
+	height: calc(100% - 7rem);
 	padding-top: .75em;
 }
 

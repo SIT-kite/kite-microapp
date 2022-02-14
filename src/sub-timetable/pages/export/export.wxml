@@ -1,5 +1,3 @@
-<!-- timetable/pages/export/export.wxml -->
-
 	<view class="main">
 
 	<picker class="reminder-picker tappable" header-text="课前提醒" bindchange="setTime"

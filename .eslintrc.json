@@ -11,8 +11,9 @@
 	},
 	"ignorePatterns": [
 		"archive/**",
-		"carpool/components/calendar/**",
-		"electricity/pages/index/u-charts.js"
+		"sub-electricity/index/u-charts.js",
+		"sub-electricity/show/echarts.js",
+		"sub-electricity/show/echarts.min.js"
 	],
 	"rules": {
 		"eqeqeq": "warn",

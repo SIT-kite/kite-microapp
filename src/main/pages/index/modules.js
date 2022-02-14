@@ -6,12 +6,12 @@ export default [
     needVerify: false
   },*/ {
     text: "电费",
-    url: "/sub-electricity/pages/show/show",
+    url: "/sub-electricity/show/show",
     iconPath: "../../assets/icons/index/electricity.png",
     needVerify: false
   }, {
     text: "空教室",
-    url: "/sub-classroom/pages/available-room",
+    url: "/sub-classroom/classroom",
     iconPath: "../../assets/icons/index/availroom.png",
     needVerify: false
   }, {
@@ -21,7 +21,7 @@ export default [
     needVerify: true
   }, {
     text: "常用电话",
-    url: "/sub-phonebook/pages/show/show",
+    url: "/sub-phonebook/phonebook",
     iconPath: "../../assets/icons/index/telephone.png",
     needVerify: false
   }, /* {

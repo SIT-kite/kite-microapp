@@ -1,0 +1,6 @@
+{
+	"navigationBarTitleText": "电费查询",
+	"usingComponents": {
+		"chart": "plugin://echarts/chart"
+	}
+}

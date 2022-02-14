@@ -1,8 +1,4 @@
-@import "../../main.wxss";
-
-.background {
-	opacity: .75;
-}
+@import "../../wxss/main.wxss";
 
 .card {
 	width: 100% !important;
@@ -15,14 +11,7 @@
 
 /* 已登录 */
 .user.info {
-	display: grid;
-	grid-template-columns: auto auto 1fr auto;
-	grid-template-areas:
-		"avatar nickname nickname verify"
-		"avatar nothing1 nothing2 verify"
-		"avatar verified nothing3 verify";
-	justify-items: start;
-	gap: 0 .5rem;
+	display: flex;
 }
 
 .avatar {
@@ -34,7 +23,16 @@
 	contain: paint;
 }
 
+.info-middle {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0 .5em;
+}
+
 .nickname {
+	flex-grow: 1;
 	max-width: 40vw;
 	font-weight: bold;
 }

@@ -1,8 +1,8 @@
-// timetable/pages/export/export.js
 
-import request from "../../../js/request";
-import getHeader from "../../../js/getHeader";
+import { timetable as onShareAppMessage } from "../../../js/onShareAppMessage";
 import { checkObject } from "../../../js/type";
+import getHeader from "../../../js/getHeader";
+import request from "../../../js/request";
 
 const app = getApp();
 const { apiUrl, token } = app.globalData;
@@ -15,6 +15,8 @@ const reminderTimes = [
   { time: 30, text: "提前 30 分钟" }
 ];
 
+
+
 Page({
 
   data: {
@@ -22,6 +24,8 @@ Page({
     showUrlTextarea: false,
     url: "请稍等"
   },
+
+  onShareAppMessage,
 
   onLoad() {
     this.setUrl();
@@ -73,13 +77,6 @@ Page({
     url === "请稍等"
     ? wx.showToast({ title: "请等待订阅地址生成完毕", icon: "none" })
     : wx.setClipboardData({ data: url }); // 会弹出 toast 提示"内容已复制"
-  },
+  }
 
-  // onReady () {},
-  // onShow () {},
-  // onHide () {},
-  // onUnload () {},
-  // onPullDownRefresh () {},
-  // onReachBottom () {},
-  // onShareAppMessage () {},
 });

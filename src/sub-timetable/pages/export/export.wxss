@@ -1,9 +1,8 @@
-/* timetable/pages/export/export.wxss */
-
 page, .entry, .url-textarea, .instructions {
 	box-sizing: border-box;
 	padding: .5rem;
 }
+
 page {
 	display: flex;
 	flex-direction: column;

@@ -1,5 +1,3 @@
-<!--components/background-index/background-index.wxml-->
-
 <image wx:if="{{ type === 'index' }}"
 	class="background index" src="../../assets/pic/background.png" mode="aspectFill"></image>
 

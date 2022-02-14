@@ -1,0 +1,149 @@
+page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: .5em;
+	background-color: #E3F2FD;
+	--theme-color: #2196F3;
+}
+
+.card {
+	border-radius: 2px;
+	box-shadow: var(--shadow);
+}
+
+.title {
+	font-size: inherit;
+	/* color: #0D47A1; */
+}
+
+.inquiry {
+	display: flex;
+	align-items: baseline;
+	padding: .5em;
+}
+
+
+/* input */
+.input-container {
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	margin-inline-end: .5em;
+	font-size: 1.1em;
+	/* font-family: Consolas, monospace; */
+}
+.input {
+	box-sizing: border-box;
+	height: 1.75em;
+	margin-inline-start: 1ch;
+	border-bottom: 2px solid;
+	text-align: center;
+}
+.input.building { width: 2em; }
+.input.room { width: 3em; }
+
+/* button */
+.button.submit {
+	width: auto !important;
+	margin: 0 !important;
+	padding: .25em 1ch;
+	font-size: inherit;
+	background-color: var(--theme-color);
+}
+.button.hint {
+	float: right;
+	width: max-content !important;
+	margin: 0 auto !important;
+	padding: 0;
+	font-size: .9em;
+	font-weight: 500;
+	color: #9E9E9E;
+	background-color: transparent;
+}
+.button.share {
+	float: right;
+	width: max-content;
+	margin: 0 auto;
+	padding: .25em 1ch;
+	color: white;
+	background-color: var(--theme-color);
+	font-weight: bold;
+}
+
+
+/* instruction */
+.instruction {
+	margin: 1em 0;
+	text-align: center;
+	color: #616161;
+}
+
+
+/* result */
+.result {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin-top: .5rem;
+	padding: .5rem;
+	transition:
+		height var(--transition),
+		var(--transition-opacity);
+}
+.result.false {
+	flex-grow: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+}
+
+/* tab */
+.tab-container {
+	display: flex;
+}
+.tab {
+	flex-grow: 1;
+	padding: .25em;
+	border-bottom: 2px solid #9E9E9E;
+	text-align: center;
+}
+.tab.true {
+	border-color: var(--theme-color);
+	font-weight: bold;
+}
+
+.swiper {
+	flex-grow: 1;
+}
+
+.scroll-view {
+	box-sizing: border-box;
+	height: 100%;
+	padding-top: .5rem;
+	contain: content;
+}
+
+.switch-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.switch-label.true {
+	font-weight: 500;
+}
+
+.switch {
+	margin: 0 .5em;
+	/* background-color: var(--theme-color); */
+}
+
+#canvas {
+	width: 100%;
+	height: 12em;
+}

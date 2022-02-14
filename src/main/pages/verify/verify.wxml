@@ -1,6 +1,6 @@
 <!-- pages/verify/verify.wxml -->
 
-<image class="image" src="../../assets/pic/verify.jpg" mode="widthFix" />
+<image class="image" src="../../assets/pic/verify.webp" webp="true" mode="widthFix" />
 
 <view class="title">身份认证</view>
 

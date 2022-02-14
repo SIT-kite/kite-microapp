@@ -1,5 +1,3 @@
-/* timetable/pages/details/details.wxss */
-
 .details {
 	background-color: #bbffaa;
 	margin: 80px 20px;

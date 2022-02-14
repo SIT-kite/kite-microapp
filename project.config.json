@@ -48,7 +48,7 @@
     "ignore": [
       {
         "type": "file",
-        "value": ".eslintrc.json"
+        "value": "/src/assets/dafault-avatar.txt"
       }
     ]
   },

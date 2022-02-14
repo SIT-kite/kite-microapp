@@ -1,5 +1,0 @@
-{
-  "usingComponents": {
-    "chart": "plugin://echarts/chart"
-  }
-}

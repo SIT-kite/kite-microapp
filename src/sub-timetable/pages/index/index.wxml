@@ -6,7 +6,7 @@
 			<navigator url="../export/export" hover-class="none">
 				<image src="../../assets/icons/export.png" class="icon" mode="aspectFit" />
 			</navigator>
-			<image src="../../assets/icons/refresh.png" class="icon" mode="aspectFit" bindtap="popUp" />
+			<image src="../../assets/icons/refresh.png" class="icon" mode="aspectFit" bindtap="refresh" />
 			<!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
 		</view>
 	</view>

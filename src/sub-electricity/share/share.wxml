@@ -1,0 +1,18 @@
+<view class="canvas-container">
+	<canvas id="canvas" type="2d" style="width: 650rpx; height: 1000rpx;"></canvas>
+</view>
+
+<checkbox-group class="checkbox-group" bindchange>
+	<label class="label">头像<checkbox class="checkbox" value checked /></label>
+	<label class="label">昵称<checkbox class="checkbox" value checked /></label>
+	<label class="label">寝室号<checkbox class="checkbox" value checked /></label>
+</checkbox-group>
+
+<view class="button_container">
+	<view class="s_button" bindtap="share">分享</view>
+	<view class="s_button" data-init="true" data-type="hours" bindtap="saveShareImg">
+		保存到手机
+	</view>
+</view>
+
+<view class="error">{{error}}</view>
