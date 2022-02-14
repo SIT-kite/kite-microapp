@@ -1,4 +1,5 @@
 {
+	"description": "全局配置 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html",
 	"style": "v2",
 	"darkmode": false,
 	"resizable": false,
@@ -16,11 +17,11 @@
 		}
 	},
 	"window": {
-		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#fff",
+		"initialRenderingCache": "static",
 		"navigationBarTitleText": "上应小风筝",
 		"navigationBarTextStyle": "black",
-		"navigationStyle": "default"
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundTextStyle": "light"
 	},
 	"sitemapLocation": "sitemap.json",
 	"entryPagePath": "main/pages/index/index",
@@ -35,27 +36,18 @@
 	"subpackages": [
 		{
 			"root": "sub-electricity",
-			"pages": [
-				"pages/share/share",
-				"pages/show/show",
-				"pages/index/index"
-			]
+			"pages": [ "show/show", "index/index", "share/share" ]
 		},
 		{
 			"root": "sub-timetable",
-			"pages": [
-				"pages/index/index",
-				"pages/details/details",
-				"pages/export/export"
-			]
+			"pages": [ "pages/index/index", "pages/details/details", "pages/export/export" ]
 		},
-		{ "root": "sub-classroom", "pages": [ "index" ] },
-		{ "root": "sub-phonebook", "pages": [ "index" ] }
+		{ "root": "sub-classroom", "pages": [ "classroom" ] },
+		{ "root": "sub-phonebook", "pages": [ "phonebook" ] }
 	],
 	"tabBar": {
 		"color": "#9E9E9E",
 		"selectedColor": "#000",
-		"custom": false,
 		"list": [
 			{
 				"text": "主页",
@@ -73,9 +65,8 @@
 	},
 	"plugins": {
 		"echarts": {
-			"version": "2.1.1",
+			"version": "2.1.0",
 			"provider": "wx1db9e5ab1149ea03"
 		}
-	},
-	"usingComponents": {}
+	}
 }

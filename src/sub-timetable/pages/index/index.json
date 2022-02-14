@@ -1,4 +1,5 @@
 {
+	"navigationBarTitleText": "课程表",
 	"usingComponents": {
 		"daily": "../../components/daily/daily",
 		"weekly": "../../components/weekly/weekly",

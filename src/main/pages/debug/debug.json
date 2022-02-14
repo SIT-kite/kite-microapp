@@ -1,5 +1,4 @@
 {
-	"navigationStyle": "default",
 	"navigationBarTitleText": "调试工具",
 	"usingComponents": {
 		"background": "../../components/background/background"
