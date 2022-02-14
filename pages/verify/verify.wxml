@@ -1,6 +1,6 @@
 <!-- pages/verify/verify.wxml -->
-<!-- <navBar background='#fff' back="{{true}}" home="{{true}}"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick" /> -->
+<!-- <navBar background="#FFF" back="true" home="true"
+	bindback="navBack" bindhome="navHome" /> -->
 
 <image class="image" src="/assets/pic/verify.jpg" mode="widthFix" />
 

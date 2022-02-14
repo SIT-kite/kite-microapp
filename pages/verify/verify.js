@@ -1,7 +1,7 @@
 // 身份认证
 // pages/verify/verify.js
 
-// import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
+// import { navHome, navBack } from "../../utils/navBarUtils";
 import onShareAppMessage from "../../utils/onShareAppMessage";
 import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
@@ -19,8 +19,8 @@ Page({
     identity: { studentId: "", oaSecret: "" }
   },
 
-  // handlerGohomeClick,
-  // handlerGobackClick,
+  // navHome,
+  // navBack,
   onShareAppMessage,
 
   onLoad(options) {
@@ -55,7 +55,7 @@ Page({
       cancelText: "我拒绝",
       success: result => {
         if (!result.confirm) {
-          this.handlerGobackClick();
+          this.navBack();
         } else {
           gData.signPrivacyConfirm = true;
           wx.setStorageSync("signPrivacyConfirm", true);

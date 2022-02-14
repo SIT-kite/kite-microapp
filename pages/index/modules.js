@@ -1,5 +1,5 @@
 export default [
-  /*{
+  /* {
     text: "新生",
     url: "/freshman/pages/welcome/welcome",
     iconPath: "/assets/icons/index/freshman.png",
@@ -24,7 +24,7 @@ export default [
     url: "/contact/pages/show/show",
     iconPath: "/assets/icons/index/telephone.png",
     needVerify: false
-  }, /*{
+  }, /* {
     text: "成绩",
     url: "/score/pages/index/index",
     iconPath: "/assets/icons/index/score.png",
@@ -35,11 +35,6 @@ export default [
     iconPath: "/assets/icons/index/activity.png",
     needVerify: true
   }, {
-    text: "消费",
-    url: "/consume/pages/index/index",
-    iconPath: "/assets/icons/index/consume.png",
-    needVerify: true
-  } , {
     text: "商城",
     url: "/shop/pages/index/index",
     iconPath: "/assets/icons/index/shop.png",

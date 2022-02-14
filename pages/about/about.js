@@ -1,7 +1,7 @@
 // 关于
 // pages/about/about.js
 
-// import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
+// import { navHome, navBack } from "../../utils/navBarUtils";
 import copyText from "../../utils/copyText";
 
 const html = [
@@ -54,8 +54,8 @@ const contributors = [ "上海应用技术大学学生" ]; /*  [
 ); */
 
 Page({
-  // handlerGohomeClick,
-  // handlerGobackClick,
+  // navHome,
+  // navBack,
   data: { html, contributors },
   copy: e => copyText(e.target.dataset.text)
 });

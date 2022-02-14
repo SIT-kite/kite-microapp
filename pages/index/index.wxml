@@ -15,9 +15,6 @@
 				</navigator>
 		</swiper-item> -->
 		<swiper-item>
-			<image class="banner-image" src="/assets/pic/temp_activity.png" bindtap="goTemp" />
-		</swiper-item>
-		<swiper-item>
 			<image class="banner-image" src="/assets/pic/banner.png" />
 		</swiper-item>
 	</swiper>
@@ -35,9 +32,9 @@
 	<!-- 功能索引 -->
 	<view class="card menu">
 		<block wx:for="{{modules}}" wx:key="url">
-			<view class="menu-cell" bindtap="router"
+			<view class="item" bindtap="router"
 				data-index="index" data-url="{{item.url}}" data-verify="{{item.verify}}">
-				<image class="{{ index === clicked ? 'living' : '' }}" src="{{item.iconPath}}" mode="heightFix" />
+				<image class="item-icon {{ index === clicked }}" src="{{item.iconPath}}" mode="heightFix" />
 				{{item.text}}
 			</view>
 		</block>
