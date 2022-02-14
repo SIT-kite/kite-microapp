@@ -2,7 +2,7 @@
 // TODO
 //   已完成 基本框架样式、请求、缓存、30天更新、复制拨打 ，搜索、菜单跟随、菜单弹出
 //   未完成 UI优化、搜索时标题隐藏、wx:key报警、动画优化
-import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import { navHome, navBack } from "../../../utils/navBarUtils";
 import getHeader from "../../../utils/getHeader";
 import request from "../../../utils/request";
 
@@ -41,8 +41,8 @@ Page({
     choosedData, departmentChange, isHidden, dataChange, click
   },
 
-  handlerGohomeClick,
-  handlerGobackClick,
+  navHome,
+  navBack,
 
   fetchData() {
     date = Date.now() + 2592000000;

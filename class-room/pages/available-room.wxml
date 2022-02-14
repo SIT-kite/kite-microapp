@@ -1,5 +1,5 @@
-<navBar background='#fff' back="true" home="true"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<navBar background="#FFF" back="true" home="true"
+	bindback="navBack" bindhome="navHome" />
 
 <view class="nav">
 	<scroll-view scroll-x="true" class="sub-nav" show-scrollbar="false">

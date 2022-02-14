@@ -1,6 +1,6 @@
 <!-- phone/pages/phone.wxml -->
-<navBar background='#fff' back="{{true}}" home="{{true}}"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<navBar background="#FFF" back="true" home="true"
+	bindback="navBack" bindhome="navHome" />
 
 <view class="search">
 	<button class="menu-button" bindtap="router">

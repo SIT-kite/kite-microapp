@@ -1,10 +1,21 @@
-import { handlerGohomeClick, handlerGobackClick } from "../../utils/navBarUtils";
+import { navHome, navBack } from "../../utils/navBarUtils";
 import request   from "../../utils/request";
 import getHeader from "../../utils/getHeader";
 
 const app = getApp();
-const transformationsUtils = require("../../utils/transformationsUtils");
-const timeUtils = require("../../utils/timeUtils");
+
+// transformations(number: number, length : number): Array
+// 将数字转换为二进制转换，并返回成数组，length 可限制返回数组长度
+// 返回值格式 [ 1, 0, 1, 0 ]
+const transformations = (number, length) => {
+  var result = [];
+  for (var i = 1; i < length + 1; i++) {
+    if (number & (1 << i)) {
+      result.push(1);
+    } else { result.push(0) }
+  }
+  return result;
+};
 
 Page({
 
@@ -29,12 +40,40 @@ Page({
   },
 
   // 导航栏函数
-  handlerGohomeClick,
-  handlerGobackClick,
+  navHome,
+  navBack,
 
   onLoad() {
 
-    const dates = timeUtils.getTimeOfHebdomad(Date.now()).map(
+    // getTimeOfHebdomad(Giventime: String): intervalWeek :array
+    // 获得给定时间后七天的日期和星期
+    // 返回格式 [{ year: yyyy, month: MM, day: dd, week: number }]
+    const getTimeOfHebdomad = (givenTime) => {
+      if (null == givenTime) return null;
+      let weekday;
+      let week = new Date(givenTime).getDay();
+      let nowDate = givenTime;
+      let newDate = 0,
+        day = 0,
+        year = 0,
+        month = 0;
+      let intervalWeek = [];
+      if (week === 0) {
+        week = 7;
+      }
+      for (let i = 0; i < 7; i++) {
+        newDate = nowDate + 86400000 * i;
+        newDate = new Date(newDate);
+        day = newDate.getDate();
+        year = newDate.getFullYear();
+        month = newDate.getMonth() + 1;
+        weekday = newDate.getDay();
+        intervalWeek.push({ year, month, day, week: weekday });
+      }
+      return intervalWeek;
+    };
+
+    const dates = getTimeOfHebdomad(Date.now()).map(
       date => ["year", "month", "day"].map(key => date[key]).join("-")
     );
     this.setData({ dates, choosedDate: dates[0] });
@@ -66,7 +105,7 @@ Page({
 
         // 有数据
         rooms.forEach( // 转换二进制数据
-          el => el.busyTime = transformationsUtils.transformations(el.busyTime, 11)
+          el => el.busyTime = transformations(el.busyTime, 11)
         );
         this.setData({ // 按照获取的是否为第一页数据，更新或附加数据
           rooms: index === 1 ? rooms : this.data.rooms.concat(rooms)
