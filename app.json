@@ -3,6 +3,7 @@
 	"darkmode": false,
 	"resizable": false,
 	"singlePage": {},
+	"lazyCodeLoading": "requiredComponents",
 	"networkTimeout": {
 		"request": 7500,
 		"connectSocket": 15000,
@@ -33,18 +34,6 @@
 	],
 	"subpackages": [
 		{
-			"root": "freshman",
-			"pages": [
-				"pages/inputInfo/inputInfo",
-				"pages/welcome/welcome",
-				"pages/stuInfoDetail/stuInfoDetail",
-				"pages/newClass/newClass",
-				"pages/shareAnalysis/shareAnalysis",
-				"pages/newFriend/newFriend",
-				"pages/guide/guide"
-			]
-		},
-		{
 			"root": "class-room",
 			"pages": [
 				"pages/available-room"
@@ -59,30 +48,6 @@
 			]
 		},
 		{
-			"root": "contact",
-			"pages": [
-				"pages/show/show"
-			]
-		},
-		{
-			"root": "shop",
-			"pages": [
-				"pages/details/details",
-				"pages/index/index",
-				"pages/launch/launch",
-				"pages/search/search"
-			]
-		},
-		{
-			"root": "search",
-			"pages": [
-				"pages/all/all",
-				"pages/details/details",
-				"pages/index/index",
-				"pages/mini-result/mini-result"
-			]
-		},
-		{
 			"root": "timetable",
 			"pages": [
 				"pages/index/index",
@@ -91,22 +56,9 @@
 			]
 		},
 		{
-			"root": "score",
+			"root": "contact",
 			"pages": [
-				"pages/index/index"
-			]
-		},
-		{
-			"root": "activity",
-			"pages": [
-				"pages/index/index",
-				"pages/detail/detail"
-			]
-		},
-		{
-			"root": "consume",
-			"pages": [
-				"pages/index/index"
+				"pages/show/show"
 			]
 		}
 	],
