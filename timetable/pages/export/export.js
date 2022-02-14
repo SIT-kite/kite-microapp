@@ -1,31 +1,40 @@
 // timetable/pages/export/export.js
 
-// import date from "../../../carpool/components/calendar/common/async-validator/validator/date";
-import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
 import request from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 import { checkObject } from "../../../utils/type";
 
 const app = getApp();
+const { apiUrl, token } = app.globalData;
+
+const reminderTimes = [
+  { time:  0, text: "不提醒" },
+  { time: 10, text: "提前 10 分钟" },
+  { time: 15, text: "提前 15 分钟" },
+  { time: 20, text: "提前 20 分钟" },
+  { time: 30, text: "提前 30 分钟" }
+];
 
 Page({
 
   data: {
-    reminder_times: ["不提醒", 10, 15, 20, 30],
-    choosed_time: "不提醒",
+    reminder: { times: reminderTimes, index: 0 },
+    showUrlTextarea: false,
     url: "请稍等"
   },
-
-  // 导航栏函数
-  handlerGohomeClick,
-  handlerGobackClick,
 
   onLoad() {
     this.setUrl();
   },
 
+  getTime() {
+    const { times, index } = this.data.reminder;
+    return times[index].time;
+  },
+
   setTime(e) {
-    this.setData({ choosed_time: e.currentTarget.dataset.time });
+    console.log(e.detail);
+    this.setData({ "reminder.index": e.detail.value });
     this.setUrl();
   },
 
@@ -41,11 +50,11 @@ Page({
     } else {
 
       const { year, semester } = calendar;
-      const time = this.data.choosed_time;
-      const alarm = time === "不提醒" ? 0 : time * 60;
+      const alarm = this.getTime() * 60;
+
       request({
-        url: `${app.globalData.apiUrl}/edu/timetable/ics`,
-        header: getHeader("urlencoded", app.globalData.token),
+        url: `${apiUrl}/edu/timetable/ics`,
+        header: getHeader("urlencoded", token),
         data: { year, semester, alarm }
       }).then(
         res => this.setData({ url: res.data.data.url })
@@ -55,11 +64,15 @@ Page({
 
   },
 
-  copy(e) {
-    const data = e.currentTarget.dataset.url;
-    data === "请稍等"
+  toggleUrlTextarea() {
+    this.setData({showUrlTextarea: !this.data.showUrlTextarea});
+  },
+
+  copy() {
+    const url = this.data.url;
+    url === "请稍等"
     ? wx.showToast({ title: "请等待订阅地址生成完毕", icon: "none" })
-    : wx.setClipboardData({ data }); // 会弹出 toast 提示"内容已复制"
+    : wx.setClipboardData({ data: url }); // 会弹出 toast 提示"内容已复制"
   },
 
   // onReady () {},

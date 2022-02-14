@@ -1,5 +1,5 @@
 <!--timetable/pages/details/details.wxml-->
-<navBar background='#fff' back="{{true}}" home="{{true}}" bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+<navBar background="#FFF" back="true" home="true" bindback="navBack" bindhome="navHome" />
 <view class="details">
 <view class="courseName">
   <text>课程名称：{{showCourse}}</text>

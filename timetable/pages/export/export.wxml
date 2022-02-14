@@ -1,34 +1,38 @@
 <!-- timetable/pages/export/export.wxml -->
 
-<navBar background="fff" back="true" home="true"
-	bindback="handlerGobackClick" bindhome="handlerGohomeClick" />
+	<view class="main">
 
-<view class="background">
+	<picker class="reminder-picker tappable" header-text="课前提醒" bindchange="setTime"
+		range="{{ reminder.times }}" range-key="text">
 
-	<view class="data">
-
-		<view class="title_export">课表导出</view>
-		<view class="title te">课前提醒（分钟）</view>
-		<view class="choose_time">
-			<block wx:for="{{ reminder_times }}" wx:key="*this">
-				<view class="time {{ choosed_time === item }}" bindtap="setTime"
-					data-time="{{ item }}">{{ item }}</view>
-			</block>
+		<view class="entry">
+			<view class="name">课前提醒</view>
+			<view class="reminder {{ reminder.index !== '0' }}">{{ reminder.times[reminder.index].text }}</view>
 		</view>
 
-		<view class="url" bindtap="copy" data-url="{{ url }}">
-			<view class="url_text">{{ url }}</view>
-			<image class="icon" src="../../assets/icons/copy.png"></image>
+	</picker>
+
+	<view class="entry">
+		<view class="name tappable">订阅地址</view>
+		<view class="copy tappable" bindtap="copy" data-url="{{ url }}">
+			复制<image class="copy-icon" src="../../assets/icons/copy.png" />
 		</view>
-
 	</view>
 
-	<view class="content">
-		<view class="title td">使用说明</view>
-		<view class="instructions td"><!--
--->该页面生成课表的订阅地址。在上方的“课前提醒”中，你可以设置课前提醒的时间差。<!--
--->将对应的同步地址复制到剪切板后，你可以使用浏览器		下载并导入日历文件到手机<!--
--->自带的日历软件中，或直接将该同步地址复制到日历软件（如小米日历）里。</view>
-	</view>
+	<textarea class="url-textarea {{showUrlTextarea}}" value="{{url}}"  bindtap="toggleUrlTextarea" disabled="true"/>
 
+</view>
+
+<view class="instructions">
+	<view class="title">使用说明</view>
+	<view class="content p">该页面生成课表的订阅地址。</view>
+	<view class="content ul">
+		<view class="li">点击上方“课前提醒”，即可设置课前提醒的提前时长；</view>
+		<view class="li">点击订阅地址右侧的“复制”图标复制地址，随后便可将此地址粘<!--
+		-->贴进大部分日历应用（如小米日历）中，进行导入；</view>
+		<view class="li">如果日历应用支持导入文件，但不支持直接导入订阅地址，可先<!--
+		-->将地址粘贴进浏览器中，下载得到 .ics 格式的日历文件，再进行导入。</view>
+		<view class="li">如果日历应用什么都不支持，那就另请高明，再装一个支持导入<!--
+		-->的日历应用吧。</view>
+		</view>
 </view>

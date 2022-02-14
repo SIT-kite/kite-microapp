@@ -1,5 +1,4 @@
 {
-  "usingComponents": { 
-    "navBar" : "../../../components/navBar/navBar"},
-    "disableScroll":true
+	"navigationStyle": "default",
+	"navigationBarTitleText": "课表导出"
 }

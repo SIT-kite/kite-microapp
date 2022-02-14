@@ -1,11 +1,21 @@
-import { handlerGohomeClick, handlerGobackClick } from "../../../utils/navBarUtils";
+import { navHome, navBack } from "../../../utils/navBarUtils";
 import { check } from "../../../utils/type";
 import request from "../../../utils/request";
 import getHeader from "../../../utils/getHeader";
 import discipline from "./discipline";
-const timeUtils = require("../../../utils/timeUtils");
-const transformationsUtils = require("../../../utils/transformationsUtils");
-// const QR = require("../../../utils/weapp-qrcode")
+
+// transformations(number: number, length : number): Array
+// 将数字转换为二进制转换，并返回成数组，length 可限制返回数组长度
+// 返回值格式 [ 1, 0, 1, 0 ]
+const transformations = (number, length) => {
+  var result = [];
+  for (var i = 1; i < length + 1; i++) {
+    if (number & (1 << i)) {
+      result.push(1);
+    } else { result.push(0) }
+  }
+  return result;
+};
 
 const app = getApp();
 
@@ -58,8 +68,8 @@ Page({
   },
 
   // 导航栏函数
-  handlerGohomeClick,
-  handlerGobackClick,
+  navHome,
+  navBack,
 
   onLoad() {
     this.animation = wx.createAnimation({ duration: 300, timingFunction: "ease" });
@@ -145,10 +155,11 @@ Page({
       this.setData({ calendar, toSchool: calendar.start });
       wx.setStorageSync("timetableCalendar", calendar);
 
-      let startTime =
-        Date.parse(new Date()) < Date.parse(calendar.start)
-          ? calendar.start
-          : new Date();
+      const startTime = (
+        Date.now() < Date.parse(calendar.start).getTime()
+        ? calendar.start
+        : new Date()
+      );
       this.setTime(calendar.start, startTime); // 加载时间函数
 
       return calendar;
@@ -201,7 +212,43 @@ Page({
     schoolHolidayDict = Date.parse(new Date(schoolHolidayDict));
     givenTime = Date.parse(new Date(givenTime));
 
-    const date = timeUtils.getTimeOfWeek(givenTime).map(
+    // getTimeOfWeek(Giventime: String): intervalWeek :array
+    // 获得给定时间对应一周的日期和星期
+    // 返回格式 [{ year: yyyy, month: MM, day: dd, week: number }]
+    const getTimeOfWeek = (givenTime) => {
+      if (null == givenTime) return null;
+      let weekday;
+      let week = new Date(givenTime).getDay();
+      let nowDate = givenTime;
+      let newDate = 0,
+        day = 0,
+        year = 0,
+        month = 0;
+      let intervalWeek = [];
+      if (week === 0) {
+        week = 7;
+      }
+      for (let i = 0; i < week - 1; i++) {
+        newDate = nowDate - 86400000 * (week - 1 - i);
+        newDate = new Date(newDate);
+        day = newDate.getDate();
+        year = newDate.getFullYear();
+        month = newDate.getMonth() + 1;
+        weekday = newDate.getDay();
+        intervalWeek.push({ year, month, day, week: weekday });
+      }
+      for (let i = week; i < 8; i++) {
+        newDate = nowDate + 86400000 * (i - week);
+        newDate = new Date(newDate);
+        day = newDate.getDate();
+        year = newDate.getFullYear();
+        month = newDate.getMonth() + 1;
+        weekday = newDate.getDay();
+        intervalWeek.push({ year, month, day, week: weekday });
+      }
+      return intervalWeek;
+    };
+    const date = getTimeOfWeek(givenTime).map(
       el => {
         el.weekday = "日一二三四五六"[el.week];
         if (el.week === 0) { el.week = 7; }
@@ -209,19 +256,31 @@ Page({
       }
     );
 
+    const oldWeek = this.data.choosedDay.week;
     let week = new Date(givenTime);
-    week = this.data.choosedDay.week !== undefined
-      ? this.data.choosedDay.week === 0 ? 7 : this.data.choosedDay.week
+    week = oldWeek !== undefined
+      ?       oldWeek === 0 ?             7 : oldWeek
       : week.getDay() !== 0 ? week.getDay() : 7;
     const choosedDay = { week };
 
     // 计算所给日期与开学的周数差
-    const thisWeek = timeUtils.getIntervalToCurrentWeek(schoolHolidayDict, givenTime);
+
+    // getIntervalToCurrentWeek(Giventime: String): intervalWeek : number
+    // 获得给定时间的周数间隔（有余进一）
+    // 传入格式为 时间戳
+    const getIntervalToCurrentWeek = (givenTime, giveTime) => {
+      let startTime = givenTime;
+      var CurrentTime = giveTime;
+      let intervalWeek = Math.ceil((CurrentTime - startTime) / 604800000);
+      return intervalWeek;
+    };
+    const thisWeek = getIntervalToCurrentWeek(schoolHolidayDict, givenTime);
 
     let startWeek = this.data.startWeek;
     if (startWeek === -1) { startWeek = thisWeek; }
 
     this.setData({ date, choosedDay, thisWeek, startWeek });
+
   },
 
   // 转换课时时间
@@ -256,8 +315,8 @@ Page({
     let weekList = [];
     let dayList = [];
     timetable.forEach(course => {
-      course.weeks = transformationsUtils.transformations(course.week, 32);
-      course.table = transformationsUtils.transformations(course.timeIndex, 32);
+      course.weeks = transformations(course.week, 32);
+      course.table = transformations(course.timeIndex, 32);
     });
     weekList = timetable.filter( // 筛出对应周的数据
       course => course.weeks[this.data.thisWeek - 1] === 1
