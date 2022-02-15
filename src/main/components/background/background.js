@@ -1,8 +1,7 @@
-
 Component({
-  properties: {
-    type: { type: String }
-  } /* ,
+	properties: {
+		type: { type: String }
+	} /* ,
   data: {},
   methods: {} */
 });

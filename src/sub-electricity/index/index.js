@@ -15,8 +15,9 @@ const getDateTime = date => [
 	["Minutes", ":", 2],
 	["Seconds", "", 2],
 ].map(
-	([name, suffix, padLength, offset = 0]) => `${(date["get" + name]() + offset).toString().padStart(padLength, "0")
-		}${suffix}`
+	([name, suffix, padLength, offset = 0]) => `${
+		(date["get" + name]() + offset).toString().padStart(padLength, "0")
+	}${suffix}`
 ).join("");
 
 const app = getApp();
@@ -25,7 +26,7 @@ const gData = app.globalData;
 const { platform, pixelRatio } = wx.getSystemInfoSync();
 
 const electricityAPI = ({ api = "", roomId, callback }) => request({
-	url: `${gData.apiUrl}/pay/room/${roomId}${api !== "" ? "/" + api : ""}`,
+	url: `${gData.apiUrl}/pay/room/${roomId}${api}`,
 	header: getHeader("urlencoded", gData.token)
 }).then(
 	callback
@@ -180,7 +181,7 @@ Page({
 
 				// 消费排名
 				electricityAPI({
-					api: "rank", roomId,
+					api: "/rank", roomId,
 					callback: res => {
 						console.log("消费排名", res.data.data);
 						const { consumption, rank, room_count } = res.data.data;
@@ -224,7 +225,7 @@ Page({
 
 		if (datetimeName === false) throw "range is not days or hours";
 		else return electricityAPI({
-			api: `bill/${range}`, roomId,
+			api: `/bill/${range}`, roomId,
 			callback: res => {
 
 				const entries = res.data.data;

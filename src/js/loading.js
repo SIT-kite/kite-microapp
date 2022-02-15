@@ -7,8 +7,8 @@ export default async ({ title, mask, callback }) => {
 	// (await typeof callback === "function") ? callback() : callback;
 	const result = await (typeof callback === "function" ? callback() : callback);
 
-  wx.hideLoading();
+	wx.hideLoading();
 
-  return result;
+	return result;
 
 };

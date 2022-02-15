@@ -42,15 +42,14 @@ Page({
 	},
 
 	getUserInfo() {
-		gData.isLogin
-			? request({
+		!gData.isLogin
+			? loginModal()
+			: request({
 				url: `${gData.apiUrl}/user/${gData.uid}`,
 				header: getHeader("urlencoded", gData.token)
 			}).then(
 				res => {
-					const data = res.data.data;
-					const nickName = data.nickName;
-					const avatarUrl = data.avatar;
+					const { nickName, avatar: avatarUrl } = res.data.data;
 					Object.assign(gData, { nickName, avatarUrl });
 					wx.setStorageSync("nickname", nickName);
 					wx.setStorageSync("avatarUrl", avatarUrl);
@@ -58,12 +57,13 @@ Page({
 				},
 			).catch(
 				err => this.catchError("用户信息获取失败", {}, err)
-			) : loginModal();
+			);
 	},
 
 	updateUserInfo() {
 		gData.isLogin
-			? wx.getUserProfile({
+			? loginModal()
+			: wx.getUserProfile({
 				lang: "zh_CN",
 				desc: "上应小风筝需要获得您的公开信息"
 			}).then(
@@ -83,7 +83,7 @@ Page({
 						err => this.catchError("用户信息更新失败", res.userInfo, err)
 					)
 				}
-			) : loginModal();
+			);
 	},
 
 	clearStorage(e) {
@@ -127,68 +127,68 @@ Page({
 	},
 
 	setDebugInfo() {
-		loading({
-			title: "正在获取…",
-			callback: async () => {
 
-				const has = (array, value) => array.some(item => item === value);
+		const callback = async () => {
 
-				const is = {
+			const has = (array, value) => array.some(item => item === value);
 
-					api: (key, value) => (
-						has(["apiUrl", "commonUrl"], key) || (
-							typeof value === "string" &&
-							value.includes("kite.sunnysab.cn")
-						)
-					),
+			const is = {
 
-					token: (key, value) => (
-						key === "token" &&
-						value !== ""
-					),
-					userInfo: (key, value) => (
-						has(["userInfo", "contact"], key) &&
-						JSON.stringify(value) !== "{}"
-					),
-					userDetail: (key, value) => (
-						key === "userDetail" &&
-						value !== null
-					),
-					credentials: (key, value) => (
-						["token", "userInfo", "userDetail"].every(
-							credential => is[credential](key, value)
-						)
-					),
-
-					timetable: (key, value) => (
-						key.startsWith("timetable_") &&
-						value !== null
+				api: (key, value) => (
+					has(["apiUrl", "commonUrl"], key) || (
+						typeof value === "string" &&
+						value.includes("kite.sunnysab.cn")
 					)
+				),
 
-				};
+				token: (key, value) => (
+					key === "token" &&
+					value !== ""
+				),
+				userInfo: (key, value) => (
+					has(["userInfo", "contact"], key) &&
+					JSON.stringify(value) !== "{}"
+				),
+				userDetail: (key, value) => (
+					key === "userDetail" &&
+					value !== null
+				),
+				credentials: (key, value) => (
+					["token", "userInfo", "userDetail"].every(
+						credential => is[credential](key, value)
+					)
+				),
 
+				timetable: (key, value) => (
+					key.startsWith("timetable_") &&
+					value !== null
+				)
 
-				// 隐藏 timetable；如果不在开发者工具中，则隐藏 api 和 credentials
-				const removeToken = (key, value) => (
-					is.timetable(key, value) ? "[长度过长，已隐藏]"
-					: gData.isDev ? value
-					: is.api(key, value) ? undefined
-					: is.credentials(key, value) ? "[已隐藏]"
-					: value
-				);
+			};
 
-				const stringify = (data, replacer = null) => (
-					JSON.stringify(data, replacer, 2)
-				);
+			// 隐藏 timetable；如果不在开发者工具中，则隐藏 api 和 credentials
+			const removeToken = (key, value) => (
+				is.timetable(key, value) ? "[长度过长，已隐藏]"
+				: gData.isDev ? value
+				: is.api(key, value) ? undefined
+				: is.credentials(key, value) ? "[已隐藏]"
+				: value
+			);
 
-				this.setData({
-					globalData: stringify(gData, removeToken),
-					storage: stringify(getAllStorageAsObject(), removeToken),
-					systemInfo: stringify(wx.getSystemInfoSync())
-				});
+			const stringify = (data, replacer = null) => (
+				JSON.stringify(data, replacer, 2)
+			);
 
-			}
-		});
+			this.setData({
+				globalData: stringify(gData, removeToken),
+				storage: stringify(getAllStorageAsObject(), removeToken),
+				systemInfo: stringify(wx.getSystemInfoSync())
+			});
+
+		};
+
+		loading({ callback, title: "正在获取…" });
+
 	},
 
 	copy(e) {

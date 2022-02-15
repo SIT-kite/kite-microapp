@@ -1,5 +1,4 @@
 // 关于
-// pages/about/about.js
 
 import copyText from "../../../js/copyText";
 
@@ -28,31 +27,31 @@ const html = [
 -->了解招新信息，加入校易班工作站。<small class="welcome">（欢迎来技术部！）</small></p>
 
 <p class="p">你也可以直接向有关项目提交 Issue 或 PR，留下你的痕迹；开源代码仓库见下。</p>`
- */
+*/
 ].map(
-  section => `<section class="section">${section}</section>`
+	section => `<section class="section">${section}</section>`
 ).join("");
 
-const contributors = [ "上海应用技术大学学生" ]; /*  [
-  [ 2017, "外国语", "张城" ],
-  [ 2017,     "理", "Snowstar Cyan" ],
-  [ 2017, "计算机科学与信息工程", "peanut996" ],
-  [ 2018,       "材料科学与工程", "RainSlide" ],
-  [ 2018, "计算机科学与信息工程", "AlenYing" ],
-  [ 2018, "计算机科学与信息工程", "sunnysab" ],
-  [ 2018, "计算机科学与信息工程", "wanfengcxz" ],
-  [ 2019, "计算机科学与信息工程", "B635" ],
-  [ 2019, "计算机科学与信息工程", "wzh" ],
-  [ 2019, "计算机科学与信息工程", "EvilorLive" ],
-  [ 2019,             "机械工程", "zdy180108" ],
-  [ 2020, "计算机科学与信息工程", "Pony-Zhang" ],
-  [ 2020, "计算机科学与信息工程", "Devin" ],
-  [ 2020,             "机械工程", "记者团廾匸" ]
+const contributors = ["上海应用技术大学学生"]; /*  [
+	[ 2017, "外国语", "张城" ],
+	[ 2017,     "理", "Snowstar Cyan" ],
+	[ 2017, "计算机科学与信息工程", "peanut996" ],
+	[ 2018,       "材料科学与工程", "RainSlide" ],
+	[ 2018, "计算机科学与信息工程", "AlenYing" ],
+	[ 2018, "计算机科学与信息工程", "sunnysab" ],
+	[ 2018, "计算机科学与信息工程", "wanfengcxz" ],
+	[ 2019, "计算机科学与信息工程", "B635" ],
+	[ 2019, "计算机科学与信息工程", "wzh" ],
+	[ 2019, "计算机科学与信息工程", "EvilorLive" ],
+	[ 2019,             "机械工程", "zdy180108" ],
+	[ 2020, "计算机科学与信息工程", "Pony-Zhang" ],
+	[ 2020, "计算机科学与信息工程", "Devin" ],
+	[ 2020,             "机械工程", "记者团廾匸" ]
 ].map(
-  ([year, college, name]) => `${year}级 ${college.padStart(10, "　")}学院 ${name}`
+	([year, college, name]) => `${year}级 ${college.padStart(10, "　")}学院 ${name}`
 ); */
 
 Page({
-  data: { html, contributors },
-  copy: e => copyText(e.target.dataset.text)
+	data: { html, contributors },
+	copy: e => copyText(e.target.dataset.text)
 });
