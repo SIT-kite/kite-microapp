@@ -195,6 +195,19 @@ Page({
 
 		});
 
+	},
+	changelog() {
+		const changelogs = new Map([
+			[ ""       , "开发者工具中，版本号为空字符串…" ],
+			[ "0.14.0" , "更新基础库至 2.19；小风筝 APP 发布" ],
+			[ "0.14.1" , "修复课表翻页bug，更改部分图标，添加更新日志" ],
+		]);
+		const { version } = wx.getAccountInfoSync().miniProgram;
+		wx.showModal({
+			title: `当前版本 ${ version }`,
+			content: changelogs.get(version) ?? "暂无更新日志",
+			showCancel: false
+		});
 	} /* ,
 
   // 更新用户数据

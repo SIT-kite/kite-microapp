@@ -1,5 +1,5 @@
 <view class="canvas-container">
-	<canvas id="canvas" type="2d" style="width: 650rpx; height: 1000rpx;"></canvas>
+	<canvas id="canvas" type="2d" style="width: 540rpx; height: 960rpx;"></canvas>
 </view>
 
 <checkbox-group class="checkbox-group" bindchange>

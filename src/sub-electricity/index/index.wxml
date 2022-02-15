@@ -1,14 +1,21 @@
 <view class="card inquiry">
 
 	<view class="input-container">
+
 		<text>10</text>
-		<input class="input building" value="{{building}}" placeholder="楼号" maxlength="2"
+
+		<input class="input building"
+			value="{{building}}" type="number" placeholder="楼号" maxlength="2"
 			confirm-type="next" bindinput="inputBuilding" focus="{{ focus }}" />
-		<input class="input room" value="{{room}}" placeholder="寝室号" maxlength="4"
+
+		<input class="input room"
+			value="{{room}}" type="number" placeholder="寝室号" maxlength="4"
 			confirm-type="send" bindinput="inputRoom" bindconfirm="fetchElectricity" />
+
 	</view>
 
-	<button class="button submit" type="primary" loading="{{loading}}" bindtap="fetchElectricity">查询</button>
+	<button class="button submit"
+		type="primary" loading="{{loading}}" bindtap="fetchElectricity">查询</button>
 
 </view>
 
@@ -51,20 +58,27 @@
 				</view>
 
 				<view class="section bill" wx:if="{{ days !== null || hours !== null }}">
+
 					<view class="title">电费使用情况</view>
 					<view class="switch-container">
 						<text class="switch-label {{currentRange === 'hours'}}">过去一天</text>
 						<switch class="switch" checked="true" bindchange="changeRange" />
 						<text class="switch-label {{currentRange === 'days'}}">过去一周</text>
 					</view>
-					<canvas id="canvas" canvas-id="canvas" type="{{ canvas2d ? '2d' : '' }}"
-						bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" />
+
+					<view class="chart-container">
+						<canvas class="chart"
+							id="uCharts-bill" canvas-id="uCharts-bill" type="{{ canvas2d ? '2d' : '' }}"
+							bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" />
+					</view>
+
 					<view wx:if="{{currentRange === 'hours'}}">
 					共消费 {{hours.sum}} 元，平均消费 {{hours.median}} 元/小时
 					</view>
 					<view wx:if="{{currentRange === 'days'}}">
 					共消费 {{ days.sum}} 元，平均消费 {{ days.median}} 元/天
 					</view>
+
 				</view>
 
 				<view class="section charge" wx:if="{{ charges.length > 0 }}">

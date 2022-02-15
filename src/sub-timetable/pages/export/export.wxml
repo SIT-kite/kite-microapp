@@ -17,7 +17,8 @@
 		</view>
 	</view>
 
-	<textarea class="url-textarea {{showUrlTextarea}}" value="{{url}}"  bindtap="toggleUrlTextarea" disabled="true"/>
+	<textarea class="url-textarea {{showUrlTextarea}}" value="{{url}}"
+		bindtap="toggleUrlTextarea" disabled="true" />
 
 </view>
 
@@ -26,7 +27,8 @@
 	<view class="content p">该页面生成课表的订阅地址。</view>
 	<view class="content ul">
 		<view class="li">点击上方“课前提醒”，即可设置课前提醒的提前时长；</view>
-		<view class="li">点击订阅地址右侧的“复制”图标复制地址，随后便可将此地址粘<!--
+		<view class="li">点击“订阅地址”下方的文本框，即可展开并预览订阅地址；</view>
+		<view class="li">点击“订阅地址”右侧的“复制”图标复制地址，随后便可将此地址粘<!--
 		-->贴进大部分日历应用（如小米日历）中，进行导入；</view>
 		<view class="li">如果日历应用支持导入文件，但不支持直接导入订阅地址，可先<!--
 		-->将地址粘贴进浏览器中，下载得到 .ics 格式的日历文件，再进行导入。</view>

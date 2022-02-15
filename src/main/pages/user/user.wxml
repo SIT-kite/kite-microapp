@@ -37,16 +37,20 @@
 		</button>
 	</block>
 
-	<navigator class="card menu-option" url="../about/about">
-		关于我们<text class="arrow">></text>
-	</navigator>
+	<view class="card menu">
+		<navigator class="menu-item" url="../about/about">
+			<image class="icon" src="./assets/info.svg" /> 关于我们
+		</navigator>
+		<button class="menu-item" open-type="feedback">
+			<image class="icon" src="./assets/feedback.svg" /> 意见反馈
+		</button>
+		<navigator class="menu-item" url="../debug/debug">
+			<image class="icon" src="./assets/dev.svg" /> 调试工具
+		</navigator>
+		<button class="menu-item" bindtap="changelog">
+			<image class="icon" src="./assets/changelog.svg" /> 更新日志
+		</button>
+	</view>
 
-	<button class="card menu-option" open-type="feedback">
-		意见反馈<text class="arrow">></text>
-	</button>
-
-	<navigator class="card menu-option" url="../debug/debug">
-		调试工具<text class="arrow">></text>
-	</navigator>
 
 </view>

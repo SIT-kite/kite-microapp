@@ -1,18 +1,9 @@
 @import "../../wxss/main.wxss";
 
-.card {
-	width: 100% !important;
-	padding: .5rem;
-}
-
-.user {
-	height: 5rem;
-}
+.user { height: 5rem; padding: .5rem; }
 
 /* 已登录 */
-.user.info {
-	display: flex;
-}
+.user.info { display: flex; }
 
 .avatar {
 	grid-area: avatar;
@@ -79,10 +70,26 @@
 	height: 2em;
 }
 
-.menu-option {
+.menu { padding: .25em 0; }
+
+.menu-item {
 	display: flex;
-	justify-content: space-between;
-	font: inherit; /* 覆盖 <button> 字体 */
+	align-items: center;
+	width: 100% !important;
+	padding: .25em .5em;
+	background-color: transparent;
+	text-align: initial;
+	font: inherit;
+	transition: background-color var(--transition);
+}
+.menu-item:active { background-color: #EEE; }
+
+.icon {
+	width: 1.5em;
+	height: 1.5em;
+	padding: .25em;
+	margin-inline-end: .5em;
+	opacity: .6;
 }
 
 .arrow {

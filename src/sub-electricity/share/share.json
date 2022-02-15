@@ -1,3 +1,4 @@
 {
-	"navigationBarTitleText": "电费分享"
+	"navigationBarTitleText": "电费分享",
+	"disableScroll": true
 }

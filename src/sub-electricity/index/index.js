@@ -5,7 +5,10 @@ import { electricity as onShareAppMessage } from "../../js/onShareAppMessage";
 import { check, checkObject, isNonEmptyString } from "../../js/type";
 import request from "../../js/request";
 import getHeader from "../../js/getHeader";
+
 import uCharts from "./u-charts";
+import uChartsConfig from "./u-charts-config";
+const uChartsBill = "uCharts-bill";
 
 const getDateTime = date => [
 	["FullYear", "年", 0],
@@ -22,8 +25,6 @@ const getDateTime = date => [
 
 const app = getApp();
 const gData = app.globalData;
-
-const { platform, pixelRatio } = wx.getSystemInfoSync();
 
 const electricityAPI = ({ api = "", roomId, callback }) => request({
 	url: `${gData.apiUrl}/pay/room/${roomId}${api}`,
@@ -47,20 +48,22 @@ const numberStringFilter = str => str
 	.join("")
 	.replace(/^0+(.+)/, "$1");
 
+const { platform, pixelRatio } = wx.getSystemInfoSync();
+
 Page({
 
 	data: {
 
-		focus: false,
+		focus: false, // 是否聚焦文本框（打开输入法）
 		loading: false,
 		showResult: false,
 		currentTab: 0,
 
-		// https://developers.weixin.qq.com/community/develop/doc/00066c12e1cb90d9865a4eea455400
-		canvas2d: ["android", "ios"].some(supported => platform === supported),
-
 		building: "",
 		room: "",
+
+		// https://developers.weixin.qq.com/community/develop/doc/00066c12e1cb90d9865a4eea455400
+		canvas2d: platform !== "windows",
 
 		electricity: null,
 		rank: null,
@@ -73,7 +76,15 @@ Page({
 
 	onShareAppMessage,
 
-	onLoad() {
+	onLoad(options) {
+
+		if (
+			typeof options === "object" &&
+			options !== null &&
+			Object.prototype.hasOwnProperty.call(options, "tab")
+		) {
+			this.setData({ currentTab: options.tab });
+		}
 
 		const electricity = wx.getStorageSync("electricity");
 
@@ -196,7 +207,7 @@ Page({
 
 				// 用电历史
 				this.fetchBill("days", roomId).then(
-					() => this.renderChart(this.data.days)
+					() => this.renderChart(uChartsBill, this.data.days)
 				)
 
 			]).then(
@@ -268,50 +279,47 @@ Page({
 	},
 
 	chart: null,
-	renderChart({ categories, series, median }) {
+
+	renderChart(canvasId, { categories, series, median }) {
 
 		const { canvas2d } = this.data;
-		const fields = { id: true, size: true };
-		fields[canvas2d ? "node" : "context"] = true;
+		const fields = { size: true, [canvas2d ? "node" : "context"]: true };
 
-		wx.createSelectorQuery().select("#canvas").fields(
+		const markLine = {
+			type: "dash",
+			data: [{
+				value: median,
+				showLabel: true,
+				// lineColor: "#03A9F4",
+				// labelBgOpacity: .5
+			}]
+		};
+
+		wx.createSelectorQuery().select(`#${ canvasId }`).fields(
 			fields, res => {
 
-				const { id: canvasId, width, height, node, context } = res;
-				const formatter = num =>
-					typeof num === "number"
-						? num.toFixed(1).replace(".0", "")
-						: num;
 
-				this.chart = new uCharts({
-					type: "line", loadingType: 4, fontSize: 12, tapLegend: true,
-					disableScroll: true, enableScroll: true,
-					animation: true, timing: "easeOut", duration: 250,
-					canvasId, canvas2d, context: canvas2d ? node.getContext("2d") : context,
-					pixelRatio, width: width - 6, height,
-					dataPointShape: true, dataPointShapeType: "solid", enableMarkLine: true,
-					xAxis: { calibration: true, disableGrid: true, itemCount: 8 },
-					yAxis: {
-						gridType: "dash", showTitle: true, formatter, data: [{
-							textAlign: "left", title: "元", titleOffsetX: -18, min: 0, formatter
-						}]
-					},
-					legend: { show: false },
-					extra: {
-						markLine: {
-							type: "dash",
-							data: [{
-								value: median,
-								lineColor: "#03A9F4",
-								showLabel: true,
-								labelBgOpacity: .5
-							}]
-						},
-					},
-					categories,
-					series
-				});
+				const canvas = res[ canvas2d ? "node" : "context" ];
+				const context = canvas2d ? canvas.getContext("2d") : canvas;
 
+				let { width, height } = res;
+				if (canvas2d) {
+					width *= pixelRatio;
+					height *= pixelRatio;
+					Object.assign(canvas, { width, height });
+				}
+
+				this.chart = new uCharts(
+					Object.assign(
+						uChartsConfig, {
+							canvasId, canvas2d, context,
+							width, height, pixelRatio: canvas2d ? pixelRatio : 1,
+							categories, series, extra: { markLine }
+						}
+					)
+				);
+
+				// console.log(this.chart);
 				// this.chart.updateData({ categories, series });
 
 			}
@@ -334,7 +342,7 @@ Page({
 	},
 
 	switchTab(e) {
-		this.setData({ currentTab: e.target.dataset.current });
+		this.setData({ currentTab: +e.target.dataset.current });
 	},
 
 	swiperChange(e) {

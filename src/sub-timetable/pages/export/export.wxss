@@ -1,11 +1,13 @@
-page, .entry, .url-textarea, .instructions {
-	box-sizing: border-box;
-	padding: .5rem;
-}
 
 page {
 	display: flex;
 	flex-direction: column;
+	box-sizing: border-box;
+	padding: 1rem;
+}
+.entry, .url-textarea, .instructions {
+	box-sizing: border-box;
+	padding: .5rem;
 }
 
 .main {
@@ -15,6 +17,7 @@ page {
 .entry {
 	display: flex;
 	justify-content: space-between;
+	border-bottom: 1px solid #9E9E9E;
 }
 .tappable { transition: background-color var(--transition); }
 .tappable:active { background-color: rgba(0, 0, 0, .1); }
@@ -38,6 +41,8 @@ page {
 }
 
 .url-textarea {
+	width: 100%;
+	margin: .5rem 0;
 	font-size: .9em;
 	font-family: Sarasa Mono SC, Consolas, monospace;
 	color: #424242;
@@ -50,7 +55,6 @@ page {
 .url-textarea.true  { height:   7em; } /* 4 行 */
 
 .instructions > .title {
-	margin-bottom: .5rem;
 	font-size: 1.25em;
 	color: #01579B;
 }

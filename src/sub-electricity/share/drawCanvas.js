@@ -4,7 +4,7 @@ const srcMap = new Map([
 	// ["avatar", avatarPath],
 	["power-user", "./assets/power-user.png"],
 	["power-saver", "./assets/power-saver.png"],
-	["power-common", "./assets/power-common.png"],
+	["power-common", "./assets/power-common.svg"],
 	["appcode", "./assets/appcode.png"]
 ]);
 
@@ -20,13 +20,13 @@ export default async (canvas, data) => {
 	const ctx = canvas.getContext("2d");
 
 	const px = wx.getSystemInfoSync().pixelRatio;
-	const cw = 650 * px;
-	const ch = 1000 * px;
+	const cw = 540 * px;
+	const ch = 960 * px;
 
 	canvas.width = cw;
 	canvas.height = ch;
 
-	console.log("分享图参数:", { data, px, cw, ch });
+	// console.log("分享图参数:", { data, px, cw, ch });
 
 	// 绘制图像时，需要先载入图像，再在回调函数 onload 中绘制图像
 	/* drawImageBySrc(
@@ -36,20 +36,16 @@ export default async (canvas, data) => {
 	const drawImageBySrc = (src, dx, dy, dWidth, dHeight, callback) => new Promise(
 		(resolve, reject) => {
 			const image = canvas.createImage();
-			return Object.assign(
-				image, {
-				src,
-				onload: () => {
-					ctx.drawImage(image, dx, dy, dWidth, dHeight);
-					typeof callback === "function" && callback();
-					resolve();
-				},
-				onerror: err => {
-					console.error("drawImageBySrc():", err);
-					reject("drawImageBySrc(): image load error");
-				}
-			}
-			);
+			const onload = () => {
+				ctx.drawImage(image, dx, dy, dWidth, dHeight);
+				typeof callback === "function" && callback();
+				resolve();
+			};
+			const onerror = err => {
+				console.error("drawImageBySrc():", src, err);
+				reject("drawImageBySrc(): image load error");
+			};
+			return Object.assign(image, { src, onload, onerror });
 		}
 	);
 
@@ -97,10 +93,10 @@ export default async (canvas, data) => {
 	const avatar_y = 25 * px;
 
 	// 白色背景 坐标 x y 宽高 w h
-	const main_x = 50 * px;
-	const main_y = avatar_y + avatar_d + 25 * px;
-	const main_w = 550 * px;
-	const main_h = ch - 50 * px - avatar_r - avatar_y;
+	const main_x = 25 * px;
+	const main_y = avatar_y + avatar_d + main_x / 2;
+	const main_w = cw - main_x * 2;
+	const main_h = ch - avatar_y - avatar_r - main_x;
 
 	// 随机方向随机颜色渐变背景
 	const randomColor = [0, 0, 0].map(() => Math.ceil(191 + Math.random() * 64));
@@ -131,7 +127,7 @@ export default async (canvas, data) => {
 	ctx.textAlign = "center";
 	ctx.textBaseline = "top";
 
-	ctx.font = `bold ${Math.round(42 * px)}px sans-serif`;
+	ctx.font = `bold ${Math.round(36 * px)}px sans-serif`;
 	ctx.fillStyle = "black";
 	ctx.fillText(nickName, cw / 2, main_y + gap, 500 * px);
 
@@ -142,8 +138,8 @@ export default async (canvas, data) => {
 	// renderLine(prefix, text, suffix, y)
 	const renderLine = (prefix, text, suffix, y) => {
 
-		const font_normal = `${Math.round(36 * px)}px sans-serif`;
-		const font_large = `bold ${Math.round(50 * px)}px sans-serif`;
+		const font_normal = `${Math.round(32 * px)}px sans-serif`;
+		const font_large = `bold ${Math.round(48 * px)}px sans-serif`;
 
 		ctx.font = font_normal;
 		const prefix_w = ctx.measureText(prefix).width;
@@ -168,12 +164,12 @@ export default async (canvas, data) => {
 	};
 
 	// 电费 y = 125
-	renderLine("昨日消耗电费", `${consumption}`, "元", 125 * px);
+	renderLine("昨日消耗电费", `${consumption}`, "元", 110 * px);
 	// 排名 y = 200
-	renderLine("超越了", `${percent}%`, "的寝室", 200 * px);
+	renderLine("超越了", `${percent}%`, "的寝室", 180 * px);
 
-	// 图片 省电达人 / 空调才是本体 / 正常用电 y = 250 d = 330
-	const power_d = 330 * px;
+	// 图片 省电达人 / 空调才是本体 / 正常用电 y = 250 d = 300
+	const power_d = 300 * px;
 	await drawImage(
 		percent <= 30 ? "power-saver"
 		: percent >= 70 ? "power-user"
@@ -183,7 +179,7 @@ export default async (canvas, data) => {
 
 	// 图片 小程序码 d = 150
 	const appCode_d = 150 * px;
-	const appCode_xy = addGap(appCode_d, 50 * px);
+	const appCode_xy = addGap(appCode_d, main_x);
 	await drawImage("appcode", cw - appCode_xy, ch - appCode_xy, appCode_d, appCode_d);
 
 	// 长按识别小程序码 打开上应小风筝，享受便利校园
@@ -191,15 +187,17 @@ export default async (canvas, data) => {
 	ctx.textAlign = "end";
 	ctx.textBaseline = "middle";
 
-	const share_x = cw - addGap(0, 50 * px, 150 * px);
-	const share_y = ch - addGap(0, 50 * px);
+	const share_x = cw - addGap(0, main_x, appCode_d);
+	const share_y = ch - addGap(0, main_x);
 
 	const share1 = "长按识别小程序码";
-	const share2 = "打开上应小风筝，享受便利校园";
+	const share2 = "打开上应小风筝";
+	const share3 = "享受便利校园";
 
-	ctx.font = `${Math.round(24 * px)}px sans-serif`;
+	ctx.font = `${Math.round(20 * px)}px sans-serif`;
 	ctx.fillStyle = "#9E9E9E";
-	ctx.fillText(share1, share_x, share_y - 90 * px);
+	ctx.fillText(share1, share_x, share_y - 80 * px);
 	ctx.fillText(share2, share_x, share_y - 50 * px);
+	ctx.fillText(share3, share_x, share_y - 20 * px);
 
 };
