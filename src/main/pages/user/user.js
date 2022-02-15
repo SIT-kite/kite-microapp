@@ -45,7 +45,8 @@ Page({
 	data: {
 		isLogin: gData.isLogin,
 		verified: gData.verified,
-		needRegister: false
+		needRegister: false,
+		showAPP: true
 	},
 
 	onShareAppMessage,
@@ -196,7 +197,8 @@ Page({
 		});
 
 	},
-	changelog() {
+
+	showChangelog() {
 		const changelogs = new Map([
 			[ ""       , "开发者工具中，版本号为空字符串…" ],
 			[ "0.14.0" , "更新基础库至 2.19；小风筝 APP 发布" ],
@@ -208,6 +210,10 @@ Page({
 			content: changelogs.get(version) ?? "暂无更新日志",
 			showCancel: false
 		});
+	},
+
+	toggleAPP() {
+		this.setDataTo([1, 1, 1], { showAPP: !this.data.showAPP });
 	} /* ,
 
   // 更新用户数据

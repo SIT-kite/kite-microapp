@@ -60,7 +60,49 @@
   },
   "condition": {
     "miniprogram": {
-      "list": []
+      "list": [
+        {
+          "name": "电费新版",
+          "pathName": "sub-electricity/index/index",
+          "query": "tab=1"
+        },
+        {
+          "name": "电费分享",
+          "pathName": "sub-electricity/share/share",
+          "query": "consumption=12.34&percent=56.78",
+          "partialCompile": {
+            "enabled": true
+          }
+        },
+        {
+          "name": "课程表",
+          "pathName": "sub-timetable/pages/index/index",
+          "partialCompile": {
+            "enabled": true
+          }
+        },
+        {
+          "name": "课程表导出",
+          "pathName": "sub-timetable/pages/export/export",
+          "partialCompile": {
+            "enabled": true
+          }
+        },
+        {
+          "name": "常用电话",
+          "pathName": "sub-phonebook/phonebook",
+          "partialCompile": {
+            "enabled": true
+          }
+        },
+        {
+          "name": "空教室",
+          "pathName": "sub-classroom/classroom",
+          "partialCompile": {
+            "enabled": true
+          }
+        }
+      ]
     }
   }
 }

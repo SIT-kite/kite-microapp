@@ -32,7 +32,7 @@
 	<block wx:else>
 		<button class="card user login"
 			bindtap="{{ needRegister ? 'register' : 'login' }}">
-			<image class="login-icon" src="../../assets/icons/person/wechat.png" />
+			<image class="login-icon" src="../../assets/wechat.png" />
 			{{ needRegister ? '点此授权' : '点此使用微信登录' }}
 		</button>
 	</block>
@@ -47,9 +47,12 @@
 		<navigator class="menu-item" url="../debug/debug">
 			<image class="icon" src="./assets/dev.svg" /> 调试工具
 		</navigator>
-		<button class="menu-item" bindtap="changelog">
+		<button class="menu-item" bindtap="showChangelog">
 			<image class="icon" src="./assets/changelog.svg" /> 更新日志
 		</button>
+		<view class="menu-item option" bindtap="toggleAPP">
+			隐藏主页 APP 提示 <checkbox checked="{{ !showAPP }}" />
+		</view>
 	</view>
 
 

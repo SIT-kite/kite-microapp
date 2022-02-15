@@ -45,7 +45,7 @@
 	</navigator>
 
 
-	<navigator class="card app"
+	<navigator wx:if="{{ showAPP }}" class="card app"
 		url="../article/article?url=https://mp.weixin.qq.com/s/hcEnxh7vWyM2cIpW2CR9Pg">
 		<image class="app-icon grow" src="../../assets/kite-app.svg" />
 		<text class="grow">小风筝 APP 发布了！</text>

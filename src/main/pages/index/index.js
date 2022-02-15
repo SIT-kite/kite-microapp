@@ -13,8 +13,9 @@ Page({
 
 	data: {
 		isLogin: gData.isLogin,
+		showAPP: true,
 		clicked: -1, // 被点击功能的索引
-		notices: [{ id: 1, title: "正在加载通知…" }], // 通知
+		notices: [{ id: 1, title: "正在加载通知…" }],
 		modules
 	},
 
@@ -35,13 +36,20 @@ Page({
 			}
 		});
 
+		const showAPP = wx.getStorageSync("showAPP");
+		showAPP !== "" && this.setData({ showAPP });
+
 	},
 
 	onShow() {
 
-		// 如果页面 isLogin 与全局 isLogin 不一致，则从全局同步到页面
-		this.data.isLogin !== gData.isLogin &&
-		this.setData({ isLogin: gData.isLogin });
+		// 如果页面属性与全局属性不一致，则从全局同步到页面
+		[ "isLogin", "showAPP" ].forEach(
+			key => (
+				this.data[key] !== gData[key] &&
+				this.setData({ [key]: gData[key] })
+			)
+		);
 
 	},
 
@@ -68,7 +76,7 @@ Page({
 
 			if (notices.length > 0) {
 				this.setData({ notices });
-				console.groupCollapsed("%c通知数据", "font-weight: normal");
+				console.groupCollapsed("通知数据");
 				notices.forEach(notice => console.log(notice));
 				console.groupEnd();
 			} else {

@@ -75,6 +75,7 @@
 .menu-item {
 	display: flex;
 	align-items: center;
+	box-sizing: border-box;
 	width: 100% !important;
 	padding: .25em .5em;
 	background-color: transparent;
@@ -84,7 +85,13 @@
 }
 .menu-item:active { background-color: #EEE; }
 
-.icon {
+.option {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.menu .icon {
 	width: 1.5em;
 	height: 1.5em;
 	padding: .25em;

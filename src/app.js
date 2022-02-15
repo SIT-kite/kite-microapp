@@ -100,7 +100,7 @@ App({
 		// 按照 isDev 进行收尾操作
 		if (gData.isDev) {
 			// 打印调试信息
-			console.groupCollapsed("%c调试信息", "color: #0075E8");
+			console.groupCollapsed("调试信息");
 			new Map([
 				["全局数据 globalData", gData],
 				["本地存储 storage", storage],
