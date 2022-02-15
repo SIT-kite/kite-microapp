@@ -1,5 +1,5 @@
 <image wx:if="{{ type === 'index' }}"
-	class="background index" src="../../assets/pic/background.png" mode="aspectFill"></image>
+	class="background index" src="../../assets/background.png" mode="aspectFill"></image>
 
 <image wx:else
-	class="background plain" src="../../assets/pic/kite.svg" mode="aspectFit" />
+	class="background plain" src="../../assets/kite.svg" mode="aspectFit" />

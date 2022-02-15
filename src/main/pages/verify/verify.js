@@ -1,5 +1,4 @@
 // 身份认证
-// pages/verify/verify.js
 
 import onShareAppMessage from "../../../js/onShareAppMessage";
 import { checkObject, isNonEmptyString } from "../../../js/type";

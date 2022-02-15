@@ -89,3 +89,23 @@
 .item-icon.true {
 	animation: living .5s ease;
 }
+
+.card.app {
+	padding: .5em;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: .9em;
+	font-weight: 500;
+}
+
+.app-icon {
+	width: 24px;
+	height: 24px;
+	padding-inline-end: 1ch;
+}
+
+@keyframes grow {
+	50% { opacity: .75; }
+}
+.grow { animation: grow 5s ease infinite; }

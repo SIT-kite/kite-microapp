@@ -11,11 +11,11 @@
 				<navigator
 					url="../article/article?url=https://mp.weixin.qq.com/s/RuQsCKZtXLvDjenBo7cXQg"
 					style="display: contents;">
-					<image class="banner-image" src="../../assets/pic/recur.png" />
+					<image class="banner-image" src="../../assets/recur.png" />
 				</navigator>
 		</swiper-item> -->
 		<swiper-item>
-			<image class="banner-image" src="../../assets/pic/banner.png" />
+			<image class="banner-image" src="../../assets/banner.png" />
 		</swiper-item>
 	</swiper>
 
@@ -43,5 +43,13 @@
 	<button wx:if="{{ !isLogin }}" class="card hint-login" bindtap="goUser">
 		尚未登录，请先在“我”中登录
 	</button>
+
+
+	<navigator class="card app"
+		url="../article/article?url=https://mp.weixin.qq.com/s/hcEnxh7vWyM2cIpW2CR9Pg">
+		<image class="app-icon grow" src="../../assets/kite-app.svg" />
+		<text class="grow">小风筝 APP 发布了！</text>
+		<view style="width: 24px; padding-inline-start: 1ch;"></view>
+	</navigator>
 
 </view>
