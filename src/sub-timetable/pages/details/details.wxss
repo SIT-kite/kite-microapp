@@ -30,5 +30,4 @@
 	padding: 10rpx;
 	border: 2px solid red;
 	margin: 10rpx;
-	border-radius: 10%;
 }

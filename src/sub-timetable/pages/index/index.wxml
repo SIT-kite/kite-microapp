@@ -1,17 +1,7 @@
 <template name="header">
-	<view class="date">
-		{{date[6].year}}年{{date[6].month}}月
-		<view class="set"> <!-- 切换日/周视图  导出  刷新 -->
-			<image src="../../assets/icons/calendar.png" class="icon" mode="aspectFit" bindtap="tapActivity" />
-			<navigator url="../export/export" hover-class="none">
-				<image src="../../assets/icons/export.png" class="icon" mode="aspectFit" />
-			</navigator>
-			<image src="../../assets/icons/refresh.png" class="icon" mode="aspectFit" bindtap="refresh" />
-			<!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="tapSet"></image> -->
-		</view>
-	</view>
-	<view class="scroll_time" >
-		<view class="this_week" bindtap="tapSet">
+
+	<view class="scroll_time">
+		<view class="this_week" bindtap="toggleWeekSlider">
 			<view>{{thisWeek}}</view>
 			<text>周</text>
 		</view>
@@ -19,27 +9,50 @@
 			<block wx:for="{{date}}" wx:key="day">
 				<view class="days {{choosedDay.week == item.week ? 'choose_couple' : ''}}"
 						data-week="{{item.week}}" bindtap="tapDays">
-					<view class="day">{{item.day}}</view>
+					<view class="day">{{item.month}}/{{item.day}}</view>
 					<view class="week">{{item.weekday}}</view>
 				</view>
 			</block>
 		</view>
 	</view>
+
 </template>
 
-<view class="background">
+<view class="background" bindtap="collapse">
 
 	<!-- 顶部 -->
-	<swiper class="header" bindchange="bindChangeWeek" duration="250"
-		easing-function="easeOutCubic" circular="true">
-		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
-		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
-		<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
-	</swiper>
+	<view class="header">
+
+		<view class="header-top">
+
+			<view class="header-year-semester">
+				<view class="header-year">{{calendar.year}}学年</view>
+				<view class="header-semester">第{{calendar.semester}}学期</view>
+			</view>
+
+			<view class="set"> <!-- 切换日/周视图  导出  刷新 -->
+				<image src="../../assets/icons/header-view-week.svg" class="icon" bindtap="tapActivity" />
+				<navigator url="../export/export" hover-class="none">
+					<image src="../../assets/icons/header-export.svg" class="icon" />
+				</navigator>
+				<image src="../../assets/icons/header-refresh.svg" class="icon" bindtap="refresh" />
+				<!-- <image src="../../assets/icons/set5.png" class="icon" bindtap="weekSlider"></image> -->
+			</view>
+
+		</view>
+
+		<swiper bindchange="bindChangeWeek" duration="250"
+			easing-function="easeOutCubic" circular="true">
+			<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
+			<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
+			<swiper-item><template is="header" data="{{date, thisWeek, choosedDay, days}}" /></swiper-item>
+		</swiper>
+
+	</view>
 
 		<!-- 日课表 -->
 		<block wx:if="{{timetableMode === 'day'}}">
-			<swiper class="daily" bindchange="bindChangeDay" bindtap="collapse"
+			<swiper class="daily" bindchange="bindChangeDay"
 				duration="300" easing-function="easeOutCubic" circular="true">
 				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
 				<swiper-item><daily list="{{courseDay}}" bindcustomevent="getDetail" /></swiper-item>
@@ -49,7 +62,7 @@
 
 		<!-- 周课表 -->
 		<block wx:if="{{timetableMode === 'week'}}">
-			<scroll-view class="scroll" scroll-y="true" bindtap="collapse">
+			<scroll-view class="scroll" scroll-y="true">
 				<view class="weekly">
 
 					<view class="weekly-time">
@@ -75,13 +88,14 @@
 </view> -->
 
 	<!-- 设置周数 -->
-	<view class="tapSet" wx:if="{{tapSet}}">
-		<view class="slider_text">周数</view>
+	<view class="week-slider" wx:if="{{weekSlider}}">
+		<view style="margin: .5em;">设置周数（1~20 周）</view>
 		<slider bindchange="sliderChange" min="1" max="20" value="{{thisWeek}}"
 			activeColor="#FCD244" backgroundColor="#58a2e7" block-size="16" class="slider" show-value />
 		<!-- <view class="set_bottom">
 			<view class="sart_time">
-				<picker class="picker" mode="date" value="{{toschool}}" start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">
+				<picker class="picker" mode="date" value="{{toschool}}"
+					start="{{toschool}}" end="2060-09-01" bindchange="bindDateChange">
 					<image src="../../assets/icons/sarttime.png" class="icon3" />
 					<view>开学时间</view>
 				</picker>

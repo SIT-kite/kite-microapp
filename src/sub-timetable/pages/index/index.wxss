@@ -13,15 +13,20 @@
 	color: white;
 }
 
-.date {
+.header-top {
 	display: flex;
 	justify-content: space-between;
 	box-sizing: border-box;
 	height: 3rem;
 	padding: .5rem;
-	font-size: 1.5em;
+}
+
+.header-year-semester {
+	line-height: 1.3;
 	font-weight: 500;
 }
+.header-year { font-size: .9em; }
+.header-semester { font-size: .8em; opacity: .95; }
 
 .set {
 	display: flex;
@@ -53,7 +58,6 @@
 	margin-left: 15px;
 	width: 28px;
 	height: 35px;
-	/* border-radius: 15px 15px 15px 15px; */
 }
 
 .icon2 {
@@ -91,8 +95,7 @@
 	flex-grow: 1;
 	padding-bottom: 3px;
 	border-bottom: 3px solid transparent;
-	/* border-radius: 6.85vw 6.85vw 6.55vw 6.55vw; */
-	font-size: .9em;
+	font-size: .8em;
 	text-align: center;
 }
 
@@ -104,17 +107,18 @@
 	background-color: rgba(255, 255, 255, .2);
 }
 
+.days > .week { font-size: .9em; font-weight: bold; }
+
 .choosed {
 	border: 2px solid #ffffff;
 	font-weight: bold;
 }
 
-
+/* header end */
 
 .daily, .scroll {
-	margin: .5em .5em 0;
+	margin-top: .5em;
 	background-color: white;
-	border-radius: 1.5rem 1.5rem 0 0;
 }
 
 .daily {
@@ -123,8 +127,7 @@
 
 .scroll {
 	width: auto;
-	height: calc(100% - 7rem);
-	padding-top: .75em;
+	height: calc(100% - 6.5rem);
 }
 
 .weekly {
@@ -173,33 +176,17 @@
 	border-bottom: 3px solid #FCD244;
 }
 
-.tapSet {
+.week-slider {
 	position: absolute;
-	background: #f0f1f1ec;
-	/* background-color: #05070a; */
-	display: flex;
-	flex-direction: column;
-	border-radius: 20px;
-	/* height: 20vh;  */
-	height: 12vh;
+	left: 1em;
+	right: 1em;
+	bottom: 1em;
 	z-index: 99;
-	bottom: 2vh;
-	left: 4vw;
-	border: 1px solid #F5F5F5;
-	box-shadow: 1px 1.5px 3px #c8d0e7,
-		-2px -2px 5px #FFFFFF;
-}
-
-.slider {
-	margin-top: 1vh;
-	width: 84vw;
-}
-
-.slider_text {
-	margin-top: 1vh;
-	margin-left: 5vw;
 	color: #568BE5;
-	font-weight: bold;
+	font-weight: 500;
+	background-color: rgba(240, 240, 240, 0.9);
+	border-radius: 2px;
+	box-shadow: var(--shadow-4dp);
 }
 
 .icon3 {
@@ -215,7 +202,6 @@
 
 .picker {
 	margin-left: 3vw;
-	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -229,38 +215,9 @@
 }
 
 .set_bottom {
-	/* background:#58a2e7; */
 	display: flex;
 	flex-direction: row;
 	height: 70px;
-}
-
-.QRcode {
-	margin-top: 3vh;
-	width: 68.7vw;
-	height: 68.1vw;
-	/* border-radius: 20px;  */
-}
-
-.QR_couple {
-	padding: 4vw;
-	padding-top: 0vw;
-	z-index: 99;
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	bottom: 18vh;
-	left: 11.65vw;
-	width: 68.7vw;
-	height: 81.1vw;
-	border-radius: 20px;
-	background: #eb9797ad;
-}
-
-.QRcode_text {
-	font-size: 20px;
-	font-weight: bolder;
-	margin-left: 9vw;
 }
 
 .detail {
@@ -268,11 +225,8 @@
 	position: absolute;
 	margin-left: 5vw;
 	top: 100vh;
-	border-radius: 1.5rem 1.5rem 0 0;
 	z-index: 101;
 	width: 90vw;
-	/* height: 10vh; */
-	/* background-color:#E4EBF5; */
 }
 
 .masks {

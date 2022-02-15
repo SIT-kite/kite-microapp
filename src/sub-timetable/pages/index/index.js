@@ -5,7 +5,20 @@ import { check } from "../../../js/type";
 import request from "../../../js/request";
 import getHeader from "../../../js/getHeader";
 
-import discipline from "./discipline";
+import { processDayCourse, processWeekCourse } from "./process";
+
+const app = getApp();
+
+const urlCalendar = `${app.globalData.apiUrl}/edu/calendar`;
+const urlSchedule = `${app.globalData.apiUrl}/edu/schedule`;
+const urlTimetable = `${app.globalData.apiUrl}/edu/timetable`;
+
+const header = getHeader("urlencoded", app.globalData.token);
+
+const swipeDirectionMap = new Map([
+	[  1,  1 ], [ -2,  1 ],
+	[ -1, -1 ], [  2, -1 ]
+]);
 
 // transformations(number: number, length : number): Array
 // 将数字转换为二进制转换，并返回成数组，length 可限制返回数组长度
@@ -20,27 +33,6 @@ const transformations = (number, length) => {
 	return result;
 };
 
-const app = getApp();
-
-const urlCalendar = `${app.globalData.apiUrl}/edu/calendar`;
-const urlSchedule = `${app.globalData.apiUrl}/edu/schedule`;
-const urlTimetable = `${app.globalData.apiUrl}/edu/timetable`;
-
-const header = getHeader("urlencoded", app.globalData.token);
-
-const checkCourseConflict = (x, course, courses) => {
-	course.conflict = false;
-	for (let i = 0; i < courses.length; i++) {
-		if (
-			i !== x &&
-			course.day === courses[i].day &&
-			course.section === courses[i].section
-		) {
-			course.conflict = courses[i].conflict = true;
-		}
-	}
-};
-
 // let code = false;
 // let qrcodeWidth = 150;
 // let codeText = "dwdwefewfw";
@@ -49,17 +41,17 @@ Page({
 	data: {
 		date: [],
 		timetableMode: "day", // 日课表："day"，周课表："week"
-		tapSet: false, // 是否显示设置周数
-		schedule: [], // 作息时间表 schedule
-		calendar: [], //   开学时间 calendar
+		weekSlider: false, // 是否显示设置周数
+		schedule: [],      // 作息时间表 schedule
 		timetable: [],     //     课程表 timetable
-		page: 0,
+		calendar: { year: "", semester: -1, start: ""}, // 开学时间 calendar
+		oldIndex: { header: 0, day: 0, week: 0 },       // 各个 <swiper> 翻页前的页码
 		pageDay: 0,
-		thisWeek: 0,
+		thisWeek: 0,       // 当前周数
 		startWeek: -1,
 		courseDay: [],
 		courseWeek: [],
-		choosedDay: [],
+		choosedDay: { week: 0 },
 		toSchool: "",
 		showDetail: false,
 		detail: [{ courseName: "", place: "" }],
@@ -78,21 +70,12 @@ Page({
 		this.fetchDataOnDemand(this.TermBegins());
 	},
 
-	// onReady: function () {
-	//   var imgData = QR.drawImg(this.data.codeText, {
-	//     typeNumber: 4,
-	//     errorCorrectLevel: 'M',
-	//     size: 500
-	//   })
-	//   this.setData({ QRCode: imgData })
-	// },
-
 	// 读取缓存
 	readStorage() {
 
 		this.data.timetable = wx.getStorageSync("timetableList");
 		this.data.schedule = wx.getStorageSync("timetableSchedule");
-		this.data.calendar = wx.getStorageSync("timetableCalendar");
+		this.setData({ calendar: wx.getStorageSync("timetableCalendar") });
 		this.data.toSchool = this.data.calendar.start;
 
 		const refresh = wx.getStorageSync("timetableRefresh");
@@ -212,7 +195,7 @@ Page({
 	// 计算一周日期
 	setTime(schoolHolidayDict, givenTime) {
 
-		console.log("setTime():", {schoolHolidayDict, givenTime});
+		// console.log("setTime():", {schoolHolidayDict, givenTime});
 		schoolHolidayDict = Date.parse(new Date(schoolHolidayDict));
 		givenTime = Date.parse(new Date(givenTime));
 
@@ -223,15 +206,15 @@ Page({
 			if (null == givenTime) return null;
 			let weekday;
 			let week = new Date(givenTime).getDay();
+			if (week === 0) {
+				week = 7;
+			}
 			let nowDate = givenTime;
 			let newDate = 0,
 				day = 0,
 				year = 0,
 				month = 0;
 			let intervalWeek = [];
-			if (week === 0) {
-				week = 7;
-			}
 			for (let i = 0; i < week - 1; i++) {
 				newDate = nowDate - 86400000 * (week - 1 - i);
 				newDate = new Date(newDate);
@@ -280,11 +263,11 @@ Page({
 		};
 		const thisWeek = getIntervalToCurrentWeek(schoolHolidayDict, givenTime);
 
-		let startWeek = this.data.startWeek;
-		if (startWeek === -1) { startWeek = thisWeek; }
+		// 如果未设置 startWeek，将其设为 thisWeek
+		if (this.data.startWeek === -1) { this.data.startWeek = thisWeek; }
 
-		console.log("setTime():", { date, choosedDay, thisWeek, startWeek });
-		this.setData({ date, choosedDay, thisWeek, startWeek });
+		// console.log("setTime():", { date, choosedDay, thisWeek });
+		this.setData({ date, choosedDay, thisWeek });
 
 	},
 
@@ -294,7 +277,7 @@ Page({
 			course => course.table_time = ["indexOf", "lastIndexOf"].map(
 				method => course.table[method](1) + 1
 			)
-		)
+		);
 		return courses;
 	},
 
@@ -336,50 +319,19 @@ Page({
 
 	// 周课表数据处理
 	processWeek(courses) {
-		courses.forEach((course, i) => {
-			const getRange = time => ["indexOf", "lastIndexOf"].map(
-				method => time[method](1)
-			);
-			const [start, end] = getRange(course.table);
-			course.color = i % 9; // 背景色
-			course.section = start; // 开始时间
-			course.time = end - start + 1; // 长度
-			checkCourseConflict(i, course, courses);
-		});
+		courses.forEach(processWeekCourse);
 	},
 
 	// 日课表数据处理
 	processDay(courses) {
-		// 排序
-		courses.sort((a, b) => a.time_index - b.time_index);
-		// 设置标签和上课时间
-		courses.forEach(course => {
-
-			// 标签
-			course.discipline = discipline.get(course.courseName) ?? "generality";
-
-			// 上课时间
-			const table = [
-				[course.campus, "奉贤校区"], // 校区 奉贤校区没了以后记得改哦
-				[course.place.slice(0, 2), "default"]  // 教学楼
-			].reduce(
-				(table, [key, fallback]) => table[key in table ? key : fallback],
-				this.data.schedule // 作息表
-			);
-
-			course.tables = ["indexOf", "lastIndexOf"].map(
-				(method, index) => table[course.table[method](1)][index]
-			);
-
-		});
+		// 排序，设置标签和上课时间
+		processDayCourse(courses, this.data.schedule);
 	},
 
 	// 敲击日按钮
 	tapDays(e) {
 		const week = e.currentTarget.dataset.week;
-		this.setData({
-			choosedDay: { week }
-		})
+		this.setData({ choosedDay: { week } })
 		this.setData({ courseDay: this.processTimetable()[0] });
 	},
 
@@ -389,55 +341,50 @@ Page({
 		this.setData({ timetableMode });
 		wx.setStorageSync("timetableMode", timetableMode);
 	},
-	// 敲击设置按钮（暂未使用）
-	tapSet() {
-		this.setData({ tapSet: !this.data.tapSet });
+
+	toggleWeekSlider() {
+		this.setData({ weekSlider: !this.data.weekSlider });
 	},
 
 	// 时间改变函数
-	changeTime(startTime, givenTime) {
-		let startWeek = this.data.startWeek;
-		console.log("changeTime():", { startTime, givenTime, startWeek })
-		this.setTime(startTime, new Date(
-			this.TermBegins().getTime() + (givenTime - startWeek) * 604800000
-		));
-		this.setData({ thisWeek: givenTime });
+	changeTime(startTime, thisWeek) {
+		const delta = thisWeek - this.data.startWeek;
+		const givenTime = new Date(this.TermBegins().getTime() + delta * 604800000);
+		this.setTime(startTime, givenTime);
 	},
 
-	// 周数设置按钮函数
+	// 周数设置滑块
 	sliderChange(e) {
 		let sliderChange = e.detail.value;
 		this.changeTime(this.data.toSchool, sliderChange);
 		let [courseDay, courseWeek] = this.processTimetable();
 		this.setData({ courseDay, courseWeek });
 	},
-	// 滑动换算函数
-	conversionPage(index, page, data) {
-		switch (index) {
-			case 1: return page === 0 ? data++ : data--;
-			case 2: return page === 1 ? data++ : data--;
-			case 0: return page === 2 ? data++ : data--;
-		}
-	},
-	// 时间滑动函数
+
+	// 切换周
 	bindChangeWeek(e) {
-		let index = e.detail.current;
-		let { page, thisWeek } = this.data;
-		thisWeek = this.conversionPage(index, page, thisWeek);
-		page = index;
-		if (thisWeek <= 0) { thisWeek = 1; } // 第一周到底
+
+		const newIndex = e.detail.current;
+		const oldIndex = this.data.oldIndex.week;
+		let { thisWeek } = this.data;
+		const delta = swipeDirectionMap.get(newIndex - oldIndex);
+		if (delta !== undefined) thisWeek += delta;
+		if (thisWeek <= 0) thisWeek = 1; // 第一周到底
+
 		this.changeTime(this.data.toSchool, thisWeek);
+
 		let [courseDay, courseWeek] = this.processTimetable();
-		this.setData({ courseDay, courseWeek, page, thisWeek });
+		this.setData({ courseDay, courseWeek, "oldIndex.week": newIndex, thisWeek });
+
 	},
 
 	bindChangeDay(e) {
 
-		let index = e.detail.current;
-		let pageDay = this.data.pageDay;
+		const newIndex = e.detail.current;
+		const oldIndex = this.data.oldIndex.day;
 		let thisDay = this.data.choosedDay.week;
-		thisDay = this.conversionPage(index, pageDay, thisDay);
-		pageDay = index;
+		const delta = swipeDirectionMap.get(newIndex - oldIndex);
+		if (delta !== undefined) thisDay += delta;
 
 		this.data.choosedDay.week = thisDay;
 		switch (this.data.choosedDay.week) {
@@ -456,7 +403,7 @@ Page({
 		let courseDay = this.processTimetable()[0];
 
 		this.setData({
-			pageDay,
+			"oldIndex.day": newIndex,
 			choosedDay: this.data.choosedDay,
 			courseDay
 		});
@@ -476,10 +423,13 @@ Page({
 	},
 
 	collapse() {
-		if (this.data.tapSet === true) {
-			this.setData({ tapSet: false });
+		// 隐藏周数滑动条
+		if (this.data.weekSlider === true) {
+			this.setData({ weekSlider: false });
 		}
+		// TODO: 隐藏课程详细信息
 	},
+
 	collapseDetail() {
 		if (this.data.showDetail === true) {
 			this.setData({ showDetail: false });

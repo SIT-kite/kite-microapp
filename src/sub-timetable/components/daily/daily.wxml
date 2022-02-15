@@ -3,7 +3,7 @@
 	<scroll-view class="scroll" scroll-y="true">
 		<view class="course" wx:for="{{list}}" wx:key="index"	data-data="{{item}}" bindtap="getdata">
 			<!-- icon地址 https://www.iconfont.cn/collections/detail?cid=8530 -->
-			<image class="course-icon" src="../../assets/icons/course/{{item.discipline}}.png" />
+			<image class="course-icon" src="../../assets/course-icons/{{item.category}}.png" />
 			<view class="course-info">
 				<view class="course-name">{{item.courseName}}</view>
 				<view class="course-teacher">{{item.teacher}}</view>
