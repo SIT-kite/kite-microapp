@@ -19,5 +19,5 @@
 	height: 50%;
 	opacity: .1;
 	border-radius: 50%;
-	box-shadow: var(--shadow);
+	box-shadow: var(--shadow-2dp);
 }

@@ -13,7 +13,7 @@
 	padding: .5em;
 	font-size: inherit;
 	font-weight: 500;
-	box-shadow: var(--shadow);
+	box-shadow: var(--shadow-2dp);
 }
 
 .title {

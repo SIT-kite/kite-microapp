@@ -41,13 +41,11 @@ Page({
 
 		// 如果页面 isLogin 与全局 isLogin 不一致，则从全局同步到页面
 		this.data.isLogin !== gData.isLogin &&
-			this.setData({ isLogin: gData.isLogin });
+		this.setData({ isLogin: gData.isLogin });
 
 	},
 
-	// banner 的点击事件；改成动态 banner 以后删掉
-	doNothing() { },
-	goTemp() {
+	/* goTemp() {
 		wx.navigateTo({
 			url: "/freshman/pages" + (
 				gData.userDetail !== null
@@ -55,11 +53,7 @@ Page({
 					: "/welcome/welcome"
 			)
 		});
-	},
-
-	goUser() {
-		wx.switchTab({ url: "../user/user" });
-	},
+	}, */
 
 	// setNotice(notices: Array)
 	setNotice(notices) {

@@ -40,9 +40,9 @@
 		</block>
 	</view>
 
-	<button wx:if="{{ !isLogin }}" class="card hint-login" bindtap="goUser">
+	<navigator wx:if="{{ !isLogin }}" class="card hint-login" url="../user/user" open-type="switchTab">
 		尚未登录，请先在“我”中登录
-	</button>
+	</navigator>
 
 
 	<navigator class="card app"

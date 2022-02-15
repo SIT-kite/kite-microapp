@@ -20,7 +20,7 @@
 .card {
 	box-sizing: border-box;
 	margin-bottom: 1rem;
-	box-shadow: var(--shadow);
+	box-shadow: var(--shadow-2dp);
 	opacity: 98%;
 	transition:
 		var(--transition-shadow),
@@ -28,6 +28,6 @@
 }
 
 .card:active {
-	box-shadow: var(--shadow-hover);
+	box-shadow: var(--shadow-4dp);
 	opacity: 100%;
 }

@@ -1,5 +1,4 @@
 {
-	"description": "全局配置 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html",
 	"style": "v2",
 	"darkmode": false,
 	"resizable": false,
