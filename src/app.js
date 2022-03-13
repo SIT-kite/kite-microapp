@@ -3,6 +3,7 @@
 import { getAllStorageAsObject } from "/js/storage";
 import { isNonEmptyString } from "/js/type";
 import getHeader from "/js/getHeader";
+import { hasOwn } from "./js/type";
 
 App({
 
@@ -11,7 +12,8 @@ App({
 		apiUrl: "https://kite.sunnysab.cn/api/v1",
 		commonUrl: "https://kite.sunnysab.cn/api/v1",
 
-		isDev: false, // 是否在微信开发者工具中
+		isDev: false,  // 是否在微信开发者工具中
+		showAPP: true, // 是否显示小风筝 APP
 
 		uid: -1,   // 用户 ID
 		token: "", // 登录需要的授权码
@@ -31,11 +33,6 @@ App({
 		contact: {},      // 迎新 inputInfo 页面 联系方式 手机号 tel，qq，微信 wechat
 		userDetail: null, // 迎新 stuInfoDetail 页面 用户详情
 
-		searchResultList: [],
-		searchHistoryList: [],
-		searchKeyWord: "",
-		searchResultItemIndex: 0,
-
 	},
 
 	onLaunch() {
@@ -45,11 +42,11 @@ App({
 		const systemInfo = wx.getSystemInfoSync();
 
 		// 从本地存储 Storage 中获取重要属性，设置全局数据 globalData
-		["uid", "token", "verified", "identity",
+		[ "uid", "token", "verified", "identity",
 			"nickName", "avatarUrl", "userInfo", "userDetail",
-			"signPrivacyConfirm", "freshmanPrivacyConfirm"]
-			.filter(key => key in storage)
-			.forEach(key => gData[key] = storage[key]);
+			"signPrivacyConfirm", "freshmanPrivacyConfirm" ]
+			.filter( key => hasOwn(storage, key) )
+			.forEach( key => gData[key] = storage[key] );
 
 		// 按照 uid 和 token 来判断并设置 isLogin
 		gData.isLogin = (

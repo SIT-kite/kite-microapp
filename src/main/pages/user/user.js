@@ -8,6 +8,7 @@ import request from "../../../js/request";
 import getHeader from "../../../js/getHeader";
 import promisify from "../../../js/promisify";
 import loading from "../../../js/loading";
+import { hasOwn } from "../../../js/type";
 
 
 const app = getApp();
@@ -55,8 +56,15 @@ Page({
 	// onReady() {},
 
 	onShow() {
-		this.data.verified !== gData.verified &&
-			this.setData({ verified: gData.verified });
+
+		[ "verified", "showAPP" ].forEach(
+			key => (
+				hasOwn(gData, key) &&
+				this.data[key] !== gData[key] &&
+				this.setData({ [key]: gData[key] })
+			)
+		);
+
 	},
 
 	// setDataTo(target: [boolean, boolean, boolean], data)

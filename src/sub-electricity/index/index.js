@@ -2,7 +2,7 @@
 // https://github.com/SIT-Yiban/kite-server/blob/develop/docs/APIv1/消费查询.md
 
 import { electricity as onShareAppMessage } from "../../js/onShareAppMessage";
-import { check, checkObject, isNonEmptyString } from "../../js/type";
+import { isNonEmptyString, check, checkObject, checkObjectHas } from "../../js/type";
 import request from "../../js/request";
 import getHeader from "../../js/getHeader";
 
@@ -78,16 +78,13 @@ Page({
 
 	onLoad(options) {
 
-		if (
-			typeof options === "object" &&
-			options !== null &&
-			Object.prototype.hasOwnProperty.call(options, "tab")
-		) {
-			this.setData({ currentTab: options.tab });
+		if (checkObjectHas(options, "tab")) {
+			this.setData({ currentTab: Number.parseInt(options.tab) });
 		}
 
 		const electricity = wx.getStorageSync("electricity");
 
+		// 检查并设置存储中的楼号和房间号
 		if (checkObject(electricity, { building: "String", room: "String" })) {
 
 			// 新

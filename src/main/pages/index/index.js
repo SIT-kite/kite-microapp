@@ -1,6 +1,6 @@
 // 主页
 
-import { isNonEmptyString } from "../../../js/type";
+import { hasOwn, isNonEmptyString } from "../../../js/type";
 import onShareAppMessage from "../../../js/onShareAppMessage";
 import getHeader from "../../../js/getHeader";
 
@@ -37,7 +37,10 @@ Page({
 		});
 
 		const showAPP = wx.getStorageSync("showAPP");
-		showAPP !== "" && this.setData({ showAPP });
+		if (showAPP !== "") {
+			gData.showAPP = showAPP;
+			this.setData({ showAPP });
+		}
 
 	},
 
@@ -46,6 +49,7 @@ Page({
 		// 如果页面属性与全局属性不一致，则从全局同步到页面
 		[ "isLogin", "showAPP" ].forEach(
 			key => (
+				hasOwn(gData, key) &&
 				this.data[key] !== gData[key] &&
 				this.setData({ [key]: gData[key] })
 			)
