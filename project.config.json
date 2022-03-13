@@ -40,7 +40,7 @@
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },
-  "libVersion": "2.19.6",
+  "libVersion": "2.22.1",
   "appid": "wxfbc5fc9c0a0be9f9",
   "projectname": "kite-microapp",
   "packOptions": {
