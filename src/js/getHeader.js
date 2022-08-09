@@ -1,4 +1,5 @@
-// HTTP Header
+// getHeader.js
+// 按照 Content-Type 和 token，获取 HTTP 请求的 Header 对象
 
 const isString = _ => Object.prototype.toString.call(_) === "[object String]";
 

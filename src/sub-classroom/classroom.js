@@ -4,7 +4,7 @@ import getHeader from "../js/getHeader";
 const app = getApp();
 
 // transformations(number: number, length : number): Array
-// 将数字转换为二进制转换，并返回成数组，length 可限制返回数组长度
+// 将数字转换为二进制并返回成数组，length 可限制返回数组长度
 // 返回值格式 [ 1, 0, 1, 0 ]
 const transformations = (number, length) => {
 	var result = [];
@@ -88,7 +88,7 @@ Page({
 		console.log({ date, campus, [key]: building, index });
 
 		return request({
-			url: `${app.globalData.commonUrl}/edu/classroom/available`,
+			url: `${app.globalData.apiUrl}/edu/classroom/available`,
 			header: getHeader("urlencoded", app.globalData.token),
 			data: { date, campus, [key]: building, index }
 		}).then(res => {

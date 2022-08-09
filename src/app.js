@@ -1,26 +1,26 @@
 // app.js
 
-import { getAllStorageAsObject } from "/js/storage";
-import { isNonEmptyString } from "/js/type";
-import getHeader from "/js/getHeader";
-import { hasOwn } from "./js/type";
+import { hasOwn, isNonEmptyString } from "./js/type";
+import getAllStorage from "./js/getAllStorage";
+import getHeader from "./js/getHeader";
 
 App({
 
 	globalData: {
 
 		apiUrl: "https://kite.sunnysab.cn/api/v1",
-		commonUrl: "https://kite.sunnysab.cn/api/v1",
 
 		isDev: false,  // 是否在微信开发者工具中
 		showAPP: true, // 是否显示小风筝 APP
 
+		customNavHeight: 0, // 自定义顶部导航栏留空高度，单位为 px
+
 		uid: -1,   // 用户 ID
 		token: "", // 登录需要的授权码
 
-		isLogin: false, // 是否已登录
+		isLogin: false,  // 是否已登录
 		verified: false, // 是否已认证
-		identity: {},    // 身份认证信息，含校园账号登录信息, 该字段替换原有的 uploadInfo
+		identity: {},    // 身份认证信息，含校园账号登录信息
 
 		nickName: null, // 昵称
 		avatarUrl: null, // 头像
@@ -38,7 +38,7 @@ App({
 	onLaunch() {
 
 		const gData = this.globalData;
-		const storage = getAllStorageAsObject();
+		const storage = getAllStorage.asObject();
 		const systemInfo = wx.getSystemInfoSync();
 
 		// 从本地存储 Storage 中获取重要属性，设置全局数据 globalData
@@ -69,27 +69,17 @@ App({
 				success: res => {
 					const { nickName, avatar: avatarUrl } = res.data.data;
 					Object.assign(gData, { nickName, avatarUrl });
-					wx.setStorageSync("nickname", nickName);
+					wx.setStorageSync("nickName", nickName);
 					wx.setStorageSync("avatarUrl", avatarUrl);
 				},
 				fail: console.error
 			});
 		}
 
-		// 将 uploadInfo 属性更新为 identity，将 isStudent 属性更新为 verified
-		// 这段代码到 2022 年的时候大概就可以移除了
-		new Map([
-			["identity", "uploadInfo"],
-			["verified", "isStudent"]
-		]).forEach(
-			(oldKey, newKey) => {
-				if (oldKey in storage) {
-					gData[newKey] = storage[oldKey];
-					wx.setStorageSync(newKey, gData[newKey]);
-					wx.removeStorageSync("isStudent");
-				}
-			}
-		);
+		// 设置 customNavHeight
+		const { safeArea: { top: safeTop } } = wx.getWindowInfo();
+		const rect = wx.getMenuButtonBoundingClientRect();
+		gData.customNavHeight = rect.height + (rect.top) * 2 - safeTop;
 
 		// 设置 isDev
 		gData.isDev = systemInfo.platform === "devtools";

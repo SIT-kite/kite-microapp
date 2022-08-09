@@ -12,20 +12,21 @@
 	flex-direction: column;
 	box-sizing: border-box;
 	max-width: 32rem;
-	margin: 3.5rem auto 0;
-	padding: 1rem;
+	margin: 0 auto;
+	padding: 0 1rem;
 	z-index: 1;
 }
 
 .card {
 	box-sizing: border-box;
-	margin-bottom: 1rem;
 	box-shadow: var(--shadow-2dp);
 	opacity: 98%;
 	transition:
 		var(--transition-shadow),
 		var(--transition-opacity);
 }
+
+.card:not(:last-child) { margin-bottom: 1rem; }
 
 .card:active {
 	box-shadow: var(--shadow-4dp);

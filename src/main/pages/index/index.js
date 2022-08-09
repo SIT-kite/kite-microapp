@@ -12,6 +12,7 @@ const gData = app.globalData;
 Page({
 
 	data: {
+		customNavHeight: gData.customNavHeight,
 		isLogin: gData.isLogin,
 		showAPP: true,
 		clicked: -1, // 被点击功能的索引

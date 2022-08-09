@@ -1,108 +1,105 @@
 {
-  "description": "项目配置文件 https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
-  "miniprogramRoot": "src/",
-  "compileType": "miniprogram",
-  "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "enhance": true,
-    "postcss": false,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": false,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": true,
-    "lazyloadPlaceholderEnable": false,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "useIsolateContext": false,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "disableUseStrict": false,
-    "minifyWXML": true,
-    "showES6CompileOption": true,
-    "useCompilerPlugins": false,
-    "ignoreUploadUnusedFiles": true
-  },
-  "libVersion": "2.22.1",
-  "appid": "wxfbc5fc9c0a0be9f9",
-  "projectname": "kite-microapp",
-  "packOptions": {
-    "include": [],
-    "ignore": [
-      {
-        "type": "file",
-        "value": "/src/assets/dafault-avatar.txt"
-      }
-    ]
-  },
-  "debugOptions": {
-    "hidedInDevtools": []
-  },
-  "watchOptions": {
-    "ignore": []
-  },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "电费新版",
-          "pathName": "sub-electricity/index/index",
-          "query": "tab=1"
-        },
-        {
-          "name": "电费分享",
-          "pathName": "sub-electricity/share/share",
-          "query": "consumption=12.34&percent=56.78",
-          "partialCompile": {
-            "enabled": true
-          }
-        },
-        {
-          "name": "课程表",
-          "pathName": "sub-timetable/pages/index/index",
-          "partialCompile": {
-            "enabled": true
-          }
-        },
-        {
-          "name": "课程表导出",
-          "pathName": "sub-timetable/pages/export/export",
-          "partialCompile": {
-            "enabled": true
-          }
-        },
-        {
-          "name": "常用电话",
-          "pathName": "sub-phonebook/phonebook",
-          "partialCompile": {
-            "enabled": true
-          }
-        },
-        {
-          "name": "空教室",
-          "pathName": "sub-classroom/classroom",
-          "partialCompile": {
-            "enabled": true
-          }
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件 https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+	"miniprogramRoot": "src/",
+	"compileType": "miniprogram",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"enhance": true,
+		"postcss": false,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"compileHotReLoad": true,
+		"lazyloadPlaceholderEnable": false,
+		"useMultiFrameRuntime": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useIsolateContext": false,
+		"userConfirmedBundleSwitch": false,
+		"packNpmManually": false,
+		"packNpmRelationList": [],
+		"minifyWXSS": true,
+		"disableUseStrict": false,
+		"minifyWXML": true,
+		"showES6CompileOption": true,
+		"useCompilerPlugins": false,
+		"ignoreUploadUnusedFiles": true
+	},
+	"condition": {
+		"miniprogram": {
+			"list": [
+				{
+					"name": "电费新版",
+					"pathName": "sub-electricity/index/index",
+					"query": "tab=1"
+				},
+				{
+					"name": "电费分享",
+					"pathName": "sub-electricity/share/share",
+					"query": "consumption=12.34&percent=56.78",
+					"partialCompile": {
+						"enabled": true
+					}
+				},
+				{
+					"name": "课程表",
+					"pathName": "sub-timetable/pages/index/index",
+					"partialCompile": {
+						"enabled": true
+					}
+				},
+				{
+					"name": "课程表导出",
+					"pathName": "sub-timetable/pages/export/export",
+					"partialCompile": {
+						"enabled": true
+					}
+				},
+				{
+					"name": "常用电话",
+					"pathName": "sub-phonebook/phonebook",
+					"partialCompile": {
+						"enabled": true
+					}
+				},
+				{
+					"name": "空教室",
+					"pathName": "sub-classroom/classroom",
+					"partialCompile": {
+						"enabled": true
+					}
+				}
+			]
+		}
+	},
+	"editorSetting": {
+		"tabIndent": "tab",
+		"tabSize": 2
+	},
+	"libVersion": "2.22.1",
+	"srcMiniprogramRoot": "src/",
+	"packOptions": {
+		"ignore": [
+			{
+				"value": "/src/assets/dafault-avatar.txt",
+				"type": "file"
+			}
+		],
+		"include": []
+	},
+	"appid": "wxfbc5fc9c0a0be9f9",
+	"projectname": "kite-microapp"
 }

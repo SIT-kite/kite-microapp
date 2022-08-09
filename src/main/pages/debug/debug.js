@@ -1,7 +1,7 @@
 // pages/debug/debug.js
 
 import onShareAppMessage from "../../../js/onShareAppMessage";
-import { getAllStorageAsObject } from "../../../js/storage";
+import getAllStorage from "../../../js/getAllStorage";
 import request from "../../../js/request";
 import getHeader from "../../../js/getHeader";
 import copyText from "../../../js/copyText";
@@ -51,7 +51,7 @@ Page({
 				res => {
 					const { nickName, avatar: avatarUrl } = res.data.data;
 					Object.assign(gData, { nickName, avatarUrl });
-					wx.setStorageSync("nickname", nickName);
+					wx.setStorageSync("nickName", nickName);
 					wx.setStorageSync("avatarUrl", avatarUrl);
 					wx.showToast({ title: "获取成功" });
 				},
@@ -70,7 +70,7 @@ Page({
 				res => {
 					const { nickName, avatarUrl } = res.userInfo;
 					Object.assign(gData, { nickName, avatarUrl });
-					wx.setStorageSync("nickname", nickName);
+					wx.setStorageSync("nickName", nickName);
 					wx.setStorageSync("avatarUrl", avatarUrl);
 					request({
 						method: "PUT",
@@ -135,7 +135,7 @@ Page({
 			const is = {
 
 				api: (key, value) => (
-					has(["apiUrl", "commonUrl"], key) || (
+					key == "apiUrl" || (
 						typeof value === "string" &&
 						value.includes("kite.sunnysab.cn")
 					)
@@ -146,7 +146,7 @@ Page({
 					value !== ""
 				),
 				userInfo: (key, value) => (
-					has(["userInfo", "contact"], key) &&
+					has(["identity", "userInfo", "contact"], key) &&
 					JSON.stringify(value) !== "{}"
 				),
 				userDetail: (key, value) => (
@@ -154,13 +154,17 @@ Page({
 					value !== null
 				),
 				credentials: (key, value) => (
-					["token", "userInfo", "userDetail"].every(
+					["token", "userInfo", "userDetail"].some(
 						credential => is[credential](key, value)
 					)
 				),
 
 				timetable: (key, value) => (
-					key.startsWith("timetable_") &&
+					has([
+						"timetableSchedule",
+						"timetableCalendar",
+						"contact_data"
+					], key) &&
 					value !== null
 				)
 
@@ -181,7 +185,7 @@ Page({
 
 			this.setData({
 				globalData: stringify(gData, removeToken),
-				storage: stringify(getAllStorageAsObject(), removeToken),
+				storage: stringify(getAllStorage.asObject(), removeToken),
 				systemInfo: stringify(wx.getSystemInfoSync())
 			});
 

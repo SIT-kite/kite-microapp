@@ -1,4 +1,6 @@
 // type.js
+// 类型相关辅助函数
+// Type related helper functions
 
 // getType(value): type: String
 const getType = value => Object.prototype.toString.call(value).slice(8, -1);
@@ -28,6 +30,7 @@ const isNonBlankString = value => (
 const check = (value, type) => getType(value) === type;
 
 // checkObject(obj, ref: Object): Boolean
+// checkObject({ a: 1 }, { a: Number }) === true
 const checkObject = (obj, ref) => {
 
 	if (getType(obj) !== "Object") {

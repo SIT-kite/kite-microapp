@@ -1,4 +1,5 @@
 // updateManager.js
+// 小程序 UpdateManager 封装
 
 export default () => {
 

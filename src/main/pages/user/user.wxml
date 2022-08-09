@@ -1,6 +1,6 @@
 <background type="index" />
 
-<view class="main">
+<view class="main" style="margin-top: {{customNavHeight}}px">
 
 	<!-- 已登录 -->
 	<block wx:if="{{isLogin}}">
@@ -11,7 +11,7 @@
 
 			<view class="info-middle">
 
-				<open-data class="nickname ellipsis" type="userNickName"
+				<open-data class="nickName ellipsis" type="userNickName"
 					default-text="微信用户" />
 
 				<view class="verified {{ verified }}">
@@ -21,9 +21,7 @@
 
 			</view>
 
-			<navigator class="verify" url="../verify/verify">
-				认证<text class="arrow">></text>
-			</navigator>
+			<navigator class="verify" url="../verify/verify">认证 ></navigator>
 
 		</view>
 	</block>
@@ -38,22 +36,29 @@
 	</block>
 
 	<view class="card menu">
+
 		<navigator class="menu-item" url="../about/about">
-			<image class="icon" src="./assets/info.svg" /> 关于我们
-		</navigator>
+			<image class="icon" src="./assets/info.svg" /> 关于我们</navigator>
+
 		<button class="menu-item" open-type="feedback">
-			<image class="icon" src="./assets/feedback.svg" /> 意见反馈
-		</button>
+			<image class="icon" src="./assets/feedback.svg" /> 意见反馈</button>
+
 		<navigator class="menu-item" url="../debug/debug">
-			<image class="icon" src="./assets/dev.svg" /> 调试工具
-		</navigator>
+			<image class="icon" src="./assets/dev.svg" /> 调试工具</navigator>
+
 		<button class="menu-item" bindtap="showChangelog">
-			<image class="icon" src="./assets/changelog.svg" /> 更新日志
-		</button>
+			<image class="icon" src="./assets/changelog.svg" /> 更新日志</button>
+
 		<view class="menu-item option" bindtap="toggleAPP">
 			隐藏主页 APP 提示 <checkbox checked="{{ !showAPP }}" />
 		</view>
+
 	</view>
 
+</view>
 
+<view wx:if="{{changelog.show}}" class="changelog">
+	<view class="title">更新日志</view>
+	<textarea class="textarea">{{changelog.text}}</textarea>
+	<button class="close" bindtap="hideChangelog">关闭</button>
 </view>

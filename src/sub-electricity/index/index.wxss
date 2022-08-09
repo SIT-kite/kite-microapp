@@ -3,6 +3,7 @@ page {
 	flex-direction: column;
 	justify-content: center;
 	box-sizing: border-box;
+	height: 100%;
 	padding: .5em;
 	background-color: #E3F2FD;
 	--theme-color: #2196F3;

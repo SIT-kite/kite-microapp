@@ -44,10 +44,12 @@ const wxLogin = () => loading({
 Page({
 
 	data: {
+		customNavHeight: gData.customNavHeight,
 		isLogin: gData.isLogin,
 		verified: gData.verified,
 		needRegister: false,
-		showAPP: true
+		showAPP: true,
+		changelog: { show: false, text: "" }
 	},
 
 	onShareAppMessage,
@@ -207,17 +209,42 @@ Page({
 	},
 
 	showChangelog() {
+
+		const hint = (
+			"你现在处于微信开发者工具之中，版本号固定为空字符串…" +
+			"用微信打开小风筝再看吧"
+		);
+
 		const changelogs = new Map([
-			[ ""       , "开发者工具中，版本号为空字符串…" ],
 			[ "0.14.0" , "更新基础库至 2.19；小风筝 APP 发布" ],
 			[ "0.14.1" , "修复课表翻页bug，更改部分图标，添加更新日志" ],
 		]);
+
 		const { version } = wx.getAccountInfoSync().miniProgram;
+
+		const content = (
+			version === ""
+			? hint
+			: (changelogs.get(version) ?? "暂无更新日志")
+		);
+
 		wx.showModal({
-			title: `当前版本 ${ version }`,
-			content: changelogs.get(version) ?? "暂无更新日志",
-			showCancel: false
+			title: `当前版本：${ version }`,
+			content,
+			confirmText: "查看更多",
+			cancelText: "关闭"
+		}).then(res => {
+			if (res.confirm === true) {
+				const text = Array.from(changelogs).map(
+					([version, log]) => version + "\n　　" + log
+				).join("\n\n");
+				this.setData({ changelog: { text, show: true } });
+			}
 		});
+	},
+
+	hideChangelog() {
+		this.setData({ "changelog.show": false });
 	},
 
 	toggleAPP() {

@@ -1,12 +1,14 @@
 @import "../../wxss/main.wxss";
 
-.user { height: 5rem; padding: .5rem; }
+.user {
+	display: flex;
+	justify-items: space-between;
+	height: 5.5rem;
+	padding: .75rem;
+}
 
-/* 已登录 */
-.user.info { display: flex; }
-
-.avatar {
-	grid-area: avatar;
+/* #region 已登录 */
+.user.info > .avatar {
 	box-sizing: border-box;
 	width: 4rem;
 	height: 4rem;
@@ -14,22 +16,21 @@
 	contain: paint;
 }
 
-.info-middle {
-	flex-grow: 1;
+.user.info > .info-middle {
+	flex-grow: 1; /* 横向撑开 */
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	padding: 0 .5em;
+	padding: 0 .75em;
 }
 
-.nickname {
-	flex-grow: 1;
+.user.info > .info-middle > .nickName {
+	flex-grow: 1; /* 纵向撑开 */
 	max-width: 40vw;
 	font-weight: bold;
 }
 
-.verified {
-	grid-area: verified;
+.user.info > .info-middle > .verified {
 	display: flex;
 	align-items: center;
 	padding: 1px .5ch;
@@ -37,47 +38,45 @@
 	font-size: .8em;
 	border-radius: 3px;
 }
+.verified image { width: 1.5em; height: 1.5em; }
 .verified.true  { background-color: lightblue; }
 .verified.false { background-color: lightcoral; }
-.verified image {
-	width: 1.5em;
-	height: 1.5em;
-}
 
-.verify {
-	grid-area: verify;
-	display: grid;
-	grid-template-columns: auto 1fr;
+.user.info > .verify {
+	display: flex;
 	align-items: center;
-	gap: .25ch;
-	padding-left: .5em; /* 添加边距，方便点击 */
+	margin: -.5rem; /* 添加边距 */
+	padding: .5rem; /* 方便点击 */
 	font-size: .9em;
+	line-height: 1;
 	color: #9E9E9E;
 }
+/* #endregion */
 
-/* 未登录 */
+/* #region 未登录 */
 .user.login {
-	display: grid;
-	grid-template-columns: 4rem 1fr;
-	justify-items: center;
 	align-items: center;
+	width: 100%;
 	font-size: 1.5em;
 	color: #9E9E9E;
 }
 
-.login-icon {
-	width: 2em;
-	height: 2em;
+.user.login >.login-icon {
+	flex-shrink: 0;
+	width: 3rem;
+	height: 3rem;
+	margin: 0 .5rem;
 }
+/* #endregion */
 
-.menu { padding: .25em 0; }
+.menu { padding: .375em 0; }
 
 .menu-item {
 	display: flex;
 	align-items: center;
 	box-sizing: border-box;
 	width: 100% !important;
-	padding: .25em .5em;
+	padding: .375em .75em;
 	background-color: transparent;
 	text-align: initial;
 	font: inherit;
@@ -99,9 +98,38 @@
 	opacity: .6;
 }
 
-.arrow {
-	font-size: medium;
-	font-weight: 300;
-	color: #9E9E9E;
-	user-select: none;
+.changelog {
+	position: fixed;
+	top: 4.5rem;
+	bottom: 1rem;
+	left: 1rem;
+	right: 1rem;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+	background-color: white;
+	box-shadow: var(--shadow-4dp);
+}
+
+.changelog > .title {
+	text-align: center;
+}
+
+.changelog > .close {
+	width: 100%;
+}
+
+.changelog > .textarea {
+	flex-grow: 1;
+	margin: .5rem 0;
+	padding: 0 .5rem;
+	overflow-y: auto;
+	white-space: pre-wrap;
+	font-family: "Sarasa Mono SC", monospace;
+	font-size: .9em;
+}
+
+.hidden {
+	display: none;
 }
