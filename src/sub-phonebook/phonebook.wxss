@@ -1,13 +1,14 @@
 page {
 	display: flex;
 	flex-direction: column;
+	height: 100%;
 	background-color: white;
 }
 .content { flex-grow: 1; }
 
 .header { position: relative; z-index: 2; }
 .content { position: relative; }
-.menu, .phone-list { position: absolute; height: 100%; }
+.menu, .departments { position: absolute; height: 100%; }
 .menu { z-index: 1; }
 
 .header {
@@ -59,14 +60,10 @@ page {
 
 .menu {
 	width: 0;
-	background-color: #dee2e6;
-	font-size: 13px;
+	line-height: 1;
 	white-space: nowrap;
-	transition: width .15s ease-out;
-}
-
-.fade > .menu {
-	width: 6em; /* 5em 文字 + 1em 内边距 */
+	background-color: #dee2e6;
+	opacity: .9;
 }
 
 .menu-item {
@@ -75,22 +72,9 @@ page {
 	color: #6C7A89;
 }
 
-.choosed {
-	background-color: white;
-}
+.departments { background-color: #f8f9fa; }
 
-.phone-list {
-	background-color: #f8f9fa;
-	transition: filter .15s ease;
-}
-
-.fade > .phone-list {
-	filter: brightness(.5);
-}
-
-.department {
-	padding: .5em;
-}
+.department { padding: .5em; }
 
 .department-name {
 	color: #212121;
@@ -99,31 +83,33 @@ page {
 	font-weight: bolder;
 }
 
-.phone {
+.contact {
 	display: flex;
 	align-items: center;
 	padding: .5em;
 	border-bottom: 1px solid #E9E9E9;
 }
 
-.info-list {
-	flex-grow: 1;
-	font-size: .9em;
-	overflow: hidden;
-}
-
-.info {
-	margin-bottom: .1em;
-	font-weight: 500;
-}
-
-.contact { color: #616161; }
-
 .icon-user {
 	flex-shrink: 0;
 	width: 48px;
 	height: 48px;
 	margin-right: 1ch;
+}
+
+.info-list {
+	flex-grow: 1;
+	overflow: hidden;
+}
+
+.info-list > .desc {
+	margin-bottom: .1em;
+	font-weight: 500;
+}
+
+.info-list > .info {
+	font-size: .9em;
+	color: #616161;
 }
 
 .buttons {
@@ -142,3 +128,15 @@ page {
 .buttons > .icon:active {
 	opacity: 1;
 }
+
+.hidden { display: none; }
+
+.menu { transition: width .15s ease-out; }
+.departments { transition: filter .2s ease; }
+.department-name { transition: margin-left .2s ease-out; }
+.contact { transition: opacity .2s ease-out; }
+
+.fade > .menu { width: 5rem; }
+.fade > .departments { filter: brightness(.5); }
+.fade .department-name { margin-left: 5rem; }
+.fade .contact { opacity: .75; }

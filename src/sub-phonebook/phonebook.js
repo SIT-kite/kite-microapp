@@ -9,101 +9,95 @@ import getHeader from "../js/getHeader";
 import request from "../js/request";
 
 const app = getApp();
-const availableSuffix = "/contact";
-
-const departmentMap = new Map([
-	["资产与实验室管理处", "资产处"],
-	["信息化技术中心", "信息办"],
-	["国际交流处", "国交处"],
-	["学生工作部", "学工部"],
-	["科学技术研究院", "科研院"],
-	["安全保卫处", "保卫处"],
-	["后勤保障与服务中心", "后保处"],
-	["校长办公室", "校办"],
-	["党委办公室", "党委"]
-]);
-
-let dataChange = []
-let department = []
-let contact_data = []
-let date = 0
-let newdate = 0
-let choosedData = "研究生院"
-let departmentChange = []
-let isHidden = true;
-let click = 1;
 
 Page({
 
 	data: {
-		department,
-		contact_data,
-		date,
-		newdate,
-		choosedData, departmentChange, isHidden, dataChange, click
+		departments: [],   // 按部门分类的联系人数据
+		showMenu: false,   // 是否显示左侧部门跳转菜单
+		scrollIntoView: "" // 跳转到部门时要提供的 view id
 	},
 
 	onShareAppMessage,
 
 	onLoad() {
 
-		let newdate = Date.parse(new Date());
-		let date = wx.getStorageSync('contact_date');
-		this.setData({ newdate, date });
+		// 从 Storage 中取出联系人数据 departments 和下次更新日期 nextUpdate
+		wx.getStorage({ key: "phonebook" }).then(phonebook => {
 
-		let data = wx.getStorageSync('contact_data')
-		this.setData({ data, contact_data: data })
-		if (contact_data.length === 0 || date < newdate) {
-			this.fetchData();
-			this.setData({ newdate, date });
-		} else { this.classification(contact_data); }
+			const { departments, nextUpdate } = phonebook ?? {};
+
+			Array.isArray(departments) && departments.length !== 0 &&
+			typeof nextUpdate === "number" && nextUpdate > Date.now()
+			// 数据有效且无需更新，直接显示
+			? this.setData({ departments })
+			// 数据无效或需要更新，获取、显示并保存
+			: this.fetchData();
+
+		}).catch(
+			() => this.fetchData()
+		);
+
 	},
 
 	fetchData() {
-		date = Date.now() + 2592000000;
-		wx.setStorageSync("contact_date", date);
-		this.setData({ date });
+
 		request({
-			url: `${app.globalData.apiUrl}${availableSuffix}`,
+			url: `${app.globalData.apiUrl}/contact`,
 			header: getHeader("urlencoded", app.globalData.token)
 		}).then(res => {
-			const data = res.data.data.contacts;
-			this.classification(data);
-			this.setData({ data, contact_data: data })
-			wx.setStorageSync("contact_data", data);
-		})
+
+			const departments = this.getDepartments(res.data.data.contacts);
+
+			// 数据获取成功，将下次更新日期 date 设为 30 天后
+			// 如果保存更新日期，后续每次判断时，都要加上 30 天
+			// 而像这样保存下次更新的日期，就只要在保存时加这一次 30 天
+			const nextUpdate = Date.now() + 2592000000; // 30 * 24 * 60 * 60 * 1000
+
+			this.setData({ departments });
+			wx.setStorageSync("phonebook", { departments, nextUpdate });
+
+		}).catch(err => {
+
+			const title = "常用电话数据获取失败";
+			console.error(title, err);
+			wx.showModal({
+				title,
+				content: `${title}，请检查网络或稍后重试。错误信息：${err}`,
+				showCancel: false
+			});
+
+		});
+
 	},
 
-	// 设置 dataChange 和 departmentChange
-	classification(contacts) {
-		const dataChange = [];
-		const departmentChange = this.data.departmentChange;
+	// 将 API 返回的一维数组 contacts 转换为按部门分类的 departments
+	getDepartments(contacts) {
 
-		contacts.forEach(contact => {
+		const departments = [];
 
-			// 如果 departmentMap 中有对应的缩写，就将部门名称转为缩写
-			const shortDpmt = departmentMap.get(contact.department);
-			if (shortDpmt !== undefined) contact.department = shortDpmt;
+		contacts.forEach((contact, index) => {
 
-			const department = contact.department;
+			contact.index = index; // 用于 wx:key
+			contact.show = true;
+			const name = contact.department;
+			delete contact.department;
 
-			// TODO：修改整体逻辑，简化下面的代码
-			if (departmentChange.includes(department)) {
-				dataChange.forEach(
-					el =>
-						el.department === department &&
-						el.origin.push(contact)
-				);
-			} else {
-				dataChange.push({ department, origin: [contact] });
-				departmentChange.push(contact.department);
+			for (const department of departments) {
+				if (department.name === name) {
+					// 找到部门，将 contact 加到现有 department 中
+					department.contacts.push(contact);
+					return;
+				}
 			}
 
-			contact.isShow = true;
+			// 找不到部门，新建一个
+			departments.push({ name, contacts: [contact], show: true });
 
-		})
+		});
 
-		this.setData({ dataChange, departmentChange })
+		return departments;
+
 	},
 
 	call(e) {
@@ -116,6 +110,50 @@ Page({
 		}
 	},
 
+	search(e) {
+
+		// 搜索关键词
+		const value = e.detail.value;
+
+		// 部门 departments
+		const { departments } = this.data;
+
+		departments.forEach(department => {
+			if (department.name.includes(value)) {
+				// 部门匹配搜索关键词，显示整个部门
+				department.show = true;
+				department.contacts.forEach(
+					contact => contact.show = true
+				);
+			} else {
+				let showDepartment = false;
+				department.contacts.forEach(contact => {
+					// 在描述和号码中搜索 value，确定联系人 contact 是否需要显示
+					contact.show = (
+						contact.description.includes(value) ||
+						contact.phone.includes(value)
+					);
+					// 如果部门 department 内有任何联系人 contact 需要显示，就继续显示那个部门
+					if (showDepartment === false && contact.show === true) {
+						showDepartment = true;
+					}
+				});
+				department.show = showDepartment;
+			}
+		});
+
+		this.setData({ departments })
+	},
+
+	toggleMenu() {
+		this.setData({ showMenu: !this.data.showMenu });
+	},
+
+	closeMenu() {
+		this.data.showMenu === true &&
+		this.setData({ showMenu: false });
+	},
+
 	copy(e) {
 		let phone = e.currentTarget.dataset.phone;
 		if (phone === "") {
@@ -126,53 +164,9 @@ Page({
 		}
 	},
 
-	tapdata(e) {
-		const department = e.currentTarget.dataset.department
-		const index = this.data.departmentChange.indexOf(department)
-		this.setData({ choosedData: department, toView: 'index' + index })
-	},
-
-	search(e) {
-		const _this = this
-		let val = e.detail.value
-		let list = _this.data.dataChange
-		let count = []
-		for (let i = 0; i < list.length; i++) {
-			let x = 0;
-			for (let j = 0; j < list[i].origin.length; j++) {
-				if (
-					list[i].origin[j].department.search(val) !== -1 ||
-					list[i].origin[j].phone.search(val) !== -1 ||
-					list[i].origin[j].description.search(val) !== -1
-				) {
-					list[i].origin[j].isShow = true
-				} else {
-					list[i].origin[j].isShow = false;
-					x += 1;
-					count[i] = x;
-				}
-			}
-			list[i].isHidden = count[i] === list[i].origin.length;
-		}
-		this.setData({ dataChange: list })
-	},
-
-	router() {
-		click = this.data.click;
-		if (click === 1) {
-			click = 2;
-			this.setData({ clicked: 1, click });
-		} else if (click === 2) {
-			click = 1;
-			this.setData({ clicked: 2, click });
-		}
-		setTimeout(() => this.setData({ clicked: -1 }), 1000);
-	},
-
-	collapse() {
-		if (this.data.click === 2) {
-			this.setData({ click: 1 });
-		}
+	gotoDepartment(e) {
+		const { index } = e.currentTarget.dataset;
+		this.setData({ scrollIntoView: "department" + index });
 	}
 
-})
+});
